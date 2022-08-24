@@ -1,0 +1,266 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+
+config("pub_config") {
+    cflags_cc = [
+        "-frtti",
+        "-fexceptions",
+        "-Wno-header-hygiene",
+        "-DHAVE_CONFIG_H=1",
+        "-D_FILE_OFFSET_BITS=64",
+        "-D_THREAD_SAFE=1",
+        "-Wno-implicitly-unsigned-literal",
+        "-Wno-variadic-macros",
+        "-fstrict-aliasing",
+        "-Wno-misleading-indentation",
+        "-Wno-main",
+        "-Wno-unused-variable",
+    ]
+
+    include_dirs = [
+        ".",
+        "src",
+        "../src",
+        "..",
+    ]
+}
+
+ohos_executable("XSValueTest") {
+    sources= [
+        "src/XSValueTest/XSValueTest.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("DOMTest") {
+    sources= [
+        "src/DOM/DOMTest/DTest.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("ThreadTest") {
+    sources= [
+        "src/ThreadTest/ThreadTest.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("Char16Test") {
+    sources= [
+        "src/Char16Test/Char16Test.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("DOMMemTest") {
+    sources= [
+        "src/DOM/DOMMemTest/DOMMemTest.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("DOMTraversalTest") {
+    sources= [
+        "src/DOM/Traversal/Traversal.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("XSerializerTest") {
+    sources= [
+        "src/XSerializerTest/XSerializerHandlers.cpp",
+        "src/XSerializerTest/XSerializerTest.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("RangeTest") {
+    sources= [
+        "src/DOM/RangeTest/RangeTest.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("InitTermTest") {
+    sources= [
+        "src/InitTermTest/InitTermTest.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("DOMTypeInfoTest") {
+    sources= [
+        "src/DOM/TypeInfo/TypeInfo.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("XSTSHarness") {
+    sources= [
+        "src/XSTSHarness/XSTSHarness.cpp",
+        "src/XSTSHarness/XSTSHarnessHandlers.cpp",
+        "src/XSTSHarness/XMLHarnessHandlers.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("EncodingTest") {
+    sources= [
+        "src/EncodingTest/EncodingTest.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("Normalizer") {
+    sources= [
+        "src/DOM/Normalizer/Normalizer.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("MemHandlerTest") {
+    sources= [
+        "src/MemHandlerTest/MemoryMonitor.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("NetAccessorTest") {
+    sources= [
+        "src/NetAccessorTest/NetAccessorTest.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}

@@ -1,0 +1,289 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+
+config("pub_config") {
+    cflags_cc = [
+        "-frtti",
+        "-fexceptions",
+        "-Wno-header-hygiene",
+        "-DHAVE_CONFIG_H=1",
+        "-D_FILE_OFFSET_BITS=64",
+        "-D_THREAD_SAFE=1",
+        "-Wno-long-long",
+        "-Wno-variadic-macros",
+        "-Wno-misleading-indentation",
+        "-Wno-main",
+        "-Wno-unused-variable",
+    ]
+
+    include_dirs = [
+        ".",
+        "../src",
+        "src",
+    ]
+}
+
+ohos_executable("StdInParse") {
+    sources= [
+        "src/StdInParse/StdInParse.cpp",
+        "src/StdInParse/StdInParseHandlers.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("SEnumVal") {
+    sources= [
+        "src/SEnumVal/SEnumVal.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("CreateDOMDocument") {
+    sources= [
+        "src/CreateDOMDocument/CreateDOMDocument.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("SCMPrint") {
+    sources= [
+        "src/SCMPrint/SCMPrint.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2"
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("XInclude") {
+    sources= [
+        "src/XInclude/XInclude.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("DOMCount") {
+    sources= [
+        "src/DOMCount/DOMCount.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("EnumVal") {
+    sources= [
+        "src/EnumVal/EnumVal.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("PSVIWriter") {
+    sources= [
+        "src/PSVIWriter/PSVIWriter.cpp",
+        "src/PSVIWriter/PSVIWriterHandlers.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("MemParse") {
+    sources= [
+        "src/MemParse/MemParse.cpp",
+        "src/MemParse/MemParseHandlers.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("DOMPrint") {
+    sources= [
+        "src/DOMPrint/DOMPrint.cpp",
+        "src/DOMPrint/DOMPrintErrorHandler.cpp",
+        "src/DOMPrint/DOMPrintFilter.cpp",
+        "src/DOMPrint/DOMTreeErrorReporter.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("Redirect") {
+    sources= [
+        "src/Redirect/Redirect.cpp",
+        "src/Redirect/RedirectHandlers.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("PParse") {
+    sources= [
+        "src/PParse/PParse.cpp",
+        "src/PParse/PParseHandlers.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("SAXCount") {
+    sources= [
+        "src/SAXCount/SAXCount.cpp",
+        "src/SAXCount/SAXCountHandlers.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("SAX2Print") {
+    sources= [
+        "src/SAX2Print/SAX2FilterHandlers.cpp",
+        "src/SAX2Print/SAX2Print.cpp",
+        "src/SAX2Print/SAX2PrintHandlers.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("SAX2Count") {
+    sources= [
+        "src/SAX2Count/SAX2Count.cpp",
+        "src/SAX2Count/SAX2CountHandlers.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
+
+ohos_executable("SAXPrint") {
+    sources= [
+        "src/SAXPrint/SAXPrint.cpp",
+        "src/SAXPrint/SAXPrintHandlers.cpp",
+    ]
+
+    configs = [ 
+        ":pub_config"
+    ]
+    deps = [
+        "../src:xerces-c-3.2",
+    ]
+
+    part_name = "xerces"
+}
