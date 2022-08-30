@@ -1,0 +1,49 @@
+# Copyright (c) Huawei Technologies Co., Ltd. 2022. All rights reserved.
+if (defined(ohos_lite)) {
+  import("//build/lite/config/component/lite_component.gni")
+} else {
+  import("//build/ohos.gni")
+}
+
+config("openjpeg_cflag_config") {
+  cflags = [
+      "-Wno-unused-function",
+      ]
+}
+
+ohos_shared_library("openjp2") {
+   sources = [
+    "//third_party/openjpeg/src/lib/openjp2/thread.c",
+    "//third_party/openjpeg/src/lib/openjp2/bio.c",
+    "//third_party/openjpeg/src/lib/openjp2/cio.c",
+    "//third_party/openjpeg/src/lib/openjp2/dwt.c",
+    "//third_party/openjpeg/src/lib/openjp2/event.c",
+    "//third_party/openjpeg/src/lib/openjp2/ht_dec.c",
+    "//third_party/openjpeg/src/lib/openjp2/image.c",
+    "//third_party/openjpeg/src/lib/openjp2/invert.c",
+    "//third_party/openjpeg/src/lib/openjp2/j2k.c",
+    "//third_party/openjpeg/src/lib/openjp2/jp2.c",
+    "//third_party/openjpeg/src/lib/openjp2/mct.c",
+    "//third_party/openjpeg/src/lib/openjp2/mqc.c",
+    "//third_party/openjpeg/src/lib/openjp2/openjpeg.c",
+    "//third_party/openjpeg/src/lib/openjp2/opj_clock.c",
+    "//third_party/openjpeg/src/lib/openjp2/pi.c",
+    "//third_party/openjpeg/src/lib/openjp2/t1.c",
+    "//third_party/openjpeg/src/lib/openjp2/t2.c",
+    "//third_party/openjpeg/src/lib/openjp2/tcd.c",
+    "//third_party/openjpeg/src/lib/openjp2/tgt.c",
+    "//third_party/openjpeg/src/lib/openjp2/function_list.c",
+    "//third_party/openjpeg/src/lib/openjp2/opj_malloc.c",
+    "//third_party/openjpeg/src/lib/openjp2/sparse_array.c",
+  ]
+
+  include_dirs = [
+    "//third_party/openjpeg/src/lib/openjp2"
+  ]
+
+  configs = [ 
+    ":openjpeg_cflag_config"
+  ]
+
+  part_name = "openjpeg_lib"
+}
