@@ -14,12 +14,12 @@ tpc_c_cplusplus
 ├── 三方库1
 │   ├──gn                 #gn构建脚本、适配指导的文件夹
 │   ├──cmake              #cmake构建脚本、适配指导的文件夹
-│   ├──README_zh.md       
+│   ├──README_zh.md       #目录下文件使用的介绍
 │   ├──README.OpenSource  #文件中包含了三方库源码的下载地址，版本，license等信息
 ├── 三方库2
 │   ├──gn                 #gn构建脚本、适配指导的文件夹
 │   ├──cmake              #cmake构建脚本、适配指导的文件夹
-│   ├──README_zh.md       
+│   ├──README_zh.md       #目录下文件使用的介绍
 │   ├──README.OpenSource  #文件中包含了三方库源码的下载地址，版本，license等信息
 ......
 ```
