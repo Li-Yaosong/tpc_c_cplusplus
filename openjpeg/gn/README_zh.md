@@ -5,6 +5,8 @@
 根据本文档对该库进行GN构建时，默认你已经阅读了《[三方库openjpeg的构建与使用](../README_zh.md)》一文，并已经完成Openharmony的对应版本下载及依赖四方库的构建。若未完成上述工作，请返回《[三方库openjpeg的构建与使用](../README_zh.md)》一文，并根据相关信息进行操作。
 
 
+
+
 ## 源码下载
 
 在OpenHarmony源码根目录下的third_party目录下执行如下指令，下载三方库openjpeg源码
@@ -25,6 +27,9 @@ git clone git@github.com:uclouvain/openjpeg.git -b v2.5.0
 - 将[openjpeg/src/lib/openjp2](openjpeg/src/lib/openjp2)/opj_config.h.in文件修改成opj_config.h，然后拷贝到源库openjpeg/src/lib/openjp2/目录下
 
 
+
+
 ## 编译
 
 完成上述步骤，三方库openjpeg就构建结束了。但若系统中没有组件依赖或调用，那么本库是不会参与编译的。开发者根据《[三方库openjpeg的构建与使用](../README_zh.md)》一文中三方库使用指导，将本库编译到系统中。
+
