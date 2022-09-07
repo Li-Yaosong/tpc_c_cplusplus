@@ -6,7 +6,6 @@
 
 
 
-
 ## 源码下载
 
 在OpenHarmony源码根目录下的third_party目录下执行如下指令，下载三方库openjpeg源码
@@ -28,8 +27,9 @@ git clone git@github.com:uclouvain/openjpeg.git -b v2.5.0
 
 
 
-
 ## 编译
 
 完成上述步骤，三方库openjpeg就构建结束了。但若系统中没有组件依赖或调用，那么本库是不会参与编译的。开发者根据《[三方库openjpeg的构建与使用](../README_zh.md)》一文中三方库使用指导，将本库编译到系统中。
+
+
 

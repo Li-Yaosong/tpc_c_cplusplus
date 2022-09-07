@@ -6,18 +6,15 @@
 
 
 
-
 ## 创建工程
 
 参考《[工程加入OpenHarmony构建体系](../../common/gn_compile_build.md)》一文，创建开发者自己的工程。
 
 
 
-
 ## 三方库引入工程
 
 参考《[三方库引入GN工程](../../common/gn_build.md)》一文，将三方库openjpeg引入开发者自己的工程。文中[thirdpartyA]对应本库库名*openjpeg*，[libA]对应本库动态库名*libjp2*，包含头文件路径需根据openjpeg三方库头文件实际路径进行调整。
-
 
 
 
