@@ -1,0 +1,154 @@
+
+# Copyright (c) 2022 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import("//build/ohos.gni")
+
+config("charset_config"){
+    cflags = [
+        "-DHAVE_CONFIG_H",
+        "-O2",
+        "-Wno-header-hygiene",
+        "-Wno-unused-const-variable",
+    ]
+}
+
+ohos_static_library("charset"){
+    sources = [
+        "libiconv/libcharset/lib/localcharset.c",
+        "libiconv/libcharset/lib/relocatable-stub.c",
+    ]
+    include_dirs = [
+        "include",
+    ]
+    deps = [
+    ]
+    configs = [
+        ":charset_config",
+    ]
+}
+
+config("libiconv_config"){
+    cflags = [
+        "-DHAVE_CONFIG_H",
+        "-DENABLE_RELOCATABLE=1",
+        "-DBUILDING_LIBICONV",
+        "-DNO_XMALLOC",
+        "-O2",
+        "-Wno-header-hygiene",
+        "-Wno-parentheses-equality",
+    ]
+}
+
+ohos_shared_library("iconv"){
+    sources = [
+        "libiconv/lib/iconv.c",
+        "libiconv/lib/relocatable.c",
+    ]
+    include_dirs = [
+        "include",
+    ]
+
+    deps = [
+        ":charset",
+    ]
+    configs = [
+        ":libiconv_config",
+    ]
+
+    part_name = "app_demo"
+}
+
+config("icrt_config"){
+    cflags = [
+        "-DHAVE_CONFIG_H",
+        "-DDEPENDS_ON_LIBICONV=1",
+        "-DDEPENDS_ON_LIBINTL=1",
+        "-DNO_XMALLOC",
+        "-O2",
+        "-Wno-header-hygiene",
+        "-Wno-int-conversion",
+    ]
+    
+}
+
+ohos_static_library("icrt"){
+    sources = [
+        "libiconv/srclib/allocator.c",
+        "libiconv/srclib/areadlink.c",
+        "libiconv/srclib/basename-lgpl.c",
+        "libiconv/srclib/binary-io.c",
+        "libiconv/srclib/careadlinkat.c",
+        "libiconv/srclib/cloexec.c",
+        "libiconv/srclib/fcntl.c",
+        "libiconv/srclib/fd-hook.c",
+        "libiconv/srclib/free.c",
+        "libiconv/srclib/getprogname.c",
+        "libiconv/srclib/malloca.c",
+        "libiconv/srclib/progname.c",
+        "libiconv/srclib/safe-read.c",
+        "libiconv/srclib/malloc/scratch_buffer_dupfree.c",
+        "libiconv/srclib/malloc/scratch_buffer_grow.c",
+        "libiconv/srclib/malloc/scratch_buffer_grow_preserve.c",
+        "libiconv/srclib/malloc/scratch_buffer_set_array_size.c",
+        "libiconv/srclib/stat-time.c",
+        "libiconv/srclib/unistd.c",
+        "libiconv/srclib/uniwidth/width.c",
+        "libiconv/srclib/xmalloc.c",
+        "libiconv/srclib/xstrdup.c",
+        "libiconv/srclib/xreadlink.c",
+        "libiconv/srclib/error.c"
+    ]
+    include_dirs = [
+        "include",
+        "include/samples",
+        "libiconv/srclib",
+    ]
+
+    configs = [
+        ":icrt_config",
+    ]
+}
+
+config("iconv_config"){
+    cflags = [
+        "-Wno-unused-parameter",
+        "-Wno-format",
+    ]
+}
+
+ohos_executable("iconv_test"){
+    sources = [
+        "libiconv/src/iconv_no_i18n.c",
+    ]
+    include_dirs = [
+        "include",
+        "include/samples",
+        "libiconv/srclib",
+    ]
+    deps = [
+        ":icrt",
+        ":iconv",
+    ]
+    configs = [
+        ":iconv_config",
+    ]
+    part_name = "app_demo"
+}
+
+group("libiconv") {
+    deps = [
+        ":iconv",
+    ]
+}
