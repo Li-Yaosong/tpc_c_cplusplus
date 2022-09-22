@@ -1,0 +1,244 @@
+# Copyright (c) Huawei Technologies Co., Ltd. 2022. All rights reserved.
+if (defined(ohos_lite)) {
+  import("//build/lite/config/component/lite_component.gni")
+} else {
+  import("//build/ohos.gni")
+}
+
+config("openjpeg_cflag_config") {
+  cflags = [
+      "-Wno-unused-function",
+      ]
+}
+
+ohos_shared_library("openjp2") {
+   sources = [
+    "./openjpeg/src/lib/openjp2/thread.c",
+    "./openjpeg/src/lib/openjp2/bio.c",
+    "./openjpeg/src/lib/openjp2/cio.c",
+    "./openjpeg/src/lib/openjp2/dwt.c",
+    "./openjpeg/src/lib/openjp2/event.c",
+    "./openjpeg/src/lib/openjp2/ht_dec.c",
+    "./openjpeg/src/lib/openjp2/image.c",
+    "./openjpeg/src/lib/openjp2/invert.c",
+    "./openjpeg/src/lib/openjp2/j2k.c",
+    "./openjpeg/src/lib/openjp2/jp2.c",
+    "./openjpeg/src/lib/openjp2/mct.c",
+    "./openjpeg/src/lib/openjp2/mqc.c",
+    "./openjpeg/src/lib/openjp2/openjpeg.c",
+    "./openjpeg/src/lib/openjp2/opj_clock.c",
+    "./openjpeg/src/lib/openjp2/pi.c",
+    "./openjpeg/src/lib/openjp2/t1.c",
+    "./openjpeg/src/lib/openjp2/t2.c",
+    "./openjpeg/src/lib/openjp2/tcd.c",
+    "./openjpeg/src/lib/openjp2/tgt.c",
+    "./openjpeg/src/lib/openjp2/function_list.c",
+    "./openjpeg/src/lib/openjp2/opj_malloc.c",
+    "./openjpeg/src/lib/openjp2/sparse_array.c",
+  ]
+
+  include_dirs = [
+    "./openjpeg/src/lib/openjp2",
+    "./adapter/include",
+  ]
+
+  configs = [ 
+    ":openjpeg_cflag_config"
+  ]
+
+  part_name = "openjpeg"
+}
+
+config("openjpeg_test_config") {
+    cflags = [
+      "-Wno-macro-redefined",
+      "-Wno-unused-variable"
+    ]
+    include_dirs = [ 
+        "./openjpeg/src/lib/openjp2/",
+        "./openjpeg/src/bin/common/",
+        "./openjpeg/src/lib/jp2/",
+        "./openjpeg/src/bin/jp2/",
+        "./adapter/include/",
+        "//third_party/libtiff/libtiff/"
+    ]
+}
+
+ohos_executable("test_tile_decoder") {
+    sources = [
+        "./openjpeg/tests/test_tile_decoder.c",
+        "./openjpeg/src/bin/common/opj_getopt.c",
+    ]
+    public_configs = [ ":openjpeg_test_config" ]
+    deps = [
+        ":openjp2",
+        "//third_party/libtiff:libtiff_shared",
+    ]   
+    part_name = "openjpeg"
+}
+
+ohos_executable("test_tile_encoder") {
+    sources = [
+        "./openjpeg/tests/test_tile_encoder.c",
+        "./openjpeg/src/bin/common/opj_getopt.c",
+    ]
+    public_configs = [ ":openjpeg_test_config" ]
+    deps = [
+        ":openjp2",
+        "//third_party/libtiff:libtiff_shared",
+    ]   
+    part_name = "openjpeg"
+}
+
+
+ohos_executable("compare_dump_files") {
+    sources = [
+        "./openjpeg/tests/compare_dump_files.c",
+        "./openjpeg/src/bin/common/opj_getopt.c",
+    ]
+    public_configs = [ ":openjpeg_test_config" ]
+    deps = [
+        ":openjp2",
+        "//third_party/libtiff:libtiff_shared",
+    ]
+    part_name = "openjpeg"
+}
+
+ohos_executable("compare_images") {
+    sources = [
+        "./openjpeg/tests/compare_images.c",
+        "./openjpeg/src/bin/jp2/convert.c",
+        "./openjpeg/src/bin/jp2/converttif.c",
+        "./openjpeg/src/bin/common/opj_getopt.c",
+    ]
+    public_configs = [ ":openjpeg_test_config" ]
+    deps = [
+        ":openjp2",
+        "//third_party/libtiff:libtiff_shared",
+    ]
+    part_name = "openjpeg"
+}
+
+ohos_executable("compare_raw_files") {
+    sources = [
+        "./openjpeg/tests/compare_raw_files.c",
+        "./openjpeg/src/bin/common/opj_getopt.c",
+    ]
+
+    public_configs = [ ":openjpeg_test_config" ]
+    deps = [
+        ":openjp2",
+        "//third_party/libtiff:libtiff_shared",
+    ] 
+    part_name = "openjpeg"
+}
+
+ohos_executable("j2k_random_tile_access") {
+    sources = [
+        "./openjpeg/tests/j2k_random_tile_access.c",
+        "./openjpeg/src/bin/common/opj_getopt.c",
+    ]
+
+    public_configs = [ ":openjpeg_test_config" ]
+    deps = [
+        ":openjp2",
+        "//third_party/libtiff:libtiff_shared",
+    ]  
+    part_name = "openjpeg"
+}
+
+ohos_executable("pdf2jp2") {
+    sources = [
+        "./openjpeg/tests/pdf2jp2.c",
+        "./openjpeg/src/bin/common/opj_getopt.c",
+    ]
+
+    public_configs = [ ":openjpeg_test_config" ]
+    deps = [
+        ":openjp2",
+        "//third_party/libtiff:libtiff_shared",
+    ] 
+    part_name = "openjpeg"
+}
+
+ohos_executable("test_decode_area") {
+    sources = [
+        "./openjpeg/tests/test_decode_area.c",
+        "./openjpeg/src/bin/common/opj_getopt.c",
+    ]
+
+    public_configs = [ ":openjpeg_test_config" ]
+    deps = [
+        ":openjp2",
+        "//third_party/libtiff:libtiff_shared",
+    ]  
+    part_name = "openjpeg"
+}
+
+ohos_executable("ppm2rgb3") {
+    sources = [
+        "./openjpeg/tests/ppm2rgb3.c",
+        "./openjpeg/src/bin/common/opj_getopt.c",
+    ]
+
+    public_configs = [ ":openjpeg_test_config" ]
+    deps = [
+        ":openjp2",
+        "//third_party/libtiff:libtiff_shared",
+    ]   
+    part_name = "openjpeg"
+}
+
+ohos_executable("testempty0") {
+    sources = [
+        "./openjpeg/tests/unit/testempty0.c",
+    ]
+
+    public_configs = [ ":openjpeg_test_config" ]
+    deps = [
+        ":openjp2",
+    ]
+    part_name = "openjpeg"
+}
+
+
+ohos_executable("testempty1") {
+    sources = [
+        "./openjpeg/tests/unit/testempty1.c",
+    ]
+
+    public_configs = [ ":openjpeg_test_config" ]
+    deps = [
+        ":openjp2",
+    ]
+    part_name = "openjpeg"
+}
+
+ohos_executable("testempty2") {
+    sources = [
+        "./openjpeg/tests/unit/testempty2.c",
+    ]
+
+    public_configs = [ ":openjpeg_test_config" ]
+    deps = [
+        ":openjp2",
+    ]
+    part_name = "openjpeg"
+}
+
+group("openjpeg_test") {
+  deps = [
+    ":test_tile_decoder",
+    ":test_tile_encoder",
+    ":compare_dump_files",
+    ":compare_images",
+    ":compare_raw_files",
+    ":j2k_random_tile_access",
+    ":pdf2jp2",
+    ":test_decode_area",
+    ":ppm2rgb3",
+    ":testempty0",
+    ":testempty1",
+    ":testempty2",
+  ]
+}

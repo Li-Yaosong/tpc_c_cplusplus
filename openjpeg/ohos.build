@@ -1,0 +1,10 @@
+{
+    "subsystem": "thirdparty",
+    "parts":{
+      "openjpeg": {
+        "module_list": [
+          "//third_party/openjpeg:openjp2"
+        ]
+      }
+    }
+}
