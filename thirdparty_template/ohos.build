@@ -1,0 +1,9 @@
+{
+  "subsystem": "thirdparty",
+    "parts":{
+      "xxx": {
+        "module_list": [
+        ]
+      }
+    }
+}
