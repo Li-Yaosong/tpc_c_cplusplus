@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "openJPEG",
+    "License": "Copyright (c) 2002-2014, Universite catholique de Louvain (UCL), Belgium",
+	"License": "Copyright (c) 2002-2014, Universite catholique de Louvain (UCL), Belgium",
+	"License": "Copyright (c) 2002-2014, Professor Benoit Macq",
+	"License": "Copyright (c) 2003-2014, Antonin Descampe",
+	"License": "Copyright (c) 2003-2009, Francois-Olivier Devaux",
+	"License": "Copyright (c) 2005, Herve Drolon, FreeImage Team",
+	"License": "Copyright (c) 2002-2003, Yannick Verschueren",
+	"License": "Copyright (c) 2001-2003, David Janssens",
+	"License": "Copyright (c) 2011-2012, Centre National d'Etudes Spatiales (CNES), France",
+	"License": "Copyright (c) 2012, CS Systemes d'Information, France",
+    "License File": "LICENSE.TXT",
+    "Version Number": "2.5",
+    "Owner": "yuguans@huawei.com",
+    "Upstream URL": "https://github.com/uclouvain/openjpeg",
+    "Description": "OpenJPEG is an open-source JPEG 2000 codec written in C language. It has been developed in order to promote the use of JPEG 2000, a still-image compression standard from the Joint Photographic Experts Group (JPEG). Since April 2015, it is officially recognized by ISO/IEC and ITU-T as a JPEG 2000 Reference Software."
+  }
+]
