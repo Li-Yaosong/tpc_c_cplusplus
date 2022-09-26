@@ -1,0 +1,10 @@
+{
+  "subsystem": "thirdparty",
+    "parts":{
+      "iconv": {
+        "module_list": [
+          "//third_party/iconv:libiconv"
+        ]
+      }
+    }
+}
