@@ -1,15 +1,9 @@
 # lzma如何集成到系统Rom
-
 ## 准备源码工程
-
 本库是基于OpenHarmony-v3.2-Beta1版本，在润和RK3568开发板上验证的。如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
-
 ## 准备系统Rom源码
-
 源码获取方法请参照：[OpenHarmony源码下载](https://gitee.com/openharmony/docs/blob/OpenHarmony-v3.2-Beta1/zh-cn/release-notes/OpenHarmony-v3.2-beta1.md#%E6%BA%90%E7%A0%81%E8%8E%B7%E5%8F%96)
-
 ## 增加构建脚本及配置文件
-
 - 下载本仓库代码
   ```
   cd ~/
@@ -41,7 +35,6 @@ mv lzma-4.32.7 lzma                                    # 修改库外层文件�
 准备完三方库代码后，我们需要将三方库加入到编译构建体系中。标准系统编译构建可以参考文档[标准系统编译构建指导](https://gitee.com/openharmony/docs/blob/OpenHarmony-3.2-Beta1/zh-cn/device-dev/subsystems/subsys-build-standard-large.md)。
 我们默认三方库是属于OpenHarmony的thirdparty子系统，如果需要自己定义子系统参考文档[如何为三方库组件中添加一个三方库](https://gitee.com/openharmony-sig/knowledge/blob/master/docs/openharmony_getstarted/port_thirdparty/README.md)
 在OpenHarmony源码的vendor/hihope/rk3568/config.json文件中，新增需要编译的组件，如下：
-
 ```
 {
 	"subsystem": "thirdparty",
@@ -49,13 +42,13 @@ mv lzma-4.32.7 lzma                                    # 修改库外层文件�
 	   {
 		 "component": "musl",
 	     "features": []
-	  },
-	  {
+	   },
+	   {
 	      "component": "lzma",
 	      "features": []
-	  }
+	   }
 	]
-},
+}
 ```
 ## 系统Rom中引入三方库测试程序
 在OpenHarmony源码的vendor/hihope/rk3568/config.json文件,对应组件的features中打开编译选项，如下：
@@ -109,8 +102,7 @@ hb build --target-cpu arm64                 # 编译64位系统使用:arm64， �
 ## 运行效果
 程序安装完后，我们通过运行如下命令测试了该库常用的.lzma文件压缩和解压缩功能，并和期望结果做对比，内容一致，总体运行结果如图：
 
-![results](source/results.png)
-
+&nbsp;![results](pic/results.png)
 ## 参考资料
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
 - [OpenHarmony三方库地址](https://gitee.com/openharmony-tpc)
