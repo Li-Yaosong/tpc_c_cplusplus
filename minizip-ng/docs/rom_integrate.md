@@ -15,12 +15,13 @@
   |-- docs			        # 存放三方库相关文档的文件夹
   |-- BUILD.gn		        # 构建脚本，支持rom包集成
   |-- bundle.json			    # 三方库组件定义文件
+  ├── CMakeLists.txt          # 构建脚本，支持hap包集成
   ├── README.OpenSource       # 说明三方库源码的下载地址，版本，license等信息
   ├── README_zh.md  
   ```
 - 将本仓库文件夹拷贝到third_party下
   ```
-  cp ~/tpc_c_cplusplus/minizipi-ng   ~/openharmony/third_party/ -rf
+  cp ~/tpc_c_cplusplus/minizip-ng   ~/openharmony/third_party/ -rf
   ```
 ## 准备三方库源码
 - 将源码下载到minizip-ng目录并将其解压出来。
@@ -98,7 +99,7 @@ hb build --target-cpu arm64     # 编译64位系统使用:arm64， 编译32位�
   ```
 - 运行测试程序
   程序安装完后，由于测试用例较多，我们准备了1个测试文件 test.c，测试了该库常用的zip文件压缩和解压缩功能，并和期望结果做对比，内容一致，如图：
-&nbsp;![results](pic/results.png)
+  &nbsp;![results](pic/results.png)
 ## 参考资料
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
 - [OpenHarmony三方库地址](https://gitee.com/openharmony-tpc)
