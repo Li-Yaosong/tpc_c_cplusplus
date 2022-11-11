@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "xz",
+        "License": "GPLv2",
+        "License File": "COPYING.GPLv2",
+        "Version Number": "5.2.6",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://tukaani.org/xz/",
+        "Description": "XZ Utils is free general-purpose data compression software with a high compression ratio. "
+    }
+]
