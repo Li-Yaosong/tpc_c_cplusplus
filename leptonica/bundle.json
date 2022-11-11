@@ -1,0 +1,33 @@
+{
+    "name": "@ohos/leptonica",
+    "description": "Leptonica is an open source library containing software that is broadly useful for image processing and image analysis applications.",
+    "version": "3.1",
+    "license": "zlib",
+    "publishAs": "code-segment",
+    "segment": {
+        "destPath": "third_party/leptonica"
+    },
+    "dirs": {},
+    "scripts": {},
+    "readmePath": {
+        "en": "README"
+    },
+    "component": {
+        "name": "leptonica",
+        "subsystem": "thirdparty",
+        "syscap": [],
+        "features": [],
+        "adapted_system_type": [],
+        "rom": "",
+        "ram": "",
+        "deps": {
+            "components": [],
+            "third_party": []
+        },
+        "build": {
+            "sub_component": ["//third_party/leptonica:leptonica","//third_party/leptonica:samples"],
+            "inner_kits": [],
+            "test": []
+        }
+    }
+}
