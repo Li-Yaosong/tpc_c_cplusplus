@@ -1,0 +1,33 @@
+{
+    "name": "@ohos/libtiff",
+    "description": "a small collection of tools for doingsimple manipulations of TIFF images, and documentation on the library and tools.",
+    "version": "v4.3.0",
+    "license": "libtiff License",
+    "publishAs": "",
+    "segment": {
+        "destPath": "third_party/libtiff"
+    },
+    "dirs": {},
+    "scripts": {},
+    "readmePath": {
+        "en": "README"
+    },
+    "component": {
+        "name": "libtiff",
+        "subsystem": "thirdparty",
+        "syscap": [],
+        "features": [],
+        "adapted_system_type": ["standard"],
+        "rom": "",
+        "ram": "",
+        "deps": {
+            "components": [],
+            "third_party": []
+        },
+        "build": {
+            "sub_component": ["//third_party/libtiff:libtiff"],
+            "inner_kits": [],
+            "test": []
+        }
+    }
+}
