@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 project(libunrar)
 
-set (unrar_SOURCES
+set (unrar_sources
 		strlist.cpp
 		strfn.cpp
 		pathfn.cpp
@@ -41,8 +41,6 @@ set (unrar_SOURCES
 		list.cpp
 		find.cpp
 		unpack.cpp
-#		unpack15.cpp
-#		unpack20.cpp
 		unpack30.cpp
 		unpack50.cpp
 		unpack50frag.cpp
@@ -57,12 +55,9 @@ set (unrar_SOURCES
 		dll.cpp
 		qopen.cpp)
 
-#set(LOCAL_MODULE_TAGS eng debug)
-#set(LOCAL_LDLAGS "${LOCAL_LDLAGS} -pie -fPIE")
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DRARDLL -DLITTLE_ENDIAN -DRAR_SMP -fPIC -fexceptions -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -UALLOW_EXCEPTIONS ")
 add_library(static_unrar STATIC
-            ${unrar_SOURCES})
+            ${unrar_sources})
 
 set(CMAKE_CXX_STANDARD 11)
 target_link_libraries(static_unrar)
