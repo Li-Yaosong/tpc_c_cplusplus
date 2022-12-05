@@ -13,4 +13,4 @@ libmp3lame是开源mp3编码库，使用MPGLIB解码引擎，专门用于编码 
 
 ## 集成方式
 
-- [系统Rom包集成](https://gitee.com/openharmony-sig/tpc_c_cplusplus/blob/master/libmp3lame/docs/rom_integrate.md)
+- [系统Rom包集成](./docs/rom_integrate.md)
