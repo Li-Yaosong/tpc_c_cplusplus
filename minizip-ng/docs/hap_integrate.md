@@ -10,7 +10,7 @@
 - SDK版本：OpenHarmony SDK
 - API版本：API Version 9
 
-应用环境准备具体可参照文档[通过IDE开发一个Napi工程](https://gitee.com/zhong-luping/samples/blob/master/docs/napi%E7%B3%BB%E5%88%97%E5%AD%A6%E4%B9%A0/docs/hello_napi.md)
+应用环境准备具体可参照文档[通过IDE开发一个Napi工程](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi%E7%B3%BB%E5%88%97%E5%AD%A6%E4%B9%A0/docs/hello_napi.md)
 
 ### 增加构建脚本及配置文件
 
@@ -106,6 +106,7 @@
 ## 参考资料
 
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
-- [通过IDE开发一个Napi工程](https://gitee.com/zhong-luping/samples/blob/master/docs/napi%E7%B3%BB%E5%88%97%E5%AD%A6%E4%B9%A0/docs/hello_napi.md)
+- [通过IDE开发一个Napi工程](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi%E7%B3%BB%E5%88%97%E5%AD%A6%E4%B9%A0/docs/hello_napi.md)
 - [minizip三方库测试源码](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/thirdparty/minizip_demo)
 - [OpenHarmony知识体系](https://gitee.com/openharmony-sig/knowledge)
+
