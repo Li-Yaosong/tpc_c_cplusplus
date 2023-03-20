@@ -78,9 +78,9 @@
   在工程的entry\src\main\cpp\CMakeLists.txt中做以下修改:
 
   ```cmake
-  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/minizip-ng)
+  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/third_party/minizip-ng)
   add_library(entry SHARED minizipNapi.cpp minizip.cpp)
-  target_include_directories(entry PUBLIC thirdparty/minizip-ng/minizip-ng)
+  target_include_directories(entry PUBLIC third_party/minizip-ng/minizip-ng)
   target_link_libraries(entry PUBLIC libace_napi.z.so minizip_shared)
   ```
 
