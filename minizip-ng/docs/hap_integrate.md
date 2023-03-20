@@ -64,7 +64,7 @@
   ```shell
   third_party
   ├── minizip-ng              # 三方库minizip-ng构建目录
-  ├── CMakeLists.txt          # 构建脚本，支持hap包集成
+  |      ├── CMakeLists.txt          # 构建脚本，支持hap包集成
   ├── zstd                    # 三方库minizip-ng的依赖库zstd源码目录
   ├── iconv                   # 三方库minizip-ng 的依赖库libiconv构建目录
   |      ├── libiconv         # libiconv源码目录
