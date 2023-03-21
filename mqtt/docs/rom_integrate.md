@@ -52,8 +52,8 @@
 
 ## 系统Rom中引入三方库
 
-准备完三方库代码后，我们需要将三方库加入到编译构建体系中。标准系统编译构建可以参考文档[标准系统编译构建指导](https://gitee.com/openharmony/docs/blob/OpenHarmony-3.2-Beta4/zh-cn/device-dev/subsystems/subsys-build-standard-large.md)。  <br />
-我们默认三方库是属于OpenHarmony的thirdparty子系统，如果需要自己定义子系统参考文档[如何为三方库组件中添加一个三方库](./add_thirdparty_component.md)。<br />
+准备完三方库代码后，我们需要将三方库加入到编译构建体系中。标准系统编译构建可以参考文档[编译构建指导](https://gitee.com/openharmony/docs/blob/OpenHarmony-3.2-Beta4/zh-cn/device-dev/subsystems/subsys-build-all.md)。  <br />
+我们默认三方库是属于OpenHarmony的thirdparty子系统，如果需要自己定义子系统参考文档[如何为三方库组件中添加一个三方库](https://gitee.com/openharmony-sig/knowledge/blob/master/docs/openharmony_getstarted/port_thirdparty/README.md)。<br />
 新增需要编译的组件,在OpenHarmony源码的vendor/hihope/rk3568/config.json文件中，新增需要编译的组件，如下代码段所示，在thirdparty子系统下面新增mqtt组件
 
 ```json
