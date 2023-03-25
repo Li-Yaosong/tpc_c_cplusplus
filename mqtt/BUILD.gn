@@ -1,0 +1,155 @@
+# Copyright (c) 2023 iSoftStone Information Technology (Group) Co.,Ltd.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v2.0
+# and Eclipse Distribution License v1.0 which accompany this distribution. 
+#
+# The Eclipse Public License is available at 
+#   https://www.eclipse.org/legal/epl-2.0/
+# and the Eclipse Distribution License is available at 
+#   http://www.eclipse.org/org/documents/edl-v10.php.
+
+import ("//build/ohos.gni")
+
+mqtt_path = "//third_party/mqtt"
+mqtt_part_name = "mqtt"
+mqtt_subsystem_name  = "thirdparty"
+
+config("mqtt_config") {
+  cflags = [
+    "-Wno-sign-compare",
+    "-Wno-unused-variable",
+    "-Wno-deprecated-declarations",
+    "-Wno-format",
+    "-fvisibility=hidden",
+    "-Wno-error",
+    "-Wall",
+    "-fPIC",
+    "-Os",
+    "-g",
+  ]
+
+  defines = [
+    "_GNU_SOURCE",
+    "PAHO_MQTT_EXPORTS",
+  ]
+
+  if (use_musl) {
+    cflags += [ "-Wno-bool-operation" ]
+  }
+}
+
+
+ohos_source_set("mqtt_commom_dynamic") {
+  sources = [
+    "${mqtt_path}/src/MQTTTime.c",
+    "${mqtt_path}/src/MQTTProtocolClient.c",
+    "${mqtt_path}/src/Clients.c",
+    "${mqtt_path}/src/utf-8.c",
+    "${mqtt_path}/src/MQTTPacket.c",
+    "${mqtt_path}/src/MQTTPacketOut.c",
+    "${mqtt_path}/src/Messages.c",
+    "${mqtt_path}/src/Tree.c",
+    "${mqtt_path}/src/Socket.c",
+    "${mqtt_path}/src/Log.c",
+    "${mqtt_path}/src/MQTTPersistence.c",
+    "${mqtt_path}/src/Thread.c",
+    "${mqtt_path}/src/MQTTProtocolOut.c",
+    "${mqtt_path}/src/MQTTPersistenceDefault.c",
+    "${mqtt_path}/src/SocketBuffer.c",
+    "${mqtt_path}/src/LinkedList.c",
+    "${mqtt_path}/src/MQTTProperties.c",
+    "${mqtt_path}/src/MQTTReasonCodes.c",
+    "${mqtt_path}/src/Base64.c",
+    "${mqtt_path}/src/SHA1.c",
+    "${mqtt_path}/src/WebSocket.c",
+    "${mqtt_path}/src/Proxy.c",
+  ]
+
+  if (!defined(PAHO_HIGH_PERFORMANCE)) {
+    sources += [
+    "${mqtt_path}/src/StackTrace.c",
+    "${mqtt_path}/src/Heap.c",
+    ]
+
+  }
+  include_dirs = [ "${mqtt_path}/src" ]
+  configs = [ ":mqtt_config" ]
+}
+
+ohos_shared_library("paho-mqtt3a") {
+  include_dirs = [ "${mqtt_path}/src" ]
+  configs = [ ":mqtt_config" ]
+  sources = [
+    "${mqtt_path}/src/MQTTAsync.c",
+    "${mqtt_path}/src/MQTTAsyncUtils.c",
+  ]
+  deps = [ ":mqtt_commom_dynamic" ]
+  install_images = [ "system" ]
+  install_enable = true
+  part_name = "${mqtt_part_name}"
+  subsystem_name = "${mqtt_subsystem_name}"
+}
+
+ohos_shared_library("paho-mqtt3c") {
+  include_dirs = [ "${mqtt_path}/src" ]
+  configs = [ ":mqtt_config" ]
+  sources = [ "${mqtt_path}/src/MQTTClient.c" ]
+  deps = [ ":mqtt_commom_dynamic" ]
+  install_images = [ "system" ]
+  install_enable = true
+  part_name = "${mqtt_part_name}"
+  subsystem_name = "${mqtt_subsystem_name}"
+}
+
+ohos_shared_library("paho-mqtt3as") {
+  include_dirs = [ "${mqtt_path}/src" ]
+  configs = [ ":mqtt_config" ]
+  sources = [
+    "${mqtt_path}/src/MQTTAsync.c",
+    "${mqtt_path}/src/MQTTAsyncUtils.c",
+    "${mqtt_path}/src/SSLSocket.c",
+  ]
+  deps = [
+    ":mqtt_commom_dynamic",
+    "//third_party/openssl:libssl_shared",
+  ]
+  install_images = [ "system" ]
+  install_enable = true
+  part_name = "${mqtt_part_name}"
+  subsystem_name = "${mqtt_subsystem_name}"
+}
+
+ohos_shared_library("paho-mqtt3cs") {
+  include_dirs = [ "${mqtt_path}/src" ]
+  configs = [ ":mqtt_config" ]
+  sources = [
+    "${mqtt_path}/src/MQTTClient.c",
+    "${mqtt_path}/src/SSLSocket.c",
+  ]
+  deps = [
+    ":mqtt_commom_dynamic",
+    "//third_party/openssl:libssl_shared",
+  ]
+  install_images = [ "system" ]
+  install_enable = true
+  part_name = "${mqtt_part_name}"
+  subsystem_name = "${mqtt_subsystem_name}"
+}
+
+group("mqtt")
+{
+  deps = [
+    "${mqtt_path}:paho-mqtt3a",
+    "${mqtt_path}:paho-mqtt3c",
+    "${mqtt_path}:paho-mqtt3as",
+    "${mqtt_path}:paho-mqtt3cs",
+  ]
+}
+
+group("mqtt_tests") {
+  deps = [
+    "${mqtt_path}/src/samples:mqtt_samples",
+    "${mqtt_path}/test:mqtt_test",
+  ]
+}

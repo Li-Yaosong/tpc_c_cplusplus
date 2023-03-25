@@ -1,0 +1,118 @@
+# Copyright (c) 2023 iSoftStone Information Technology (Group) Co.,Ltd.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v2.0
+# and Eclipse Distribution License v1.0 which accompany this distribution. 
+#
+# The Eclipse Public License is available at 
+#   https://www.eclipse.org/legal/epl-2.0/
+# and the Eclipse Distribution License is available at 
+#   http://www.eclipse.org/org/documents/edl-v10.php.
+
+import ("//build/ohos.gni")
+
+mqtt_path = "//third_party/mqtt"
+mqtt_part_name = "mqtt"
+mqtt_subsystem_name  = "thirdparty"
+
+config("mqtt_samples_config") {
+  cflags = [
+    "-Wno-unused-variable",
+    "-Wno-error",
+  ]
+  defines = [ "PAHO_MQTT_IMPORTS" ]
+}
+
+template("swanlink_mqtt_samples") {
+  ohos_executable(target_name) {
+    include_dirs = [ "${mqtt_path}/src" ]
+    configs = [ ":mqtt_samples_config" ]
+    part_name = "${mqtt_part_name}"
+    subsystem_name = "${mqtt_subsystem_name}"
+    forward_variables_from(invoker, "*")
+  }
+}
+
+swanlink_mqtt_samples("MQTTAsync_publish") {
+  sources = [ "${mqtt_path}/src/samples/MQTTAsync_publish.c" ]
+  deps = [ "${mqtt_path}:paho-mqtt3a" ]
+}
+
+swanlink_mqtt_samples("MQTTAsync_subscribe") {
+  sources = [ "${mqtt_path}/src/samples/MQTTAsync_subscribe.c" ]
+  deps = [ "${mqtt_path}:paho-mqtt3a" ]
+}
+
+swanlink_mqtt_samples("MQTTClient_publish") {
+  sources = [ "${mqtt_path}/src/samples/MQTTClient_publish.c" ]
+  deps = [ "${mqtt_path}:paho-mqtt3c" ]
+}
+
+swanlink_mqtt_samples("MQTTClient_publish_async") {
+  sources = [ "${mqtt_path}/src/samples/MQTTClient_publish_async.c" ]
+  deps = [ "${mqtt_path}:paho-mqtt3c" ]
+}
+
+swanlink_mqtt_samples("MQTTClient_subscribe") {
+  sources = [ "${mqtt_path}/src/samples/MQTTClient_subscribe.c" ]
+  deps = [ "${mqtt_path}:paho-mqtt3c" ]
+}
+
+swanlink_mqtt_samples("paho_c_pub") {
+  sources = [
+    "${mqtt_path}/src/samples/paho_c_pub.c",
+    "${mqtt_path}/src/samples/pubsub_opts.c",
+  ]
+  deps = [
+    "${mqtt_path}:mqtt_commom_dynamic",
+    "${mqtt_path}:paho-mqtt3as",
+  ]
+}
+
+swanlink_mqtt_samples("paho_c_sub") {
+  sources = [
+    "${mqtt_path}/src/samples/paho_c_sub.c",
+    "${mqtt_path}/src/samples/pubsub_opts.c",
+  ]
+  deps = [
+    "${mqtt_path}:mqtt_commom_dynamic",
+    "${mqtt_path}:paho-mqtt3as"
+  ]
+}
+
+swanlink_mqtt_samples("paho_cs_pub") {
+  sources = [
+    "${mqtt_path}/src/samples/paho_cs_pub.c",
+    "${mqtt_path}/src/samples/pubsub_opts.c",
+  ]
+  deps = [
+    "${mqtt_path}:mqtt_commom_dynamic",
+    "${mqtt_path}:paho-mqtt3cs",
+  ]
+}
+
+swanlink_mqtt_samples("paho_cs_sub") {
+  sources = [
+    "${mqtt_path}/src/samples/paho_cs_sub.c",
+    "${mqtt_path}/src/samples/pubsub_opts.c",
+  ]
+  deps = [
+    "${mqtt_path}:mqtt_commom_dynamic",
+    "${mqtt_path}:paho-mqtt3cs",
+  ]
+}
+
+group("mqtt_samples")
+{
+  deps = [
+    ":MQTTAsync_publish",
+    ":MQTTAsync_subscribe",
+    ":MQTTClient_publish",
+    ":MQTTClient_publish_async",
+    ":MQTTClient_subscribe",
+    ":paho_c_pub",
+    ":paho_c_sub",
+    ":paho_cs_pub",
+    ":paho_cs_sub",
+  ]
+}
