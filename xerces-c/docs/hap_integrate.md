@@ -2,7 +2,7 @@
 ## 准备应用工程
 本库是基于DevEco Studio 3.0 Release版本，在RK3568开发板上验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
 ### 准备应用开发环境
-开发环境的准备参考：[开发环境准备](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi%E7%B3%BB%E5%88%97%E5%AD%A6%E4%B9%A0/docs/hello_napi.md#%E5%B7%A5%E7%A8%8B%E5%87%86%E5%A4%87)
+开发环境的准备参考：[开发环境准备](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi_study/docs/hello_napi.md#%E5%B7%A5%E7%A8%8B%E5%87%86%E5%A4%87)
 ### 增加构建脚本及配置文件
 - 下载本仓库，并解压
 - 三方库目录结构
@@ -41,7 +41,7 @@
   ```
 - 三方库接口使用可以参考demo工程 [xerces_demo](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/FA/thirdparty/xerces_demo)
 ## 编译工程
-编译工程，安装应用可以参考 [应用的安装和运行](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi%E7%B3%BB%E5%88%97%E5%AD%A6%E4%B9%A0/docs/hello_napi.md#%E5%AE%89%E8%A3%85%E8%B0%83%E8%AF%95)
+编译工程，安装应用可以参考 [应用的安装和运行](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi_study/docs/hello_napi.md#%E5%AE%89%E8%A3%85%E8%B0%83%E8%AF%95)
 ## 运行效果
 - 在 [xerces_demo](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/FA/thirdparty/xerces_demo)中，使用DOM和SAX解析如下图所示数据
   &nbsp;![content](pic/content.png)
@@ -51,5 +51,4 @@
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
 - [OpenHarmony三方库地址](https://gitee.com/openharmony-tpc)
 - [OpenHarmony知识体系](https://gitee.com/openharmony-sig/knowledge)
-- [通过DevEco Studio开发一个NAPI工程](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi%E7%B3%BB%E5%88%97%E5%AD%A6%E4%B9%A0/docs/hello_napi.md)
-
+- [通过DevEco Studio开发一个NAPI工程](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi_study/docs/hello_napi.md)
