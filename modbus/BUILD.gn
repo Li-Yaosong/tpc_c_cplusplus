@@ -1,0 +1,97 @@
+# Copyright (c) 2023 iSoftStone Information Technology (Group) Co.,Ltd.
+#
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
+import("//build/ohos.gni")
+
+modbus_path = "//third_party/modbus"
+modbus_part_name = "modbus"
+modbus_subsystem_name = "thirdparty"
+
+modbus_includes = [
+  "${modbus_path}",
+  "${modbus_path}/src",
+]
+
+config("modbus_config") {
+  cflags = [
+    "-Wall",
+    "-Wmissing-declarations",
+    "-Wmissing-prototypes",
+    "-Wnested-externs",
+    "-Wpointer-arith",
+    "-Wpointer-arith",
+    "-Wsign-compare",
+    "-Wchar-subscripts",
+    "-Wstrict-prototypes",
+    "-Wshadow",
+    "-Wformat-security",
+  ]
+}
+
+ohos_shared_library("modbus") {
+  install_enable = true
+  include_dirs = modbus_includes
+  sources = [
+    "${modbus_path}/src/modbus-data.c",
+    "${modbus_path}/src/modbus-rtu.c",
+    "${modbus_path}/src/modbus-tcp.c",
+    "${modbus_path}/src/modbus.c",
+  ]
+  configs = [ ":modbus_config" ]
+  part_name = "${modbus_part_name}"
+  subsystem_name = "${modbus_subsystem_name}"
+}
+
+template("swanlink_modbus_test") {
+  ohos_executable(target_name) {
+    use_exceptions = true
+    include_dirs = [ "tests" ]
+    include_dirs += modbus_includes
+    deps = [ ":modbus" ]
+    configs = [ ":modbus_config" ]
+    part_name = "${modbus_part_name}"
+    subsystem_name = "${modbus_subsystem_name}"
+    forward_variables_from(invoker, "*")
+  }
+}
+
+swanlink_modbus_test("unit-test-client") {
+  sources = [ "tests/unit-test-client.c" ]
+}
+
+swanlink_modbus_test("unit-test-server") {
+  sources = [ "tests/unit-test-server.c" ]
+}
+
+swanlink_modbus_test("random-test-client") {
+  sources = [ "tests/random-test-client.c" ]
+}
+
+swanlink_modbus_test("random-test-server") {
+  sources = [ "tests/random-test-server.c" ]
+}
+
+swanlink_modbus_test("bandwidth-client") {
+  sources = [ "tests/bandwidth-client.c" ]
+}
+
+swanlink_modbus_test("bandwidth-server-one") {
+  sources = [ "tests/bandwidth-server-one.c" ]
+}
+
+swanlink_modbus_test("bandwidth-server-many-up") {
+  sources = [ "tests/bandwidth-server-many-up.c" ]
+}
+
+group("modbus_tests") {
+  deps = [
+    ":unit-test-client",
+    ":unit-test-server",
+    ":random-test-client",
+    ":random-test-server",
+    ":bandwidth-client",
+    ":bandwidth-server-one",
+    ":bandwidth-server-many-up",
+  ]
+}
