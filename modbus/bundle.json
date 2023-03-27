@@ -23,7 +23,7 @@
         },
         "build": {
             "sub_component": [
-                "//third_party/modbus:modbus"
+                "//third_party/modbus:libmodbus"
             ],
             "inner_kits": [],
             "test": []
