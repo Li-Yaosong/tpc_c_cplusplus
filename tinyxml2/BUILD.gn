@@ -14,66 +14,49 @@
 import("//build/ohos.gni")
 
 declare_args() {
-   enable_tinyxml2_test = false
+  enable_tinyxml2_test = false
 }
 
 config("tinyxml2_config") {
-    include_dirs = [
-        "//third_party/tinyxml2/tinyxml2"
-    ]
+  include_dirs = [ "//third_party/tinyxml2/tinyxml2" ]
 
-    cflags = [
-          "-fdata-sections",
-          "-ffunction-sections",
-          "-funwind-tables",
-          "-fstack-protector-strong",
-          "-no-canonical-prefixes",
-          "-fno-addrsig",
-          "-Wa,--noexecstack",
-          "-Wformat",
-          "-Werror=format-security",
-          "-D__MUSL__",
-          "-fPIC",
-          "-fvisibility=hidden",
-          "-fvisibility-inlines-hidden"
-    ]
+  cflags = [
+    "-fdata-sections",
+    "-ffunction-sections",
+    "-funwind-tables",
+    "-fstack-protector-strong",
+    "-no-canonical-prefixes",
+    "-fno-addrsig",
+    "-Wa,--noexecstack",
+    "-Wformat",
+    "-Werror=format-security",
+    "-D__MUSL__",
+    "-fPIC",
+    "-fvisibility=hidden",
+    "-fvisibility-inlines-hidden",
+  ]
 }
 
 ohos_shared_library("tinyxml2_shared") {
-    sources = [
-        "//third_party/tinyxml2/tinyxml2/tinyxml2.cpp",
-    ]
+  sources = [ "//third_party/tinyxml2/tinyxml2/tinyxml2.cpp" ]
 
-    configs = [
-        ":tinyxml2_config"
-    ]
+  configs = [ ":tinyxml2_config" ]
 
-    deps = [
-    ]
+  deps = []
 
-    part_name = "tinyxml2"
+  part_name = "tinyxml2"
 }
 
-ohos_executable("xmltest"){
-    sources = [
-        "//third_party/tinyxml2/tinyxml2/xmltest.cpp",
-    ]
-    deps = [
-        ":tinyxml2_shared"
-    ]
-    configs = [
-        ":tinyxml2_config"
-    ]
-    part_name = "tinyxml2"
+ohos_executable("xmltest") {
+  sources = [ "//third_party/tinyxml2/tinyxml2/xmltest.cpp" ]
+  deps = [ ":tinyxml2_shared" ]
+  configs = [ ":tinyxml2_config" ]
+  part_name = "tinyxml2"
 }
 
 group("tinyxml2") {
-    deps = [
-        ":tinyxml2_shared",
-    ]
-if (enable_tinyxml2_test) {
-    deps += [
-        ":xmltest",
-    ]
-}
+  deps = [ ":tinyxml2_shared" ]
+  if (enable_tinyxml2_test) {
+    deps += [ ":xmltest" ]
+  }
 }

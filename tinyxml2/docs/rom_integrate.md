@@ -1,6 +1,6 @@
 # tinyxml2如何集成到系统Rom
 ## 准备源码工程
-本库是基于OpenHarmony-v3.2-Beta5版本，在RK3568开发板上验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
+本库是基于OpenHarmony-v3.2-Beta1版本，在RK3568开发板上验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
 ### 准备系统Rom源码
 系统源码获取请参考：[OpenHarmony源码下载](https://gitee.com/openharmony/docs/blob/OpenHarmony-v3.2-Beta2/zh-cn/release-notes/OpenHarmony-v3.2-beta1.md)
 ### 增加构建脚本及配置文件

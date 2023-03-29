@@ -11,3 +11,4 @@ TinyXML2 是 simple、small、efficient 的开源 C++ XML 文件解析库，可�
 - [zlib License](https://github.com/leethomason/tinyxml2/blob/9.0.0/LICENSE.txt)
 ## 集成方式
 + [系统Rom包集成](docs/rom_integrate.md)
++ [系统Hap包集成](docs/hap_integrate.md)
