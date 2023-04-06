@@ -43,7 +43,7 @@
 
 - 三方库源码下载
 
-  将mqtt-1.3.12源码下载到mqtt目录并将代码拷贝出来。
+  将mqtt-1.3.12源码下载到mqtt目录。
 
   ```shell
   cd ~/OpenHarmony/third_party/mqtt
@@ -86,7 +86,7 @@
     },
     {
       "component": "mqtt",
-      "features": []
+      "features": [ "enable_mqtt_test=true" ]
     }
   ]
 }
