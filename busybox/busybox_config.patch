@@ -1,0 +1,10 @@
+--- Makefile	2023-04-05 18:24:13.142398421 -0700
++++ ../Makefile	2023-04-05 18:24:19.964766778 -0700
+@@ -162,6 +162,7 @@ export srctree objtree VPATH TOPDIR
+ # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
+ 
+ CROSS_COMPILE ?=
++CROSS_COMPILE=/home/owner/workspace/openharmony/prebuilts/gcc/linux-x86/arm/gcc-linaro-7.5.0-arm-linux-gnueabi/bin/arm-linux-gnueabi-
+ # bbox: we may have CONFIG_CROSS_COMPILER_PREFIX in .config,
+ # and it has not been included yet... thus using an awkward syntax.
+ ifeq ($(CROSS_COMPILE),)
