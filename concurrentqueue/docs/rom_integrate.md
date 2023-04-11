@@ -24,7 +24,7 @@
   ```
 ### 准备三方库源码
 ```
-cd ~/openharmony/third_party/    #进入三方库目录
+cd ~/openharmony/third_party/concurrentqueue    #进入三方库目录
 git clone https://github.com/cameron314/concurrentqueue.git   #下载三方库源码
 ```
 ## 系统Rom中引入三方库
@@ -57,7 +57,7 @@ concurrentqueue原生库提供了测试用例，如需要引入测试程序，�
 	 },
 	 {
 		"component": "concurrentqueue",
-		"features": [ "enable_concurrentqueue_test=true" ]
+		"features": [ "enable_queue_test=true" ]
 	 }
     ]
 }
