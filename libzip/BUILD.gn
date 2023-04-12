@@ -1,0 +1,522 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+
+declare_args() {
+  enable_libzip_test = false
+}
+
+config("liblibzip_config") {
+  include_dirs = [
+    "//third_party/libzip/adapted/include",
+    "//third_party/libzip/adapted/lib",
+    "//third_party/libzip/libzip/lib",
+    "//third_party/libzip/libzip/src",
+    "//third_party/libzip/libzip/examples",
+    "//third_party/libzip/libzip/regress",
+    "../zlib",
+    "../bzip2",
+    "../zstd",
+    "../zstd/zstd",
+    "../zstd/zstd/lib",
+    "../zstd/zstd/lib/common",
+    "../zstd/zstd/lib/compress",
+    "../zstd/zstd/lib/decompress",
+    "../zstd/zstd/lib/deprecated",
+    "../zstd/zstd/lib/dictBuilder",
+    "../zstd/zstd/lib/legacy",
+    "../xz",
+    "../xz/xz",
+    "../xz/adapted",
+    "../xz/xz/src/liblzma",
+    "../xz/xz/src/liblzma/api",
+    "../xz/xz/src/liblzma/lzma",
+    "../xz/xz/src/liblzma/common",
+    "../xz/xz/src/liblzma/check",
+    "../xz/xz/src/liblzma/lz",
+    "../xz/xz/src/liblzma/rangecoder",
+    "../xz/xz/src/liblzma/api/lzma",
+    "../xz/xz/src/liblzma/delta",
+    "../xz/xz/src/liblzma/simple",
+    "../xz/xz/src/common",
+    "../openssl",
+    "../openssl/crypto",
+    "../openssl/include",
+    "../openssl/crypto/modes",
+    "../openssl/crypto/ec/curve448",
+    "../openssl/crypto/ec/curve448/arch_32",
+  ]
+
+  cflags = [
+    "-fPIC",
+    "-fdata-sections",
+    "-ffunction-sections",
+    "-funwind-tables",
+    "-fstack-protector-strong",
+    "-no-canonical-prefixes",
+    "-fno-addrsig",
+    "-Wa",
+    "-Wformat",
+    "-Werror=format-security",
+    "-D__MUSL__",
+    "-Dzip_EXPORTS",
+  ]
+}
+
+ohos_shared_library("libzip_shared") {
+  sources = [
+    "//third_party/libzip/adapted/lib/zip_err_str.c",
+    "//third_party/libzip/libzip/lib/zip_add.c",
+    "//third_party/libzip/libzip/lib/zip_add_dir.c",
+    "//third_party/libzip/libzip/lib/zip_add_entry.c",
+    "//third_party/libzip/libzip/lib/zip_algorithm_bzip2.c",
+    "//third_party/libzip/libzip/lib/zip_algorithm_deflate.c",
+    "//third_party/libzip/libzip/lib/zip_algorithm_xz.c",
+    "//third_party/libzip/libzip/lib/zip_algorithm_zstd.c",
+    "//third_party/libzip/libzip/lib/zip_buffer.c",
+    "//third_party/libzip/libzip/lib/zip_close.c",
+    "//third_party/libzip/libzip/lib/zip_crypto_openssl.c",
+    "//third_party/libzip/libzip/lib/zip_delete.c",
+    "//third_party/libzip/libzip/lib/zip_dir_add.c",
+    "//third_party/libzip/libzip/lib/zip_dirent.c",
+    "//third_party/libzip/libzip/lib/zip_discard.c",
+    "//third_party/libzip/libzip/lib/zip_entry.c",
+    "//third_party/libzip/libzip/lib/zip_error.c",
+    "//third_party/libzip/libzip/lib/zip_error_clear.c",
+    "//third_party/libzip/libzip/lib/zip_error_get.c",
+    "//third_party/libzip/libzip/lib/zip_error_get_sys_type.c",
+    "//third_party/libzip/libzip/lib/zip_error_strerror.c",
+    "//third_party/libzip/libzip/lib/zip_error_to_str.c",
+    "//third_party/libzip/libzip/lib/zip_extra_field.c",
+    "//third_party/libzip/libzip/lib/zip_extra_field_api.c",
+    "//third_party/libzip/libzip/lib/zip_fclose.c",
+    "//third_party/libzip/libzip/lib/zip_fdopen.c",
+    "//third_party/libzip/libzip/lib/zip_file_add.c",
+    "//third_party/libzip/libzip/lib/zip_file_error_clear.c",
+    "//third_party/libzip/libzip/lib/zip_file_error_get.c",
+    "//third_party/libzip/libzip/lib/zip_file_get_comment.c",
+    "//third_party/libzip/libzip/lib/zip_file_get_external_attributes.c",
+    "//third_party/libzip/libzip/lib/zip_file_get_offset.c",
+    "//third_party/libzip/libzip/lib/zip_file_rename.c",
+    "//third_party/libzip/libzip/lib/zip_file_replace.c",
+    "//third_party/libzip/libzip/lib/zip_file_set_comment.c",
+    "//third_party/libzip/libzip/lib/zip_file_set_encryption.c",
+    "//third_party/libzip/libzip/lib/zip_file_set_external_attributes.c",
+    "//third_party/libzip/libzip/lib/zip_file_set_mtime.c",
+    "//third_party/libzip/libzip/lib/zip_file_strerror.c",
+    "//third_party/libzip/libzip/lib/zip_fopen.c",
+    "//third_party/libzip/libzip/lib/zip_fopen_encrypted.c",
+    "//third_party/libzip/libzip/lib/zip_fopen_index.c",
+    "//third_party/libzip/libzip/lib/zip_fopen_index_encrypted.c",
+    "//third_party/libzip/libzip/lib/zip_fread.c",
+    "//third_party/libzip/libzip/lib/zip_fseek.c",
+    "//third_party/libzip/libzip/lib/zip_ftell.c",
+    "//third_party/libzip/libzip/lib/zip_get_archive_comment.c",
+    "//third_party/libzip/libzip/lib/zip_get_archive_flag.c",
+    "//third_party/libzip/libzip/lib/zip_get_encryption_implementation.c",
+    "//third_party/libzip/libzip/lib/zip_get_file_comment.c",
+    "//third_party/libzip/libzip/lib/zip_get_name.c",
+    "//third_party/libzip/libzip/lib/zip_get_num_entries.c",
+    "//third_party/libzip/libzip/lib/zip_get_num_files.c",
+    "//third_party/libzip/libzip/lib/zip_hash.c",
+    "//third_party/libzip/libzip/lib/zip_io_util.c",
+    "//third_party/libzip/libzip/lib/zip_libzip_version.c",
+    "//third_party/libzip/libzip/lib/zip_memdup.c",
+    "//third_party/libzip/libzip/lib/zip_name_locate.c",
+    "//third_party/libzip/libzip/lib/zip_new.c",
+    "//third_party/libzip/libzip/lib/zip_open.c",
+    "//third_party/libzip/libzip/lib/zip_pkware.c",
+    "//third_party/libzip/libzip/lib/zip_progress.c",
+    "//third_party/libzip/libzip/lib/zip_random_unix.c",
+    "//third_party/libzip/libzip/lib/zip_rename.c",
+    "//third_party/libzip/libzip/lib/zip_replace.c",
+    "//third_party/libzip/libzip/lib/zip_set_archive_comment.c",
+    "//third_party/libzip/libzip/lib/zip_set_archive_flag.c",
+    "//third_party/libzip/libzip/lib/zip_set_default_password.c",
+    "//third_party/libzip/libzip/lib/zip_set_file_comment.c",
+    "//third_party/libzip/libzip/lib/zip_set_file_compression.c",
+    "//third_party/libzip/libzip/lib/zip_set_name.c",
+    "//third_party/libzip/libzip/lib/zip_source_accept_empty.c",
+    "//third_party/libzip/libzip/lib/zip_source_begin_write.c",
+    "//third_party/libzip/libzip/lib/zip_source_begin_write_cloning.c",
+    "//third_party/libzip/libzip/lib/zip_source_buffer.c",
+    "//third_party/libzip/libzip/lib/zip_source_call.c",
+    "//third_party/libzip/libzip/lib/zip_source_close.c",
+    "//third_party/libzip/libzip/lib/zip_source_commit_write.c",
+    "//third_party/libzip/libzip/lib/zip_source_compress.c",
+    "//third_party/libzip/libzip/lib/zip_source_crc.c",
+    "//third_party/libzip/libzip/lib/zip_source_error.c",
+    "//third_party/libzip/libzip/lib/zip_source_file_common.c",
+    "//third_party/libzip/libzip/lib/zip_source_file_stdio.c",
+    "//third_party/libzip/libzip/lib/zip_source_file_stdio_named.c",
+    "//third_party/libzip/libzip/lib/zip_source_free.c",
+    "//third_party/libzip/libzip/lib/zip_source_function.c",
+    "//third_party/libzip/libzip/lib/zip_source_get_file_attributes.c",
+    "//third_party/libzip/libzip/lib/zip_source_is_deleted.c",
+    "//third_party/libzip/libzip/lib/zip_source_layered.c",
+    "//third_party/libzip/libzip/lib/zip_source_open.c",
+    "//third_party/libzip/libzip/lib/zip_source_pass_to_lower_layer.c",
+    "//third_party/libzip/libzip/lib/zip_source_pkware_decode.c",
+    "//third_party/libzip/libzip/lib/zip_source_pkware_encode.c",
+    "//third_party/libzip/libzip/lib/zip_source_read.c",
+    "//third_party/libzip/libzip/lib/zip_source_remove.c",
+    "//third_party/libzip/libzip/lib/zip_source_rollback_write.c",
+    "//third_party/libzip/libzip/lib/zip_source_seek.c",
+    "//third_party/libzip/libzip/lib/zip_source_seek_write.c",
+    "//third_party/libzip/libzip/lib/zip_source_stat.c",
+    "//third_party/libzip/libzip/lib/zip_source_supports.c",
+    "//third_party/libzip/libzip/lib/zip_source_tell.c",
+    "//third_party/libzip/libzip/lib/zip_source_tell_write.c",
+    "//third_party/libzip/libzip/lib/zip_source_window.c",
+    "//third_party/libzip/libzip/lib/zip_source_winzip_aes_decode.c",
+    "//third_party/libzip/libzip/lib/zip_source_winzip_aes_encode.c",
+    "//third_party/libzip/libzip/lib/zip_source_write.c",
+    "//third_party/libzip/libzip/lib/zip_source_zip.c",
+    "//third_party/libzip/libzip/lib/zip_source_zip_new.c",
+    "//third_party/libzip/libzip/lib/zip_stat.c",
+    "//third_party/libzip/libzip/lib/zip_stat_index.c",
+    "//third_party/libzip/libzip/lib/zip_stat_init.c",
+    "//third_party/libzip/libzip/lib/zip_strerror.c",
+    "//third_party/libzip/libzip/lib/zip_string.c",
+    "//third_party/libzip/libzip/lib/zip_unchange.c",
+    "//third_party/libzip/libzip/lib/zip_unchange_all.c",
+    "//third_party/libzip/libzip/lib/zip_unchange_archive.c",
+    "//third_party/libzip/libzip/lib/zip_unchange_data.c",
+    "//third_party/libzip/libzip/lib/zip_utf-8.c",
+    "//third_party/libzip/libzip/lib/zip_winzip_aes.c",
+  ]
+
+  deps = [
+    "../bzip2:libbz2",
+    "../openssl:libcrypto_shared",
+    "../xz:xz_shared",
+    "../zlib:shared_libz",
+    "../zstd:zstd_shared",
+  ]
+
+  configs = [ ":liblibzip_config" ]
+
+  part_name = "libzip"
+}
+
+config("libzip_config") {
+  include_dirs = [
+    "//third_party/libzip/libzip/src",
+    "//third_party/libzip/libzip/examples",
+    "//third_party/libzip/libzip/regress",
+    "//third_party/libzip//libzip/regress/BEFORE",
+    "//third_party/libzip/libzip/lib",
+    "//third_party/libzip/adapted/include",
+    "//third_party/libzip/adapted/lib",
+    "../zlib",
+    "../bzip2",
+  ]
+
+  cflags_cc = [
+    "-Dnonrandomopen_EXPORTS",
+    "-Dliboverride_EXPORTS",
+    "-fdata-sections",
+    "-ffunction-sections",
+    "-funwind-tables",
+    "-fstack-protector-strong",
+    "-no-canonical-prefixes",
+    "-fno-addrsig",
+    "-Wa",
+    "-Wformat",
+    "-Werror=format-security",
+    "-D__MUSL__",
+    "-fPIE",
+  ]
+}
+
+ohos_shared_library("nonrandomopen") {
+  sources = [ "//third_party/libzip/libzip/regress/nonrandomopen.c" ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_shared_library("liboverride") {
+  sources = [ "//third_party/libzip/libzip/regress/liboverride.c" ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("add_from_filep") {
+  sources = [ "//third_party/libzip/libzip/regress/add_from_filep.c" ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("can_clone_file") {
+  sources = [ "//third_party/libzip/libzip/regress/can_clone_file.c" ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("fopen_unchanged") {
+  sources = [ "//third_party/libzip/libzip/regress/fopen_unchanged.c" ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("fseek") {
+  sources = [ "//third_party/libzip/libzip/regress/fseek.c" ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("fuzz_main") {
+  sources = [ "//third_party/libzip/libzip/regress/fuzz_main.c" ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("nonrandomopentest") {
+  sources = [ "//third_party/libzip/libzip/regress/nonrandomopentest.c" ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("liboverride-test") {
+  sources = [ "//third_party/libzip/libzip/regress/liboverride-test.c" ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("fread") {
+  sources = [
+    "//third_party/libzip/libzip/regress/fread.c",
+    "//third_party/libzip/libzip/src/getopt.c",
+  ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("tryopen") {
+  sources = [
+    "//third_party/libzip/libzip/regress/tryopen.c",
+    "//third_party/libzip/libzip/src/getopt.c",
+  ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("ziptool_regress") {
+  sources = [
+    "//third_party/libzip/libzip/regress/source_hole.c",
+    "//third_party/libzip/libzip/regress/ziptool_regress.c",
+    "//third_party/libzip/libzip/src/getopt.c",
+  ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("hole") {
+  sources = [
+    "//third_party/libzip/libzip/regress/hole.c",
+    "//third_party/libzip/libzip/regress/source_hole.c",
+    "//third_party/libzip/libzip/src/getopt.c",
+  ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("add-compressed-data") {
+  sources = [ "//third_party/libzip/libzip/examples/add-compressed-data.c" ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("autoclose-archive") {
+  sources = [ "//third_party/libzip/libzip/examples/autoclose-archive.c" ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("in-memory") {
+  sources = [ "//third_party/libzip/libzip/examples/in-memory.c" ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("zipcmp") {
+  sources = [
+    "//third_party/libzip/libzip/src/diff_output.c",
+    "//third_party/libzip/libzip/src/getopt.c",
+    "//third_party/libzip/libzip/src/zipcmp.c",
+  ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [
+    ":libzip_shared",
+    "../zlib:shared_libz",
+  ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("zipmerge") {
+  sources = [
+    "//third_party/libzip/libzip/src/diff_output.c",
+    "//third_party/libzip/libzip/src/getopt.c",
+    "//third_party/libzip/libzip/src/zipmerge.c",
+  ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+ohos_executable("ziptool") {
+  sources = [
+    "//third_party/libzip/libzip/src/diff_output.c",
+    "//third_party/libzip/libzip/src/getopt.c",
+    "//third_party/libzip/libzip/src/ziptool.c",
+  ]
+
+  configs = [ ":libzip_config" ]
+
+  deps = [ ":libzip_shared" ]
+
+  defines = [ "PACKAGE_VERSION" ]
+
+  part_name = "libzip"
+}
+
+group("libzip_test") {
+  if (enable_libzip_test) {
+    deps = [
+      ":add-compressed-data",
+      ":add_from_filep",
+      ":autoclose-archive",
+      ":can_clone_file",
+      ":fopen_unchanged",
+      ":fread",
+      ":fseek",
+      ":fuzz_main",
+      ":hole",
+      ":in-memory",
+      ":liboverride-test",
+      ":nonrandomopentest",
+      ":tryopen",
+      ":zipcmp",
+      ":zipmerge",
+      ":ziptool",
+      ":ziptool_regress",
+    ]
+  } else {
+    deps = []
+  }
+}
