@@ -6,9 +6,9 @@ minizip是一个用C编写的zip文件操作库。
 
 ## 使用约束
 
-- IDE版本：DevEco Studio 3.0 Beta4
 - ROM版本：OpenHarmony3.2 Beta1
-- API版本：9
+- IDE版本：DevEco Studio 3.1 Release(3.1.3.400)
+- SDK：API9 Release(3.2.11.5)
 - 三方库版本：3.0.4
 - 当前适配的功能：
   - 创建和解压缩zip存档。
