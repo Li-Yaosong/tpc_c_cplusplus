@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "concurrentqueue",
+        "License": "BSD License",
+        "License File": "LICENSE",
+        "Version Number": "v1.0.3",
+        "Owner" : "wangyingjun5@huawei.com",
+        "Upstream URL": "https://github.com/cameron314/concurrentqueue",
+        "Description": "A fast multi-producer, multi-consumer lock-free concurrent queue for C++11"
+    }
+]
