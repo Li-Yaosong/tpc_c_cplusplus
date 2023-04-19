@@ -2,12 +2,11 @@
 
 function build_busybox() {
     
-    local file=.config
+#    local file=.config
+#    make defconfig
+#    sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/' $file
 
-    make defconfig
-
-    sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/' $file
-
+    cp ../busybox.config .config
     make -j8
     if [ $? -ne 0 ]; then
         echo "build busybox failed!"
@@ -54,8 +53,9 @@ curdir=`pwd`
 srcdir=$1
 url="https://github.com/mirror/busybox.git"
 ver=1_36_0
-PATHCH_FILE=`pwd`/../../third_party/busybox/busybox_config.patch
+CONFIG_FILE=`pwd`/../../third_party/busybox/busybox.config
 source_dir=$target_name-$ver
+COMPILE_PATH=`pwd`/../../prebuilts/gcc/linux-x86/arm/gcc-linaro-7.5.0-arm-linux-gnueabi/bin/
 
 echo "curdir=$curdir"
 echo "srcdir=$srcdir"
@@ -65,7 +65,7 @@ if [ -z "$srcdir" ];then
     exit 1
 fi
 
-cp $PATHCH_FILE $srcdir/
+cp $CONFIG_FILE $srcdir/
 
 cd $srcdir
 
@@ -78,7 +78,7 @@ if [ ! -d "$source_dir" ]; then
 
     mv ./$target_name ./$source_dir
     cd $source_dir
-    patch -p0 < ../busybox_config.patch
+    sed -i "s/CROSS_COMPILE ?=/CROSS_COMPILE=${COMPILE_PATH}arm-linux-gnueabi-/" Makefile
     cd $srcdir
 fi
 
