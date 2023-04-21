@@ -6,7 +6,7 @@ BusyBox将许多常见UNIX实用程序的微小版本组合成一个小型可执
 
 ## 使用约束
 
-+ Rom版本：OpenHarmony3.2 beta5
++ Rom版本：OpenHarmony3.2 beta3
 + 三方库版本：1_36_0
 + 当前适配的功能：支持常见的unix指令集。
 + License：[GPL 2.0](https://github.com/mirror/busybox/blob/master/LICENSE)

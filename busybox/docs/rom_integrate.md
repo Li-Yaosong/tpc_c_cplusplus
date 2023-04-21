@@ -7,7 +7,7 @@ RK3568开发板如何使用可以参照[润和RK3568开发板标准系统快速�
 
 ### 准备系统Rom源码
 
-源码获取方法请参照：[OpenHarmony3.2beta5源码下载](https://gitee.com/openharmony/docs/blob/OpenHarmony-3.2-Beta5/zh-cn/release-notes/OpenHarmony-v3.2-beta5.md#%E6%BA%90%E7%A0%81%E8%8E%B7%E5%8F%96)
+源码获取方法请参照：[OpenHarmony3.2beta3源码下载](https://gitee.com/openharmony/docs/blob/OpenHarmony-3.2-Beta5/zh-cn/release-notes/OpenHarmony-v3.2-beta3.md#%E6%BA%90%E7%A0%81%E8%8E%B7%E5%8F%96)
 
 ### 增加构建脚本及配置文件
 
