@@ -2,7 +2,7 @@
 
 ## 准备工程
 
-本库是基于OpenHarmony 3.2 beta5版本适配，并在润和RK3568开发板上验证的。
+本库是基于OpenHarmony 3.2 beta3版本适配，并在润和RK3568开发板上验证的。
 RK3568开发板如何使用可以参照[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/rk3568_helloworld/README.md)。
 
 ### 准备系统Rom源码
