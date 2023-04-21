@@ -29,13 +29,15 @@ RK3568开发板如何使用可以参照[润和RK3568开发板标准系统快速�
       |-- BUILD.gn            ## Rom版编译构建脚本
       |-- export_api.txt      ## bsdiff库对外导出的api接口
       |-- tested_api.txt      ## 测试用例已测试的api接口
-      |-- run_test.sh         ## 测试用例运行脚本
       |-- bundle.json         ## 组件定义文件
       |-- README_zh.md        ## bsdiff 说明文档
       |-- README.OpenSource   ## bsdiff 开源信息说明文档
       |-- docs                ## 存放nsdiff相关文档
       |-- media               ## 存放图片的文件夹
       |-- testdata            ## 存放测试数据
+          |-- run_test.sh     ## 测试用例运行脚本，注意：在运行该测试用例时，需要将做拆分与合并的2个测试应用程序放到当前路径下。
+          |-- note.txt        ## 测试用例文件
+          |-- note_new.txt    ## 测试用例新文件，与之前文件存在差异，通过测试用例做拆分与合并，最终生成一个新的文件与该文件一致。
   ```
 
 - 将本仓库bsdiff文件夹拷贝到OpenHarmony的third_party下
