@@ -122,3 +122,11 @@ busybox最终生成的是busybox可执行文件，无需引入测试编译，引
 ## 测试方法与运行结果
 
 - [busybox 测试说明](https://gitee.com/zhong-luping/ohos_thirdparty_test/tree/busybox/busybox)
+
+## 参考资料
+
+- [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/rk3568_helloworld/README.md)
+- [如何添加一个三方库到OpenHarmony的thirdparty子系统中](https://gitee.com/openharmony-sig/knowledge/blob/master/docs/openharmony_getstarted/port_thirdparty/README.md)
+- [OpenHarmony3.2beta3介绍](https://gitee.com/openharmony/docs/blob/OpenHarmony-3.2-Beta5/zh-cn/release-notes/OpenHarmony-v3.2-beta3.md)
+- [OpenHarmony三方库地址](https://gitee.com/openharmony-tpc)
+- [OpenHarmony知识体系](https://gitee.com/openharmony-sig/knowledge)
