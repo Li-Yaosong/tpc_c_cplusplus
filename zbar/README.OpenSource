@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "zbar",
+        "License": "LGPL",
+        "License File": "COPYING",
+        "Version Number": "master",
+        "Owner" : "wupingyuan@huawei.com",
+        "Upstream URL": "https://github.com/herbyme/zbar",
+        "Description": "libzbar, a QR Code scanner engine for QR+Emoji."
+    }
+]
