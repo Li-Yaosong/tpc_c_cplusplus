@@ -97,31 +97,21 @@ busybox最终生成的是busybox可执行文件，无需引入测试编译，引
   hb build  ## 编译SDK，最后工具编译出来在out/sdk/ohos-sdk/windows/toolchains/hdc_std.exe
   ```
 
-- 将工具拷贝到Windows，可以为工具目录配置环境变量，也可以在工具所在目录打开windows命令
-- 测试资源准备
-  
-  ```shell
-  git clone https://github.com/mirror/busybox.git -b 1_36_0         ## 在linux系统上下载和OH编译版本一致的busybox源码
-  cd busybox
-  cp ~/tpc_c_cplusplus/busybox/busybox.config .config               ## 修改配置文件与OH编译的配置一致
-  make -j8                                                          ## 编译linux版的busybox
-  cp ~/OpenHarmony/out/rk2568/package/phone/system/bin/busybox ./   ## 替换可执行文件busybox，将linuxbusybox替换成OH编译的busybox
-  cd ..
-  tar -cvf busybox_test.tar busybox                                 ## 将源码包打包成tar包，最后推入到OH设备上进行测试(注意: OH设备上路径需与编译linux版本的路径一致)
-  ```
-
-- 将测试资源推送到开发板 ,具体步骤如下：
+- 将工具拷贝到Windows，可以为工具目录配置环境变量，也可以在工具所在目录打开windows命令  
+- 将busybox推送到开发板 ,具体步骤如下：
 
   ```sh
-  hdc_std.exe file send busybox_test.tar /data/     ## 将测试资源推送到板子
+  hdc_std.exe file send busybox /data/              ## 将测试资源推送到板子
   hdc_std.exe shell                                 ## 进入设备系统
   cd /data                                          
-  tar -xvf busybox_test.tar                         ## 解压测试资源
+  chmod a+x busybox                                 ## 设置busybox可执行权限
   ```
 
 ## 测试方法与运行结果
 
-- [busybox 测试说明](https://gitee.com/zhong-luping/ohos_thirdparty_test/tree/busybox/busybox)
+将busybox推送开发板后，可以直接运行busybox相关指令并可看到其执行结果，如下图所示:
+
+![result](media/result.png)
 
 ## 参考资料
 

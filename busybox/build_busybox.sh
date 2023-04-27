@@ -53,7 +53,7 @@ curdir=`pwd`
 srcdir=$1
 url="https://github.com/mirror/busybox.git"
 ver=1_36_0
-CONFIG_FILE=`pwd`/../../third_party/busybox/busybox.config
+CONFIG_FILE=`pwd`/../../third_party/busybox/adapted/busybox.config
 source_dir=$target_name-$ver
 COMPILE_PATH=`pwd`/../../prebuilts/gcc/linux-x86/arm/gcc-linaro-7.5.0-arm-linux-gnueabi/bin/
 
