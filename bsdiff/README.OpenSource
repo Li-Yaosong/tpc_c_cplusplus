@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "bsdiff",
+        "License": "BSD 2-clause license",
+        "License File": "LICENSE",
+        "Version Number": "master",
+        "Owner": "zhongluping1@huawei.com",
+        "Upstream URL": "https://github.com/mendsley/bsdiff",
+        "Description": "bsdiff and bspatch are libraries for building and applying patches to binary files."
+    }
+]
