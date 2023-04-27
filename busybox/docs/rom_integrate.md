@@ -28,9 +28,10 @@ RK3568开发板如何使用可以参照[润和RK3568开发板标准系统快速�
   busybox
       |-- docs                      ## busybox集成说明文档目录
       |-- media                     ## 存放文档中的图片资源
+      |-- adapted
+          |-- busybox.config        ## busybox 配置文件
       |-- BUILD.gn                  ## Rom版编译构建脚本
       |-- bundle.json               ## 组件定义文件
-      |-- busybox.config            ## busybox 配置文件
       |-- build_busybox.sh          ## 调用busybox原生库进行编译的脚本文件
       |-- EADME.OpenSource          ## busybox 开源信息说明文档
       |-- README_zh.md              ## busybox 说明文档
