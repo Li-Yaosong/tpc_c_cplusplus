@@ -1,0 +1,35 @@
+{
+    "name": "@ohos/libsvm",
+    "description": "Libsvm is a simple, easy-to-use, and efficient software for SVM classification and regression.",
+    "version": "v331",
+    "license": "BSD 3-Clause",
+    "publishAs": "",
+    "segment": {
+        "destPath": "third_party/libsvm"
+    },
+    "dirs": {},
+    "scripts": {},
+    "readmePath": {
+        "en": "README"
+    },
+    "component": {
+        "name": "libsvm",
+        "subsystem": "thirdparty",
+        "syscap": [],
+        "features": [],
+        "adapted_system_type": ["standard"],
+        "rom": "",
+        "ram": "",
+        "deps": {
+            "components": [],
+            "third_party": []
+        },
+        "build": {
+            "sub_component": [
+                "//third_party/libsvm:svm_targets"
+            ],
+            "inner_kits": [],
+            "test": []
+        }
+    }
+}
