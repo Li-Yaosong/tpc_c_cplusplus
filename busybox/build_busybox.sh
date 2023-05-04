@@ -1,10 +1,6 @@
 #!/usr/bin/bash
 
 function build_busybox() {
-    
-#    local file=.config
-#    make defconfig
-#    sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/' $file
 
     cp ../busybox.config .config
     make -j8
@@ -12,7 +8,7 @@ function build_busybox() {
         echo "build busybox failed!"
         return 1
     fi
-    
+
     cp ./busybox ../
 
     echo "build busybox success!"
@@ -51,14 +47,12 @@ ERR_MSG="BUILD busybox ERROR!!!!!!!!!!!!!!!!!!!!!"
 target_name=busybox
 curdir=`pwd`
 srcdir=$1
+topdir=$2
 url="https://github.com/mirror/busybox.git"
 ver=1_36_0
-CONFIG_FILE=`pwd`/../../third_party/busybox/adapted/busybox.config
+CONFIG_FILE=${topdir}third_party/busybox/adapted/busybox.config
 source_dir=$target_name-$ver
-COMPILE_PATH=`pwd`/../../prebuilts/gcc/linux-x86/arm/gcc-linaro-7.5.0-arm-linux-gnueabi/bin/
-
-echo "curdir=$curdir"
-echo "srcdir=$srcdir"
+COMPILE_PATH=${topdir}prebuilts/gcc/linux-x86/arm/gcc-linaro-7.5.0-arm-linux-gnueabi/bin/
 
 if [ -z "$srcdir" ];then
     echo "must set the param dir!"

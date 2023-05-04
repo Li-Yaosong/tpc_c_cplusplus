@@ -7,7 +7,7 @@ RK3568开发板如何使用可以参照[润和RK3568开发板标准系统快速�
 
 ### 准备系统Rom源码
 
-源码获取方法请参照：[OpenHarmony3.2beta3源码下载](https://gitee.com/openharmony/docs/blob/OpenHarmony-3.2-Beta5/zh-cn/release-notes/OpenHarmony-v3.2-beta3.md#%E6%BA%90%E7%A0%81%E8%8E%B7%E5%8F%96)
+源码获取方法请参照：[OpenHarmony3.2beta3源码下载](https://gitee.com/openharmony/docs/blob/OpenHarmony-3.2-Beta3/zh-cn/release-notes/OpenHarmony-v3.2-beta3.md#%E6%BA%90%E7%A0%81%E8%8E%B7%E5%8F%96)
 
 ### 增加构建脚本及配置文件
 
@@ -118,6 +118,6 @@ busybox最终生成的是busybox可执行文件，无需引入测试编译，引
 
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/rk3568_helloworld/README.md)
 - [如何添加一个三方库到OpenHarmony的thirdparty子系统中](https://gitee.com/openharmony-sig/knowledge/blob/master/docs/openharmony_getstarted/port_thirdparty/README.md)
-- [OpenHarmony3.2beta3介绍](https://gitee.com/openharmony/docs/blob/OpenHarmony-3.2-Beta5/zh-cn/release-notes/OpenHarmony-v3.2-beta3.md)
+- [OpenHarmony3.2beta3介绍](https://gitee.com/openharmony/docs/blob/OpenHarmony-3.2-Beta3/zh-cn/release-notes/OpenHarmony-v3.2-beta3.md)
 - [OpenHarmony三方库地址](https://gitee.com/openharmony-tpc)
 - [OpenHarmony知识体系](https://gitee.com/openharmony-sig/knowledge)

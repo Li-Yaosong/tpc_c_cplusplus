@@ -60,7 +60,7 @@ build_busybox("busybox") {
   outputs = [ "${target_out_dir}/busybox" ]
   args = [
     rebase_path(target_out_dir, root_build_dir),
-    rebase_path(root_build_dir, "//third_party/busybox"),
+    rebase_path(root_build_dir, "//"),
   ]
 
   subsystem_name = "thirdparty"
