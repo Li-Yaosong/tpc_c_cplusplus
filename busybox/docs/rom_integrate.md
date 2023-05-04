@@ -37,7 +37,7 @@ RK3568开发板如何使用可以参照[润和RK3568开发板标准系统快速�
       |-- README_zh.md              ## busybox 说明文档
   ```
 
-- 将本仓库iconv文件夹拷贝到OpenHarmony的third_party下
+- 将本仓库busybox文件夹拷贝到OpenHarmony的third_party下
 
   ``` sh
   cp -arf ~/tpc_c_cplusplus/busybox ~/OpenHarmony/third_party
