@@ -59,8 +59,11 @@ COMPILE_PATH=${topdir}prebuilts/gcc/linux-x86/arm/gcc-linaro-7.5.0-arm-linux-gnu
 
 if [ "${cpu}" == "arm" ]; then
     export CROSS_COMPILE=${topdir}prebuilts/gcc/linux-x86/arm/gcc-linaro-7.5.0-arm-linux-gnueabi/bin/arm-linux-gnueabi-
-else
+elif [ "${cpu}" == "arm64" ]; then
     export CROSS_COMPILE=${topdir}prebuilts/gcc/linux-x86/aarch64/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+else
+    echo "cant not support this cpu(${cpu}) type!!!"
+    exit 1
 fi
 
 if [ -z "$srcdir" ];then
