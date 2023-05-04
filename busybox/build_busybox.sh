@@ -13,8 +13,6 @@ function build_busybox() {
 
     echo "build busybox success!"
 
-    ## make test   ## for gen test cmd
-
     return 0
 }
 
