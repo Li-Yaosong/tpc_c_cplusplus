@@ -1,6 +1,10 @@
 #!/usr/bin/bash
 
 function build_busybox() {
+    
+#    local file=.config
+#    make defconfig
+#    sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/' $file
 
     cp ../busybox.config .config
     make -j8
@@ -8,7 +12,7 @@ function build_busybox() {
         echo "build busybox failed!"
         return 1
     fi
-
+    
     cp ./busybox ../
 
     echo "build busybox success!"
@@ -46,11 +50,18 @@ target_name=busybox
 curdir=`pwd`
 srcdir=$1
 topdir=$2
+cpu=$3
 url="https://github.com/mirror/busybox.git"
 ver=1_36_0
 CONFIG_FILE=${topdir}third_party/busybox/adapted/busybox.config
 source_dir=$target_name-$ver
-COMPILE_PATH=${topdir}prebuilts/gcc/linux-x86/arm/gcc-linaro-7.5.0-arm-linux-gnueabi/bin/
+COMPILE_PATH=${topdir}prebuilts/gcc/linux-x86/arm/gcc-linaro-7.5.0-arm-linux-gnueabi/bin
+
+if [ "${cpu}" == "arm" ]; then
+    export CROSS_COMPILE=${topdir}prebuilts/gcc/linux-x86/arm/gcc-linaro-7.5.0-arm-linux-gnueabi/bin/arm-linux-gnueabi-
+else
+    export CROSS_COMPILE=${topdir}prebuilts/gcc/linux-x86/aarch64/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+fi
 
 if [ -z "$srcdir" ];then
     echo "must set the param dir!"
@@ -69,9 +80,6 @@ if [ ! -d "$source_dir" ]; then
     fi
 
     mv ./$target_name ./$source_dir
-    cd $source_dir
-    sed -i "s/CROSS_COMPILE ?=/CROSS_COMPILE=${COMPILE_PATH}arm-linux-gnueabi-/" Makefile
-    cd $srcdir
 fi
 
 cd $source_dir
