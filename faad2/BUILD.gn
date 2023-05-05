@@ -1,0 +1,117 @@
+import("//build/ohos.gni")
+
+declare_args() {
+  enable_faad2_test = false
+}
+
+config("config") {
+  cflags = [
+    "-fPIC",
+    "-Wall",
+    "-Wextra",
+    "-fexceptions",
+    "-Wno-error=unused-parameter",
+    "-Wno-error=int-conversion",
+    "-Wno-error=constant-conversion",
+    "-Wno-error=format",
+    "-Wno-incompatible-pointer-types",
+    "-Wno-parentheses",
+    "-Wno-unused-variable",
+    "-Wno-absolute-value",
+    "-Wno-unused-function",
+    "-Wno-unused-const-variable",
+    "-Wno-unused-label",
+    "-Wno-implicit-function-declaration",
+    "-DHAVE_CONFIG_H",
+    "-Wno-error=missing-field-initializers",
+    "-Wno-error=sign-compare",
+    "-Wno-error=misleading-indentation",
+    "-Wno-error=comment",
+  ]
+}
+
+ohos_source_set("faad2_source") {
+  sources = [
+    "//third_party/faad2/frontend/audio.c",
+    "//third_party/faad2/frontend/getopt.c",
+    "//third_party/faad2/frontend/mp4read.c",
+    "//third_party/faad2/frontend/unicode_support.c",
+    "//third_party/faad2/libfaad/bits.c",
+    "//third_party/faad2/libfaad/cfft.c",
+    "//third_party/faad2/libfaad/common.c",
+    "//third_party/faad2/libfaad/decoder.c",
+    "//third_party/faad2/libfaad/drc.c",
+    "//third_party/faad2/libfaad/drm_dec.c",
+    "//third_party/faad2/libfaad/error.c",
+    "//third_party/faad2/libfaad/filtbank.c",
+    "//third_party/faad2/libfaad/hcr.c",
+    "//third_party/faad2/libfaad/huffman.c",
+    "//third_party/faad2/libfaad/ic_predict.c",
+    "//third_party/faad2/libfaad/is.c",
+    "//third_party/faad2/libfaad/lt_predict.c",
+    "//third_party/faad2/libfaad/mdct.c",
+    "//third_party/faad2/libfaad/mp4.c",
+    "//third_party/faad2/libfaad/ms.c",
+    "//third_party/faad2/libfaad/output.c",
+    "//third_party/faad2/libfaad/pns.c",
+    "//third_party/faad2/libfaad/ps_dec.c",
+    "//third_party/faad2/libfaad/ps_syntax.c",
+    "//third_party/faad2/libfaad/pulse.c",
+    "//third_party/faad2/libfaad/rvlc.c",
+    "//third_party/faad2/libfaad/sbr_dct.c",
+    "//third_party/faad2/libfaad/sbr_dec.c",
+    "//third_party/faad2/libfaad/sbr_e_nf.c",
+    "//third_party/faad2/libfaad/sbr_fbt.c",
+    "//third_party/faad2/libfaad/sbr_hfadj.c",
+    "//third_party/faad2/libfaad/sbr_hfgen.c",
+    "//third_party/faad2/libfaad/sbr_huff.c",
+    "//third_party/faad2/libfaad/sbr_qmf.c",
+    "//third_party/faad2/libfaad/sbr_syntax.c",
+    "//third_party/faad2/libfaad/sbr_tf_grid.c",
+    "//third_party/faad2/libfaad/specrec.c",
+    "//third_party/faad2/libfaad/ssr.c",
+    "//third_party/faad2/libfaad/ssr_fb.c",
+    "//third_party/faad2/libfaad/ssr_ipqf.c",
+    "//third_party/faad2/libfaad/syntax.c",
+    "//third_party/faad2/libfaad/tns.c",
+  ]
+  include_dirs = [
+    "//third_party/faad2/",
+    "//third_party/faad2/include",
+    "//third_party/faad2/libfaad",
+    "//third_party/faad2/libfaad/codebook",
+    "//third_party/faad2/frontend",
+  ]
+  configs = [ ":config" ]
+}
+
+ohos_executable("faad2_test") {
+  sources = [ "//third_party/faad2/frontend/main.c" ]
+  include_dirs = [
+    "//third_party/faad2/",
+    "//third_party/faad2/frontend",
+    "//third_party/faad2/include",
+    "//third_party/faad2/libfaad",
+    "//third_party/faad2/libfaad/codebook",
+  ]
+
+  configs = [ ":config" ]
+
+  deps = [ "//third_party/faad2:libfaad2" ]
+  subsystem_name = "thirdparty"
+  part_name = "faad2"
+  output_name = "faad2_test"
+}
+
+ohos_shared_library("libfaad2") {
+  deps = [ ":faad2_source" ]
+  part_name = "faad2"
+  output_name = "faad2"
+}
+
+group("faad2_targets") {
+  deps = [ ":libfaad2" ]
+  if (enable_faad2_test) {
+    deps += [ ":faad2_test" ]
+  }
+}

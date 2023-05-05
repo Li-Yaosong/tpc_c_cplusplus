@@ -1,0 +1,35 @@
+{
+    "name": "@ohos/faad2",
+    "description": "FAAD2 is a HE, LC, MAIN and LTP profile, MPEG2 and MPEG-4 AAC decoder.",
+    "version": "2.10.1",
+    "license": "GPL",
+    "publishAs": "",
+    "segment": {
+        "destPath": "third_party/faad2"
+    },
+    "dirs": {},
+    "scripts": {},
+    "readmePath": {
+        "en": "README"
+    },
+    "component": {
+        "name": "faad2",
+        "subsystem": "thirdparty",
+        "syscap": [],
+        "features": [],
+        "adapted_system_type": ["standard"],
+        "rom": "",
+        "ram": "",
+        "deps": {
+            "components": [],
+            "third_party": []
+        },
+        "build": {
+            "sub_component": [
+                "//third_party/faad2:faad2_targets"
+            ],
+            "inner_kits": [],
+            "test": []
+        }
+    }
+}
