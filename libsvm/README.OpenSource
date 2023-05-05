@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libsvm",
+        "License": "BSD",
+        "License File": "COPYRIGHT",
+        "Version Number": "v331",
+        "Owner" : "wupingyuan@huawei.com",
+        "Upstream URL": "https://github.com/cjlin1/libsvm",
+        "Description": "Libsvm is a simple, easy-to-use, and efficient software for SVM classification and regression."
+    }
+]
