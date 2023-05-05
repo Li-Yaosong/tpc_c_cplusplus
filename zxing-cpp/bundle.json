@@ -1,0 +1,35 @@
+{
+    "name": "@ohos/zxing-cpp",
+    "description": "ZXing-C++ is an open-source, multi-format linear/matrix barcode image processing library implemented in C++.",
+    "version": "v2.0.0",
+    "license": "Apache License 2.0",
+    "publishAs": "",
+    "segment": {
+        "destPath": "third_party/zxing-cpp"
+    },
+    "dirs": {},
+    "scripts": {},
+    "readmePath": {
+        "en": "README"
+    },
+    "component": {
+        "name": "zxing-cpp",
+        "subsystem": "thirdparty",
+        "syscap": [],
+        "features": [],
+        "adapted_system_type": ["standard"],
+        "rom": "",
+        "ram": "",
+        "deps": {
+            "components": [],
+            "third_party": []
+        },
+        "build": {
+            "sub_component": [
+                "//third_party/zxing-cpp:zxing_cpp_targets"
+            ],
+            "inner_kits": [],
+            "test": []
+        }
+    }
+}
