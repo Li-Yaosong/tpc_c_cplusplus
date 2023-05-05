@@ -1,0 +1,35 @@
+{
+    "name": "@ohos/zbar",
+    "description": "libzbar, a QR Code scanner engine for QR+Emoji",
+    "version": "0.10",
+    "license": "LGPL-2.1",
+    "publishAs": "",
+    "segment": {
+        "destPath": "third_party/zbar"
+    },
+    "dirs": {},
+    "scripts": {},
+    "readmePath": {
+        "en": "README"
+    },
+    "component": {
+        "name": "zbar",
+        "subsystem": "thirdparty",
+        "syscap": [],
+        "features": [],
+        "adapted_system_type": ["standard"],
+        "rom": "",
+        "ram": "",
+        "deps": {
+            "components": [],
+            "third_party": []
+        },
+        "build": {
+            "sub_component": [
+                "//third_party/zbar:zbar_targets"
+            ],
+            "inner_kits": [],
+            "test": []
+        }
+    }
+}

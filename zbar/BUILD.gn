@@ -1,0 +1,94 @@
+import("//build/ohos.gni")
+
+declare_args() {
+  enable_zbar_test = false
+}
+
+config("config") {
+  cflags = [
+    "-O3",
+    "-Wall",
+    "-Wno-extra-tokens",
+    "-Wno-incompatible-pointer-types",
+    "-Wno-parentheses",
+    "-Wno-unused-variable",
+    "-Wno-absolute-value",
+    "-Wno-unused-function",
+    "-Wno-unused-const-variable",
+    "-Wno-unused-label",
+    "-Wno-shift-negative-value",
+    "-Wno-tautological-pointer-compare",
+    "-Wno-duplicate-decl-specifier",
+  ]
+}
+
+ohos_source_set("zbar_source") {
+  sources = [
+    "//third_party/zbar/zbar/config.c",
+    "//third_party/zbar/zbar/convert.c",
+    "//third_party/zbar/zbar/decoder.c",
+    "//third_party/zbar/zbar/decoder/code128.c",
+    "//third_party/zbar/zbar/decoder/code39.c",
+    "//third_party/zbar/zbar/decoder/ean.c",
+    "//third_party/zbar/zbar/decoder/i25.c",
+    "//third_party/zbar/zbar/decoder/pdf417.c",
+    "//third_party/zbar/zbar/decoder/qr_finder.c",
+    "//third_party/zbar/zbar/error.c",
+    "//third_party/zbar/zbar/image.c",
+    "//third_party/zbar/zbar/img_scanner.c",
+    "//third_party/zbar/zbar/jpeg.c",
+    "//third_party/zbar/zbar/qrcode/bch15_5.c",
+    "//third_party/zbar/zbar/qrcode/binarize.c",
+    "//third_party/zbar/zbar/qrcode/isaac.c",
+    "//third_party/zbar/zbar/qrcode/qrdec.c",
+    "//third_party/zbar/zbar/qrcode/qrdectxt.c",
+    "//third_party/zbar/zbar/qrcode/rs.c",
+    "//third_party/zbar/zbar/qrcode/util.c",
+    "//third_party/zbar/zbar/refcnt.c",
+    "//third_party/zbar/zbar/scanner.c",
+    "//third_party/zbar/zbar/symbol.c",
+    "//third_party/zbar/zbar/video.c",
+    "//third_party/zbar/zbar/video/null.c",
+  ]
+  include_dirs = [
+    "//third_party/zbar/include",
+    "//third_party/libjpeg",
+    "//third_party/libpng",
+    "//third_party/zbar/zbar/",
+  ]
+  configs = [ ":config" ]
+}
+
+ohos_executable("zbar_test") {
+  sources = [ "//third_party/zbar/examples/scan_image.c" ]
+  include_dirs = [
+    "//third_party/zbar/include",
+    "//third_party/libjpeg",
+    "//third_party/libpng",
+    "//third_party/zbar/zbar/",
+  ]
+
+  configs = [ ":config" ]
+
+  deps = [ "//third_party/zbar:libzbar" ]
+  subsystem_name = "thirdparty"
+  part_name = "zbar"
+  output_name = "zbar_test"
+}
+
+ohos_shared_library("libzbar") {
+  deps = [
+    ":zbar_source",
+    "//third_party/libjpeg:libjpeg_static",
+    "//third_party/libpng:libpng_static",
+  ]
+  part_name = "zbar"
+  output_name = "zbar"
+}
+
+group("zbar_targets") {
+  deps = [ ":libzbar" ]
+  if (enable_zbar_test) {
+    deps += [ ":zbar_test" ]
+  }
+}
