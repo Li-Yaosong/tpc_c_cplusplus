@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "openJPEG",
+    "License": "2-clauses BSD license",
+    "License File": "LICENSE.TXT",
+    "Version Number": "v2.5.0",
+    "Owner": "huangminzhong2@huawei.com",
+    "Upstream URL": "https://github.com/uclouvain/openjpeg",
+    "Description": "OpenJPEG is an open-source JPEG 2000 codec written in C language. It has been developed in order to promote the use of JPEG 2000, a still-image compression standard from the Joint Photographic Experts Group (JPEG). Since April 2015, it is officially recognized by ISO/IEC and ITU-T as a JPEG 2000 Reference Software."
+  }
+]
