@@ -54,7 +54,7 @@
   ```
   ![cryptopp_usage](pic/cryptopp_usage.png)
 ## 测试三方库
-三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
+三方库的测试使用原库自带的测试用例来做测试
 
 进入到构建目录,执行./cryptest.exe -tv运行测试用例（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
 
