@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "nghttp3",
+        "License": "MIT",
+        "License File": "https://github.com/ngtcp2/nghttp3/blob/main/COPYING",
+        "Version Number": "v0.10.0,
+        "Owner": "tianyong13@huawei.com",
+        "Upstream URL": "https://github.com/ngtcp2/nghttp3/archive/refs/tags/v0.10.0.tar.gz",
+        "Description": "nghttp3 is an implementation of RFC 9114 HTTP/3 mapping over QUIC and RFC 9204 QPACK in C."
+    }
+]
