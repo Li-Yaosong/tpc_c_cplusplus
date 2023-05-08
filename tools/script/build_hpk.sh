@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # 退出码检查
 sure()
 {
@@ -98,25 +99,62 @@ builddepends() {
 }
 
 recordbuildlibs() {
-    echo $2,$3,$1>> `pwd`/../../usr/hpk_build.csv
+    echo $2,$3,$1>> $LYCIUM_ROOT/usr/hpk_build.csv
 }
 
-dependpath=
+buildargs=
 cmakedependpath() {
-    dependpath="-DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX=`pwd`/../../usr/$pkgname-$1-install "
+    buildargs="-DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$LYCIUM_ROOT/usr/$pkgname/$1 -G \"Unix Makefiles\" "
     if [ ${#depends[@]} -ne 0 ] 
     then
         tmppath="\""
         for depend in ${depends[@]}
         do
-            tmppath=$tmppath"`pwd`/../../usr/$depend-$1-install;"
+            dependpath=$LYCIUM_ROOT/usr/$depend/$1/
+            tmppath=$tmppath"${dependpath};"
         done
         tmppath=$tmppath"\""
-        dependpath=$dependpath"-DCMAKE_FIND_ROOT_PATH="$tmppath
+        buildargs=$buildargs"-DCMAKE_FIND_ROOT_PATH="$tmppath
     fi
 }
+
+pkgconfigpath=
 configuredependpath() {
-    dependpath="--prefix=`pwd`/../../usr/$pkgname-$1-install"
+    buildargs="--prefix=$LYCIUM_ROOT/usr/$pkgname/$1"
+    if [ ${#depends[@]} -ne 0 ] 
+    then
+        pkgconfigpath="\""
+        for depend in ${depends[@]}
+        do
+            dependpath=$LYCIUM_ROOT/usr/$depend/$1/lib/pkgconfig
+            if [ ! -d ${dependpath} ]
+            then
+                continue
+            fi
+            pkgconfigpath=$pkgconfigpath"${dependpath}:"
+        done
+        pkgconfigpath=$pkgconfigpath"\""
+    fi
+}
+
+checkmakedepends() {
+    ismakedependready=true
+    for makedepend in ${makedepends[@]}
+    do
+        which $makedepend >/dev/null 2>&1
+        if [ $? -ne 0 ]
+        then
+            echo "请先安装 $makedepend 命令, 才可以编译 $1"
+            ismakedependready=false
+        else
+            echo "$makedepend 已安装"
+        fi
+    done
+    if ! $ismakedependready
+    then
+        echo "!!! 退出 $1 编译 !!!"
+        exit 1
+    fi
 }
 
 builpackage() {
@@ -130,13 +168,18 @@ builpackage() {
     echo "Build $pkgname $pkgver strat!"
     if [ ! $downloadpackage ] || [ $downloadpackage != false ]
     then
-        sure download $source $packageName
-        sure checksum SHA512SUM
+        sure download $source $packagename
+        if [ -f "SHA512SUM" ]
+        then
+            sure checksum SHA512SUM
+        fi
     fi
     if [ ! $autounpack ] || [ $autounpack != false ]
     then
-        sure unpack $packageName
+        sure unpack $packagename
     fi
+    
+    checkmakedepends $pkgname
     for arch in ${archs[@]}
     do
         echo "Compileing OpenHarmony $arch $pkgname $pkgver libs..." 
@@ -151,9 +194,12 @@ builpackage() {
         else
             echo "buildtools $buildtools, 需要用户自己传入编译参数(安装路径)"
         fi
-        sure build $dependpath
+        sure build $buildargs
         sure package
-        sure check
+        if $LYCIUM_BUILD_CHECK
+        then
+            sure check
+        fi
         sure recordbuildlibs $ARCH $pkgname $pkgver
     done
     echo "Build $pkgname $pkgver end!"
@@ -164,8 +210,6 @@ cleanhpk(){
 }
 
 main() {
-    # 根目录
-    LYCIUM_ROOT=`pwd`/../..
     # 清理上次的环境
     sure cleanhpk
     # 编译 PKG
