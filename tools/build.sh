@@ -1,6 +1,30 @@
 #!/bin/bash
 
+unames=`uname -s`
+osname=${unames:0:5}
+
+# 根目录
+LYCIUM_ROOT=
+buildcheckflag=true
+if [ "$osname" == "Linux" ]
+then
+    echo "Build OS linux"
+    LYCIUM_ROOT=`pwd`
+elif [ "$osname" == "CYGWI" ] # CYGWIN
+then
+    echo "Build OS CYGWIN"
+    lyciumroot=`cygpath -w $PWD`
+    LYCIUM_ROOT=${lyciumroot//\\/\/}
+    buildcheckflag=false
+else
+    echo "System cannot recognize, exiting"
+    exit 0
+fi
+export LYCIUM_BUILD_CHECK=$buildcheckflag
+export LYCIUM_BUILD_OS=$osname
+export LYCIUM_ROOT=$LYCIUM_ROOT
 jobFlag=true
+
 checkbuildenv(){
     if [ -z ${OHOS_SDK} ]
     then
@@ -197,6 +221,7 @@ main(){
     buildhpk
 
     cleanhpkdir
+    unset LYCIUM_BUILD_OS LYCIUM_ROOT LYCIUM_BUILD_CHECK
 }
 
 main $*
