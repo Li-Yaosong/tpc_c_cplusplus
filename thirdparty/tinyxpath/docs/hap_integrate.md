@@ -60,7 +60,7 @@
 
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
 
-  &nbsp;![thirdparty_install_dir](../../thirdparty_template/pic/xxx_install_dir.png)
+  &nbsp;![thirdparty_install_dir](../../thirdparty_template/docs/pic/xxx_install_dir.png)
 
   其中`xxx`代表三方库名，即为`tinyxpath`
 
