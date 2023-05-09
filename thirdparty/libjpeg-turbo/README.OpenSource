@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libjpeg-turbo",
+        "License": "IJG(Independent JPEG Group) License/3-clause BSD License/zlib License",
+        "License File": "LICENSE.md",
+        "Version Number": "2.1.91",
+        "Owner": "zhongluping1@huawei.com",
+        "Upstream URL": "https://github.com/libjpeg-turbo/libjpeg-turbo",
+        "Description": "libjpeg-turbo is a JPEG image codec that uses SIMD instructions to accelerate baseline JPEG compression and decompression"
+    }
+]
