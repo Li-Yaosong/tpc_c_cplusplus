@@ -39,6 +39,7 @@ build() {
     cd $builddir/$ARCH-build
     ../configure "$@" --host=$host > `pwd`/build.log 2>&1
     make -j4 >> `pwd`/build.log 2>&1
+    make testprogs >> `pwd`/build.log 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
