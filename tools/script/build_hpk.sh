@@ -103,8 +103,10 @@ recordbuildlibs() {
 }
 
 buildargs=
+pkgconfigpath=
 cmakedependpath() {
-    buildargs="-DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$LYCIUM_ROOT/usr/$pkgname/$1 -G \"Unix Makefiles\" "
+    buildargs="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$LYCIUM_ROOT/usr/$pkgname/$1 -G \"Unix Makefiles\" "
+    pkgconfigpath=""
     if [ ${#depends[@]} -ne 0 ] 
     then
         tmppath="\""
@@ -112,18 +114,25 @@ cmakedependpath() {
         do
             dependpath=$LYCIUM_ROOT/usr/$depend/$1/
             tmppath=$tmppath"${dependpath};"
+
+            dependpkgpath=$LYCIUM_ROOT/usr/$depend/$1/lib/pkgconfig
+            if [ -d ${dependpkgpath} ]
+            then
+                pkgconfigpath=$pkgconfigpath"${dependpkgpath}:"
+            fi
         done
+        tmppath=${tmppath%;*}
+        pkgconfigpath=${pkgconfigpath%:*}
         tmppath=$tmppath"\""
         buildargs=$buildargs"-DCMAKE_FIND_ROOT_PATH="$tmppath
     fi
 }
 
-pkgconfigpath=
 configuredependpath() {
-    buildargs="--prefix=$LYCIUM_ROOT/usr/$pkgname/$1"
+    pkgconfigpath=""
+    buildargs="--enable-static --prefix=$LYCIUM_ROOT/usr/$pkgname/$1"
     if [ ${#depends[@]} -ne 0 ] 
     then
-        pkgconfigpath="\""
         for depend in ${depends[@]}
         do
             dependpath=$LYCIUM_ROOT/usr/$depend/$1/lib/pkgconfig
@@ -133,7 +142,7 @@ configuredependpath() {
             fi
             pkgconfigpath=$pkgconfigpath"${dependpath}:"
         done
-        pkgconfigpath=$pkgconfigpath"\""
+        pkgconfigpath=${pkgconfigpath%:*}
     fi
 }
 
@@ -192,7 +201,7 @@ builpackage() {
         then
             sure configuredependpath $ARCH
         else
-            echo "buildtools $buildtools, 需要用户自己传入编译参数(安装路径)"
+            :
         fi
         sure build $buildargs
         sure package
