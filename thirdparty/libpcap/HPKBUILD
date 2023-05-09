@@ -30,13 +30,13 @@ prepare() {
           setarm64ENV
           host=aarch64-linux
     fi
-    bison --version
+    bison --version >> /dev/null
     if [ "$?" != "0" ];then
           echo "please sudo apt-get install bison"
           exit 1
     fi
 
-    flex --version
+    flex --version >> /dev/null
     if [ "$?" != "0" ];then
           echo "please sudo apt-get install flex"
           exit 1
