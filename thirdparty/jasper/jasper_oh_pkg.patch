@@ -1,0 +1,11 @@
+diff -Naur jasper-version-4.0.0/CMakeLists.txt jasper_patch/CMakeLists.txt
+--- jasper-version-4.0.0/CMakeLists.txt	2022-11-06 01:06:53.000000000 +0800
++++ jasper_patch/CMakeLists.txt	2023-05-09 11:44:01.636103253 +0800
+@@ -724,6 +724,7 @@
+ set(JAS_HAVE_LIBJPEG 0)
+ set(JAS_LIBJPEG_TARGET)
+ if(JAS_ENABLE_LIBJPEG)
++	set(JPEG_NAMES libjpeg.a)
+ 	find_package(JPEG)
+ 	if (TARGET JPEG::JPEG)
+ 		# In some versions of the JPEG library, the header file jpeglib.h

@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "Jasper",
+        "License": "Jasper license file",
+        "License File": "LICENSE.txt",
+        "Version Number": "4.0.0",
+        "Owner": "zhongluping1@huawei.com",
+        "Upstream URL": "https://github.com/jasper-software/jasper/tree/version-4.0.0",
+        "Description": " JasPer is a collection of software (i.e., a library and application programs) for the coding and manipulation of images"
+    }
+]
