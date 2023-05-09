@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "json-schema-validator",
+        "License": "MIT",
+        "License File": "LICENSE",
+        "Version Number": "v3.11.2",
+        "Owner": "wupingyuan@huawei.com",
+        "Upstream URL": "https://github.com/nlohmann/json/archive/refs/tags/v3.11.2.tar.gz",
+        "Description": "This is a C++ library for validating JSON documents based on a JSON Schema which itself should validate with draft-7 of JSON Schema Validation."
+    }
+]
