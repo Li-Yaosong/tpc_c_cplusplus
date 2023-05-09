@@ -53,9 +53,13 @@
   ```
   #将三方库加入工程中
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libsrtp/${OHOS_ARCH}/lib/libsrtp2.a)
-  
-  #将三方库的头文件加入工程中
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libpcap/${OHOS_ARCH}/lib/libpcap.a)
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/openssl/${OHOS_ARCH}/lib/libssl.a)
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/openssl/${OHOS_ARCH}/lib/libcrypto.a)
+#将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libsrtp/${OHOS_ARCH}/include)
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libpcap/${OHOS_ARCH}/include)
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/openssl/${OHOS_ARCH}/include)
   ```
   ![libsrtp_usage](pic/libsrtp_usage.png)
 ## 测试三方库
