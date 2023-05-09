@@ -1,0 +1,55 @@
+# Contributor: huangminzhong <huangminzhong2@huawei.com>
+# Maintainer: huangminzhong <huangminzhong2@huawei.com>
+pkgname=log4cplus
+pkgver=REL_2_1_0
+pkgrel=0
+pkgdesc=""
+url=""
+archs=("armeabi-v7a" "arm64-v8a")
+license=("BSD" "Apache license 2.0")
+depends=()
+makedepends=()
+install=
+source="https://github.com/log4cplus/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+downloadpackage=true
+autounpack=true
+syncsubmodule=true # 用于同步子模块
+
+builddir=$pkgname-${pkgver}
+packagename=$builddir.tar.gz
+
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+    if [ $syncsubmodule == true ];then
+        cd "$builddir"
+        # 同步子模块，这里采用git submodule update容易失败，进行git clone下载
+        git clone https://github.com/philsquared/Catch.git -b v2.13.9  catch >> `pwd`/build.log 2>&1
+        git clone https://github.com/log4cplus/ThreadPool.git threadpool >> `pwd`/build.log 2>&1
+        cd $OLDPWD
+        syncsubmodule=false
+    fi
+}
+
+build() {
+    cd $builddir
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > $ARCH-build/build.log 2>&1 
+    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd "$builddir"
+    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+}
+
+# 清理环境
+cleanbuild(){
+    rm -rf ${PWD}/$builddir # ${PWD}/$packagename
+}
