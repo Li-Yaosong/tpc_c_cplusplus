@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "double-conversion",
+        "License": "BSD",
+        "License File": "LICENSE",
+        "Version Number": "v3.2.1",
+        "Owner": "wupingyuan@huawei.com",
+        "Upstream URL": "https://github.com/google/double-conversion/archive/refs/tags/v3.2.1.tar.gz",
+        "Description": "This project (double-conversion) provides binary-decimal and decimal-binary routines for IEEE doubles."
+    }
+]
