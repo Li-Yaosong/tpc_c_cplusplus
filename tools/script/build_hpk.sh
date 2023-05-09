@@ -130,7 +130,7 @@ cmakedependpath() {
 
 configuredependpath() {
     pkgconfigpath=""
-    buildargs="--enable-static --prefix=$LYCIUM_ROOT/usr/$pkgname/$1"
+    buildargs="--prefix=$LYCIUM_ROOT/usr/$pkgname/$1"
     if [ ${#depends[@]} -ne 0 ] 
     then
         for depend in ${depends[@]}
