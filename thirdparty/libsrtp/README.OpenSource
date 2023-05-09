@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libsrtp",
+        "License": "2001-2017 Cisco Systems, Inc",
+        "License File": "notes.txt",
+        "Version Number": "v2.5.0",
+        "Owner": "llh_01129@163.com",
+        "Upstream URL": "https://github.com/cisco/libsrtp/archive/refs/tags/v2.5.0.tar.gz",
+        "Description": "libSRTP provides functions for protecting RTP and RTCP. RTP packets can be encrypted and authenticated (using the srtp_protect() function), turning them into SRTP packets."
+    }
+]
