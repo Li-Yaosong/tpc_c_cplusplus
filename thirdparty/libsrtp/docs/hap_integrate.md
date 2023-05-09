@@ -40,7 +40,7 @@
   在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
   
   ```
-  libsrtp/arm64-v8a   libsrtp/armeabi-v7a  libpcap/arm64-v8a libpcap/armeabi-v7a openssl/arm64-v8a openssl/armeabi-v7a 
+  libsrtp/arm64-v8a   libsrtp/armeabi-v7a  libpcap/arm64-v8a libpcap/armeabi-v7a openssl/arm64-v8a openssl/armeabi-v7a   
   ```
   
 - [测试三方库](#测试三方库)
