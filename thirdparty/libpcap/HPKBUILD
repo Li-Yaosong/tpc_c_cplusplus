@@ -9,7 +9,7 @@ url=""
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD")
 depends=()
-makedepends=() 
+makedepends=("flex" "bison")
 install= 
 source="https://github.com/the-tcpdump-group/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 builddir=$pkgname-$pkgver
@@ -29,17 +29,6 @@ prepare() {
     then
           setarm64ENV
           host=aarch64-linux
-    fi
-    bison --version >> /dev/null
-    if [ "$?" != "0" ];then
-          echo "please sudo apt-get install bison"
-          exit 1
-    fi
-
-    flex --version >> /dev/null
-    if [ "$?" != "0" ];then
-          echo "please sudo apt-get install flex"
-          exit 1
     fi
     cd $builddir
     cd $OLDPWD
@@ -75,6 +64,8 @@ check() {
     make testprogs >> `pwd`/build.log 2>&1
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
+    # 保证设备联网
+    # 在构建目录的testprogs目录下，执行./capturetest 进行抓包测试即可
 }
 
 cleanbuild(){
