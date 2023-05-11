@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libdash",
+        "License": "LGPLv2.1",
+        "License File": "README.md",
+        "Version Number": "v2.2",
+        "Owner": "wupingyuan@huawei.com",
+        "Upstream URL": "https://github.com/bitmovin/libdash/archive/refs/tags/v2.2.tar.gz",
+        "Description": "libdash is the official reference software of the ISO/IEC MPEG-DASH standard and is an open-source library that provides an object orient (OO) interface to the MPEG-DASH standard, developed by Bitmovin."
+    }
+]
