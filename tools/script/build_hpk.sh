@@ -105,7 +105,7 @@ recordbuildlibs() {
 buildargs=
 pkgconfigpath=
 cmakedependpath() {
-    buildargs="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$LYCIUM_ROOT/usr/$pkgname/$1 -G \"Unix Makefiles\" "
+    buildargs="-DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$LYCIUM_ROOT/usr/$pkgname/$1 -G \"Unix Makefiles\" "
     pkgconfigpath=""
     if [ ${#depends[@]} -ne 0 ] 
     then
