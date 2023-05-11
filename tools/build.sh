@@ -28,35 +28,42 @@ jobFlag=true
 checkbuildenv(){
     if [ -z ${OHOS_SDK} ]
     then
-        echo "OHOS_SDK 未设置，请先下载安装ohos SDK，并设置OHOS_SDK环境变量。"
+        echo "OHOS_SDK 未设置, 请先下载安装ohos SDK, 并设置OHOS_SDK环境变量. "
         exit 1
     fi
     echo "OHOS_SDK="${OHOS_SDK}
     which cmake >/dev/null 2>&1
     if [ $? -ne 0 ]
     then
-        echo "cmake 命令未安装，请先安装jq命令"
+        echo "cmake 命令未安装, 请先安装 cmake 命令"
         exit 1
     fi
     echo "cmake 命令已安装"
     which make >/dev/null 2>&1
     if [ $? -ne 0 ]
     then
-        echo "make 命令未安装，请先安装jq命令"
+        echo "make 命令未安装. 请先安装 make 命令"
         exit 1
     fi
     echo "make 命令已安装"
+    which pkg-config >/dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "pkg-config 命令未安装, 请先安装 pkg-config 命令"
+        exit 1
+    fi
+    echo "pkg-config 命令已安装"
     which autoreconf >/dev/null 2>&1
     if [ $? -ne 0 ]
     then
-        echo "autoreconf 命令未安装，请先安装jq命令"
+        echo "autoreconf 命令未安装, 请先安装 autoreconf 命令"
         exit 1
     fi
     echo "autoreconf 命令已安装"
     which patch >/dev/null 2>&1
     if [ $? -ne 0 ]
     then
-        echo "patch 命令未安装，请先安装jq命令"
+        echo "patch 命令未安装, 请先安装 patch 命令"
         exit 1
     fi
     echo "patch 命令已安装"

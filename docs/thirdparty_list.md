@@ -36,4 +36,12 @@
 | [WavPack](../thirdparty/WavPack/README_zh.md)                | BSD 3-Clause "New" or "Revised" License       |      | 是   |
 | [libsrtp](../thirdparty/libsrtp/README_zh.md)                | Copyright (c) 2001-2017 Cisco Systems         |      | 是   |
 | [log4cplus](../thirdparty/log4cplus/README_zh.md)            | BSD 2.0/Apache 2.0                            |      | 是   |
+| [zxing-cpp](../thirdparty/zxing-cpp/README_zh.md)            | Apache License 2.0                            |      | 是   |
+| [libsvm](../thirdparty/libsvm/README_zh.md)                  | BSD                                           |      | 是   |
+| [geos](../thirdparty/geos/README_zh.md)                      | LGPL v2.1                                     |      | 是   |
+| [jbig2dec](../thirdparty/jbig2dec/README_zh.md)              | GPLv3                                         |      | 是   |
+| [faad2](../thirdparty/faad2/README_zh.md)                    | GPLv2                                         |      | 是   |
+| [libxls](../thirdparty/libxls/README_zh.md)                  | BSD                                           |      | 是   |
+| [libtess2](../thirdparty/libtess2/README_zh.md)              | SGI FREE SOFTWARE LICENSE B                   |      | 是   |
+| [djvulibre](../thirdparty/djvulibre/README_zh.md)            | GPLv2                                         |      | 是   |
 
