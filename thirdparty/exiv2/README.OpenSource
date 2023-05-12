@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "exiv2",
+        "License": "GPL2.0",
+        "License File": "LICENSE.txt",
+        "Version Number": "v2.0.0",:
+        "Owner": "wupingyuan@huawei.com",
+        "Upstream URL": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.27.6.tar.gz",
+        "Description": "Exiv2 is a C++ library and a command-line utility to read, write, delete and modify Exif, IPTC, XMP and ICC image metadata."
+    }
+]
