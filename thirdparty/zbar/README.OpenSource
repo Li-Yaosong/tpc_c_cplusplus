@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "zbar",
+        "License": "LGPL2.1",
+        "License File": "COPYING",
+        "Version Number": "0.10",
+        "Owner": "wupingyuan@huawei.com",
+        "Upstream URL": "https://sourceforge.net/projects/zbar/files/zbar/0.10/zbar-0.10.tar.gz",
+        "Description": "ZBar is an open source software suite for reading bar codes from various sources, such as video streams, image files and raw intensity sensors. It supports many popular symbologies (types of bar codes) including EAN-13/UPC-A, UPC-E, EAN-8, Code 128, Code 39, Interleaved 2 of 5 and QR Code."
+    }
+]
