@@ -23,15 +23,28 @@ fi
 export LYCIUM_BUILD_CHECK=$buildcheckflag
 export LYCIUM_BUILD_OS=$osname
 export LYCIUM_ROOT=$LYCIUM_ROOT
+if [ -z ${OHOS_SDK} ]
+then
+    echo "OHOS_SDK 未设置, 请先下载安装ohos SDK, 并设置OHOS_SDK环境变量. "
+    exit 1
+fi
+echo "OHOS_SDK="${OHOS_SDK}
+CLANG_VERSION_STR=$(echo __clang_version__ | $OHOS_SDK/native/llvm/bin/clang -E -xc - | tail -n 1)
+CLANG_VERSION_ARR=(${CLANG_VERSION_STR//,/ })
+CLANG_VERSION_1=${CLANG_VERSION_ARR[0]}
+CLANG_VERSION=${CLANG_VERSION_1: 1}
+echo "CLANG_VERSION="${CLANG_VERSION}
+export CLANG_VERSION=${CLANG_VERSION}
 jobFlag=true
 
 checkbuildenv(){
-    if [ -z ${OHOS_SDK} ]
+    which gcc >/dev/null 2>&1
+    if [ $? -ne 0 ]
     then
-        echo "OHOS_SDK 未设置, 请先下载安装ohos SDK, 并设置OHOS_SDK环境变量. "
+        echo "gcc 命令未安装, 请先安装 gcc 命令"
         exit 1
     fi
-    echo "OHOS_SDK="${OHOS_SDK}
+    echo "gcc 命令已安装"
     which cmake >/dev/null 2>&1
     if [ $? -ne 0 ]
     then
@@ -228,7 +241,7 @@ main(){
     buildhpk
 
     cleanhpkdir
-    unset LYCIUM_BUILD_OS LYCIUM_ROOT LYCIUM_BUILD_CHECK
+    unset LYCIUM_BUILD_OS LYCIUM_ROOT LYCIUM_BUILD_CHECK CLANG_VERSION
 }
 
 main $*
