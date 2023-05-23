@@ -46,7 +46,7 @@ build() {
 
 package() {
     cd $builddir-$ARCH-build
-    make install PREFIX=$LYCIUM_ROOT/usr/$pkgname-$ARCH-install >> `pwd`/build.log 2>&1
+    make install PREFIX=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> `pwd`/build.log 2>&1
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
     then

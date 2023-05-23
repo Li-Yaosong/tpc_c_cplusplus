@@ -27,13 +27,13 @@ prepare() {
     then
         setarm32ENV
         host=arm-linux
-        export LDFLAGS="${OHOS_SDK}/native/llvm/lib/clang/12.0.1/lib/arm-linux-ohos/a7_hard_neon-vfpv4/libclang_rt.builtins.a ${LDFLAGS}"
+        export LDFLAGS="${OHOS_SDK}/native/llvm/lib/clang/${CLANG_VERSION}/lib/arm-linux-ohos/a7_hard_neon-vfpv4/libclang_rt.builtins.a ${LDFLAGS}"
     fi
     if [ $ARCH == ${archs[1]} ]
     then
         setarm64ENV
         host=aarch64-linux
-        export LDFLAGS="${OHOS_SDK}/native/llvm/lib/clang/12.0.1/lib/aarch64-linux-ohos/libclang_rt.builtins.a ${LDFLAGS}"
+        export LDFLAGS="${OHOS_SDK}/native/llvm/lib/clang/${CLANG_VERSION}/lib/aarch64-linux-ohos/libclang_rt.builtins.a ${LDFLAGS}"
     fi
     cd $builddir-$ARCH-build
     autoreconf -ifv > `pwd`/build.log 2>&1

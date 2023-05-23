@@ -73,7 +73,7 @@
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/tinyxpath/${OHOS_ARCH}/include)
   ```
 
-  ![tinyxpath_usage](pic/tinyxpath_usage.png)
+  ![tinyxpath_usage](../../thirdparty_template/docs/pic/xxx_usage.png)
 
 ## 测试三方库
 
