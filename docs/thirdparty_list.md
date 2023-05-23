@@ -44,4 +44,11 @@
 | [libxls](../thirdparty/libxls/README_zh.md)                  | BSD                                           |      | 是   |
 | [libtess2](../thirdparty/libtess2/README_zh.md)              | SGI FREE SOFTWARE LICENSE B                   |      | 是   |
 | [djvulibre](../thirdparty/djvulibre/README_zh.md)            | GPLv2                                         |      | 是   |
+| [expat](../thirdparty/libexpat/README_zh.md)                 | MIT License                                   |      | 是   |
+| [exiv2](../thirdparty/exiv2/README_zh.md)                    | GPL 2.0                                       |      | 是   |
+| [libpng](../thirdparty/libpng/README_zh.md)                  | zlib/libpng License                           |      | 是   |
+| [soundtouch](../thirdparty/soundtouch/README_zh.md)          | LGPLv2.1                                      |      | 是   |
+| [jbigkit](../thirdparty/jbigkit/README_zh.md)                | GNU General Public License                    |      | 是   |
+| [zbar](../thirdparty/zbar/README_zh.md)                      | LGPL2.1                                       |      | 是   |
+| [marisa-trie](../thirdparty/marisa-trie/README_zh.md)        | LGPL-2.1/GPL-2.0                              |      | 是   |
 

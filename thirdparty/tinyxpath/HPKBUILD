@@ -9,18 +9,18 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("LGPL-2.1" "GPL-2.0")
 depends=()
 makedepends=()
-install=
+
 source="https://sourceforge.net/projects/tinyxpath/files/TinyXPath%20%28Linux%20-%20tar.gz%29/TinyXPath%201.3.1/tinyxpath_1_3_1.tgz"
 downloadpackage=true
 autounpack=false
 buildDir=$pkgname-$pkgver
-packageName=tinyxpath_1_3_1.tgz  # 压缩包名
+packagename=tinyxpath_1_3_1.tgz  # 压缩包名
 decompFlag=true
 
 prepare() {
     if [ $decompFlag == true ];then
         mkdir -p $buildDir
-        tar xvf $packageName -C $buildDir > /dev/null
+        tar xvf $packagename -C $buildDir > /dev/null
         decompFlag=false
         cd $buildDir
         patch -p1 < `pwd`/../tinyxpath_oh_pkg.patch
@@ -31,7 +31,7 @@ prepare() {
 
 build() {
     cd $buildDir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake $* -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
     make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
@@ -50,5 +50,5 @@ check() {
 
 # 清理环境
 cleanbuild(){
-    rm -rf ${PWD}/$buildDir #${PWD}/$packageName
+    rm -rf ${PWD}/$buildDir #${PWD}/$packagename
 }
