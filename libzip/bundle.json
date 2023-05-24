@@ -1,0 +1,38 @@
+{
+  "name": "@ohos/libzip",
+  "description": "This is libzip, a C library for reading, creating, and modifying zip and zip64 archives. Files can be added from data buffers, files, or compressed data copied directly from other zip archives. ",
+  "version": "0.1.0",
+  "license": "Dieter Baron and Thomas Klausner",
+  "publishAs": "code-segment",
+  "segment": {
+    "destPath": "third_party/libzip"
+  },
+  "dirs": {},
+  "scripts": {},
+  "readmePath": {
+    "en": "README"
+  },
+  "component": {
+    "name": "libzip",
+    "subsystem": "thirdparty",
+    "syscap": [],
+    "features": [],
+    "adapted_system_type": [],
+    "rom": "",
+    "ram": "",
+    "deps": {
+      "components": [],
+      "third_party": []
+    },
+    "build": {
+      "sub_component": [
+        "//third_party/libzip:libzip_shared",
+        "//third_party/libzip:nonrandomopen",
+        "//third_party/libzip:liboverride",
+        "//third_party/libzip:libzip_test"
+      ],
+      "inner_kits": [],
+      "test": []
+    }
+  }
+}
