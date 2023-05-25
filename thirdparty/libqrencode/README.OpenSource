@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libqrencode",
+        "License": "LGPL-2.1 license",
+        "License File": "LICENSE.txt",
+        "Version Number": "v4.1.1",
+        "Owner": "llh_01129@163.com",
+        "Upstream URL": "https://github.com/fukuchi/libqrencode/archive/refs/tags/v4.1.1.tar.gz",
+        "Description": "Libqrencode is a fast and compact library for encoding data in a QR Code, a 2D symbology that can be scanned by handy terminals such as a smartphone. "
+    }
+]
