@@ -1,0 +1,54 @@
+# Contributor: Jeff Han <hanjinfei@foxmail.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
+pkgname=zstd
+pkgver=v1.5.4
+pkgrel=0
+pkgdesc=""
+url=""
+archs=("armeabi-v7a" "arm64-v8a")
+license=("MIT")
+depends=()
+makedepends=()
+
+source="https://github.com/facebook/$pkgname/releases/download/$pkgver/$pkgname-1.5.4.tar.gz"
+
+autounpack=true
+downloadpackage=true
+
+builddir=$pkgname-${pkgver:1}
+packagename=$builddir.tar.gz
+
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+    cd "$builddir"
+
+    cd $OLDPWD # 1> /dev/null
+}
+
+build() {
+    cd $builddir
+    # fix this OHOS_SDK 中的cmake版本过低，无法识别zstd项目中使用的cmake函数，因此替换为系统安装的cmake
+    # 此方法编译的zstd没有soname和软连接，被其他项目依赖时，将全路径依赖
+    # 规避上面问题的方法添加OHOS系统识别到开发机的cmake目录，具体具体如下
+    # cp $OHOS_SDK/native/build-tools/cmake/share/cmake-3.16/Modules/Platform/OHOS.cmake xxx(代表你开发机安装的cmake的路径)/cmake-3.26.3-linux-x86_64/share/cmake-3.26/Modules/Platform
+    cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./build/cmake -DZSTD_BUILD_TESTS=ON -L > `pwd`/$ARCH-build/build.log 2>&1
+    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd "$builddir"
+    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+}
+
+# 清理环境
+cleanbuild(){
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}

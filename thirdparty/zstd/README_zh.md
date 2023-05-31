@@ -8,3 +8,4 @@ zstd 是一种快速的无损压缩算法，是针对 zlib 级别的实时压缩
 - [License : BSD and GPLv2](https://github.com/facebook/zstd/tree/zstd-0.4.2)
 ## 集成方式
 + [系统Rom包集成](docs/rom_integrate.md)
++ [应用hap包集成](docs/hap_integrate.md)
