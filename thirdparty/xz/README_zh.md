@@ -14,3 +14,4 @@ XZ 是免费的通用数据压缩软件，具有较高的压缩比。
 ## 集成方式
 
 - [系统Rom包集成](docs/rom_integrate.md)
+- [应用hap包集成](docs/hap_integrate.md)
