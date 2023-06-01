@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "harfbuzz",
+        "License": "Old MIT",
+        "License File": "LICENSES",
+        "Version Number": "7.1.0",
+        "Owner": "chenbaodi@huawei.com",
+        "Upstream URL": "https://github.com/harfbuzz/harfbuzz/archive/refs/tags/7.3.0.tar.gz",
+        "Description": "HarfBuzz text shaping engine"
+    }
+]
