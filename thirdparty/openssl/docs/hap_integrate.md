@@ -45,7 +45,8 @@
 ## 应用中使用三方库
 
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
-&nbsp;![thirdparty_install_dir](pic/openssl_install_dir.png)
+
+![thirdparty_install_dir](pic/openssl_install_dir.png)
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
   ```
   #将三方库加入工程中
@@ -65,7 +66,7 @@
 
 32个用例是错误判定为误判，不同系统错误描述不同，实际为正常
 
-8个dlopen用例错误，进程退出是signal11，可能是资源释放问题已经提单待回复
+8个dlopen用例错误，进程退出是signal11，请避免使用dlopen
 
 ## 参考资料
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
