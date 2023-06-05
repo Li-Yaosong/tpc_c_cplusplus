@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "tcl",
+        "License": "BSD",
+        "License File": "license.terms",
+        "Version Number": "8.6.13",
+        "Owner": "wupingyuan@huawei.com",
+        "Upstream URL": "https://sourceforge.net/projects/tcl/files/Tcl/8.6.13/tcl8.6.13-src.tar.gz",
+        "Description": "Tool Command Language (Tcl) is an interpreted language and very portable interpreter for that language. Tcl is embeddable and extensible, and has been widely used since its creation in 1988 by John Ousterhout."
+    }
+]
