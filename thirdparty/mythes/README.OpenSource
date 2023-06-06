@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "mythes",
+        "License": "BSD",
+        "License File": "README",
+        "Version Number": "0.9",
+        "Owner": "wupingyuan@huawei.com",
+        "Upstream URL": "https://github.com/hunspell/mythes/archive/refs/tags/v1.2.5.tar.gz",
+        "Description": "MyThes is a simple thesaurus that uses a structured text data file and an index file with binary search to lookup words and phrases and return information on part of speech, meanings, and synonyms"
+    }
+]
