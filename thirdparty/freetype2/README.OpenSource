@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "freetype",
+        "License": "GPL FTL",
+        "License File": "https://github.com/freetype/freetype/blob/master/LICENSE.TXT",
+        "Version Number": "2.13.0",
+        "Owner": "tianyong13@huawei.com",
+        "Upstream URL": "https://sourceforge.net/projects/freetype/files/freetype2/2.13.0/freetype-2.13.0.tar.xz",
+        "Description": "FreeType is written in C. It is designed to be small, efficient, and highly customizable while capable of producing high-quality output (glyph images) of most vector and bitmap font formats for digital typography. FreeType is a freely available and portable software library to render fonts."
+    }
+]
