@@ -1,0 +1,65 @@
+# Contributor: liulihong <llh_01129@163.com>
+# Maintainer: liulihong <llh_01129@163.com>
+pkgname=giflib
+pkgver=5.2.1
+pkgrel=0
+pkgdesc="giflib is a library for reading and writing gif images. "
+url="https://sourceforge.net/projects/giflib/"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("1997  Eric S. Raymond")
+depends=()
+makedepends=()
+
+source="https://sourceforge.net/projects/$pkgname/files/$pkgname-$pkgver.tar.gz"
+
+autounpack=true
+downloadpackage=true
+buildtools="make"
+
+builddir=$pkgname-$pkgver
+packagename=$builddir.tar.gz
+
+cc=
+ar=
+# giflib 采用makefile编译构建，为了保留构建环境(方便测试)。因此同一份源码在解压后分为两份,各自编译互不干扰
+prepare() {
+    cp -rf $builddir $builddir-$ARCH-build
+    cd $builddir-$ARCH-build
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        cc=${OHOS_SDK}/native/llvm/bin/arm-linux-ohos-clang
+        ar=${OHOS_SDK}/native/llvm/bin/llvm-ar
+    fi
+    if [ $ARCH == "arm64-v8a" ]
+    then
+        cc=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang
+        ar=${OHOS_SDK}/native/llvm/bin/llvm-ar
+    fi
+    cd $OLDPWD # 1> /dev/null
+}
+
+build() {
+    cd $builddir-$ARCH-build
+    make CC=${cc} AR=${ar} -j4 > `pwd`/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir-$ARCH-build
+    make install PREFIX=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> `pwd`/build.log 2>&1
+    cd $OLDPWD
+    unset cc ar
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # real test CMD
+    # TODO
+}
+
+# 清理环境
+cleanbuild(){
+    rm -rf ${PWD}/$builddir $builddir-armeabi-v7a-build  $builddir-arm64-v8a-build #${PWD}/$packagename
+}
