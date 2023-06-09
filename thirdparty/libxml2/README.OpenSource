@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libxml2",
+        "License": " MIT license",
+        "License File": "README",
+        "Version Number": "v2.11.3",
+        "Owner": "hanjinfei@foxmail.com",
+        "Upstream URL": "https://github.com/GNOME/libxml2/archive/refs/tags/v2.11.3.tar.gz",
+        "Description": "libxml2 is an XML toolkit implemented in C, originally developed for the GNOME Project."
+    }
+]
