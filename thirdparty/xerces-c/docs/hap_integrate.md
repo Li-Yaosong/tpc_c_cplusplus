@@ -1,52 +1,78 @@
-# xerces-c如何集成到应用hap
-## 准备应用工程
-本库是基于DevEco Studio 3.0 Release版本，在RK3568开发板上验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
-### 准备应用开发环境
-开发环境的准备参考：[开发环境准备](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi_study/docs/hello_napi.md#%E5%B7%A5%E7%A8%8B%E5%87%86%E5%A4%87)
-### 增加构建脚本及配置文件
-- 下载本仓库，并解压
+# xerces-c集成到应用hap
+本库是在RK3568开发板上基于OpenHarmony3.2 Release版本的镜像验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
+## 开发环境
+- ubuntu20.04
+- [OpenHarmony3.2.1Release镜像](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2.1%2Fdayu200_standard_arm32.tar.gz)
+- [ohos_sdk_public 3.2.12.5](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2.1%2Fohos-sdk-windows_linux-public.tar.gz)
+- [DevEco Studio 3.1 release](https://contentcenter-vali-drcn.dbankcdn.cn/pvt_2/DeveloperAlliance_package_901_9/16/v3/YO_7mAQNTbS8jekrvez5IA/devecostudio-windows-3.1.0.500.zip?HW-CC-KV=V1&HW-CC-Date=20230512T073650Z&HW-CC-Expire=315360000&HW-CC-Sign=90814E421B9A6D8DB4757FAFC21A965CF890A387DF9A2633B4AB797AD77E6485)    
+- [准备三方库构建环境](../../../tools/README.md#编译环境准备)
+- [准备三方库测试环境](../../../tools/README.md#ci环境准备)
+
+## 编译三方库
+- 下载本仓库
+  ```
+  git clone https://gitee.com/openharmony-sig/tpc_c_cplusplus.git --depth=1
+  ```
 - 三方库目录结构
   ```
-  tpc_c_cplusplus/thirdparty/xerces-c  #三方库xerces-c的目录结构如下
-  ├── adapted               #存放三方库适配需要的代码文件
-  ├── docs                  #存放三方库相关文档的文件夹
-  ├── CmakeLists.txt        #构建脚本，支持hap包集成
-  ├── bundle.json           #三方库组件定义文件
-  ├── README.OpenSource     #说明三方库源码的下载地址，版本，license等信息
-  ├── README_zh.md   
+  tpc_c_cplusplus/thirdparty/xerces-c      #三方库xerces-c的目录结构如下
+  ├── adapted                              #存放三方库适配需要的代码文件
+  ├── BUILD.gn                          # 构建脚本，支持rom包集成
+  ├── docs                                 #三方库相关文档的文件夹
+  ├── CmakeLists.txt                       #构建脚本，支持hap包集成
+  ├── bundle.json                          #三方库组件定义文件
+  ├── HPKBUILD                             #构建脚本
+  ├── SHA512SUM                            #三方库校验文件
+  ├── README.OpenSource                    #说明三方库源码的下载地址，版本，license等信息
+  ├── README_zh.md      
   ```
-- 将xerces-c拷贝至工程xxxx/entry/src/main/cpp/thirdparty目录下
-### 准备三方库源码
-- 三方库下载地址：[xerces-c](https://github.com/apache/xerces-c), 版本：v3.2.4
-  解压后修改库文件名为xerces-c，拷贝至工程xxxx/entry/src/main/cpp/thirdparty/xerces-c目录下
-- 依赖库下载地址：[ICU](https://gitee.com/openharmony/third_party_icu.git)，版本：OpenHarmony-3.2-Beta3
-  解压后修改库文件名为icu，拷贝至工程xxxx/entry/src/main/cpp/thirdparty目录下
+  
+- 将xerces拷贝至tools/main目录下
+  ```
+  cd tpc_c_cplusplus
+  cp thirdparty/xerces-c tools/main -rf
+  ```
+- 在tools目录下编译三方库
+  编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
+  ```
+  cd tools
+  ./build.sh xerces-c
+  ```
+- 三方库头文件及生成的库
+  在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
+  
+  ```
+  xerces-c/arm64-v8a   xerces-c/armeabi-v7a
+  ```
+  
+- [测试三方库](#测试三方库)
+
 ## 应用中使用三方库
-- 将三方库加入工程中，目录结构如下
+- 拷贝动态库到`\\entry\libs\${OHOS_ARCH}\`目录：
+  动态库需要在`\\entry\libs\${OHOS_ARCH}\`目录，才能集成到hap包中，所以需要将对应的so文件拷贝到对应CPU架构的目录
+- 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
+&nbsp;![xerces-c_install](pic/xerces-c_install.png)
+- 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
   ```
-  demo/entry/src/main/cpp
-  ├── thirdparty         #三方库存放目录
-  │   ├──  xerces-c      #三方库xerces-c
-  │   ├──  icu           #三方库xerces-c的依赖库
-  ├── CMakeLists.txt     #工程目录的构建脚本
-  ├── .....              #工程目录的其他文件
+  
+  #将三方库加入工程中
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libxerces-c-3.2.so)
+  #将三方库的头文件加入工程中
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/cJSON/${OHOS_ARCH}/include/xercesc)
+  
   ```
-- 在工程顶级CMakeLists.txt中引入三方库，增加如下代码
-  ```
-  add_subdirectory(thirdparty/xerces-c)      #引入子目录下的CMakeLists.txt
-  target_link_libraries(工程库名 PUBLIC xerces-c)   #工程依赖三方库xerces
-  target_include_directories(工程库名 PRIVATE thirdparty/xerces-c/xerces-c
-                                      thirdparty/xerces-c/xerces-c/src
-                                      thirdparty/xerces-c/adapted)    #增加三方库头文件目录
-  ```
-- 三方库接口使用可以参考demo工程 [xerces_demo](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/FA/thirdparty/xerces_demo)
-## 编译工程
-编译工程，安装应用可以参考 [应用的安装和运行](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi_study/docs/hello_napi.md#%E5%AE%89%E8%A3%85%E8%B0%83%E8%AF%95)
-## 运行效果
-- 在 [xerces_demo](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/FA/thirdparty/xerces_demo)中，使用DOM和SAX解析如下图所示数据
-  &nbsp;![content](pic/content.png)
-- 先创建xml文件，然后分析使用两种方式解析，如下图
-  &nbsp;![hap_xerces_test](pic/hap_xerces_test.png)
+  ![xerces-c_usage](pic/xerces-c_usage.png)
+## 测试三方库
+三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
+
+进入到构建目录执行ctest运行测试用例，共80个用例如下截图（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
+
+![jbigkit_test](pic/xerces-c_ohos_test1.png)
+
+
+
+![jbigkit_test](pic/xerces-c_ohos_test2.png)
+
 ## 参考资料
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
 - [OpenHarmony三方库地址](https://gitee.com/openharmony-tpc)
