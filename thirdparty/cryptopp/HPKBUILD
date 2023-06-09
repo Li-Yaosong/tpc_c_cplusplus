@@ -10,7 +10,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("Boost Software License" "CRYPTOGAMS License")
 depends=()
 makedepends=()
-install=
+
 source="https://github.com/weidai11/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
 patchflag=false 
@@ -61,8 +61,8 @@ package() {
 check() {
     echo "The test must be on an OpenHarmony device!"
     # real test CMD
-    # ./cryptest.exe -tv
-    # ./cryptest.ext -v
+    # ./cryptest.exe tv
+    # ./cryptest.exe v
 }
 
 cleanbuild(){

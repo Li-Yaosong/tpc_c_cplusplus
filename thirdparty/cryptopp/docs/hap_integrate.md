@@ -36,7 +36,7 @@
 - 三方库头文件及生成的库
   在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
   ```
-  cryptopp-arm64-v8a-install   cryptopp-armeabi-v7a-install
+  cryptopp/arm64-v8a   cryptopp/armeabi-v7a
   ```
 
 - [测试三方库](#测试三方库)
@@ -44,19 +44,27 @@
 ## 应用中使用三方库
 
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
-&nbsp;![thirdparty_install_dir](pic/cryptopp_install_dir.png)
+
+ &nbsp;![thirdparty_install_dir](pic/cryptopp_install_dir.png)
+
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
   ```
   #将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/cryptopp-${OHOS_ARCH}-install/lib/libcryptopp.a)
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/cryptopp/${OHOS_ARCH}/lib/libcryptopp.a)
   #将三方库的头文件加入工程中
-  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/cryptopp-${OHOS_ARCH}-install/include)
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/cryptopp/${OHOS_ARCH}/include)
+
   ```
   ![cryptopp_usage](pic/cryptopp_usage.png)
 ## 测试三方库
-三方库的测试使用原库自带的测试用例来做测试
+三方库的测试使用原库自带的可执行文件来做测试
 
-进入到构建目录,执行./cryptest.exe -tv运行测试用例（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
+进入到构建目录,执行以下命令
+```
+./cryptest.exe tv
+./cryptest.exe v
+```
+查看运行结果（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
 
 &nbsp;![cryptopp_test](pic/cryptopp_test.png)
 

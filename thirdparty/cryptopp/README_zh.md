@@ -2,7 +2,7 @@
 ## 功能简介
 cryptopp是开源的C++密码学库，集成了非常多的密码算法。
 ## 使用约束
-- IDE版本：DevEco Studio 3.1 Release
+- IDE版本：DevEco Studio 3.1 Beta2
 - SDK版本：ohos_sdk_public 3.2.11.9 (API Version 9 Release)
 - 三方库版本：Crypto++ 8.7 release
 - 当前适配的功能：支持开源密码算法
