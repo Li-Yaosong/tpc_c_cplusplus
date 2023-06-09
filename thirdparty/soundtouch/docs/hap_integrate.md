@@ -56,7 +56,7 @@
 ## 测试三方库
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
 
-- 将编译生成的soundstretch可执行文件及音频测试文件soundtouch.wav准备好
+- 将编译生成的soundstretch可执行文件及音频测试文件soundtouch.wav准备好，备注：音频素材放在source目录下，最终结果放在out目录下
 
 - 将准备好的文件推送到开发板，在windows命令行进行如下操作
 
