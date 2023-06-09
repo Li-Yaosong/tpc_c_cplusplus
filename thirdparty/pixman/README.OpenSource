@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "pixman",
+        "License": " MIT license",
+        "License File": "COPYING",
+        "Version Number": "0.42.2",
+        "Owner": "hanjinfei@foxmail.com",
+        "Upstream URL": "https://www.cairographics.org/releases/pixman-0.42.2.tar.gz",
+        "Description": "Pixman is a low-level software library for pixel manipulation, providing features such as image compositing and trapezoid rasterization."
+    }
+]
