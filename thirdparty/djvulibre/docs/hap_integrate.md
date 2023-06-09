@@ -57,7 +57,7 @@
 ## 测试三方库
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
 
-- 将编译生成的c44、djvm可执行文件及测试文件a.pbm、b.pbm准备好
+- 将编译生成的c44、djvm可执行文件及测试文件a.pbm、b.pbm准备好，备注：素材在source目录下，最终结果merge.djuv文件可通过[windjview](https://sourceforge.net/projects/windjview/) 浏览
 
 - 将准备好的文件推送到开发板，在windows命令行进行如下操作
 
@@ -77,6 +77,8 @@
   ```
 
 &nbsp;![djvulibre_test](pic/djvulibre_test.jpg)
+&nbsp;![djvulibre_test2](pic/djvulibre_test_2.jpg)
+
 
 ## 参考资料
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
