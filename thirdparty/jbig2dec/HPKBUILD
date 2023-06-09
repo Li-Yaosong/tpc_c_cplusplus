@@ -9,7 +9,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("AGPLv3")
 depends=()
 makedepends=()
-install=
+
 source="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9533/$pkgname-$pkgver.tar.gz"
 
 autounpack=true
@@ -64,11 +64,19 @@ package() {
 }
 
 check() {
+    cd $pkgname-$ARCH-build
+    sed -i '/.*test_sha1.log: test_sha1$(EXEEXT)*/c\test_sha1.log: #test_sha1$(EXEEXT)' Makefile
+    sed -i '/.*test_jbig2dec.py.log: test_jbig2dec.py*/c\test_jbig2dec.py.log: #test_jbig2dec.py' Makefile
+    sed -i '/.*test_huffman.log: test_huffman$(EXEEXT)*/c\test_huffman.log: #test_huffman$(EXEEXT)' Makefile
+    sed -i '/.*test_arith.log: test_arith$(EXEEXT)*/c\test_arith.log: #test_arith$(EXEEXT)' Makefile
+    ret=$?
+    cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
-    # 在OpenHarmony开发板中执行用例
+    # 在OpenHarmony开发板中执行用例,备注:由于ohos不支持python,因此涉及到python的用例不通过
     # make check-TESTS
+    return $ret
 }
 
 cleanbuild(){
-    rm -rf ${PWD}/$builddir $builddir-armeabi-v7a-build  $builddir-arm64-v8a-build #${PWD}/$packagename
+    rm -rf ${PWD}/$builddir $pkgname-armeabi-v7a-build  $pkgname-arm64-v8a-build #${PWD}/$packagename
 }
