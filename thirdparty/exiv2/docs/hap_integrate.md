@@ -63,7 +63,7 @@
 ## 测试三方库
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
 
-- 将编译生成的exiv2可执行文件及测试文件exiv2.jpg、large.icc准备好
+- 将编译生成的exiv2可执行文件及测试文件exiv2.jpg、large.icc准备好，备注：jpg图片在原库下的README-SAMPLES.md文件中搜索文件名"Stonehenge.jpg"找到下载链接、large.icc：在原库的test/data/目录下
 
 - 将准备好的文件推送到开发板，在windows命令行进行如下操作
 
