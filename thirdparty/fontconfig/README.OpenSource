@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "fontconfig",
+        "License": "MIT license",
+        "License File": "COPYING",
+        "Version Number": "2.14.2",
+        "Owner": "chenbaodi@huawei.com",
+        "Upstream URL": "https://gitlab.freedesktop.org/fontconfig/fontconfig/-/archive/2.14.2/fontconfig-2.14.2.tar.gz",
+        "Description": "Font configuration and customization library"
+    }
+]
