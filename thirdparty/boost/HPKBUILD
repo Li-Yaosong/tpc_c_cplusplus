@@ -1,0 +1,70 @@
+# Contributor: Jeff Han <hanjinfei@foxmail.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
+pkgname=boost
+pkgver=1.81.0
+pkgrel=0
+pkgdesc="Boost provides free peer-reviewed portable C++ source libraries."
+url="https://www.boost.org/"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("Boost Software License")
+depends=()
+makedepends=()
+
+source="https://boostorg.jfrog.io/artifactory/main/release/$pkgver/source/$pkgname'_1_81_0.tar.gz'"
+
+autounpack=true
+downloadpackage=true
+buildtools=jamfile
+
+builddir=$pkgname'_1_81_0'
+packagename=$builddir.tar.gz
+
+compileflags=
+prepare() {
+    cp -rf $builddir $builddir-$ARCH-build
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        cd $builddir-$ARCH-build
+        compileflags="\"-march=armv7a\""
+        # without boost_log boost_python boost_locale.这三个库无法用 ohos sdk 编译
+        ./bootstrap.sh --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH --without-libraries=log,python,locale > `pwd`/build.log 2>&1
+        sed -i '/.*using gcc ;/c\    using gcc : arm : '"${OHOS_SDK}"'/native/llvm/bin/arm-linux-ohos-clang ; ' project-config.jam
+        ret=$?
+        cd $OLDPWD
+    fi
+    if [ $ARCH == "arm64-v8a" ]
+    then
+        cd $builddir-$ARCH-build
+        compileflags="\"\""
+        # without boost_log boost_python boost_locale.这三个库无法用 ohos sdk 编译
+        ./bootstrap.sh --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH --without-libraries=log,python,locale > `pwd`/build.log 2>&1
+        sed -i '/.*using gcc ;/c\    using gcc : arm : '"${OHOS_SDK}"'/native/llvm/bin/aarch64-linux-ohos-clang ; ' project-config.jam
+        ret=$?
+        cd $OLDPWD
+    fi
+    return $ret
+}
+
+build() {
+    cd $builddir-$ARCH-build
+    ./b2 cxxflags=$compileflags cflags=$compileflags >> `pwd`/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir-$ARCH-build
+    ./b2 install >> `pwd`/build.log 2>&1
+    cd $OLDPWD
+    unset compileflags
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+}
+
+# 清理环境
+cleanbuild(){
+    rm -rf ${PWD}/$builddir ${PWD}/$builddir"-arm64-v8a-build" ${PWD}/$builddir"-armeabi-v7a-build" #${PWD}/$packagename
+}
