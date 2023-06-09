@@ -1,0 +1,53 @@
+# Contributor: Jeff Han <hanjinfei@foxmail.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
+pkgname=libxml2
+pkgver=v2.11.3
+pkgrel=0
+pkgdesc="libxml2 is an XML toolkit implemented in C, originally developed for the GNOME Project."
+url="https://github.com/GNOME/libxml2"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("MIT")
+depends=("xz" "zlib")
+makedepends=()
+
+source="https://github.com/GNOME/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+
+autounpack=true
+downloadpackage=true
+
+builddir=$pkgname-${pkgver:1}
+packagename=$builddir.tar.gz
+
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+}
+
+build() {
+    cd $builddir
+    # cmake 需要高版本(同zstd),cmake版本不一致导致lzma无法被自动find 关闭python
+    cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L -DCMAKE_C_FLAGS="-munaligned-access" \
+    -DLIBLZMA_LIBRARY=${LYCIUM_ROOT}/usr/xz/$ARCH/lib/liblzma.so \
+    -DLIBLZMA_INCLUDE_DIR=${LYCIUM_ROOT}/usr/xz/$ARCH/include -DZLIB_INCLUDE_DIR=${LYCIUM_ROOT}/usr/zlib/$ARCH/include \
+    -DLIBXML2_WITH_ICONV=OFF -DLIBXML2_WITH_PYTHON=OFF > `pwd`/$ARCH-build/build.log 2>&1
+    make VERBOSE=1 -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd "$builddir"
+    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # 默认编译未开启 ICU; 依赖liblzma 需要将xz库 安装到测试机
+    # icu 相关测试用例均失败
+}
+
+# 清理环境
+cleanbuild(){
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
