@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "websocketpp",
+        "License": "Peter Thorson. All rights reserved",
+        "License File": "COPYING",
+        "Version Number": "0.8.2",
+        "Owner": "hanjinfei@foxmail.com",
+        "Upstream URL": "https://github.com/zaphoyd/websocketpp/archive/refs/tags/0.8.2.tar.gz",
+        "Description": "C++ websocket client/server library"
+    }
+]
