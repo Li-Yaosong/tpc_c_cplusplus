@@ -1,0 +1,81 @@
+# Contributor: 小肉头君 <chenbaodi@huawei.com>
+# Maintainer: 小肉头君 <chenbaodi@huawei.com>
+
+pkgname=libass
+pkgver=0.17.1
+pkgrel=0
+pkgdesc="libass is a portable subtitle renderer for the ASS/SSA (Advanced Substation Alpha/Substation Alpha) subtitle format."
+url="https://github.com/libass/libass"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("ISC License")
+depends=("freetype2" "fribidi" "harfbuzz" "libpng" "zlib" "fontconfig") # fontconfig是测试需要的三方库
+makedepends=()
+source="https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+
+autounpack=true
+downloadpackage=true
+buildtools="configure"
+
+builddir=$pkgname-$pkgver 
+packagename=$builddir.tar.gz
+
+source envset.sh
+autogenflag=true
+host=
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        setarm32ENV
+        host=arm-linux
+    fi
+    if [ $ARCH == "arm64-v8a" ]
+    then
+        setarm64ENV
+        host=aarch64-linux
+    fi
+
+    if $autogenflag
+    then
+        cd $builddir
+        ./autogen.sh > `pwd`/build.log 2>&1
+        cd $OLDPWD
+        autogenflag=false
+    fi
+}
+
+build() {
+    cd $builddir/$ARCH-build
+    FREETYPE_CFLAGS="-I${LYCIUM_ROOT}/usr/freetype2/$ARCH/include/freetype2 ${LYCIUM_ROOT}/usr/bzip2/$ARCH/lib/libbz2.a ${LYCIUM_ROOT}/usr/brotli/$ARCH/lib/libbrotlicommon.so ${LYCIUM_ROOT}/usr/brotli/$ARCH/lib/libbrotlienc.so ${LYCIUM_ROOT}/usr/brotli/$ARCH/lib/libbrotlidec.so -lz" FREETYPE_LIBS="${LYCIUM_ROOT}/usr/freetype2/$ARCH/lib/libfreetype.a" FONTCONFIG_CFLAGS="-I${LYCIUM_ROOT}/usr/fontconfig/$ARCH/include/ ${LYCIUM_ROOT}/usr/libxml2/$ARCH/lib/libxml2.so" FONTCONFIG_LIBS="${LYCIUM_ROOT}/usr/fontconfig/$ARCH/lib/libfontconfig.so" PKG_CONFIG_PATH="${pkgconfigpath}" ../configure "$@" --enable-test --enable-static --host=$host > `pwd`/build.log 2>&1
+    make -j4 >> `pwd`/build.log 2>&1
+    # 对最关键一步的退出码进行判断
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir/$ARCH-build
+    make install >> `pwd`/build.log 2>&1
+    cd $OLDPWD
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        unsetarm32ENV
+    fi
+    if [ $ARCH == "arm64-v8a" ]
+    then
+        unsetarm64ENV
+    fi
+    unset host
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # real test
+    # 测试时需要把Unbutu中的usr/share/fonts打包推送到ohos设备中,放在ohos设备同一路径中
+    # ./test/test testass.png  ../compare/test/sub1.ass 0.03
+}
+
+cleanbuild(){
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
