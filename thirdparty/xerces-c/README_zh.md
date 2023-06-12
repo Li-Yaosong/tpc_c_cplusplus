@@ -9,3 +9,4 @@ xerces是一个开放源代码的XML语法分析器，它提供了SAX和DOM API�
 - [Apache License 2.0](https://github.com/apache/xerces-c/blob/master/LICENSE)
 ## 集成方式
 + [应用hap包集成](docs/hap_integrate.md)
++ [系统Rom包集成](docs/rom_integrate.md)
