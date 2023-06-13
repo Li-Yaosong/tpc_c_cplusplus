@@ -1,0 +1,46 @@
+# Contributor: huangminzhong <huangminzhong2@huawei.com>
+# Maintainer:  huangminzhong <huangminzhong2@huawei.com>
+pkgname=glog
+pkgver=v0.6.0
+pkgrel=0
+pkgdesc="Google Logging (glog) is a C++14 library that implements application-level logging. The library provides logging APIs based on C++-style streams and various helper macros."
+url="https://github.com/google/glog"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("glog license")
+depends=("googletest" "gflags")
+makedepends=()
+source="https://github.com/google/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+downloadpackage=true
+autounpack=true
+
+builddir=$pkgname-${pkgver:1}
+packagename=$builddir.tar.gz
+
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+}
+
+build() {
+    cd $builddir
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -DBUILD_TESTING=ON -S./ -L > $ARCH-build/build.log 2>&1
+    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd "$builddir"
+    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # cd $ARCH-build
+    # ctest
+}
+
+cleanbuild(){
+    rm -rf ${PWD}/$builddir # ${PWD}/$packagename
+}
