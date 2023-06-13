@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "protobuf",
+        "License": "BSD-3-Clause license",
+        "License File": "LICENSES",
+        "Version Number": "v4.23.2",
+        "Owner": "qiandinge@isoftstone.com",
+        "Upstream URL": "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v4.23.2.tar.gz",
+        "Description": "Protocol Buffers - Google's data interchange format"
+    }
+]
