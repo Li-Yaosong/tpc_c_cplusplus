@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "unzip",
+        "License": "Info-ZIP license",
+        "License File": "LICENSE",
+        "Version Number": "60",
+        "Owner": "llh_01129@163.com",
+        "Upstream URL": "https://sourceforge.net/projects/infozip",
+        "Description": "Info-ZIP portable compression/archiver utilities (Zip, UnZip, WiZ, etc.)"
+    }
+]
