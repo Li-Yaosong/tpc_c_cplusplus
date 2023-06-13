@@ -89,7 +89,7 @@
 进入到构建目录,再进入test目录,执行
 ```
 # 测试时需要把Unbutu中的usr/share/fonts打包推送到ohos设备中,放在ohos设备同一路径中
-./test testass.png sub1.ass 0.03
+./test/test testass.png  ../compare/test/sub1.ass 0.03
 ```
 
 &nbsp;![libass_test](pic/libass_test.png)
