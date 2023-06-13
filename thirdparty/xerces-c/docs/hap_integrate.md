@@ -58,7 +58,7 @@
   #将三方库加入工程中
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libxerces-c-3.2.so)
   #将三方库的头文件加入工程中
-  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/cJSON/${OHOS_ARCH}/include/xercesc)
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/xerces-c/${OHOS_ARCH}/include/xercesc)
   
   ```
   ![xerces-c_usage](pic/xerces-c_usage.png)
