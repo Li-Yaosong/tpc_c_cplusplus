@@ -1,0 +1,121 @@
+# caffe集成到应用hap
+本库是在RK3568开发板上基于OpenHarmony3.2 Release版本的镜像验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
+## 开发环境
+- ubuntu20.04
+- [OpenHarmony3.2Release镜像](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fdayu200_standard_arm32.tar.gz)
+- [ohos_sdk_public 3.2.11.9 (API Version 9 Release)](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fohos-sdk-windows_linux-public.tar.gz)
+- [DevEco Studio 3.1 Beta2](https://gitee.com/link?target=https%3A%2F%2Fcontentcenter-vali-drcn.dbankcdn.cn%2Fpvt_2%2FDeveloperAlliance_package_901_9%2Ff3%2Fv3%2FuJyuq3syQ2ak4hE1QZmAug%2Fdevecostudio-windows-3.1.0.400.zip%3FHW-CC-KV%3DV1%26HW-CC-Date%3D20230408T013335Z%26HW-CC-Expire%3D315360000%26HW-CC-Sign%3D96262721EDC9B34E6F62E66884AB7AE2A94C2A7B8C28D6F7FC891F46EB211A70)
+- [准备三方库构建环境](../../../tools/README.md#编译环境准备)
+- [准备三方库测试环境](../../../tools/README.md#ci环境准备)
+## 编译三方库
+- 下载本仓库
+  ```
+  git clone https://gitee.com/openharmony-sig/tpc_c_cplusplus.git --depth=1
+  ```
+- 三方库目录结构
+  ```
+  tpc_c_cplusplus/thirdparty/caffe  #三方库caffe的目录结构如下
+  ├── docs                              #三方库相关文档的文件夹
+  ├── HPKBUILD                          #构建脚本
+  ├── SHA512SUM                         #三方库校验文件
+  ├── caffe_oh_pkg.patch                #补丁
+  ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
+  ├── Makefile.ohos                     #编译caffe所需依赖库cblas的makefile  
+  ├── caffe_test.sh                     #三方库自测脚本  
+  ├── README_zh.md   
+  ```
+  
+- 将snappy leveldb opencv szip hdf5 boost glog zlib gflags googletest caffe拷贝至tools/main目录下
+  ```
+  cd tpc_c_cplusplus
+  cp thirdparty/caffe tools/main -rf
+  cp thirdparty/leveldb tools/main -rf
+  cp thirdparty/opencv tools/main -rf
+  cp thirdparty/szip tools/main -rf
+  cp thirdparty/hdf5 tools/main -rf
+  cp thirdparty/boost tools/main -rf
+  cp thirdparty/glog tools/main -rf
+  cp thirdparty/zlib tools/main -rf
+  cp thirdparty/gflags tools/main -rf
+  cp thirdparty/googletest tools/main -rf    
+  ```
+- 在tools目录下编译三方库
+  编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
+  ```
+  cd tools
+  ./build.sh ./build.sh snappy leveldb opencv szip hdf5 boost glog zlib gflags googletest caffe
+  ```
+- 三方库头文件及生成的库
+  在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
+  ```
+  caffe/arm64-v8a   caffe/armeabi-v7a
+  liboost/arm64-v8a  boost/armeabi-v7a  
+  iboostb/arm64-v8a  boost/armeabi-v7a
+  gflags/arm64-v8a  gflags/armeabi-v7a
+  glog/arm64-v8a  glog/armeabi-v7a
+  googletest/arm64-v8a  googletest/armeabi-v7a
+  hdf5/arm64-v8a  hdf5/armeabi-v7a
+  leveldb/arm64-v8a  leveldb/armeabi-v7a
+  opencv/arm64-v8a  opencv/armeabi-v7a
+  snappy/arm64-v8a  snappy/armeabi-v7a
+  szip/arm64-v8a  szip/armeabi-v7a
+  zlib/arm64-v8a  zlib/armeabi-v7a
+  ```
+
+- [测试三方库](#测试三方库)
+
+## 应用中使用三方库
+
+- 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
+&nbsp;![thirdparty_install_dir](pic/caffe_install_dir.png)
+- 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
+  ```
+  #将三方库加入工程中
+target_link_libraries(entry PUBLIC libace_napi.z.so)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/cafffe/${OHOS_ARCH}/lib/libcaffe.so.1.0.0)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_atomic.so.1.81.0)
+```
+  #将三方库的头文件加入工程中
+target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/caffe/${OHOS_ARCH}/include)
+target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/include)
+  ```
+  ![caffe_usage](pic/caffe_usage.png)
+## 测试三方库
+三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
+
+- 将tools/caffe/caffe_test.sh 文件拷贝到 tools/caffe/caffe-1.0目录
+- 将编译生成的tools/caffe目录 压缩成caffe.tar.gz文件
+- 将编译生成的tools/usr目录   压缩成usr.tar.gz文件
+
+- 将准备好的文件推送到开发板，在windows命令行进行如下操作
+
+  ```
+  hdc_std shell mount -o remount,rw /         #修改系统权限为可读写
+
+  hdc_std file send libc++_shared.so /system/lib64 
+
+  hdc_std file send caffe.tar.gz /data/local/tmp
+
+  hdc_std file send usr.tar.gz /data/local/tmp
+
+  hdc_std shell                          #进入开发板
+  
+  cd /data/local/tmp目录 
+  tar -zxf caffe.tar.gz       #解压
+  tar -zxf usr.tar.gz         #解压
+
+  cd /data/local/tmp/caffe/caffe-1.0   
+  
+  LD_LIBRARY_PATH=/data/local/tmp/usr/boost/arm64-v8a/lib:/data/local/tmp/usr/caffe/arm64-v8a/lib:/data/local/tmp/usr/gflags/arm64-v8a/lib:/data/local/tmp/usr/glog/arm64-v8a/lib:/data/local/tmp/usr/googletest/arm64-v8a/lib:/data/local/tmp/usr/hdf5/arm64-v8a/lib:/data/local/tmp/usr/leveldb/arm64-v8a/lib:/data/local/tmp/usr/opencv/arm64-v8a/lib:/data/local/tmp/usr/snappy/arm64-v8a/lib:/data/local/tmp/usr/szip/arm64-v8a/lib:/data/local/tmp/usr/zlib/arm64-v8a/lib /bin/sh ./caffe_test.sh arm64-v8a    #64位系统 执行命令      
+
+  LD_LIBRARY_PATH=/data/local/tmp/usr/boost/armeabi-v7a/lib:/data/local/tmp/usr/caffe/armeabi-v7a/lib:/data/local/tmp/usr/gflags/armeabi-v7a/lib:/data/local/tmp/usr/glog/armeabi-v7a/lib:/data/local/tmp/usr/googletest/armeabi-v7a/lib:/data/local/tmp/usr/hdf5/armeabi-v7a/lib:/data/local/tmp/usr/leveldb/armeabi-v7a/lib:/data/local/tmp/usr/opencv/armeabi-v7a/lib:/data/local/tmp/usr/snappy/armeabi-v7a/lib:/data/local/tmp/usr/szip/armeabi-v7a/lib:/data/local/tmp/usr/zlib/armeabi-v7a/lib /bin/sh ./caffe_test.sh armeabi-v7a                      #32位系统 执行命令
+
+  ```
+
+&nbsp;![caffe_test](pic/caffe_test.png)
+
+## 参考资料
+- [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
+- [OpenHarmony三方库地址](https://gitee.com/openharmony-tpc)
+- [OpenHarmony知识体系](https://gitee.com/openharmony-sig/knowledge)
+- [通过DevEco Studio开发一个NAPI工程](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi_study/docs/hello_napi.md)

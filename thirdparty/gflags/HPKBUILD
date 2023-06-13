@@ -1,0 +1,44 @@
+# Contributor: huangminzhong <huangminzhong2@huawei.com>
+# Maintainer:  huangminzhong <huangminzhong2@huawei.com>
+pkgname=gflags
+pkgver=v2.2.2
+pkgrel=0
+pkgdesc="The gflags package contains a C++ library that implements commandline flags processing."
+url="https://github.com/gflags/gflags"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("BSD 3-Clause New or Revised License")
+depends=()
+makedepends=()
+source="https://github.com/gflags/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+downloadpackage=true
+autounpack=true
+
+builddir=$pkgname-${pkgver:1}
+packagename=$builddir.tar.gz
+
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+}
+
+build() {
+    cd $builddir
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -DBUILD_TESTING=ON -S./ -L > $ARCH-build/build.log 2>&1
+    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd "$builddir"
+    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+}
+
+cleanbuild(){
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
