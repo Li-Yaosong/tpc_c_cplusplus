@@ -1,0 +1,60 @@
+# Contributor: lpzhong <278527840@qq.com>
+# Maintainer: lpzhong <278527840@qq.com>
+pkgname=thrift
+pkgver=v0.18.1
+pkgrel=0
+pkgdesc="Thrift is a lightweight, language-independent software stack for point-to-point RPC implementation"
+url="https://github.com/apache/thrift"
+archs=("armeabi-v7a" "arm64-v8a")
+license="Apache License"
+depends=("boost" "openssl" "zlib")
+makedepends=()
+source="https://github.com/apache/${pkgname}/archive/refs/tags/${pkgver}.tar.gz"
+
+autounpack=true
+downloadpackage=true
+buildtools="cmake"
+buildhostthrift=true
+
+builddir=$pkgname-${pkgver:1}
+packagename=$builddir.tar.gz
+
+prepare() {
+    if [ $buildhostthrift ]; then
+        mkdir -p ${builddir}/host-build
+        cd ${builddir}/host-build
+        cmake -DWITH_JAVA=OFF -DWITH_JAVASCRIPT=OFF -DWITH_NODEJS=OFF  -DWITH_C_GLIB=OFF -DWITH_PYTHON=OFF .. -L > build.log 2>&1
+        make -j4 >> build.log 2>&1
+        buildhostthrift=false
+        cd $OLDPWD
+    fi
+
+    mkdir -p ${builddir}/${ARCH}-build
+}
+
+build() {
+    cd $builddir
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -DWITH_LIBEVENT=OFF -DWITH_HASKELL=OFF -DWITH_JAVA=OFF -DWITH_JAVASCRIPT=OFF -DWITH_NODEJS=OFF -DTHRIFT_COMPILER=`pwd`/host-build/compiler/cpp/bin/thrift -DWITH_C_GLIB=OFF -DWITH_PYTHON=OFF -B${ARCH}-build -S./ -L > `pwd`/${ARCH}-build/build.log 2>&1
+    make VERBOSE=1 -j4 -C ${ARCH}-build >> `pwd`/${ARCH}-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd ${builddir}
+    make -C ${ARCH}-build install >> `pwd`/${ARCH}-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # real test CMD
+    # 进入到编译目录执行[说明：测试时设备需要连接网络]
+    # ctest
+}
+
+# 清理环境
+cleanbuild(){
+    rm -rf ${PWD}/${builddir} # ${PWD}/$packagename
+}

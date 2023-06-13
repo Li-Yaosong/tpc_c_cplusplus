@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "thrift",
+        "License": "Apache License 2.0",
+        "License File": "https://github.com/apache/thrift/blob/master/LICENSE",
+        "Version Number": "v0.18.1",
+        "Owner": "swkec@isoftstone.com",
+        "Upstream URL": "https://github.com/apache/thrift/archive/refs/tags/v0.18.1.tar.gz",
+        "Description": "Thrift is an interface description language and binary communication protocol used to define and create cross-language services. It is designed as a remote procedure call (RPC) framework and was developed by Facebook for "large-scale cross-language service development"."
+    }
+]
