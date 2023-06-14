@@ -59,8 +59,7 @@
 
 进入到构建目录获取,执行ctest，运行测试用例（fmt-arm64-v8a-build为构建64位的目录，fmt-armeabi-v7a-build为构建32位的目录）
 &nbsp;![cunit_test_result](pic/test_result.png)
-有3个测试项目报错，已经确定是因为鸿蒙os的 std::locate函数抛出异常失败
-导致。需要鸿蒙系统修改
+有3个测试项目报错，已经确定是因为 OpenHarmony的std::locate函数抛出异常失败导致，建议不要使用std::locate函数。
 
 ## 参考资料
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
