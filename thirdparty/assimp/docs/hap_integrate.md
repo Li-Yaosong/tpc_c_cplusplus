@@ -23,36 +23,33 @@
   ├── README_zh.md   
   ```
   
-- 将assimp、zlib拷贝至tools/main目录下
+- 将assimp拷贝至tools/main目录下
   ```
   cd tpc_c_cplusplus
   cp thirdparty/assimp tools/main -rf
-  cp thirdparty/zlib tools/main -rf
   ```
 - 在tools目录下编译三方库
   编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
   
   ```
   cd tools
-  ./build.sh zlib assimp
+  ./build.sh assimp
   ```
 - 三方库头文件及生成的库
   在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
   ```
-  assimp/arm64-v8a   assimp/armeabi-v7a
-  zlib/arm64-v8a     zlib/armeabi-v7a  
+  assimp/armeabi-v7a assimp/arm64-v8a
   ```
-
+  
 - [测试三方库](#测试三方库)
 
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
+- 在IDE的cpp目录下新增thirdparty目录，将编译生成的库头文件拷贝到该目录下，并libs目录下libassimp.so.5.2.4改名为libassimp.so.5，如下图所示
 &nbsp;![thirdparty_install_dir](pic/screen_cut.jpg)
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
   ```
   #将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libz.so.1)
   target_link_libraries(entry PRIVATE ${CMAKE_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libassimp.so.5)
   #将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/assimp/${OHOS_ARCH}/include)
@@ -63,13 +60,15 @@
 
 - 将编译生成的unit可执行文件及测试数据准备好
 
-  unit 在 main/assimp/assimp-5.2.5/arm64-v8a-build/bin  
+  unit 在 
+
+  assimp/assimp-5.2.5/arm64-v8a-build/bin  
 
   测试数据: 
 
-  main/assimp/assimp-5.2.5/test/models
+  assimp/assimp-5.2.5/test/models
 
-  main/assimp/assimp-5.2.5/test/models-nonbsd      
+  assimp/assimp-5.2.5/test/models-nonbsd      
 
 - 将准备好的文件推送到开发板，在windows命令行进行如下操作
 
@@ -78,13 +77,13 @@
   hdc_std file send unit /data                #将可执行文件推入开发板data目录
   hdc_std file send models/ /data             #将测试文件推入开发板data目录
   hdc_std file send models-nonbsd/ /data      #将测试文件推入开发板data目录
-  hdc_std file send libc++_shared.so /system/lib64 
-  hdc_std file send libz.so.1 /system/lib64
-  hdc_std file send libassimp.so.5 /system/lib64
+  hdc_std file send libassimp.so.5.2.4  /system/lib64/libassimp.so.5
   hdc_std shell                          #进入开发板
   chmod 777 unit                         #添加权限
   ./unit                                 #执行测试用例
   ```
+
+测试用例运行结果如下：
 
 &nbsp;![zbar_test](pic/run_screen_cut.jpg)
 
