@@ -72,34 +72,36 @@
 ```shell
 #将三方库加入工程中
 target_link_libraries(entry PUBLIC libace_napi.z.so)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/cafffe/${OHOS_ARCH}/lib/libcaffe.so.1.0.0)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_atomic.so.1.81.0)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_filesystem.so.1.81.0)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_system.so.1.81.0)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_thread.so.1.81.0)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glog/${OHOS_ARCH}/lib/libglog.so.1)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/lib/libhdf5.so.310)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/lib/libhdf5_cpp.so.310)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/lib/libhdf5_hl.so.310)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/lib/libhdf5_hl_cpp.so.310)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_core.so.407)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_highgui.so.407)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_imgcodecs.so.407)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_imgproc.so.407)
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_videoio.so.407)
+target_link_libraries(entry PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_atomic.so.1.81.0
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_filesystem.so.1.81.0
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_system.so.1.81.0
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_thread.so.1.81.0
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glog/${OHOS_ARCH}/lib/libglog.so.1
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/lib/libhdf5.so.310
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/lib/libhdf5_cpp.so.310
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/lib/libhdf5_hl.so.310
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/lib/libhdf5_hl_cpp.so.310
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_core.so.407
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_highgui.so.407
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_imgcodecs.so.407
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_imgproc.so.407
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_videoio.so.407
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/caffe/${OHOS_ARCH}/lib/libcaffe.so.1.0.0)
 ```
 
 ```shell
 #将三方库的头文件加入工程中
-target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/caffe/${OHOS_ARCH}/include)
-target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/include)
-target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glog/${OHOS_ARCH}/include)
-target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/include)
-target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/include)
-target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/googletest/${OHOS_ARCH}/include)
-target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/leveldb/${OHOS_ARCH}/include)
-target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/szip/${OHOS_ARCH}/include)
-target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/zlib/${OHOS_ARCH}/include)
+target_include_directories(entry PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/caffe/${OHOS_ARCH}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glog/${OHOS_ARCH}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/googletest/${OHOS_ARCH}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/leveldb/${OHOS_ARCH}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/szip/${OHOS_ARCH}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/zlib/${OHOS_ARCH}/include)
 ```
 
   ![caffe_usage](pic/caffe_usage.png)
