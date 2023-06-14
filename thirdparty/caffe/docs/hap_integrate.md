@@ -25,8 +25,8 @@
   ├── README_zh.md   
   ```
   
-- 将snappy leveldb opencv szip hdf5 boost glog zlib gflags googletest caffe拷贝至tools/main目录下
-  ```
+- caffe库需要依赖snappy leveldb opencv szip hdf5 boost glog zlib gflags googletest 这些库，需要将这些库和caffe库都拷贝至tools/main目录下
+  ```shell
   cd tpc_c_cplusplus
   cp thirdparty/caffe tools/main -rf
   cp thirdparty/leveldb tools/main -rf
@@ -39,9 +39,9 @@
   cp thirdparty/gflags tools/main -rf
   cp thirdparty/googletest tools/main -rf    
   ```
-- 在tools目录下编译三方库
+- 在tools目录下编译三方库，编译caffe库时候需要和依赖库一起进行编译。
   编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
-  ```
+  ```shell
   cd tools
   ./build.sh ./build.sh snappy leveldb opencv szip hdf5 boost glog zlib gflags googletest caffe
   ```
@@ -69,16 +69,39 @@
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
 &nbsp;![thirdparty_install_dir](pic/caffe_install_dir.png)
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
-  ```
-  #将三方库加入工程中
+```shell
+#将三方库加入工程中
 target_link_libraries(entry PUBLIC libace_napi.z.so)
 target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/cafffe/${OHOS_ARCH}/lib/libcaffe.so.1.0.0)
 target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_atomic.so.1.81.0)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_filesystem.so.1.81.0)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_system.so.1.81.0)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_thread.so.1.81.0)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glog/${OHOS_ARCH}/lib/libglog.so.1)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/lib/libhdf5.so.310)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/lib/libhdf5_cpp.so.310)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/lib/libhdf5_hl.so.310)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/lib/libhdf5_hl_cpp.so.310)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_core.so.407)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_highgui.so.407)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_imgcodecs.so.407)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_imgproc.so.407)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/lib/libopencv_videoio.so.407)
 ```
-  #将三方库的头文件加入工程中
+
+```shell
+#将三方库的头文件加入工程中
 target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/caffe/${OHOS_ARCH}/include)
 target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/include)
-  ```
+target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glog/${OHOS_ARCH}/include)
+target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/hdf5/${OHOS_ARCH}/include)
+target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opencv/${OHOS_ARCH}/include)
+target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/googletest/${OHOS_ARCH}/include)
+target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/leveldb/${OHOS_ARCH}/include)
+target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/szip/${OHOS_ARCH}/include)
+target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/zlib/${OHOS_ARCH}/include)
+```
+
   ![caffe_usage](pic/caffe_usage.png)
 ## 测试三方库
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
@@ -89,7 +112,7 @@ target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/
 
 - 将准备好的文件推送到开发板，在windows命令行进行如下操作
 
-  ```
+```shell
   hdc_std shell mount -o remount,rw /         #修改系统权限为可读写
 
   hdc_std file send libc++_shared.so /system/lib64 
@@ -112,7 +135,7 @@ target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/
 
   ```
 
-&nbsp;![caffe_test](pic/caffe_test.png)
+&nbsp;![caffe_test](pic/caffe_test.jpg)
 
 ## 参考资料
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
