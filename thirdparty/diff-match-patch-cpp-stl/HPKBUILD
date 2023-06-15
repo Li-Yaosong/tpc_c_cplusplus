@@ -33,9 +33,16 @@ build() {
 }
 
 package() {
-    cd $builddir/
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
-    cd $OLDPWD
+    install_dir=${LYCIUM_ROOT}/usr/${pkgname}/${ARCH}
+    mkdir -p ${install_dir}/bin
+    mkdir -p ${install_dir}/include
+    cd ${builddir}/$ARCH-build/
+    cp -af ../diff_match_patch.h ${install_dir}/include
+    cp -af diff_match_patch_test_string ${install_dir}/bin
+    cp -af diff_match_patch_test_wstring ${install_dir}/bin
+    cd ${OLDPWD}
+
+    return 0
 }
 
 check() {
