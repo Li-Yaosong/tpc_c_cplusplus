@@ -40,13 +40,25 @@
   cp thirdparty/minizip-ng tools/main -rf
   ```
 
+- 将minizip-ng的依赖库拷贝至tools/main目录下
+  
+  minizip-ng依赖了openssl,xz,bzip2,zstd以及googletest等三方库,其中googletest是minizip-ng的测试用例所依赖的库
+
+  ```shell
+  cp thirdparty/openssl tools/main -rf
+  cp thirdparty/xz tools/main -rf
+  cp thirdparty/bzip2 tools/main -rf
+  cp thirdparty/zstd tools/main -rf
+  cp thirdparty/googletest tools/main -rf
+  ```
+
 - 在tools目录下编译三方库
 
   编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
 
   ```shell
   cd tools
-  ./build.sh minizip-ng
+  ./build.sh minizip-ng googletest xz zstd bzip2 openssl
   ```
 
 - 三方库头文件及生成的库
