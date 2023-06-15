@@ -23,7 +23,7 @@
   ├── README_zh.md      
   ```
   
-- 将xerces拷贝至tools/main目录下
+- 将unzip和依赖的bzip2拷贝至tools/main目录下
   ```
   cd tpc_c_cplusplus
   cp thirdparty/unzip tools/main -rf
