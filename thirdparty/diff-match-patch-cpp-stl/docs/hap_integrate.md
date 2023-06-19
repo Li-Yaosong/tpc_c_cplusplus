@@ -1,4 +1,4 @@
-# diff-match-patch-cpp-stl编译说明
+# diff-match-patch-cpp-stl集成到应用hap
 本库是在RK3568开发板上基于OpenHarmony3.2 Release版本的镜像验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
 ## 开发环境
 - ubuntu20.04
@@ -33,6 +33,13 @@
   cd tools
   ./build.sh diff-match-patch-cpp-stl
   ```
+- [测试三方库](#测试三方库)
+
+## 应用中使用三方库
+
+- 在IDE的cpp目录下新增thirdparty目录，因该原库未生成库文件，需要将源文件(diff_match_patch.h)拷贝到该目录下，进行源码方式引入，如下图所示
+
+  ![diff_install](pic/diff_install.png)
 
 ## 测试三方库
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
