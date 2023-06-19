@@ -11,7 +11,6 @@
 | [jbig2enc](../thirdparty/jbig2enc/README_zh.md)              | Apache License                                | 是   |      |
 | [leptonica](../thirdparty/leptonica/README_zh.md)            | leptonica-license                             | 是   |      |
 | [libmp3lame](../thirdparty/libmp3lame/README_zh.md)          | LGPL                                          | 是   |      |
-| [libtiff](../thirdparty/libtiff/README_zh.md)                | libtiff License                               | 是   |      |
 | [lzma](../thirdparty/lzma/README_zh.md)                      | GNU LGPLv2+                                   | 是   |      |
 | [minizip-ng](../thirdparty/minizip-ng/README_zh.md)          | zlib License                                  | 是   | 是   |
 | [mqtt](../thirdparty/mqtt/README_zh.md)                      | Eclipse Public License v2.0                   | 是   |      |
@@ -73,4 +72,20 @@
 | [lcms2](../thirdparty/lcms2/README_zh.md)                    | MIT License                                   |      | 是   |
 | [websocketpp](../thirdparty/websocketpp/README_zh.md)        | websocketpp license                           |      | 是   |
 | [p7zip](../thirdparty/p7zip/README_zh.md)                    | LGPL                                          |      | 是   |
+| [freetype2](../thirdparty/freetype2/README_zh.md)            | eneral Public License]                        |      | 是   |
+| [curl](../thirdparty/curl/README_zh.md)                      | MIT License                                   |      | 是   |
+| [openssl](../thirdparty/openssl/README_zh.md)                | Apache License 2.0                            |      | 是   |
+| [libdash](../thirdparty/libdash/README_zh.md)                | LGPLv2.1                                      |      | 是   |
+| [mythes](../thirdparty/mythes/README_zh.md)                  | BSD                                           |      | 是   |
+| [libass](../thirdparty/libass/README_zh.md)                  | ISC License                                   |      | 是   |
+| [diff-match-patch-cpp-stl](../thirdparty/diff-match-patch-cpp-stl/README_zh.md) | Apache License 2.0                            |      | 是   |
+| [uchardet](../thirdparty/uchardet/README_zh.md)              | OZILLA PUBLIC LICENSE/PLV2/GPLV2              |      | 是   |
+| [unzip](../thirdparty/unzip/README_zh.md)                    | Info-ZIP license                              |      | 是   |
+| [xmlrpc-c](../thirdparty/xmlrpc-c/README_zh.md)              | BSD license                                   |      | 是   |
+| [protobuf](../thirdparty/protobuf/README_zh.md)              | BSD-3-Clause license                          |      | 是   |
+| [unixODBC](../thirdparty/unixODBC/README_zh.md)              | GNU Lesser General Public License v2.1        |      | 是   |
+| [fmt](../thirdparty/fmt/README_zh.md)                        | GNU Lesser General Public License             |      | 是   |
+| [assimp](../thirdparty/assimp/README_zh.md)                  | 3-clause BSD                                  |      | 是   |
+| [thrift](../thirdparty/thrift/README_zh.md)                  | Apache License 2.0                            |      | 是   |
+| [caffe](../thirdparty/caffe/README_zh.md)                    | caffe license                                 |      | 是   |
 
