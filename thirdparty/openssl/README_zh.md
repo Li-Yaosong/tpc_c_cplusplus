@@ -8,5 +8,8 @@ OpenSSL是一个强大的、商业级的、功能齐全的用于传输层安全�
 - 当前适配的功能：支持openssl加密传输功能
 - [Apache License 2.0](https://github.com/openssl/openssl)
 
+#### Legalities
+  A number of nations restrict the use or export of cryptography. If you are potentially subject to such restrictions, you should seek legal advice before attempting to develop or distribute cryptographic code.
+
 ## 集成方式
 + [应用hap包集成](docs/hap_integrate.md)
