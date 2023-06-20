@@ -9,4 +9,4 @@ C++ STL variant of https://code.google.com/p/google-diff-match-patch.
 - [Apache License 2.0](https://github.com/leutloff/diff-match-patch-cpp-stl/blob/master/LICENSE)
 
 ## 集成方式
-+ [编译说明](docs/hap_integrate.md)
++ [应用hap包集成](docs/hap_integrate.md)
