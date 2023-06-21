@@ -3,7 +3,7 @@
 pkgname=diff-match-patch-cpp-stl
 pkgver=master
 pkgrel=0
-pkgdesc=""
+pkgdesc="C++ STL variant of https://code.google.com/p/google-diff-match-patch."
 url="https://github.com/leutloff/diff-match-patch-cpp-stl"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("Apache License 2.0")
@@ -35,9 +35,7 @@ build() {
 package() {
     install_dir=${LYCIUM_ROOT}/usr/${pkgname}/${ARCH}
     mkdir -p ${install_dir}/bin
-    mkdir -p ${install_dir}/include
     cd ${builddir}/$ARCH-build/
-    cp -af ../diff_match_patch.h ${install_dir}/include
     cp -af diff_match_patch_test_string ${install_dir}/bin
     cp -af diff_match_patch_test_wstring ${install_dir}/bin
     cd ${OLDPWD}
