@@ -25,3 +25,7 @@ tpc_c_cplusplus
 ## 三方库列表
 
 - [C/C++三方库列表](docs/thirdparty_list.md)
+
+## 北向应用集成三方库
+
+- [北向应用集成三方库](docs/thirdparty_knowledge.md)
