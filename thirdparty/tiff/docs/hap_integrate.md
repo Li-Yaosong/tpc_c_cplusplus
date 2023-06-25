@@ -36,13 +36,16 @@
   cp thirdparty/xz tools/main -rf
   cp thirdparty/zstd tools/main -rf
   cp thirdparty/libdeflate tools/main -rf
+  cp thirdparty/jbigkit tools/main -rf
   ```
 - 在tools目录下编译三方库
   编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
   
   ```
+  (tiff库所需要的依赖库有 libpng giflib zstd libjpeg-turbo xz libdeflate jbigkit libwebp， 所以编译时需要一起编译)
+
   cd tools
-  ./build.sh  tiff libpng libjpeg-turbo libwebp zstd xz libdeflate
+  ./build.sh libpng giflib zstd libjpeg-turbo xz libdeflate jbigkit libwebp tiff
   ```
 - 三方库头文件及生成的库
   在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
@@ -50,7 +53,7 @@
   ```
   tiff/arm64-v8a   tiff/armeabi-v7a                             libpng/arm64-v8a      libpng/armeabi-v7a               
   libjpeg-turbo/arm64-v8a libjpeg-turbo/armeabi-v7a             libwebp/arm64-v8a      libwebp/armeabi-v7a              
-  zstd/arm64-v8a         zstd/armeabi-v7a                       xz/arm64-v8a            xz/armeabi-v7a                libdeflate/arm64-v8a   libdeflate/armeabi-v7a       
+  zstd/arm64-v8a         zstd/armeabi-v7a                       xz/arm64-v8a            xz/armeabi-v7a                libdeflate/arm64-v8a   libdeflate/armeabi-v7a       jbigkit/arm64-v8a   jbigkit/armeabi-v7a       
   ```
   
 - [测试三方库](#测试三方库)
@@ -84,9 +87,33 @@
 ## 测试三方库
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
 
-进入到构建目录执行 make -C prog check-TESTS 运行测试用例，如下截图（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
 
-![tiff_test](pic/tiff_ohos_test1.png)
+- 设置MAKE执行程序路径
+  ```
+  mkdir -p /data/local/tmp/ohos-sdk/linux/native/build-tools/cmake
+  ln -s /usr/bin  /data/local/tmp/ohos-sdk/linux/native/build-tools/cmake/bin
+  ```
+- 拷贝CMAKE安装路径到单板
+  ```
+  将编译机的/usr/share 目录下面cmake-3.26.X 进行压缩并传送到单板
+  hdc.exe  file send Z:\code\cmake-3.26.3.tar.gz /data/
+  mv /data/cmake-3.26.3.tar.gz /usr/share
+  tar zxvf cmake-3.26.3.tar.gz
+  mv cmake-3.26.3 cmake-3.26
+  ```
+- 将测试资源导入到开发板
+- 设置依赖库路径
+```
+32位系统
+export LD_LIBRARY_PATH=/data/local/tmp/lycium/usr/libjpeg-turbo/armeabi-v7a/lib:/data/local/tmp/lycium/usr/libdeflate/armeabi-v7a/lib:/data/local/tmp/lycium/usr/xz/armeabi-v7a/lib:/data/local/tmp/lycium/usr/zstd/armeabi-v7a/lib:/data/local/tmp/lycium/usr/libpng/armeabi-v7a/lib:/data/local/tmp/lycium/usr/tiff/armeabi-v7a/lib:/data/local/tmp/lycium/usr/libwebp/armeabi-v7a/lib:/data/local/tmp/lycium/usr/jbigkit/armeabi-v7a/lib
+
+##64位系统
+export LD_LIBRARY_PATH=/data/local/tmp/lycium/usr/libjpeg-turbo/arm64-v8a/lib:/data/local/tmp/lycium/usr/libdeflate/arm64-v8a/lib:/data/local/tmp/lycium/usr/xz/arm64-v8a/lib:/data/local/tmp/lycium/usr/zstd/arm64-v8a/lib:/data/local/tmp/lycium/usr/libpng/arm64-v8a/lib:/data/local/tmp/lycium/usr/tiff/arm64-v8a/lib:/data/local/tmp/lycium/usr/libwebp/arm64-v8a/lib:/data/local/tmp/lycium/usr/jbigkit/arm64-v8a/lib
+
+```  
+- 进入到构建目录执行 ctest 运行测试用例，如下截图（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
+
+
 
 ![tiff_test](pic/tiff_ohos_test2.png)
 
