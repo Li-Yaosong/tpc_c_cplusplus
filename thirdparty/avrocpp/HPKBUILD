@@ -12,8 +12,8 @@ depends=("boost")
 makedepends=()
 source="https://github.com/apache/avro/archive/refs/tags/$pkgver.tar.gz"
 
-autounpack=true
-downloadpackage=true
+autounpack=false
+downloadpackage=false
 patchflag=false
 buildhost=false
 
@@ -64,5 +64,5 @@ check() {
 
 # 清理环境
 cleanbuild(){
-    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+    #rm -rf ${PWD}/$builddir #${PWD}/$packagename
 }
