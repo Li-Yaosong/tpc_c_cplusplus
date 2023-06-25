@@ -12,8 +12,8 @@ depends=("boost")
 makedepends=()
 source="https://github.com/apache/avro/archive/refs/tags/$pkgver.tar.gz"
 
-autounpack=false
-downloadpackage=false
+autounpack=true
+downloadpackage=true
 patchflag=false
 buildhost=false
 
@@ -33,7 +33,7 @@ prepare() {
     if [ $buildhost == false ];then
         cd $builddir
         cmake -Bhost-build -Slang/c++ -L > `pwd`/host-build/build.log 2>&1
-        make -j4 -C host-build avrogencpp >> `pwd`/host-build/build.log 2>&1
+        VERBOSE=1 make -j4 -C host-build avrogencpp >> `pwd`/host-build/build.log 2>&1
         cd $OLDPWD
         buildhost=true
     fi
@@ -43,7 +43,7 @@ build() {
     # 编译avro c++的版本
     cd $builddir
     PKG_CONFIG_PATH="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DHOST_BUILD_DIR=$(pwd)/host-build -DOHOS_ARCH=$ARCH -B$ARCH-build -Slang/c++ -L  > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    VERBOSE=1 make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
 
     ret=$?
     cd $OLDPWD
@@ -64,5 +64,5 @@ check() {
 
 # 清理环境
 cleanbuild(){
-    #rm -rf ${PWD}/$builddir #${PWD}/$packagename
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
 }

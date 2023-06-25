@@ -1,4 +1,4 @@
-# avro集成到应用hap
+# protobuf集成到应用hap
 
 本库是在RK3568开发板上基于OpenHarmony3.2 Release版本的镜像验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
 
@@ -64,7 +64,7 @@
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示:
   ![thirdparty_install_dir](pic/avrocpp_install_dir.png)
  
-- 在最外层（entry/src/main/cpp)目录下CMakeLists.txt中添加如下语句
+- 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
 
   ```shell
   #将三方库加入工程中
@@ -77,8 +77,14 @@
   #将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/avrocpp/${OHOS_ARCH}/include)
   ```
-  在entry/build-profile.json5 添加配置:
-  ![pic/avro_build.png](pic/avro_build.png)
+
+## 测试三方库
+
+三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
+
+进入到构建目录,执行如下命令ctest（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
+
+![avrocpp_test](pic/avrocpp_test.png)
 
 ## 参考资料
 
