@@ -7,7 +7,7 @@ pkgdesc=""
 url=""
 archs=("armeabi-v7a" "arm64-v8a")
 license="LibTIFF license"
-depends=("zstd" "libjpeg-turbo" "xz" "libwebp" "libdeflate") # TODO ISO JBIG/LERC
+depends=("zstd" "libjpeg-turbo" "xz" "libwebp" "libdeflate" "jbigkit") # TODO LERC 循环依赖：libwebp 与 tiff 互相依赖, 这里为了不阻塞自动化构建，采用 libwebp 不依赖 tiff，tiff 依赖 libwebp
 makedepends=()
 
 source="http://download.osgeo.org/libtiff/$pkgname-$pkgver.tar.xz"
