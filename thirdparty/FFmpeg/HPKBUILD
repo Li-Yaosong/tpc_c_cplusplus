@@ -8,7 +8,7 @@ url="https://github.com/FFmpeg/FFmpeg/"
 archs=("armeabi-v7a" "arm64-v8a")
 license="GPL2/GPL3/LGPL3"
 depends=()
-makedepends=("yasm")
+makedepends=()
 source="https://github.com/FFmpeg/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
 autounpack=false
