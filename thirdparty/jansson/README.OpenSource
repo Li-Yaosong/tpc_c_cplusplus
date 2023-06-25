@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "jansson",
+        "License": "MIT license",
+        "License File": "LICENSES",
+        "Version Number": "v2.14",
+        "Owner": "wlxuz@isoftstone.com",
+        "Upstream URL": "https://github.com/akheron/jansson/archive/refs/tags/v2.14.tar.gz",
+        "Description": "C library for encoding, decoding and manipulating JSON data."
+    }
+]
