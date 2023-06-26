@@ -64,7 +64,7 @@
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
 
-  ```shell
+  ```cmake
   #将三方库加入工程中
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/FFmpeg/${OHOS_ARCH}/lib/libavcodec.a)
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/FFmpeg/${OHOS_ARCH}/lib/libavdevice.a)
@@ -83,7 +83,7 @@
 
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
 
-进入到构建目录,执行如下命令ctest（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
+进入到构建目录,执行如下命令make check（arm64-v8a-build/FFmpeg-n6.0为构建64位的目录，armeabi-v7a-build/FFmpeg-n6.0为构建32位的目录，其中n6.0为版本号，不同的版本对应的构建目录会不一样）
 
 
 &nbsp;![FFmpeg_test](pic/FFmpeg_test_1.png)
