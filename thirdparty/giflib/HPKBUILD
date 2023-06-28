@@ -18,11 +18,23 @@ buildtools="make"
 
 builddir=$pkgname-$pkgver
 packagename=$builddir.tar.gz
+patchflag=true
 
 cc=
 ar=
 # giflib 采用makefile编译构建，为了保留构建环境(方便测试)。因此同一份源码在解压后分为两份,各自编译互不干扰
 prepare() {
+    # patch说明：
+    # 原库测试使用head命令，在linux上head支持--bytes参数，但是oh上的head不支持该参数，这里使用等效的参数 -c 来替代
+    # oh上面的head -c 命令不支持 例如-20（除了尾部20字节），这里使用busybox中的head命令来替代oh自带的head命令
+    if $patchflag
+    then
+        cd $builddir
+        patch -p1 < `pwd`/../giflib_oh_test.patch
+        # patch只需要打一次,关闭打patch
+        patchflag=false
+        cd $OLDPWD
+    fi
     cp -rf $builddir $builddir-$ARCH-build
     cd $builddir-$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]
@@ -60,6 +72,6 @@ check() {
 }
 
 # 清理环境
-cleanbuild(){
+cleanbuild() {
     rm -rf ${PWD}/$builddir $builddir-armeabi-v7a-build  $builddir-arm64-v8a-build #${PWD}/$packagename
 }
