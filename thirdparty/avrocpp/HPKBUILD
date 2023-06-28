@@ -1,0 +1,68 @@
+# Contributor: wlxuz <wlxuz@isoftstone.com>
+# Maintainer: wlxuz <wlxuz@isoftstone.com>
+
+pkgname=avrocpp
+pkgver=release-1.11.1
+pkgrel=0
+pkgdesc="Apache Avro is a data serialization system."
+url="https://github.com/apache/avro"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("Apache-2.0 license")
+depends=("boost")
+makedepends=()
+source="https://github.com/apache/avro/archive/refs/tags/$pkgver.tar.gz"
+
+autounpack=true
+downloadpackage=true
+patchflag=false
+buildhost=false
+
+builddir=avro-$pkgver
+packagename=avro-$pkgver.tar.gz
+
+prepare() {
+    if [ $patchflag == false ];then
+        cd $builddir
+        patch -p1 < `pwd`/../avro_oh_pkg.patch
+        patchflag=true
+        cd $OLDPWD
+    fi
+    mkdir -p $builddir/$ARCH-build
+    mkdir -p $builddir/host-build
+    
+    if [ $buildhost == false ];then
+        cd $builddir
+        cmake -Bhost-build -Slang/c++ -L > `pwd`/host-build/build.log 2>&1
+        VERBOSE=1 make -j4 -C host-build avrogencpp >> `pwd`/host-build/build.log 2>&1
+        cd $OLDPWD
+        buildhost=true
+    fi
+}
+
+build() {
+    # 编译avro c++的版本
+    cd $builddir
+    PKG_CONFIG_PATH="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DHOST_BUILD_DIR=$(pwd)/host-build -DOHOS_ARCH=$ARCH -B$ARCH-build -Slang/c++ -L  > `pwd`/$ARCH-build/build.log 2>&1
+    VERBOSE=1 make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # real test
+    # ctest
+}
+
+# 清理环境
+cleanbuild(){
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
