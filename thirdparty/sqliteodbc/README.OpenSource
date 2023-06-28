@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "sqliteodbc",
+        "License": "BSD",
+        "License File": "http://www.ch-werner.de/sqliteodbc/license.terms",
+        "Version Number": "0.9998",
+        "Owner": "sttangc@isoftstone.com",
+        "Upstream URL": "http://www.ch-werner.de/sqliteodbc/sqliteodbc-0.9998.tar.gz",
+        "Description": "SQLite ODBC driver."
+    }
+]
