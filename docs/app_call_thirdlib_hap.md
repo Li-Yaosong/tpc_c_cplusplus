@@ -18,12 +18,12 @@ OpenHarmony的napi介绍请参考[Napi 系列学习课程](https://gitee.com/ope
 
 ### 移植适配
 
-openjpeg三方库的移植适配参考文档[通过IDE集成C/C++三方库](./adapter_thirdlib_with_ide.md).
+openjpeg三方库的移植适配参考文档[通过IDE集成C/C++三方库](./adapter_thirdlib.md).
 
 ### Napi接口开发
 
 三方库napi的接口一般是由需求方提供的，对于无需求或需要自己定义接口的，我们可以根据三方库对外导出的API接口进行封装或是根据原生库的测试用例对外封装测试接口。本文中我们以封装2个openjpeg测试接口为例详细说明napi接口开发的具体流程。<br>
-napi接口开发前提是需要创建一个napi的工程，具体步骤参考[通过Deveco Studio创建一个Napi工程](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi_study/docs/hello_napi.md)
+napi接口开发前提是需要创建一个napi的工程，具体步骤参考[通过Deveco Studio创建一个Napi工程](./hello_napi.md)
 
 #### 定义napi接口
 
