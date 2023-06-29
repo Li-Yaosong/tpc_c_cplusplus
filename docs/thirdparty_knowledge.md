@@ -25,3 +25,13 @@
 - :tw-1f195: [OH应用包编译构建分析](hap_build.md)
 - :tw-1f195: [如何将三方库集成到hap包中](adapter_thirdlib_with_ide.md)
 - :tw-1f195: [在OpenHarmony开发板上验证hap包中集成的三方库](./test_hap.md)
+
+## C/C++ 三方库适配的关键问题点分析
+
+### 固件集成的动态库无法在IDE上使用
+
+- :tw-1f195: [应用集成和固件集成中C库差异化分析](rom_hap_c_cpluplus_diff.md)
+
+### 开源三方库的cmake在IDE上直接引用的问题
+
+- :tw-1f195: [开源三方库的cmake在IDE上直接引用的问题分析](ide_findpackage_problem.md)
