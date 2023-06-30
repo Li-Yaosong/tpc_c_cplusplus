@@ -11,30 +11,22 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("jasper license files")
 depends=("libjpeg-turbo")
 makedepends=()
-install=usr
+
 source="https://github.com/${pkgname}-software/${pkgname}/archive/refs/tags/${pkgver}.tar.gz"
 
 builddir=${pkgname}-${pkgver}
 packagename=${builddir}.tar.gz
 autounpack=true
 downloadpackage=true
-patchflag=true
 buildtools="cmake"
 
 prepare() {
     mkdir -p ${builddir}/${ARCH}-build
-    if [ $patchflag == true ]; then
-        cd ${builddir}
-        patch -p1 < ../jasper_oh_pkg.patch
-
-        patchflag=false
-        cd $OLDPWD
-    fi
 }
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=${ARCH} -DJAS_ENABLE_SHARED=OFF -DJAS_STDC_VERSION=199901L -B${ARCH}-build -S./ -L > `pwd`/${ARCH}-build/build.log 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=${ARCH} -DJAS_ENABLE_DOC=OFF -DJAS_STDC_VERSION=199901L -B${ARCH}-build -S./ -L > `pwd`/${ARCH}-build/build.log 2>&1
     make -j4 -C ${ARCH}-build >> `pwd`/${ARCH}-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
@@ -49,10 +41,8 @@ package() {
 
 check() {
     echo "The test must be on an OpenHarmony device!"
-    # real test CMD
-    # ctest
 }
 
-cleanbuild(){
+cleanbuild() {
      rm -rf ${PWD}/${builddir} #${PWD}/$packagename
 }

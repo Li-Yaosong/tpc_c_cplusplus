@@ -65,15 +65,19 @@
 
   &nbsp;![thirdparty_install_dir](pic/jasper_install_dir.png)
 
+- 动态库需要在`\\entry\libs\${OHOS_ARCH}\`目录，才能集成到hap包中，因此需要将对应的动态库拷贝到`\\entry\libs\${OHOS_ARCH}\`目录。
+  
+  &nbsp;![thirdparty_so_install_dir](pic/jasper_so_install_dir.png)
+  
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
 
   ```shell
   # 将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/jasper/${OHOS_ARCH}/lib/libjasper.a)
+  target_link_libraries(entry PRIVATE ${CMAKE_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libjasper.so.7)
   # 将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/jasper/${OHOS_ARCH}/include)
   # 将三方库的依赖库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libjpeg-turbo/${OHOS_ARCH}/lib/libjpeg.a)
+  target_link_libraries(entry PRIVATE ${CMAKE_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libjpeg.so.62)
   # 将三方库的依赖库头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libjpeg-turbo/${OHOS_ARCH}/include)
   ```
