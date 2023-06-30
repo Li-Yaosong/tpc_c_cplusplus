@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libyuv",
+        "License": "BSD 3-Clause License",
+        "License File": "https://chromium.googlesource.com/libyuv/libyuv/+/c0031cfd95e131c7b11be41d0272455cc63f10f4/LICENSE",
+        "Version Number": "c0031cf",
+        "Owner": "swkec@isoftstone.com",
+        "Upstream URL": "https://chromium.googlesource.com/libyuv/libyuv/+archive/c0031cfd95e131c7b11be41d0272455cc63f10f4.tar.gz",
+        "Description": "libyuv is an open-source image processing library that provides various image processing functions, including image format conversion, color space conversion, color adjustment, denoising, defogging, sharpening, and scaling."
+    }
+]
