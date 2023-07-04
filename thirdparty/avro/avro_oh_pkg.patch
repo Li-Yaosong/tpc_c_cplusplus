@@ -1,0 +1,48 @@
+diff -Naur avro-release-1.11.1_old/lang/c/examples/CMakeLists.txt avro-release-1.11.1/lang/c/examples/CMakeLists.txt
+--- avro-release-1.11.1_old/lang/c/examples/CMakeLists.txt	2023-06-08 10:46:03.120338183 +0800
++++ avro-release-1.11.1/lang/c/examples/CMakeLists.txt	2023-06-08 10:52:34.003978909 +0800
+@@ -27,6 +27,5 @@
+ endif (WIN32)
+ 
+ add_test(quickstop
+-    ${CMAKE_COMMAND} -E chdir ${AvroC_SOURCE_DIR}/examples
+     ${exec_name}
+ )
+diff -Naur avro-release-1.11.1_old/lang/c/tests/CMakeLists.txt avro-release-1.11.1/lang/c/tests/CMakeLists.txt
+--- avro-release-1.11.1_old/lang/c/tests/CMakeLists.txt	2023-06-08 10:46:03.124338242 +0800
++++ avro-release-1.11.1/lang/c/tests/CMakeLists.txt	2023-06-08 10:52:23.643924713 +0800
+@@ -35,7 +35,6 @@
+     endif (WIN32)
+ 
+     add_test(${name}
+-        ${CMAKE_COMMAND} -E chdir ${AvroC_SOURCE_DIR}/tests
+         ${exec_name}
+     )
+ endmacro(add_avro_test)
+
+ --- avro-release-1.11.1_old/lang/c++/impl/FileStream.cc	2023-06-14 19:21:41.028932840 +0800
++++ avro-release-1.11.1/lang/c++/impl/FileStream.cc	2023-06-14 19:21:54.049117895 +0800
+@@ -87,7 +87,11 @@
+     }
+ 
+     void seek(size_t len) final {
++#ifdef __ILP32__
++        off_t r = ::lseek(fd_, static_cast<int32_t>(len), SEEK_CUR);
++#else
+         off_t r = ::lseek(fd_, len, SEEK_CUR);
++#endif
+         if (r == static_cast<off_t>(-1)) {
+             throw Exception(boost::format("Cannot skip file: %1%") % strerror(errno));
+         }
+--- avro-release-1.11.1_old/lang/c++/CMakeLists.txt	2023-06-15 14:31:14.401856054 +0800
++++ avro-release-1.11.1/lang/c++/CMakeLists.txt	2023-06-15 14:31:42.806246942 +0800
+@@ -140,7 +140,7 @@
+ 
+ macro (gen file ns)
+     add_custom_command (OUTPUT ${file}.hh
+-        COMMAND avrogencpp
++        COMMAND ${HOST_BUILD_DIR}/avrogencpp
+             -p -
+             -i ${CMAKE_CURRENT_SOURCE_DIR}/jsonschemas/${file}
+             -o ${file}.hh -n ${ns} -U
+
