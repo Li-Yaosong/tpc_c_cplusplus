@@ -3,15 +3,17 @@
 ## 简介
 GNUMake是一种工具，用于控制从程序的源文件生成程序的可执行文件和其他非源文件。
 
+本文档主要介绍其arm64位交叉编译步骤
+
 ## 编译步骤
 
 ### 编译工具链下载
 
-- 64位编译工具：gcc-linaro-11.3.1-2022.06-x86_64_aarch64-linux-gnu.tar.xz  [下载链接](https://snapshots.linaro.org/gnu-toolchain/11.3-2022.06-1/aarch64-linux-gnu/gcc-linaro-11.3.1-2022.06-x86_64_aarch64-linux-gnu.tar.xz)
+- 64位编译工具：gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz  [下载链接](https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz)
 
 ### 解压编译工具链
 
-- 解压64位 gcc-linaro-11.3.1-2022.06-x86_64_aarch64-linux-gnu.tar.xz
+- 解压64位 tar xvJf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
 
 
 - 进入解压后的文件夹，查看bin目录下就有我们编译用到的工具链
@@ -33,7 +35,7 @@ GNUMake是一种工具，用于控制从程序的源文件生成程序的可执�
 
 
 ```shell
-export TOOLS=/xxx/gcc-linaro-11.3.1-2022.06-x86_64_aarch64-linux-gnu/bin
+export TOOLS=/xxx/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin
 export AS=${TOOLS}/aarch64-linux-gnu-as
 export CC=${TOOLS}/aarch64-linux-gnu-gcc
 export CXX=${TOOLS}/aarch64-linux-gnu-g++
@@ -49,17 +51,19 @@ export AR=${TOOLS}/aarch64-linux-gnu-ar
 ### 生成makefile
 
 - 进入64位编译路径 cd arm64_v8a
-- 执行如下命令生成makefile
+- 执行如下命令生成Makefile
 
 ```shell
 ../configure --host="aarch64-linux" --prefix="${PWD}/install" 
 ```
 
+- 修改Makefile，将AM_LDFLAGS = -Wl,--export-dynamic 改成AM_LDFLAGS = 即删除后面的-Wl,--export-dynamic
+
 ### 编译make源码
 
 在对应的编译目录执行make CFLAGS="-static" LDFLAGS="-static" VERBOSE=1，执行结果截图如下
 
-&nbsp;![makesuccess](media/make_64_success.png)
+&nbsp;![success](media/build_success_64.png)
 
 ### 安装make
 
@@ -75,7 +79,7 @@ export AR=${TOOLS}/aarch64-linux-gnu-ar
 
 ### 运行结果
 
-将编译目录install文件夹压缩打包，发送到OHOS开发板中
+将安装目录install文件夹压缩打包，发送到OHOS开发板中
 
 ```shell
 #打包对应编译目录下的install文件夹
