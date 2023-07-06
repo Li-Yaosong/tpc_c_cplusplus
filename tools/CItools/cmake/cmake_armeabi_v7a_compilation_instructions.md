@@ -3,15 +3,17 @@
 ## 简介
 CMake是一个跨平台的编译安装工具。
 
+本文档主要介绍其arm32位交叉编译步骤
+
 ## 编译步骤
 
 ### 编译工具链下载
 
-- 32位编译工具：gcc-linaro-11.3.1-2022.06-x86_64_arm-linux-gnueabihf.tar.xz [下载链接](https://snapshots.linaro.org/gnu-toolchain/11.3-2022.06-1/arm-linux-gnueabihf/gcc-linaro-11.3.1-2022.06-x86_64_arm-linux-gnueabihf.tar.xz)
+- 32位编译工具：gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi.tar.xz [下载链接](https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/arm-linux-gnueabi/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi.tar.xz)
 
 ### 解压编译工具链
 
-- 解压32位 gcc-linaro-11.3.1-2022.06-x86_64_arm-linux-gnueabihf.tar.xz
+- 解压32位工具链 tar xvJf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi.tar.xz
 
 
 - 进入解压后的文件夹，查看bin目录下就有我们编译用到的工具链
@@ -31,18 +33,17 @@ CMake是一个跨平台的编译安装工具。
 - 设置32位交叉编译环境, xxx 是表示工具链存放的目录路径
 
 ```shell
-
-export TOOLS=/xxx/gcc-linaro-11.3.1-2022.06-x86_64_arm-linux-gnueabihf/bin
-export AS=${TOOLS}/arm-linux-gnueabihf-as
-export CC=${TOOLS}/arm-linux-gnueabihf-gcc
-export CXX=${TOOLS}/arm-linux-gnueabihf-g++
-export LD=${TOOLS}/arm-linux-gnueabihf-ld
-export STRIP=${TOOLS}/arm-linux-gnueabihf-strip
-export RANLIB=${TOOLS}/arm-linux-gnueabihf-ranlib
-export OBJDUMP=${TOOLS}/arm-linux-gnueabihf-objdump
-export OBJCOPY=${TOOLS}/arm-linux-gnueabihf-objcopy
-export NM=${TOOLS}/arm-linux-gnueabihf-gcc-nm
-export AR=${TOOLS}/arm-linux-gnueabihf-ar
+export TOOLS=/xxx/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi/bin
+export AS=${TOOLS}/arm-linux-gnueabi-as
+export CC=${TOOLS}/arm-linux-gnueabi-gcc
+export CXX=${TOOLS}/arm-linux-gnueabi-g++
+export LD=${TOOLS}/arm-linux-gnueabi-ld
+export STRIP=${TOOLS}/arm-linux-gnueabi-strip
+export RANLIB=${TOOLS}/arm-linux-gnueabi-ranlib
+export OBJDUMP=${TOOLS}/arm-linux-gnueabi-objdump
+export OBJCOPY=${TOOLS}/arm-linux-gnueabi-objcopy
+export NM=${TOOLS}/arm-linux-gnueabi-gcc-nm
+export AR=${TOOLS}/arm-linux-gnueabi-ar
 export LDFLAGS="-static"
 ```
 
@@ -59,7 +60,7 @@ cmake ../ -L -DCMAKE_USE_OPENSSL=OFF -DBUILD_TESTING=OFF
 
 在对应的编译目录执行 make  VERBOSE=1,编译成功截图如下
 
-&nbsp;![make_file](media/make_32_success.png)
+&nbsp;![file](media/build_success_32.png)
 
 ### 编译完成
 
