@@ -3,15 +3,17 @@
 ## 简介
 GNUMake是一种工具，用于控制从程序的源文件生成程序的可执行文件和其他非源文件。
 
+本文档主要介绍其arm32位交叉编译步骤
+
 ## 编译步骤
 
 ### 编译工具链下载
 
-- 32位编译工具：gcc-linaro-11.3.1-2022.06-x86_64_arm-linux-gnueabihf.tar.xz [下载链接](https://snapshots.linaro.org/gnu-toolchain/11.3-2022.06-1/arm-linux-gnueabihf/gcc-linaro-11.3.1-2022.06-x86_64_arm-linux-gnueabihf.tar.xz)
+- 32位编译工具：gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi.tar.xz [下载链接]https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/arm-linux-gnueabi/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi.tar.xz)
 
 ### 解压编译工具链
 
-- 解压32位 gcc-linaro-11.3.1-2022.06-x86_64_arm-linux-gnueabihf.tar.xz
+- 解压32位 tar xvJf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi.tar.xz
 
 
 - 进入解压后的文件夹，查看bin目录下就有我们编译用到的工具链
@@ -32,17 +34,17 @@ GNUMake是一种工具，用于控制从程序的源文件生成程序的可执�
 - 设置32位交叉编译环境, xxx 是表示工具链存放的目录路径
 
 ```shell
-export TOOLS=/xxx/gcc-linaro-11.3.1-2022.06-x86_64_arm-linux-gnueabihf/bin
-export AS=${TOOLS}/arm-linux-gnueabihf-as
-export CC=${TOOLS}/arm-linux-gnueabihf-gcc
-export CXX=${TOOLS}/arm-linux-gnueabihf-g++
-export LD=${TOOLS}/arm-linux-gnueabihf-ld
-export STRIP=${TOOLS}/arm-linux-gnueabihf-strip
-export RANLIB=${TOOLS}/arm-linux-gnueabihf-ranlib
-export OBJDUMP=${TOOLS}/arm-linux-gnueabihf-objdump
-export OBJCOPY=${TOOLS}/arm-linux-gnueabihf-objcopy
-export NM=${TOOLS}/arm-linux-gnueabihf-gcc-nm
-export AR=${TOOLS}/arm-linux-gnueabihf-ar
+export TOOLS=/xxx/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabi/bin
+export AS=${TOOLS}/arm-linux-gnueabi-as
+export CC=${TOOLS}/arm-linux-gnueabi-gcc
+export CXX=${TOOLS}/arm-linux-gnueabi-g++
+export LD=${TOOLS}/arm-linux-gnueabi-ld
+export STRIP=${TOOLS}/arm-linux-gnueabi-strip
+export RANLIB=${TOOLS}/arm-linux-gnueabi-ranlib
+export OBJDUMP=${TOOLS}/arm-linux-gnueabi-objdump
+export OBJCOPY=${TOOLS}/arm-linux-gnueabi-objcopy
+export NM=${TOOLS}/arm-linux-gnueabi-gcc-nm
+export AR=${TOOLS}/arm-linux-gnueabi-ar
 ```
 
 ### 生成makefile
@@ -54,11 +56,13 @@ export AR=${TOOLS}/arm-linux-gnueabihf-ar
 ../configure --host="arm-linux" --prefix="${PWD}/install"
 ```
 
+- 修改Makefile，将AM_LDFLAGS = -Wl,--export-dynamic 改成AM_LDFLAGS = 即删除后面的-Wl,--export-dynamic
+
 ### 编译make源码
 
 在对应的编译目录执行make CFLAGS="-static" LDFLAGS="-static" VERBOSE=1，执行结果截图如下
 
-&nbsp;![makesuccess](media/make_success.png)
+&nbsp;![success](media/build_success_32.png)
 
 ### 安装make
 
@@ -74,7 +78,7 @@ export AR=${TOOLS}/arm-linux-gnueabihf-ar
 
 ### 运行结果
 
-将编译目录install文件夹压缩打包，发送到OHOS开发板中
+将安装目录install文件夹压缩打包，发送到OHOS开发板中
 
 ```shell
 #打包对应编译目录下的install文件夹
