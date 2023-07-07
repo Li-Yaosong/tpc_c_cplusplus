@@ -34,7 +34,7 @@
 
   ```shell
   cd tpc_c_cplusplus
-  cp -rf thirdparty/protobuf tools/main
+  cp -rf thirdparty/avrocpp tools/main
   ```
 
 - 在tools目录下编译三方库
@@ -73,6 +73,12 @@
 
   #将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/avrocpp/${OHOS_ARCH}/include)
+
+  #将动态库打包到libs
+  add_custom_command(TARGET entry POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/avrocpp/${OHOS_ARCH}/lib/libavrocpp.so
+    ${CMAKE_CURRENT_BINARY_DIR}/../../../../libs/${OHOS_ARCH})
   ```
 
 ## 测试三方库
