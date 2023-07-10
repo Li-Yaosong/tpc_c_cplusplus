@@ -1,4 +1,4 @@
-# protobuf集成到应用hap
+# avro集成到应用hap
 
 本库是在RK3568开发板上基于OpenHarmony3.2 Release版本的镜像验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
 
@@ -68,7 +68,13 @@
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/avro/${OHOS_ARCH}/lib/libavro.so)
 
   #将三方库的头文件加入工程中
-  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/avrocpp/${OHOS_ARCH}/include)
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/avro/${OHOS_ARCH}/include)
+
+  #将动态库打包到libs
+  add_custom_command(TARGET entry POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/avro/${OHOS_ARCH}/lib/libavro.so
+    ${CMAKE_CURRENT_BINARY_DIR}/../../../../libs/${OHOS_ARCH})
   ```
 
 ## 测试三方库
