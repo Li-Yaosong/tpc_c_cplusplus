@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "ngtcp2",
+        "License": "MIT license",
+        "License File": "https://github.com/ngtcp2/ngtcp2/blob/main/COPYING",
+        "Version Number": "v0.16.0",
+        "Owner": "kanchengc@isoftstone.com",
+        "Upstream URL": "https://github.com/ngtcp2/ngtcp2/archive/refs/tags/v0.16.0.tar.gz",
+        "Description": "ngtcp2 project is an effort to implement IETF QUIC protocol."
+    }
+]
