@@ -1,6 +1,6 @@
 #!/bin/bash
 
-setarm32ENV(){
+setarm32ENV() {
     export AS=${OHOS_SDK}/native/llvm/bin/llvm-as
     export CC=${OHOS_SDK}/native/llvm/bin/arm-linux-ohos-clang
     export CXX=${OHOS_SDK}/native/llvm/bin/arm-linux-ohos-clang++
@@ -16,11 +16,11 @@ setarm32ENV(){
     export LDFLAGS=""
 }
 
-unsetarm32ENV(){
+unsetarm32ENV() {
     unset AS CC CXX LD STRIP RANLIB OBJDUMP OBJCOPY NM AR CFLAGS CXXFLAGS LDFLAGS
 }
 
-setarm64ENV(){
+setarm64ENV() {
     export AS=${OHOS_SDK}/native/llvm/bin/llvm-as
     export CC=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang
     export CXX=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang++
@@ -36,6 +36,6 @@ setarm64ENV(){
     export LDFLAGS=""
 }
 
-unsetarm64ENV(){
+unsetarm64ENV() {
     unset AS CC CXX LD STRIP RANLIB OBJDUMP OBJCOPY NM AR CFLAGS CXXFLAGS LDFLAGS
 }
