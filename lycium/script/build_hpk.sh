@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # 退出码检查
-sure()
-{
+sure() {
     eval $*
     err=$?
     if [ "$err" != "0" ]
@@ -12,6 +11,8 @@ sure()
         exit 1
     fi
 }
+
+PKGBUILD_ROOT=$(cd $(dirname ${BASH_SOURCE[0]}); pwd)
 
 # 加载库信息
 source ${PWD}/HPKBUILD
@@ -25,6 +26,7 @@ download() {
         echo ${PWD}/$2"，存在"
     else
         curl -f -L -- "$1" > ${PWD}/$2
+        return $?
     fi
 }
 
@@ -42,7 +44,7 @@ checksum() {
 
 # 解压库
 # 参数1 压缩包名
-unpack(){
+unpack() {
     if [ -f ${PWD}/$1 ]
     then
         if [[ "$1" == *.tar.gz ]]
@@ -76,6 +78,7 @@ unpack(){
     fi
 }
 
+newdeps=()
 builddepends() {
     donelist=($*)
     # 如果有依赖没有编译完，则跳过编译后续再次编译
@@ -83,13 +86,22 @@ builddepends() {
     count=0
     for depend in ${depends[@]}
     do
+        doneflag=false
         for donelib in ${donelist[@]}
         do
             if [ $depend == $donelib ]
             then
                 count=$((count+1))
+                doneflag=true
             fi
         done
+        # 记录未编译的依赖项
+        # echo $doneflag
+        if ! $doneflag
+        then
+            # echo -----------
+            newdeps[${#newdeps[@]}]=$depend
+        fi
     done
     if [ $count -ne $deplen ]
     then
@@ -171,7 +183,11 @@ builpackage() {
     builddepends "${donelist[*]}"
     if [ $? -eq 101 ]
     then
-        echo $pkgname" not ready. wait "${depends[*]}
+        echo $pkgname" not ready. wait "${newdeps[*]}
+        for dep in ${newdeps[@]}
+        do
+            echo $dep >> ${LYCIUM_DEPEND_PKGNAMES}
+        done
         exit 101
     fi
     echo "Build $pkgname $pkgver strat!"
@@ -191,6 +207,7 @@ builpackage() {
     checkmakedepends $pkgname
     for arch in ${archs[@]}
     do
+        # TODO archs1 编译失败，继续编译archs2
         echo "Compileing OpenHarmony $arch $pkgname $pkgver libs..." 
         ARCH=$arch
         sure prepare
@@ -214,7 +231,7 @@ builpackage() {
     echo "Build $pkgname $pkgver end!"
 }
 
-cleanhpk(){
+cleanhpk() {
     sure cleanbuild
 }
 

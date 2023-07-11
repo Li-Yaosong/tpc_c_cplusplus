@@ -17,9 +17,9 @@
     cp toolchain/* ${OHOS_SDK}/native/llvm/bin
 ```
 
-## 设置ohos编译宏
-由于 ohos_sdk 没有为OpenHarmony提供系统识别的宏，因此我们需要在 ${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake 文件末尾，添加
+## 设置编译机cmake识别OHOS系统
+由于sdk中的cmake版本过低, 导致很多开源库在cmake阶段报错. 这个时候就需要用户在编译机上安装一个高版本的cmake(推荐使用3.26版本). 但是
+cmake官方是不支持OHOS的. 解决方案:
 ```
-    add_definitions(-DOHOS_NDK)
+cp $OHOS_SDK/native/build-tools/cmake/share/cmake-3.16/Modules/Platform/OHOS.cmake xxx(代表你编译机安装的cmake的路径)/cmake-3.26.3-linux-x86_64/share/cmake-3.26/Modules/Platform
 ```
-用于系统识别

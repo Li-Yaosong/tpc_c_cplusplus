@@ -1,4 +1,4 @@
-Linux 环境下 使用 OpenHarmony SDK 编译，OpenHarmony standard 系统北向应用 c/c++ 库
+Ubuntu 20.04(推荐) 环境下 使用 OpenHarmony SDK 编译，OpenHarmony standard 系统北向应用 c/c++ 库
 
 ## OpenHarmony Linux 环境 SDK 使用说明
 
@@ -69,7 +69,7 @@ nativeapi_syscap_config.json 记录 SDK 提供的能力对应的头文件
 **build和build-tools目录提供构建时的 cmake，ninja，以及 toolchain 依赖。llvm 提供编译工具链。sysroot 提供 usr 系统资源**
 
 ## OHOS SDK 使用
-本片介绍基本用法, 涉及到库有依赖的情况请[移步](./OHOS_SDK-Usage--depend-libs.md).
+本片介绍基本用法, 涉及到库有依赖的情况请[移步](./OHOS_SDK-Usage-depend-libs.md).
 ### 编译cmake构建的库
 
 ​		SDK 采用 cmake 作为默认的编译脚本工具和 deveco 开发工具是一致的。并且 cmake 也是现如今 c/c++ 开发最流行的编译构建脚本。以下我使用 cjson 作为实例演示一下 OHOS SDK 构建 cmake 项目的步骤。
@@ -153,7 +153,7 @@ ohos@ubuntu20:~/openHarmony/cJSON/ohos64build$
 
 #### 方法1：我们可以使用 cmake 构建脚本重写开源库的构建过程
 
-​		这种方法需要分析源库的构建脚本或者分析源库的编译构建日志，我这里推荐简单点的分析构建日志（可以不必去学习 configure 的语法）。很多库为了性能一般会对代码进行处理器级的优化（SIMD: SSE,AVX; NEON），因此编译构建日志最好采用交叉编译工具链的日志，不要盲目的根据 x86_64 的构建日志进行翻译（cmake）。如果使用此方法请参考 oh 三方库 [cmake 编写指导](https://gitee.com/huangminzhong/cmake_study)及[编写规范](../cmake_specification.md)。
+​		这种方法需要分析源库的构建脚本或者分析源库的编译构建日志，我这里推荐简单点的分析构建日志（可以不必去学习 configure 的语法）。很多库为了性能一般会对代码进行处理器级的优化（SIMD: SSE,AVX; NEON），因此编译构建日志最好采用交叉编译工具链的日志，不要盲目的根据 x86_64 的构建日志进行翻译（cmake）。如果使用此方法请参考 oh 三方库 [cmake 编写指导](https://gitee.com/huangminzhong/cmake_study)及[编写规范](./cmake_specification.md)。
 
 #### 方法2：使用项目原生的构建工具例如 configure、makefile
 
