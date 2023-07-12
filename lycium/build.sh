@@ -9,7 +9,7 @@ buildcheckflag=true
 if [ "$osname" == "Linux" ]
 then
     echo "Build OS linux"
-    LYCIUM_ROOT=`pwd`
+    LYCIUM_ROOT=$(cd $(dirname ${BASH_SOURCE[0]}); pwd)
 elif [ "$osname" == "CYGWI" ] # CYGWIN
 then
     echo "Build OS CYGWIN"
@@ -37,7 +37,12 @@ echo "CLANG_VERSION="${CLANG_VERSION}
 export CLANG_VERSION=${CLANG_VERSION}
 jobFlag=true
 
-checkbuildenv(){
+# 记录依赖库
+export LYCIUM_DEPEND_PKGNAMES="/tmp/$USER-lycium_deps"
+
+hpksdir="../thirdparty/" # 所有 hpk 项目存放的目录
+
+checkbuildenv() {
     which gcc >/dev/null 2>&1
     if [ $? -ne 0 ]
     then
@@ -80,10 +85,10 @@ checkbuildenv(){
         exit 1
     fi
     echo "patch 命令已安装"
-    if [ ! -d `pwd`/usr ]
+    if [ ! -d $LYCIUM_ROOT/usr ]
     then
-        echo "创建 `pwd`/usr 目录"
-        mkdir -p `pwd`/usr
+        echo "创建 $LYCIUM_ROOT/usr 目录"
+        mkdir -p $LYCIUM_ROOT/usr
     fi
 
 }
@@ -118,7 +123,7 @@ readdonelibs() {
     donelist=(${donelibs[@]})
 }
 
-makelibsdir(){
+makelibsdir() {
     jobs=($*)
     for job in ${jobs[@]}
     do
@@ -134,8 +139,8 @@ makelibsdir(){
         then
             continue
         fi
-        tmppath=`pwd`/main/$job
-        if [ -d $tmppath ]
+        tmppath=$LYCIUM_ROOT/$hpksdir/$job
+        if [[ -d $tmppath && -f $tmppath/HPKBUILD ]]
         then
             hpkPaths[${#hpkPaths[@]}]=$tmppath
         fi
@@ -144,7 +149,7 @@ makelibsdir(){
 
 # 找到main目录下的所有目录
 # 参数1 为项目根路径
-findmainhpkdir(){
+findmainhpkdir() {
     # hpkPaths=`find $1 -maxdepth 1 -type d`
     # # echo $hpkPaths
     # # remove root dir
@@ -162,22 +167,23 @@ findmainhpkdir(){
 }
 
 # 进入每一个目录 将script 目录下的脚本都链接过去
-prepareshell(){
-    for hpkdir in ${hpkPaths[@]}
+prepareshell() {
+    pkgPaths=($*)
+    for hpkdir in ${pkgPaths[@]}
     do
         cd $hpkdir
-        ln -fs `pwd`/../../script/build_hpk.sh build_hpk.sh
-        ln -fs `pwd`/../../script/envset.sh envset.sh
+        ln -fs $LYCIUM_ROOT/script/build_hpk.sh build_hpk.sh
+        ln -fs $LYCIUM_ROOT/script/envset.sh envset.sh
         cd ${OLDPWD}
     done
 }
 
 # 恢复脚本
-cleanhpkdir(){
+cleanhpkdir() {
     for hpkdir in ${hpkPaths[@]}
     do
         cd $hpkdir
-        rm build_hpk.sh envset.sh
+        rm -rf build_hpk.sh envset.sh
         cd ${OLDPWD}
     done
 }
@@ -185,9 +191,11 @@ cleanhpkdir(){
 # 编译库本身
 nextroundlist=()
 notdonelist=()
-buildhpk(){
+buildfalselist=()
+buildhpk() {
     nextroundlist=(${hpkPaths[*]})
 
+    lastroundfirstjob=
     while $jobFlag
     do
         lastroundlen=${#nextroundlist[*]}
@@ -196,48 +204,128 @@ buildhpk(){
         len=${#notdonelist[*]}
         for ((i=0; i < $len; i=i+1))
         do
+            
             cd ${notdonelist[$i]}
+            echo "start build ${notdonelist[$i]}" > $LYCIUM_ROOT/lycium_build_intl.log
             bash ${PWD}/build_hpk.sh "${donelist[*]}" # > blackhole.log 2>&1  #入参已经完成的list
             res=$?
             if [ $res -eq 0 ]
             then
-                donelist[${#donelist[@]}]=${notdonelist[$i]##*/}
+                isdone=false
+                for libname in ${donelist[@]}
+                do
+                    if [ ${notdonelist[$i]##*/} == $libname ]
+                    then
+                        isdone=true
+                    fi
+                done
+                if ! $isdone
+                then
+                    donelist[${#donelist[@]}]=${notdonelist[$i]##*/}
+                fi
+                echo donelist:${donelist[*]} > $LYCIUM_ROOT/lycium_build_intl.log
             elif [ $res -eq 101 ]
             then
-                nextroundlist[${#nextroundlist[@]}]=${notdonelist[$i]}
+                if [ -f ${LYCIUM_DEPEND_PKGNAMES} ]
+                then
+                    # echo "添加依赖"
+                    for deppkg in `cat ${LYCIUM_DEPEND_PKGNAMES}`
+                    do
+                        # echo "Line contents are : $deppkg "
+                        tmppath=$LYCIUM_ROOT/$hpksdir/$deppkg
+                        if [[ -d $tmppath  && -f $tmppath/HPKBUILD ]]
+                        then
+                            doneflag=false
+                            for libname in ${donelist[@]}
+                            do
+                                if [ $tmppath == $LYCIUM_ROOT/$hpksdir/$libname ]
+                                then
+                                    doneflag=true
+                                fi
+                            done
+                            nextflag=false
+                            for libname in ${nextroundlist[@]}
+                            do
+                                if [ $tmppath == $libname ]
+                                then
+                                    nextflag=true
+                                fi
+                            done
+                            notdoneflag=false
+                            for libname in ${notdonelist[@]}
+                            do
+                                if [ $tmppath == $libname ]
+                                then
+                                    notdoneflag=true
+                                fi
+                            done
+                            if ! $doneflag && ! $nextflag && ! $notdoneflag
+                            then
+                                nextroundlist[${#nextroundlist[@]}]=$tmppath
+                                hpkPaths[${#hpkPaths[@]}]=$tmppath
+                                prepareshell $tmppath
+                            fi
+                            
+                        fi
+                    done
+                    # echo "清空deps file"
+                    echo > ${LYCIUM_DEPEND_PKGNAMES}
+                fi
+                
+                roundflag=false
+                for libname in ${nextroundlist[@]}
+                do
+                    if [ ${notdonelist[$i]} == $libname ]
+                    then
+                        roundflag=true
+                    fi
+                done
+                if ! $roundflag
+                then
+                    nextroundlist[${#nextroundlist[@]}]=${notdonelist[$i]}
+                fi
+                echo nextroundlist:${nextroundlist[*]} > $LYCIUM_ROOT/lycium_build_intl.log
             else
-                echo "${notdonelist[$i]} build ERROR"
+                echo "${notdonelist[$i]} build ERROR. errno: $res"
+                buildfalselist[${#buildfalselist[@]}]=${notdonelist[$i]}
             fi
             cd ${OLDPWD}
         done
         if [ ${#nextroundlist[*]} -eq 0 ]
         then
-            echo "ALL JOBS DONE!!!"
+            if [ ${#buildfalselist[*]} -eq 0 ]
+            then
+                echo "ALL JOBS DONE!!!"
+            else
+                echo "The follow pkg build error!"
+                echo ${buildfalselist[*]}
+            fi
             break
         fi
-        if [ $lastroundlen -eq ${#nextroundlist[*]} ]
+        if [[ $lastroundlen -eq ${#nextroundlist[*]} && $lastroundfirstjob == ${nextroundlist[0]} ]]
         then
             echo "Please check the dependencies of these items:"
             echo " "${nextroundlist[*]}
             jobFlag=false
         fi
+        lastroundfirstjob=${nextroundlist[0]}
     done
 }
 
-main(){
+main() {
     checkbuildenv
 
-    readdonelibs "`pwd`/usr/hpk_build.csv"
+    readdonelibs "$LYCIUM_ROOT/usr/hpk_build.csv"
 
     if [ $# -ne 0 ]
     then
         makelibsdir $*
     else
-        findmainhpkdir ${PWD}/main
+        findmainhpkdir $LYCIUM_ROOT/$hpksdir
         # exit 2
     fi
 
-    prepareshell
+    prepareshell ${hpkPaths[@]}
     buildhpk
 
     cleanhpkdir
