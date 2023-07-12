@@ -30,11 +30,11 @@
   ├── README_zh.md   
   ```
 
-- 将avrocpp拷贝至tools/main目录下
+- 将avro拷贝至tools/main目录下
 
   ```shell
   cd tpc_c_cplusplus
-  cp -rf thirdparty/protobuf tools/main
+  cp -rf thirdparty/avro tools/main
   ```
 
 - 在tools目录下编译三方库
@@ -51,7 +51,7 @@
   在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
 
   ```shell
-  avro/arm64-v8a   avrocpp/armeabi-v7a
+  avro/arm64-v8a   avro/armeabi-v7a
   ```
 - [测试三方库](#测试三方库)
 
@@ -71,7 +71,7 @@
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/avro/${OHOS_ARCH}/include)
 
   #将动态库打包到libs
-  file(GLOB allLibs "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/avrocpp/${OHOS_ARCH}/lib/*.so*")
+  file(GLOB allLibs "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/avro/${OHOS_ARCH}/lib/*.so*")
   add_custom_command(TARGET entry POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy
     ${allLibs}
