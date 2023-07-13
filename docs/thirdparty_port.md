@@ -20,12 +20,12 @@
 
 OpenHarmony的应用编译开发使用的是[DevEco Studio](https://developer.harmonyos.com/cn/develop/deveco-studio#download)，而该工具目前只支持cmake的编译，但开源的C/C++三方库编译方式多样化，包含cmake，configured等方式。对于原生库cmake无法在IDE上编译构建的，我们需要分析问题原因并需要针对IDE修改原生CMakeLists.txt。而非cmake编译方式的三方库，我们也需要分析该库的编译方式进行手写CMakeLists.txt文件将该库编译方式改为cmake编译构建。这些过程比较耗时，尤其对一些大型的C/C++三方库.
 
-针对于这些问题，我们开发一套基于linux下用原生库的编译脚本进行交叉编译三方库的[工具](../tools/README.md)。该工具协助开发者，在 linux系统上快速编译构建能在OpenHamony上运行的c/c++ 三方库。
+针对于这些问题，我们开发一套基于linux下用原生库的编译脚本进行交叉编译三方库的[工具](../lycium/README.md)。该工具协助开发者，在 linux系统上快速编译构建能在OpenHamony上运行的c/c++ 三方库。
 
 ### 三方库测试验证
 
 业界内C/C++三方库测试框架多种多样，我们无法将其统一，因此为了保证原生库功能完整，我们基于原生库的测试用例进行测试验证。为此，我们需要集成了一套可以在OH环境上进行make test等操作的环境，具体方法可参照：
-[CItools README](https://gitee.com/han_jin_fei/lycium-citools)
+[CItools 介绍](../lycium/CItools/README_zh.md)
 
 ### 三方库的使用
 
@@ -33,7 +33,7 @@ OpenHarmony的应用编译开发使用的是[DevEco Studio](https://developer.ha
 
 ## 快速适配三方库实例
 
-我们可以通过[工具](../tools/README.md)在 linux系统上快速编译构建能在OpenHamony上运行的c/c++ 三方库，该现在支持cmake以及config及make等构建方式，下面以minizip-ng三方库为例详细讲解lycium工具的使用。
+我们可以通过[工具](../lycium/README.md)在 linux系统上快速编译构建能在OpenHamony上运行的c/c++ 三方库，该现在支持cmake以及config及make等构建方式，下面以minizip-ng三方库为例详细讲解lycium工具的使用。
 
 ### 使用约束
 
@@ -43,8 +43,8 @@ OpenHarmony的应用编译开发使用的是[DevEco Studio](https://developer.ha
 
 ### 环境搭建
 
-- 工具下载：[工具](../tools)
-- 环境搭建参照[编译环境搭建](../tools/Buildtools/README.md)
+- 工具下载：[工具](../lycium)
+- 环境搭建参照[编译环境搭建](../lycium/Buildtools/README.md)
 - OpenHarmony SDK版本下载地址: [Ohos_sdk_public 3.2.11.9 (API Version 9 Release)](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fohos-sdk-windows_linux-public.tar.gz)
 
 ### 编译脚本规则
@@ -175,7 +175,7 @@ cleanbuild() {
 
   该函数主要清理当前库的编译环境。
 
-编译脚本模板更多信息可以参照[HPKBUILD](../tools/template/HPKBUILD)。
+编译脚本模板更多信息可以参照[HPKBUILD](../lycium/template/HPKBUILD)。
 
 ### minizip快速适配
 
@@ -184,7 +184,7 @@ cleanbuild() {
 - 在main目录下创建minizip-ng三方库目录，以及对应的xz(该库编译完后会生成liblzma.a以及对应的liblzma.so)，openssl和bzip2.
   
   ``` shell
-  cd tools/main
+  cd lycium/main
   mkdir minizip-ng
   mkdir xz
   mkdir openssl
@@ -424,13 +424,13 @@ cleanbuild() {
 
 ### minizip编译构建
 
-编写完HPKBUILD文件后，我们就可以进行三方库的编译了。在`tools`目录执行如下指令进行编译：
+编写完HPKBUILD文件后，我们就可以进行三方库的编译了。在`lycium`目录执行如下指令进行编译：
 
 ```shell
 ./build.sh minizip-ng xz bzip2 openssl googletest
 ```
 
-其中minizip-ng是我们需要编译的三方库，而xz，bzip2,openssl以及googletest是minizip-ng三方库的依赖库。进行编译完后，会在`tools/usr`下生成对应架构的三方库的的库文件和头文件等。
+其中minizip-ng是我们需要编译的三方库，而xz，bzip2,openssl以及googletest是minizip-ng三方库的依赖库。进行编译完后，会在`lycium/usr`下生成对应架构的三方库的的库文件和头文件等。
 
 ```shell
 minizip-ng/arm64-v8a minizip-ng/armeabi-v7a 
