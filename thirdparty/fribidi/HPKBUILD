@@ -8,9 +8,10 @@ url="https://github.com/fribidi/fribidi"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("LGPL-2.1 license")
 depends=()
-makedepends=("c2man") # fribidi编译过程需要依赖c2man
+makedepends=("unzip")
 source="https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
+autounpack=true
 downloadpackage=true
 buildtools="configure"
 
@@ -18,9 +19,30 @@ builddir=$pkgname-${pkgver:1}
 packagename=$builddir.tar.gz
 
 source envset.sh
+autogenflag=true
+buildhostc2man=true
 host=
+originalPath=
 prepare() {
-    cp -rf $builddir $pkgname-$ARCH-build
+    mkdir -p $builddir/$ARCH-build
+    # 编译c2man
+    if $buildhostc2man
+    then
+        curl -f -L https://github.com/fribidi/c2man/archive/refs/heads/master.zip -o c2man.zip
+        unzip c2man.zip > `pwd`/build.log 2>&1
+        if [ $? != 0 ]
+        then
+            return -1
+        fi
+        cd c2man-master
+        ./Configure -d -e > `pwd`/build.log 2>&1
+        make -j4 >> `pwd`/build.log 2>&1
+        cd $OLDPWD
+        buildhostc2man=false
+    fi
+    # 把c2man的路径配置到PATH中
+    originalPath=$PATH
+    export PATH=$PATH:$LYCIUM_ROOT/main/$pkgname/c2man-master
     if [ $ARCH == "armeabi-v7a" ]
     then
         setarm32ENV
@@ -32,30 +54,36 @@ prepare() {
         host=aarch64-linux
     fi
 
-    cd $pkgname-$ARCH-build
-    ./autogen.sh > `pwd`/build.log 2>&1
-    cd $OLDPWD
+    if $autogenflag
+    then
+        cd $builddir
+        ./autogen.sh >> `pwd`/build.log 2>&1
+        autogenflag=false
+        cd $OLDPWD
+    fi
 
 }
 
 build() {
-    cd $pkgname-$ARCH-build
-    ./configure "$@" --host=$host --enable-static > `pwd`/build.log 2>&1
+    cd $builddir/$ARCH-build
+    ../configure "$@" --host=$host --enable-static > `pwd`/build.log 2>&1
     make -j4 >> `pwd`/build.log 2>&1
+    export PATH=$originalPath
     ret=$?
     cd $OLDPWD
     return $ret
 }
 
 package() {
-    cd $pkgname-$ARCH-build
+    cd $builddir/$ARCH-build
     make install >> `pwd`/build.log 2>&1
     cd $OLDPWD
 }
 
 check() {
-    cd $pkgname-$ARCH-build/test/unicode-conformance
-    make BidiTest BidiCharacterTest
+    cd $builddir/$ARCH-build
+    make -C test/unicode-conformance BidiTest BidiCharacterTest > `pwd`/build.log 2>&1
+    ret=$?
     if [ $ARCH == "armeabi-v7a" ]
     then
         unsetarm32ENV
@@ -64,15 +92,17 @@ check() {
     then
         unsetarm64ENV
     fi
+    # sed是为了避免在ohos设备测试时去编译可执行文件，导致测试失败
+    sed 's/check-TESTS: $(check_PROGRAMS)/check-TESTS: #$(check_PROGRAMS)/1' test/unicode-conformance/Makefile > test/unicode-conformance/tmp_Makefile
+    mv test/unicode-conformance/tmp_Makefile test/unicode-conformance/Makefile
     cd $OLDPWD
     unset host
     echo "The test must be on an OpenHarmony device!"
     # real test
-    # cd /test/unicode-conformance
-    # make check-TESTS
+    # make -C test/unicode-conformance/ check-TESTS
 }
 
 # 清理环境
-cleanbuild(){
-    rm -rf ${PWD}/$builddir $pkgname-armeabi-v7a-build $pkgname-arm64-v8a-build #${PWD}/$packagename
+cleanbuild() {
+    rm -rf ${PWD}/$builddir ${PWD}/c2man.zip ${PWD}/c2man-master #${PWD}/$packagename
 }
