@@ -10,7 +10,7 @@
 tpc_c_cplusplus
 ├── README_zh.md            # 仓库主页
 ├── docs                    # 说明文档/三方库适配文档
-├── tools                   # 三方库适配相关工具
+├── lycium                  # 三方库适配相关工具
 ├── thirdparty              # 已经适配OpenHarmony的三方库的构建脚本
 ├── LICENSE                 # 本仓库的开源license文件
 ......
