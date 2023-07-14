@@ -32,7 +32,7 @@
   编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
   
   ```
-  cd tools
+  cd lycium
   ./build.sh assimp
   ```
 - 三方库头文件及生成的库
