@@ -33,10 +33,13 @@
 
 - 将oneDNN拷贝至tools/main目录下
 
+  拷贝前要如果tools下没有main目录，需要自己创建。
+
   ```shell
   cd tpc_c_cplusplus
   cp -rf thirdparty/oneDNN tools/main
   ```
+  oneDNN依赖openmp, 需要把openmp也拷贝到tools/main 下。
 
   编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
 
@@ -76,9 +79,15 @@
     ${allLibs}
     ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/)
   ```
- 修改IDE的entry/build-profile.json5 文件，增加编译架构过滤："abiFilters": ["armeabi-v7a", "arm64-v8a"], 如下图所示：
+ 修改IDE的entry/build-profile.json5 文件，增加编译架构过滤："abiFilters": ["arm64-v8a"], 该库不支持armeabi-v7a, 如下图所示：
 
  ![oneDNN_build](pic/oneDNN_build.png)
+
+ 第一次编译，可能IDE不能创建目录，需要在entry/libs/下创建arm64-v8a 目录， 如下图：
+
+ ![entry_libs](pic/entry_libs.png)
+
+ 然后，执行编译运行.
 
 ## 测试三方库
 
