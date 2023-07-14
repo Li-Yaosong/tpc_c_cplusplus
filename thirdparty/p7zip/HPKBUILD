@@ -41,14 +41,14 @@ build() {
 }
 
 package() {
-    cd "$builddir"
-    mkdir -p `pwd`/../../../usr/$pkgname/$ARCH/bin/Codecs
-    cp -rf `pwd`/$ARCH-build/bin/7z_ `pwd`/../../../usr/$pkgname/$ARCH/bin
-    cp -rf `pwd`/$ARCH-build/bin/7za `pwd`/../../../usr/$pkgname/$ARCH/bin
-    cp -rf `pwd`/$ARCH-build/bin/7zCon.sfx `pwd`/../../../usr/$pkgname/$ARCH/bin
-    cp -rf `pwd`/$ARCH-build/bin/7zr `pwd`/../../../usr/$pkgname/$ARCH/bin
-    cp -rf `pwd`/$ARCH-build/bin/7z.so `pwd`/../../../usr/$pkgname/$ARCH/bin
-    cp -rf `pwd`/$ARCH-build/bin/Codecs/Rar.so `pwd`/../../../usr/$pkgname/$ARCH/bin/Codecs
+    cd $builddir
+    mkdir -p $LYCIUM_ROOT/usr/$pkgname/$ARCH/bin/Codecs
+    cp -rf `pwd`/$ARCH-build/bin/7z_ $LYCIUM_ROOT/usr/$pkgname/$ARCH/bin
+    cp -rf `pwd`/$ARCH-build/bin/7za $LYCIUM_ROOT/usr/$pkgname/$ARCH/bin
+    cp -rf `pwd`/$ARCH-build/bin/7zCon.sfx $LYCIUM_ROOT/usr/$pkgname/$ARCH/bin
+    cp -rf `pwd`/$ARCH-build/bin/7zr $LYCIUM_ROOT/usr/$pkgname/$ARCH/bin
+    cp -rf `pwd`/$ARCH-build/bin/7z.so $LYCIUM_ROOT/usr/$pkgname/$ARCH/bin
+    cp -rf `pwd`/$ARCH-build/bin/Codecs/Rar.so $LYCIUM_ROOT/usr/$pkgname/$ARCH/bin/Codecs
     cd $OLDPWD
 }
 
@@ -57,6 +57,6 @@ check() {
 }
 
 # 清理环境
-cleanbuild(){
+cleanbuild() {
     rm -rf ${PWD}/$builddir #${PWD}/$packagename
 }

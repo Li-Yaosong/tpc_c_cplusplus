@@ -21,7 +21,7 @@
 请阅读 [template README](./template/README.md) 
 
 ### 3.CI环境准备
-请查阅 [lycium CItools](https://gitee.com/han_jin_fei/lycium-citools)
+请查阅 [lycium CItools](./CItools/README_zh.md)
 
 ### 4.测试通过即可提交PR，附带测试成功的截屏
 
