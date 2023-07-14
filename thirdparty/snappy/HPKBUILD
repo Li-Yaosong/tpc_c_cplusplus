@@ -11,20 +11,24 @@ depends=()
 makedepends=()
 source="https://github.com/google/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
-downloadpackage=true
-autounpack=true
+downloadpackage=false
+autounpack=false
 
 builddir=$pkgname-$pkgver
 packagename=$builddir.tar.gz
 
 prepare() {
-    mkdir -p $builddir/$ARCH-build
+    git clone https://github.com/google/snappy.git $builddir
+    cd  $builddir
+    git checkout $pkgver
+    git submodule update --init
 }
 
 build() {
-    cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -DSNAPPY_BUILD_TESTS=OFF -DSNAPPY_BUILD_BENCHMARKS=OFF -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    cd  $builddir
+    mkdir -p $ARCH-build
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake -DCMAKE_CXX_FLAGS="-w"  "$@" ./ -B$ARCH-build -DOHOS_ARCH=$ARCH > $ARCH-build/build.log 2>&1
+    make -j4 -C $ARCH-build  >>  $ARCH-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -38,8 +42,10 @@ package() {
 
 check() {
     echo "The test must be on an OpenHarmony device!"
+    #cd $ARCH-build
+    #ctest 
 }
 
-cleanbuild(){
+cleanbuild() {
     rm -rf ${PWD}/$builddir # ${PWD}/$packagename
 }
