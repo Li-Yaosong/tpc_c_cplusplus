@@ -1,6 +1,6 @@
-# osip2三方库说明
+# libosip2三方库说明
 ## 功能简介
-Osip2是一个开放源代码的sip协议栈,是开源代码中不多使用C语言写的协议栈之一,它具有短小简洁的特点,专注于sip底层解析使得它的效率比较高.
+libosip2是一个开放源代码的sip协议栈,是开源代码中不多使用C语言写的协议栈之一,它具有短小简洁的特点,专注于sip底层解析使得它的效率比较高.
 ## 使用约束
 - IDE版本：DevEco Studio 3.1 Beta2
 - SDK版本：ohos_sdk_public 3.2.11.9 (API Version 9 Release)
