@@ -45,7 +45,8 @@ package() {
     mkdir -p $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
     mkdir -p $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib/
     cp svm.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
-    cp libsvm.so.3 $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib/
+    ln -s libsvm.so.3 libsvm.so
+    cp libsvm.so* $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib/
     ret=$?
     cd $OLDPWD
     unset cxx
