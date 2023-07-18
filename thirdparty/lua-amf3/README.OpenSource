@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "lua-amf3",
+        "License": "MIT License",
+        "License File": "LICENSE",
+        "Version Number": "2.0.5",
+        "Owner": "chenxu.unix@gmail.com",
+        "Upstream URL": "https://github.com/neoxic/lua-amf3.git",
+        "Description": "lua-amf3 provides fast AMF3 encoding/decoding routines for Lua."
+    }
+]
