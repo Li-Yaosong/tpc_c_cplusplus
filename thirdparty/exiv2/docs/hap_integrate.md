@@ -3,15 +3,16 @@
 ## 开发环境
 - ubuntu20.04
 - [OpenHarmony3.2Release镜像](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fdayu200_standard_arm32.tar.gz)
-- [ohos_sdk_public 3.2.11.9 (API Version 9 Release)](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fohos-sdk-windows_linux-public.tar.gz)
-- [DevEco Studio 3.1 Beta2](https://gitee.com/link?target=https%3A%2F%2Fcontentcenter-vali-drcn.dbankcdn.cn%2Fpvt_2%2FDeveloperAlliance_package_901_9%2Ff3%2Fv3%2FuJyuq3syQ2ak4hE1QZmAug%2Fdevecostudio-windows-3.1.0.400.zip%3FHW-CC-KV%3DV1%26HW-CC-Date%3D20230408T013335Z%26HW-CC-Expire%3D315360000%26HW-CC-Sign%3D96262721EDC9B34E6F62E66884AB7AE2A94C2A7B8C28D6F7FC891F46EB211A70)
-- [准备三方库构建环境](../../../tools/README.md#编译环境准备)
-- [准备三方库测试环境](../../../tools/README.md#ci环境准备)
+- [ohos_sdk_public 4.0.8.1 (API Version 10 Release)](http://download.ci.openharmony.cn/version/Master_Version/OpenHarmony_4.0.8.1/20230608_091016/version-Master_Version-OpenHarmony_4.0.8.1-20230608_091016-ohos-sdk-full.tar.gz)
+- [DevEco Studio 3.1 Release](https://contentcenter-vali-drcn.dbankcdn.cn/pvt_2/DeveloperAlliance_package_901_9/81/v3/tgRUB84wR72nTfE8Ir_xMw/devecostudio-windows-3.1.0.501.zip?HW-CC-KV=V1&HW-CC-Date=20230621T074329Z&HW-CC-Expire=315360000&HW-CC-Sign=22F6787DF6093ECB4D4E08F9379B114280E1F65DA710599E48EA38CB24F3DBF2)
+- [准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
+- [准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 ## 编译三方库
 - 下载本仓库
   ```
   git clone https://gitee.com/openharmony-sig/tpc_c_cplusplus.git --depth=1
   ```
+  
 - 三方库目录结构
   ```
   tpc_c_cplusplus/thirdparty/exiv2  #三方库exiv2的目录结构如下
@@ -22,20 +23,16 @@
   ├── README_zh.md   
   ```
   
-- 将exiv2拷贝至tools/main目录下
+- 在lycium目录下编译三方库
+  编译环境的搭建参考[准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
+  
   ```
-  cd tpc_c_cplusplus
-  cp thirdparty/exiv2 tools/main -rf
-  cp thirdparty/libexpat tools/main -rf
-  ```
-- 在tools目录下编译三方库
-  编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
-  ```
-  cd tools
+  cd lycium
   ./build.sh libexpat exiv2
   ```
+  
 - 三方库头文件及生成的库
-  在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
+  在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
   ```
   exiv2/arm64-v8a   exiv2/armeabi-v7a
   libexpat/arm64-v8a  libexpat/armeabi-v7a
@@ -53,15 +50,12 @@
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
   ```
   #将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libexiv2.so.27)
-  target_link_libraries(entry PRIVATE ${CMAKE_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libexpat.so.1)
+  target_link_libraries(entry PRIVATE ${CMAKE_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libexiv2.so)
   #将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/exiv2/${OHOS_ARCH}/include)
-  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libexpat/${OHOS_ARCH}/include)
   ```
-  ![exiv2_usage](pic/exiv2_usage.jpg)
 ## 测试三方库
-三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
+三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
 - 将编译生成的exiv2可执行文件及测试文件exiv2.jpg、large.icc准备好，备注：jpg图片在原库下的README-SAMPLES.md文件中搜索文件名"Stonehenge.jpg"找到下载链接、large.icc：在原库的test/data/目录下
 
@@ -72,7 +66,9 @@
   hdc_std file send exiv2 /data         #将可执行文件推入开发板data目录
   hdc_std file send libc++_shared.so /system/lib64 #将动态库推入开发板
   hdc_std file send libexiv2.so.27 /system/lib64
+  hdc_std file send libexiv2.so /system/lib64
   hdc_std file send libexpat.so.1 /system/lib64
+  hdc_std file send libexpat.so /system/lib64
   hdc_std file send exiv2.jpg /data  #将测试文件推入开发板data目录
   hdc_std file send large.icc /data
   hdc_std shell                      #进入开发板

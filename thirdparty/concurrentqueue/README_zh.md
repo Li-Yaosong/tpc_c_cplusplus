@@ -9,7 +9,6 @@ concurrentqueue是一个高效的线程安全的队列的库。
 - Rom版本：OpenHarmony3.2 beta2
 - 三方库版本：v1.0.3
 - 当前适配的功能：入队与出队
-- License：[BSD License](https://github.com/cameron314/concurrentqueue/blob/master/LICENSE.md)
 
 ## 集成方式
 

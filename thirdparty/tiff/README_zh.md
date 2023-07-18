@@ -4,9 +4,9 @@ tiff是一个用来读写标签图片(tiff)的库。该库还支持如下文件�
 ## 使用约束
 - ROM版本：OpenHarmony-v3.2-Beta1
 
-- IDE版本：DevEco Studio 3.1 Release(3.1.0.500)
+- IDE版本：DevEco Studio 3.1 Release
 
-- SDK：API9 Release(3.2.12.2)
+- SDK版本：ohos_sdk_public 4.0.8.1 (API Version 10 Release)
 
 - 三方库版本：v4.5.0
 
@@ -21,7 +21,5 @@ tiff是一个用来读写标签图片(tiff)的库。该库还支持如下文件�
   |    ppm     |    tiff    |
   |    tiff    |    pdf     |
   |    tiff    |     ps     |
-
-- [1991-1997 Silicon Graphics, Inc](https://gitlab.com/libtiff/libtiff/-/blob/v4.5.0/)
 ## 集成方式
 + [系统hap包集成](docs/hap_integrate.md)

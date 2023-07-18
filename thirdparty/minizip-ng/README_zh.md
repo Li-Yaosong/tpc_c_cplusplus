@@ -7,8 +7,8 @@ minizip是一个用C编写的zip文件操作库。
 ## 使用约束
 
 - ROM版本：OpenHarmony3.2 Beta1
-- IDE版本：DevEco Studio 3.1 Release(3.1.3.400)
-- SDK：API9 Release(3.2.11.5)
+- IDE版本：DevEco Studio 3.1 Release
+- SDK版本：ohos_sdk_public 4.0.8.1 (API Version 10 Release)
 - 三方库版本：3.0.4
 - 当前适配的功能：
   - 创建和解压缩zip存档。
@@ -22,7 +22,6 @@ minizip是一个用C编写的zip文件操作库。
   - 将本地文件头信息归零。
   - 压缩/解压缩中心目录以减小大小
   - 如果中心目录损坏或丢失，则恢复该目录
-- [License : zlib](https://github.com/zlib-ng/minizip-ng/tree/3.0.4/LICENSE)
 
 ## 集成方式
 

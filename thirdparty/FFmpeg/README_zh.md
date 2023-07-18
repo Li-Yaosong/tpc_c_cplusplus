@@ -7,7 +7,6 @@
 - SDK版本：ohos_sdk_public 3.2.11.9 (API Version 9 Release)
 - 三方库版本：n6.0
 - 当前适配的功能：解码，编码，转码，复用，解复用，过滤音视频数据
-- [GPL2/GPL3/LGPL3 license](https://github.com/FFmpeg/FFmpeg)
 
 ## 集成方式
 + [应用hap包集成](docs/hap_integrate.md)

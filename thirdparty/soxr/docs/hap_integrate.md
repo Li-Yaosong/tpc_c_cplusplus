@@ -6,10 +6,10 @@
 
 - ubuntu20.04
 - [OpenHarmony3.2Release镜像](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fdayu200_standard_arm32.tar.gz)
-- [ohos_sdk_public 4.0.8.1 (API Version 10 Release)](https://gitee.com/link?target=http%3A%2F%2Fdownload.ci.openharmony.cn%2Fversion%2FMaster_Version%2FOpenHarmony_4.0.8.1%2F20230608_091058%2Fversion-Master_Version-OpenHarmony_4.0.8.1-20230608_091058-ohos-sdk-public.tar.gz)
-- [DevEco Studio 3.1 Release](https://gitee.com/link?target=https%3A%2F%2Fcontentcenter-vali-drcn.dbankcdn.cn%2Fpvt_2%2FDeveloperAlliance_package_901_9%2F81%2Fv3%2FtgRUB84wR72nTfE8Ir_xMw%2Fdevecostudio-windows-3.1.0.501.zip%3FHW-CC-KV%3DV1%26HW-CC-Date%3D20230621T074329Z%26HW-CC-Expire%3D315360000%26HW-CC-Sign%3D22F6787DF6093ECB4D4E08F9379B114280E1F65DA710599E48EA38CB24F3DBF2)
-- [准备三方库构建环境](../../../tools/README.md#编译环境准备)
-- [准备三方库测试环境](../../../tools/README.md#ci环境准备)
+- [ohos_sdk_public 4.0.8.1 (API Version 10 Release)](http://download.ci.openharmony.cn/version/Master_Version/OpenHarmony_4.0.8.1/20230608_091016/version-Master_Version-OpenHarmony_4.0.8.1-20230608_091016-ohos-sdk-full.tar.gz)
+- [DevEco Studio 3.1 Release](https://contentcenter-vali-drcn.dbankcdn.cn/pvt_2/DeveloperAlliance_package_901_9/81/v3/tgRUB84wR72nTfE8Ir_xMw/devecostudio-windows-3.1.0.501.zip?HW-CC-KV=V1&HW-CC-Date=20230621T074329Z&HW-CC-Expire=315360000&HW-CC-Sign=22F6787DF6093ECB4D4E08F9379B114280E1F65DA710599E48EA38CB24F3DBF2)
+- [准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
+- [准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
 ## 编译三方库
 
@@ -30,29 +30,23 @@
   ├── README_zh.md   
   ```
 
-- 将soxr拷贝至tools/main目录下
+- 在lycium目录下编译三方库
+
+  编译环境的搭建参考[准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
 
   ```shell
-  cd tpc_c_cplusplus
-  cp thirdparty/soxr tools/main -rf
-  ```
-
-- 在tools目录下编译三方库
-
-  编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
-
-  ```shell
-  cd tools
+  cd lycium
   ./build.sh soxr
   ```
 
 - 三方库头文件及生成的库
 
-  在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库和头文件
+  在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库和头文件
 
   ```shell
   soxr/arm64-v8a   soxr/armeabi-v7a
   ```
+  
 - [测试三方库](#测试三方库)
 
 ## 应用中使用三方库
@@ -60,7 +54,7 @@
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件拷贝到该目录下，将编译生成的三方库全部（动态库名字带版本号和不带版本号的都需要）拷贝到该目录下，如下图所示
   &nbsp;
 
-  ![thirdparty_install_dir](pic/soxr_install_dir.png)
+  &nbsp;![thirdparty_install_dir](pic/soxr_install_dir.png)
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
 
@@ -74,11 +68,10 @@
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/soxr/${OHOS_ARCH}/include)
   ```
 
-  ![soxr_usage](pic/soxr_usage.png)
 
 ## 测试三方库
 
-三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
+三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
 进入到构建目录下面的examples目录,执行其示例程序如下（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
 - 首先将编译生成的so路径（根据实际编译路径填写）添加到环境变量：

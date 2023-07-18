@@ -9,7 +9,6 @@ modbus 是用 C 语言编写的第三方Modbus库来实现modbus通讯，支持 
 - ROM版本：OpenHarmony3.2 beta4
 - 三方库版本：v3.1.10
 - 当前适配的功能：完成modbus鸿蒙编译的适配
-- License：[LGPL v2.1 or Later](https://github.com/stephane/libmodbus/COPYING.LESSER)
 
 ## 集成方式
 
