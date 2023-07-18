@@ -6,7 +6,6 @@ soxr是一个重采样库，执行一维采样率转换，例如，可用于对 
 - SDK版本：ohos_sdk_public 4.0.8.1 (API Version 10 Release)
 - 三方库版本：0.1.3
 - 当前适配的功能：soxr是一个重采样库，执行一维采样率转换。
-- [LGPLv2 license](https://sourceforge.net/p/soxr/code/ci/0.1.3/tree/LICENCE)
 
 ## 集成方式
 + [应用hap包集成](docs/hap_integrate.md)

@@ -5,6 +5,5 @@ LZMA(Lempel-Ziv-Markov chain-Algorithm的缩写)是2001年以来得到发展的�
 - ROM版本：OpenHarmony3.2 Beta1
 - 三方库版本：4.32.7
 - 当前适配的功能：完成了 .lzma 格式文件的压缩、解压缩
-- [License : LGPLv2+](https://tukaani.org/lzma/)
 ## 集成方式
 + [系统Rom包集成](docs/rom_integrate.md)

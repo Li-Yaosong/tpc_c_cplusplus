@@ -3,10 +3,10 @@
 ## 开发环境
 - ubuntu20.04
 - [OpenHarmony3.2Release镜像](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fdayu200_standard_arm32.tar.gz)
-- [ohos_sdk_public 4.0.8.1 (API Version 10 Release)](https://gitee.com/link?target=http%3A%2F%2Fdownload.ci.openharmony.cn%2Fversion%2FMaster_Version%2FOpenHarmony_4.0.8.1%2F20230608_091058%2Fversion-Master_Version-OpenHarmony_4.0.8.1-20230608_091058-ohos-sdk-public.tar.gz)
-- [DevEco Studio 3.1 Release](https://gitee.com/link?target=https%3A%2F%2Fcontentcenter-vali-drcn.dbankcdn.cn%2Fpvt_2%2FDeveloperAlliance_package_901_9%2F81%2Fv3%2FtgRUB84wR72nTfE8Ir_xMw%2Fdevecostudio-windows-3.1.0.501.zip%3FHW-CC-KV%3DV1%26HW-CC-Date%3D20230621T074329Z%26HW-CC-Expire%3D315360000%26HW-CC-Sign%3D22F6787DF6093ECB4D4E08F9379B114280E1F65DA710599E48EA38CB24F3DBF2)
-- [准备三方库构建环境](../../../tools/README.md#编译环境准备)
-- [准备三方库测试环境](../../../tools/README.md#ci环境准备)
+- [ohos_sdk_public 4.0.8.1 (API Version 10 Release)](http://download.ci.openharmony.cn/version/Master_Version/OpenHarmony_4.0.8.1/20230608_091016/version-Master_Version-OpenHarmony_4.0.8.1-20230608_091016-ohos-sdk-full.tar.gz)
+- [DevEco Studio 3.1 Release](https://contentcenter-vali-drcn.dbankcdn.cn/pvt_2/DeveloperAlliance_package_901_9/81/v3/tgRUB84wR72nTfE8Ir_xMw/devecostudio-windows-3.1.0.501.zip?HW-CC-KV=V1&HW-CC-Date=20230621T074329Z&HW-CC-Expire=315360000&HW-CC-Sign=22F6787DF6093ECB4D4E08F9379B114280E1F65DA710599E48EA38CB24F3DBF2)
+- [准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
+- [准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 ## 编译三方库
 - 下载本仓库
   ```
@@ -19,26 +19,26 @@
   ├── HPKBUILD                          #构建脚本
   ├── HPKCHECK                          #自动化测试脚本
   ├── SHA512SUM                         #三方库校验文件
-  |-- BUILD.gn            ## Rom版编译构建脚本
-  |-- export_api.txt      ## bsdiff库对外导出的api接口
-  |-- tested_api.txt      ## 测试用例已测试的api接口
-  |-- bundle.json         ## 组件定义文件
-  |-- README_zh.md        ## bsdiff 说明文档
-  |-- README.OpenSource   ## bsdiff 开源信息说明文档
-  |-- docs                ## 存放bsdiff相关文档
-  |-- bsdiff_oh_pkg.patch ## 存放bsdiff库patch文件
-  |-- media               ## 存放图片的文件夹
-  |-- testdata            ## 存放测试数据
-      |-- run_test.sh     ## 测试用例运行脚本，注意：在运行该测试用例时，需要将做拆分与合并的2个测试应用程序放到当前路径下。
-      |-- note.txt        ## 测试用例文件
-      |-- note_new.txt    ## 测试用例新文件，与之前文件存在差异，通过测试用例做拆分与合并，最终生成一个新的文件与该文件一致。
+  |-- BUILD.gn            			  # Rom版编译构建脚本
+  |-- export_api.txt       			  # bsdiff库对外导出的api接口
+  |-- tested_api.txt      			  # 测试用例已测试的api接口
+  |-- bundle.json         			  # 组件定义文件
+  |-- README_zh.md        			  # bsdiff 说明文档
+  |-- README.OpenSource   			  # bsdiff 开源信息说明文档
+  |-- docs                			  # 存放bsdiff相关文档
+  |-- bsdiff_oh_pkg.patch 			  # 存放bsdiff库patch文件
+  |-- media               			  # 存放图片的文件夹
+  |-- testdata            			  # 存放测试数据
+      |-- run_test.sh     			  # 测试用例运行脚本，注意：在运行该测试用例时，需要将做拆分与合并的2个测试应用程序放到当前路径下。
+      |-- note.txt        			  # 测试用例文件
+      |-- note_new.txt    			  # 测试用例新文件，与之前文件存在差异，通过测试用例做拆分与合并，最终生成一个新的文件与该文件一致。
   ```
   
-- 在tpc_c_cplusplus目录下编译三方库
-  编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
+- 在tpc_c_cplusplus/lycium目录下编译三方库
+  编译环境的搭建参考[准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
   
   ```
-  ./lycium/build.sh bzip2 bsdiff
+  ./build.sh bzip2 bsdiff
   ```
   
 - 三方库头文件及生成的库
@@ -67,7 +67,7 @@
   ![jbigkit_usage](pic/bsdiff_usage.png)
 
 ## 测试三方库
-三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
+三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
 拷贝整个tpc仓库，进入到lycium目录执行./check.sh运行测试用例
 

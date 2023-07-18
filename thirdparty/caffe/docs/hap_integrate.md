@@ -3,10 +3,10 @@
 ## 开发环境
 - ubuntu20.04
 - [OpenHarmony3.2Release镜像](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fdayu200_standard_arm32.tar.gz)
-- [ohos_sdk_public 3.2.11.9 (API Version 9 Release)](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fohos-sdk-windows_linux-public.tar.gz)
-- [DevEco Studio 3.1 Beta2](https://gitee.com/link?target=https%3A%2F%2Fcontentcenter-vali-drcn.dbankcdn.cn%2Fpvt_2%2FDeveloperAlliance_package_901_9%2Ff3%2Fv3%2FuJyuq3syQ2ak4hE1QZmAug%2Fdevecostudio-windows-3.1.0.400.zip%3FHW-CC-KV%3DV1%26HW-CC-Date%3D20230408T013335Z%26HW-CC-Expire%3D315360000%26HW-CC-Sign%3D96262721EDC9B34E6F62E66884AB7AE2A94C2A7B8C28D6F7FC891F46EB211A70)
-- [准备三方库构建环境](../../../tools/README.md#编译环境准备)
-- [准备三方库测试环境](../../../tools/README.md#ci环境准备)
+- [ohos_sdk_public 4.0.8.1 (API Version 10 Release)](http://download.ci.openharmony.cn/version/Master_Version/OpenHarmony_4.0.8.1/20230608_091016/version-Master_Version-OpenHarmony_4.0.8.1-20230608_091016-ohos-sdk-full.tar.gz)
+- [DevEco Studio 3.1 Release](https://contentcenter-vali-drcn.dbankcdn.cn/pvt_2/DeveloperAlliance_package_901_9/81/v3/tgRUB84wR72nTfE8Ir_xMw/devecostudio-windows-3.1.0.501.zip?HW-CC-KV=V1&HW-CC-Date=20230621T074329Z&HW-CC-Expire=315360000&HW-CC-Sign=22F6787DF6093ECB4D4E08F9379B114280E1F65DA710599E48EA38CB24F3DBF2)
+- [准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
+- [准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 ## 编译三方库
 - 下载本仓库
   ```
@@ -15,38 +15,26 @@
 - 三方库目录结构
   ```
   tpc_c_cplusplus/thirdparty/caffe  #三方库caffe的目录结构如下
-  ├── docs                              #三方库相关文档的文件夹
-  ├── HPKBUILD                          #构建脚本
-  ├── SHA512SUM                         #三方库校验文件
-  ├── caffe_oh_pkg.patch                #补丁
-  ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
-  ├── Makefile.ohos                     #编译caffe所需依赖库cblas的makefile  
-  ├── caffe_test.sh                     #三方库自测脚本  
+  ├── docs                          #三方库相关文档的文件夹
+  ├── HPKBUILD                      #构建脚本
+  ├── SHA512SUM                     #三方库校验文件
+  ├── caffe_oh_pkg.patch            #补丁
+  ├── README.OpenSource             #说明三方库源码的下载地址，版本，license等信息
+  ├── Makefile.ohos                 #编译caffe所需依赖库cblas的makefile  
+  ├── caffe_test.sh                 #三方库自测脚本  
   ├── README_zh.md   
   ```
   
-- caffe库需要依赖snappy leveldb opencv szip hdf5 boost glog zlib gflags googletest 这些库，需要将这些库和caffe库都拷贝至tools/main目录下
+- 在lycium目录下编译三方库
+  编译环境的搭建参考[准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
+  
   ```shell
-  cd tpc_c_cplusplus
-  cp thirdparty/caffe tools/main -rf
-  cp thirdparty/leveldb tools/main -rf
-  cp thirdparty/opencv tools/main -rf
-  cp thirdparty/szip tools/main -rf
-  cp thirdparty/hdf5 tools/main -rf
-  cp thirdparty/boost tools/main -rf
-  cp thirdparty/glog tools/main -rf
-  cp thirdparty/zlib tools/main -rf
-  cp thirdparty/gflags tools/main -rf
-  cp thirdparty/googletest tools/main -rf    
-  ```
-- 在tools目录下编译三方库，编译caffe库时候需要和依赖库一起进行编译。
-  编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
-  ```shell
-  cd tools
-  ./build.sh ./build.sh snappy leveldb opencv szip hdf5 boost glog zlib gflags googletest caffe
+  cd lycium
+  ./build.sh caffe
   ```
 - 三方库头文件及生成的库
-  在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
+  在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
+  
   ```
   caffe/arm64-v8a   caffe/armeabi-v7a
   liboost/arm64-v8a  boost/armeabi-v7a  
@@ -61,7 +49,7 @@
   szip/arm64-v8a  szip/armeabi-v7a
   zlib/arm64-v8a  zlib/armeabi-v7a
   ```
-
+  
 - [测试三方库](#测试三方库)
 
 ## 应用中使用三方库
@@ -106,11 +94,11 @@ target_include_directories(entry PRIVATE
 
   ![caffe_usage](pic/caffe_usage.png)
 ## 测试三方库
-三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
+三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
-- 将tools/caffe/caffe_test.sh 文件拷贝到 tools/caffe/caffe-1.0目录
-- 将编译生成的tools/caffe目录 压缩成caffe.tar.gz文件
-- 将编译生成的tools/usr目录   压缩成usr.tar.gz文件
+- 将lycium/caffe/caffe_test.sh 文件拷贝到 lycium/caffe/caffe-1.0目录
+- 将编译生成的lycium/caffe目录 压缩成caffe.tar.gz文件
+- 将编译生成的lycium/usr目录   压缩成usr.tar.gz文件
 
 - 将准备好的文件推送到开发板，在windows命令行进行如下操作
 
@@ -135,7 +123,7 @@ target_include_directories(entry PRIVATE
 
   LD_LIBRARY_PATH=/data/local/tmp/usr/boost/armeabi-v7a/lib:/data/local/tmp/usr/caffe/armeabi-v7a/lib:/data/local/tmp/usr/gflags/armeabi-v7a/lib:/data/local/tmp/usr/glog/armeabi-v7a/lib:/data/local/tmp/usr/googletest/armeabi-v7a/lib:/data/local/tmp/usr/hdf5/armeabi-v7a/lib:/data/local/tmp/usr/leveldb/armeabi-v7a/lib:/data/local/tmp/usr/opencv/armeabi-v7a/lib:/data/local/tmp/usr/snappy/armeabi-v7a/lib:/data/local/tmp/usr/szip/armeabi-v7a/lib:/data/local/tmp/usr/zlib/armeabi-v7a/lib /bin/sh ./caffe_test.sh armeabi-v7a                      #32位系统 执行命令
 
-  ```
+```
 
 &nbsp;![caffe_test](pic/caffe_test.jpg)
 

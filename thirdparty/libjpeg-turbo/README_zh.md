@@ -6,11 +6,10 @@ libjpeg-turbo是一种JPEG图像编解码器，它使用SIMD指令来加速基�
 
 ## 使用约束
 
-- IDE版本：DevEco Studio 3.1 Beta2
-- SDK版本：ohos_sdk_public 3.2.11.9 (API Version 9 Release)
+- IDE版本：DevEco Studio 3.1 Release
+- SDK版本：ohos_sdk_public 4.0.8.1 (API Version 10 Release)
 - 三方库版本：2.1.91
 - 当前适配的功能：支持JPEG图像编解码。
-- [IJG(Independent JPEG Group) License/3-clause BSD License/zlib License](https://github.com/libjpeg-turbo/libjpeg-turbo/blob/main/LICENSE.md)
 
 ## 集成方式
 

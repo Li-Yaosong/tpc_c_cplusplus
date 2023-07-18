@@ -9,7 +9,6 @@ OpenJPEG 是用 C 语言编写的开源 JPEG 2000 编解码器。
 - ROM版本：OpenHarmony3.2 beta1
 - 三方库版本：v2.5.0
 - 当前适配的功能：[JPEG 2000](https://jpeg.org/jpeg2000/) 图像编解码
-- License：[The 2-Clause BSD License](https://github.com/uclouvain/openjpeg/blob/v2.5.0/LICENSE)
 
 ## 集成方式
 

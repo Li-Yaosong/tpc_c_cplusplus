@@ -3,15 +3,16 @@
 ## 开发环境
 - ubuntu20.04
 - [OpenHarmony3.2Release镜像](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fdayu200_standard_arm32.tar.gz)
-- [ohos_sdk_public 3.2.11.9 (API Version 9 Release)](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fohos-sdk-windows_linux-public.tar.gz)
-- [DevEco Studio 3.1 Beta2](https://gitee.com/link?target=https%3A%2F%2Fcontentcenter-vali-drcn.dbankcdn.cn%2Fpvt_2%2FDeveloperAlliance_package_901_9%2Ff3%2Fv3%2FuJyuq3syQ2ak4hE1QZmAug%2Fdevecostudio-windows-3.1.0.400.zip%3FHW-CC-KV%3DV1%26HW-CC-Date%3D20230408T013335Z%26HW-CC-Expire%3D315360000%26HW-CC-Sign%3D96262721EDC9B34E6F62E66884AB7AE2A94C2A7B8C28D6F7FC891F46EB211A70)
-- [准备三方库构建环境](../../../tools/README.md#编译环境准备)
-- [准备三方库测试环境](../../../tools/README.md#ci环境准备)
+- [ohos_sdk_public 4.0.8.1 (API Version 10 Release)](http://download.ci.openharmony.cn/version/Master_Version/OpenHarmony_4.0.8.1/20230608_091016/version-Master_Version-OpenHarmony_4.0.8.1-20230608_091016-ohos-sdk-full.tar.gz)
+- [DevEco Studio 3.1 Release](https://contentcenter-vali-drcn.dbankcdn.cn/pvt_2/DeveloperAlliance_package_901_9/81/v3/tgRUB84wR72nTfE8Ir_xMw/devecostudio-windows-3.1.0.501.zip?HW-CC-KV=V1&HW-CC-Date=20230621T074329Z&HW-CC-Expire=315360000&HW-CC-Sign=22F6787DF6093ECB4D4E08F9379B114280E1F65DA710599E48EA38CB24F3DBF2)
+- [准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
+- [准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 ## 编译三方库
 - 下载本仓库
   ```
   git clone https://gitee.com/openharmony-sig/tpc_c_cplusplus.git --depth=1
   ```
+  
 - 三方库目录结构
   ```
   tpc_c_cplusplus/thirdparty/thrift  #三方库thrift的目录结构如下
@@ -22,20 +23,17 @@
   ├── README_zh.md 
   ```
   
-- 将thrift拷贝至tools/main目录下
+- 编译三方库 
+  thrift库需要依赖boost openssl zlib这三个库，所以在build时需要会自动将依赖库一起编译进来
+  编译环境的搭建参考[准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
+  
   ```
-  cd tpc_c_cplusplus
-  cp thirdparty/thrift tools/main -rf
+  cd lycium
+  ./build.sh thrift
   ```
-- 在tools目录下编译三方库 
-  thrift库需要依赖boost openssl zlib这三个库，所以在build时需要将依赖库一起编译进来
-  编译环境的搭建参考[准备三方库构建环境](../../../tools/README.md#编译环境准备)
-  ```
-  cd tools
-  ./build.sh boost openssl zlib thrift
-  ```
+  
 - 三方库头文件及生成的库
-  在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
+  在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
   ```
   thrift/arm64-v8a   thrift/armeabi-v7a
   boost/arm64-v8a   boost/armeabi-v7a
@@ -49,6 +47,7 @@
 
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
   
+
 &nbsp;![thirdparty_install_dir](pic/thrift_install_dir.jpg)
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
@@ -88,18 +87,18 @@
             ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_unit_test_framework.so.1.81.0
             ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_wave.so.1.81.0
             ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/libboost_wserialization.so.1.81.0)
-
+  
   target_link_libraries(entry PRIVATE -L${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/openssl/${OHOS_ARCH}/lib/engines-1.1/afalg.so
             -L${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/openssl/${OHOS_ARCH}/lib/engines-1.1/capi.so
             -L${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/openssl/${OHOS_ARCH}/lib/engines-1.1/padlock.so
             ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/openssl/${OHOS_ARCH}/lib/libcrypto.so.1.1
             ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/openssl/${OHOS_ARCH}/lib/libssl.so.1.1)
-
+  
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/zlib/${OHOS_ARCH}/lib/libz.so.1.2.13)
-
+  
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/thrift/${OHOS_ARCH}/lib/libthrift.a
             ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/thrift/${OHOS_ARCH}/lib/libthriftz.a)
-
+  
   #将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/boost/${OHOS_ARCH}/lib/include)
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/openssl/${OHOS_ARCH}/lib/include)
@@ -110,7 +109,7 @@
 &nbsp;![thrift_usage](pic/thrift_usage.jpg)
 
 ## 测试三方库
-三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
+三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
 - 将编译生成的可执行文件及生成的动态库准备好
 
