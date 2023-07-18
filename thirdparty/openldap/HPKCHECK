@@ -1,5 +1,5 @@
-# Contributor: shann <kanchengc@isoftstone.com>
-# Maintainer: shann <kanchengc@isoftstone.com>
+# Contributor: chengkan <kanchengc@isoftstone.com>
+# Maintainer: chengkan <kanchengc@isoftstone.com>
 
 source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_ROOT}/../thirdparty/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
