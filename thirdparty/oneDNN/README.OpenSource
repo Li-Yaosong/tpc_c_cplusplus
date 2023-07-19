@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "oneDNN",
+        "License": "Apache-2.0 license",
+        "License File": "LICENSE",
+        "Version Number": "v3.2",
+        "Owner": "myxuan475@126.com",
+        "Upstream URL": "https://github.com/oneapi-src/oneDNN/archive/refs/tags/v3.2.tar.gz",
+        "Description": "oneDNN is an open-source cross-platform performance library of basic building blocks for deep learning applications."
+    }
+]
