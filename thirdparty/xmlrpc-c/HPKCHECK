@@ -1,0 +1,25 @@
+# Contributor: lpzhong <278527840@qq.com>
+# Maintainer: lpzhong <278527840@qq.com>
+
+source HPKBUILD > /dev/null 2>&1
+
+logfile=${LYCIUM_THIRDPARTY_ROOT}/$pkgname/$builddir-$ARCH-build/${pkgname}_${pkgver}_${OHOS_SDK_VER}_test.log
+
+openharmonycheck() {
+    res=0    
+    cd $builddir-$ARCH-build
+    old_pwd=$OLDPWD
+
+    cd test
+    ./test > $logfile 2>&1
+    res=$?
+    if [ $res -eq 0 ]
+    then
+        cd cpp 
+        ./test >> $logfile 2>&1
+        res=$?
+    fi
+    cd $old_pwd
+
+    return $res
+}
