@@ -12,10 +12,9 @@ uint_test() {
     ((total_count++))
     # 测试步骤，执行训练、预期结果
     echo "---------------------- Test $total_count: type$1 -- $2 ----------------------" >> ${logfile} 2>&1  
-    echo "pwd: $(pwd)"
-    # ./train -s $1 heart_scale >> ${logfile} 2>&1   
-    # cp heart_scale heart_scale.t 
-    # ./predict heart_scale.t heart_scale.model output >> ${logfile} 2>&1  
+    ./train -s $1 heart_scale >> ${logfile} 2>&1   
+    cp heart_scale heart_scale.t 
+    ./predict heart_scale.t heart_scale.model output >> ${logfile} 2>&1  
     ret=$?
 
     # 清空还原
