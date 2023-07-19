@@ -9,10 +9,12 @@ hpkPaths=()
 successlibs=()
 failedlibs=()
 
+LYCIUM_THIRDPARTY_ROOT=${LYCIUM_ROOT}/../thirdparty
 CHECK_RESULT_PATH=$LYCIUM_ROOT/check_result              # 收集测试结果(log以及生成资源)的目录
 LOG_PATH=$CHECK_RESULT_PATH/check_log                     # 收集测试log的目录
 export LYCIUM_FAULT_PATH=$CHECK_RESULT_PATH/check_fault          # 收集组件测试错误日志，该目录需要创建组件名，日志最终路径为 $CHECK_RESULT_PATH/check_fault/${pkgname}/fault.log
 export LYCIUM__MANUAL_CONFIRM_PATH=$CHECK_RESULT_PATH/manual_confirm  # 手动确认信息(组件生成的如图片，音视频文件等),该目录需要创建组件名，文件最终路径为 $CHECK_RESULT_PATH/manual_confirm/${pkgname}/xxx.wav
+export LYCIUM_THIRDPARTY_ROOT=${LYCIUM_THIRDPARTY_ROOT}
 
 envmessage="please follow the CITools instruction: https://gitee.com/han_jin_fei/lycium-citools"
 
@@ -98,7 +100,7 @@ findlibsdir(){
         tmppath=${LYCIUM_ROOT}/usr/$job     # 查找已编译的库路径
         if [ -d $tmppath ]
         then
-            hpkPaths[${#hpkPaths[@]}]=${LYCIUM_ROOT}/../thirdparty/$job  # 记录库编译路径
+            hpkPaths[${#hpkPaths[@]}]=${LYCIUM_THIRDPARTY_ROOT}/$job  # 记录库编译路径
         fi
     done
 }

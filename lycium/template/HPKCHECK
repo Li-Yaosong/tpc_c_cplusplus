@@ -5,7 +5,7 @@
 # Maintainer: Your Name <youremail@domain.com>
 
 source HPKBUILD > /dev/null 2>&1    # 导入HPKBUILD文件
-logfile=${LYCIUM_ROOT}/../thirdparty/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
+logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
 # 测试前的准备, 如果不需要可以不写。
 checkprepare(){
