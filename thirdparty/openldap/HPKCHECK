@@ -12,6 +12,7 @@ function ping_success() {
 
 checkprepare(){
     res = 0
+    mount -o remount,rw /
     # 判断是否需要创建hosts文件
     if ! ping_success; then
         echo "Hosts file not found. Creating hosts file..." >> ${logfile} 2>&1
