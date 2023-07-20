@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "lpeg",
+        "License": "MIT license",
+        "License File": "LICENSES",
+        "Version Number": "master",
+        "Owner": "qiandinge@isoftstone.com",
+        "Upstream URL": "https://github.com/luvit/lpeg/archive/refs/heads/master.zip",
+        "Description": "LPeg is a new pattern-matching library for Lua, based on Parsing Expression Grammars (PEGs)"
+    }
+]
