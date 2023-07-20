@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "LuaXML",
+        "License": "MIT license",
+        "License File": "LICENSE",
+        "Version Number": "master",
+        "Owner": "chenxu.unix@gmail.com",
+        "Upstream URL": "https://github.com/n1tehawk/LuaXML.git",
+        "Description": "A module that maps between Lua and XML without much ado."
+    }
+]
