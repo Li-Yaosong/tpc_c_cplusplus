@@ -40,6 +40,7 @@ prepare() {
         host=aarch64-linux
     else
         echo "cant not support this ARCH($ARCH) type!!!"
+    fi    
 }
 
 build() {
@@ -62,6 +63,7 @@ package() {
         unsetarm64ENV
     else
         echo "cant not support this ARCH($ARCH) type!!!"
+    fi    
 
     unset host
 }
