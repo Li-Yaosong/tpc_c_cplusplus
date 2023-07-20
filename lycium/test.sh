@@ -16,7 +16,7 @@ export LYCIUM_FAULT_PATH=$CHECK_RESULT_PATH/check_fault          # 收集组件�
 export LYCIUM__MANUAL_CONFIRM_PATH=$CHECK_RESULT_PATH/manual_confirm  # 手动确认信息(组件生成的如图片，音视频文件等),该目录需要创建组件名，文件最终路径为 $CHECK_RESULT_PATH/manual_confirm/${pkgname}/xxx.wav
 export LYCIUM_THIRDPARTY_ROOT=${LYCIUM_THIRDPARTY_ROOT}
 
-envmessage="please follow the CITools instruction: https://gitee.com/han_jin_fei/lycium-citools"
+envmessage="please follow the CITools instruction: https://gitee.com/openharmony-sig/tpc_c_cplusplus/tree/master/lycium/CItools"
 
 # 检查测试环境
 checktestenv(){
