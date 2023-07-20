@@ -9,41 +9,64 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("snappy license")
 depends=()
 makedepends=()
-source="https://github.com/google/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+source="https://github.com/google/snappy.git"
 
 downloadpackage=false
 autounpack=false
 
 builddir=$pkgname-$pkgver
-packagename=$builddir.tar.gz
 
+cloneflag=true # 第一次下载成功标记为true，防止第二次下载
 prepare() {
-    git clone https://github.com/google/snappy.git $builddir
-    cd  $builddir
-    git checkout $pkgver
-    git submodule update --init
+    if $cloneflag
+    then
+        git clone $source $builddir
+        ret=$?
+        if [ $ret -ne 0 ]; then
+            echo "fail: git clone $source $builddir $ret"
+            return $ret
+        fi
+
+        cd  $builddir
+        git checkout -b $pkgver $pkgver
+        ret=$?
+        if [ $ret -ne 0 ]; then
+            echo "fail: git checkout $pkgver $ret"
+            return $ret
+        fi
+
+        git submodule update --init
+        ret=$?
+        if [ $ret -ne 0 ]; then
+            echo "fail: git submodule update --init $ret"
+            return $ret
+        fi
+        cd $OLDPWD
+        cloneflag=false 
+    fi
+    mkdir -p $builddir/$ARCH-build
 }
 
 build() {
-    cd  $builddir
-    mkdir -p $ARCH-build
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake -DCMAKE_CXX_FLAGS="-w"  "$@" ./ -B$ARCH-build -DOHOS_ARCH=$ARCH > $ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build  >>  $ARCH-build/build.log 2>&1
+    cd $builddir
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake -DCMAKE_CXX_FLAGS="-w" "$@" -S./ \
+        -B$ARCH-build -DOHOS_ARCH=$ARCH > $ARCH-build/build.log 2>&1
+    make VERBOSE=1 -j4 -C $ARCH-build >> $ARCH-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
 }
 
 package() {
-    cd "$builddir"
+    cd $builddir
     make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
     cd $OLDPWD
 }
 
 check() {
     echo "The test must be on an OpenHarmony device!"
-    #cd $ARCH-build
-    #ctest 
+    # 进入编译目录
+    # ctest 
 }
 
 cleanbuild() {
