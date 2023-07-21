@@ -1,0 +1,58 @@
+# Contributor: 城meto <myxuan475@126.com>
+# Maintainer: 城meto <myxuan475@126.com>
+
+pkgname=erlang-libdecaf
+pkgver=2.1.1
+pkgrel=0
+pkgdesc="The libdecaf library is for elliptic curve research and practical application."
+url="https://github.com/potatosalad/erlang-libdecaf"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("MIT")
+depends=()
+makedepends=()
+source="https://github.com/potatosalad/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+
+buildtools="cmake"
+
+autounpack=true
+downloadpackage=true
+
+builddir=$pkgname-$pkgver
+packagename=$pkgname-$pkgver.tar.gz
+
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+}
+
+build() {
+    cd $builddir
+    echo "$@, $(pwd)"
+    # CURDIR=$(pwd)/$ARCH-build  
+    # AUTOCONF=`which autoconf` AUTOMAKE=`which automake` AUTOHEADER=`which automake`  MAKEINFO=`which makeinfo` \
+    #  ./configure "$@" --host=`/usr/bin/gcc -dumpmachine` --srcdir=./  > `pwd`/build.log 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+        -DOHOS_ARCH=$ARCH -B$ARCH-build -Sc_deps/ed448goldilocks -L  > `pwd`/$ARCH-build/build.log 2>&1
+    make -j4 -C $ARCH-build VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$? 
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    make -C $ARCH-build install VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # real test
+    # ctest
+}
+
+# 清理环境
+cleanbuild(){
+    # rm -rf $builddir
+    echo "rm ${ARCH}-build"
+    rm -rf $builddir/$ARCH-build
+}
