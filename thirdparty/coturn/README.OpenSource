@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "coturn",
+        "License": "BSD-3-Clause",
+        "License File": "LICENSE",
+        "Version Number": "4.6.2",
+        "Owner": "chenxu.unix@gmail.com",
+        "Upstream URL": "https://github.com/coturn/coturn.git",
+        "Description": "coturn is a free open source implementation of TURN and STUN Server. The TURN Server is a VoIP media traffic NAT traversal server and gateway."
+    }
+]
