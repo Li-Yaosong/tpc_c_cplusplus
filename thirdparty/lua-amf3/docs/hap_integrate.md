@@ -23,13 +23,6 @@
   ├── README_zh.md   
   ```
   
-- 将lua-amf3拷贝至lycium/main目录下
-  ```
-  cd tpc_c_cplusplus
-  mkdir -p lycium/main
-  cp thirdparty/LuaJIT lycium/main -rf
-  cp thirdparty/lua-amf3 lycium/main -rf
-  ```
 - 在lycium目录下编译三方库
   编译环境的搭建参考[准备三方库构建环境](../../../lycium/README.md#编译环境准备)
   
