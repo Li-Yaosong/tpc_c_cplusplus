@@ -11,7 +11,6 @@ license=("MIT")
 depends=()
 makedepends=()
 source="https://github.com/potatosalad/$pkgname/archive/refs/tags/$pkgver.tar.gz"
-
 buildtools="cmake"
 
 autounpack=true
@@ -26,10 +25,6 @@ prepare() {
 
 build() {
     cd $builddir
-    echo "$@, $(pwd)"
-    # CURDIR=$(pwd)/$ARCH-build  
-    # AUTOCONF=`which autoconf` AUTOMAKE=`which automake` AUTOHEADER=`which automake`  MAKEINFO=`which makeinfo` \
-    #  ./configure "$@" --host=`/usr/bin/gcc -dumpmachine` --srcdir=./  > `pwd`/build.log 2>&1
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
         -DOHOS_ARCH=$ARCH -B$ARCH-build -Sc_deps/ed448goldilocks -L  > `pwd`/$ARCH-build/build.log 2>&1
     make -j4 -C $ARCH-build VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
@@ -52,7 +47,5 @@ check() {
 
 # 清理环境
 cleanbuild(){
-    # rm -rf $builddir
-    echo "rm ${ARCH}-build"
-    rm -rf $builddir/$ARCH-build
+    rm -rf $builddir
 }
