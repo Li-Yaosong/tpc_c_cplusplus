@@ -1,0 +1,69 @@
+# Contributor: shann <swkec@isoftstone.com>
+# Maintainer: shann <swkec@isoftstone.com>
+pkgname=opus
+pkgver=v1.4
+pkgrel=0
+pkgdesc="OPUS is an open, royalty-free audio codec designed to provide high-fidelity audio transmission across various network environments."
+url="https://opus-codec.org/"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("BSD-licensed")
+depends=()
+makedepends=()
+
+source="https://downloads.xiph.org/releases/$pkgname/$pkgname-${pkgver:1}.tar.gz"
+
+autounpack=true
+downloadpackage=true
+buildtools="configure"
+
+builddir=$pkgname-${pkgver:1}
+packagename=$builddir.tar.gz
+
+source envset.sh
+host=
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+    if [ $ARCH == "armeabi-v7a" ]; then
+        setarm32ENV
+        host=arm-linux
+    elif [ $ARCH == "arm64-v8a" ]; then
+        setarm64ENV
+        host=aarch64-linux
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
+}
+
+build() {
+    cd $builddir/$ARCH-build
+    ../configure "$@" --host=$host --enable-test > `pwd`/build.log 2>&1
+    make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+    if [ $ARCH == "armeabi-v7a" ]; then
+        unsetarm32ENV
+    elif [ $ARCH == "arm64-v8a" ]; then
+        unsetarm64ENV
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    #编译生成目录$ARCH-build下执行make check
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
