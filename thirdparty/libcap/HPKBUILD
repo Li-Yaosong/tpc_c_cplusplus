@@ -1,0 +1,101 @@
+# Contributor: Chen Xu <chenxu.unix@gmail.com>
+# Maintainer: Chen Xu <chenxu.unix@gmail.com>
+pkgname=libcap
+pkgver=libcap-2.24
+pkgrel=0
+pkgdesc="This is a library for getting and setting POSIX.1e (formerly POSIX 6)draft 15 capabilities."
+url="https://github.com/Distrotech/libcap"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("GPL-2.0")
+depends=("attr")
+makedepends=("")
+
+source="https://github.com/Distrotech/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+
+autounpack=true
+downloadpackage=true
+buildtools="make"
+
+builddir=$pkgname-${pkgver}
+packagename=$builddir.tar.gz
+buildhost=true
+cc=
+ar=
+ldflags=
+
+fixfunc() {
+    # _caps_output.gperf为编译时生成，没有模板文件；需要使用sed修改
+    # size_t未定义，需要包含定义头文件
+    sed -i "4 i#include <stddef.h>" `pwd`/libcap/_caps_output.gperf
+    # 函数的声明与定义不一致，需要修改
+    sed -i 's/const struct __cap_token_s \*__cap_lookup_name(const char \*, unsigned int)/const struct __cap_token_s \*__cap_lookup_name(register const char \*, register size_t)/' \
+        `pwd`/libcap/_caps_output.gperf
+}
+
+prepare() {
+    cp -rf $builddir $builddir-$ARCH-build
+    ar=${OHOS_SDK}/native/llvm/bin/llvm-ar
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        cc=${OHOS_SDK}/native/llvm/bin/arm-linux-ohos-clang
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        cc=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
+    
+    if [ $buildhost == true ];then
+        cp -rf $builddir $builddir-host-build
+        cd $builddir-host-build/libcap
+        make _makenames -j4 VERBOSE=1 > `pwd`/build.log 2>&1
+        cd $OLDPWD
+        buildhost=false
+    fi
+    
+    # makefile没有查找attr路径，需要手动指定路径
+    ldflags="-L$LYCIUM_ROOT/usr/attr/$ARCH/lib"
+}
+build() {
+    cd $builddir-$ARCH-build
+    make CC=${cc} AR=${ar} -j4 VERBOSE=1 > `pwd`/build.log 2>&1
+
+    # 修复编译报错
+    fixfunc
+    
+    # 继续编译
+    make CC=${cc} AR=${ar} LDFLAGS=${ldflags} -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
+
+    # 生成cap_names.h
+    cp -rf `pwd`/../$builddir-host-build/libcap/_makenames `pwd`/libcap/
+
+    # 继续编译
+    make CC=${cc} AR=${ar} LDFLAGS=${ldflags} -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
+    ret=$?
+
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    installpath=$LYCIUM_ROOT/usr/libcap/$ARCH
+    cd $builddir-$ARCH-build
+    make DESTDIR=$installpath lib="lib" install VERBOSE=1 >> `pwd`/build.log 2>&1
+    cd $OLDPWD
+    unset cc ar ldflags
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # mount -o remount,rw /
+    # ln -s /bin/sh /bin/bash
+    # cd ${LYCIUM_THIRDPARTY_ROOT}/libcap/libcap-libcap-2.24-arm64-v8a-build/progs
+    # export LD_LIBRARY_PATH=${LYCIUM_ROOT}/usr/libcap/arm64-v8a/lib:$LD_LIBRARY_PATH
+    # ./capsh --print
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir $builddir-host-build $builddir-armeabi-v7a-build  $builddir-arm64-v8a-build #${PWD}/$packagename
+}

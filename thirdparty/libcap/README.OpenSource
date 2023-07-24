@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libcap",
+        "License": "GPL-2.0",
+        "License File": "LICENSE",
+        "Version Number": "libcap-2.24",
+        "Owner": "chenxu.unix@gmail.com",
+        "Upstream URL": "https://github.com/Distrotech/libcap.git",
+        "Description": "This is a library for getting and setting POSIX.1e (formerly POSIX 6) draft 15 capabilities."
+    }
+]
