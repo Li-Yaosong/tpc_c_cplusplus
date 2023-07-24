@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "protobuf_v3.6.1",
+        "License": "Copyright 2008 Google Inc",
+        "License File": "LICENSE",
+        "Version Number": "v3.6.1",
+        "Owner": "chenxu.unix@gmail.com",
+        "Upstream URL": "https://github.com/protocolbuffers/protobuf.git",
+        "Description": "Protocol Buffers (a.k.a., protobuf) are Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data."
+    }
+]
