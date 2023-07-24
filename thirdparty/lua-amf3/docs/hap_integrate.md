@@ -1,8 +1,6 @@
-# xxHash集成到应用hap
+# lua-amf3集成到应用hap
 本库是在RK3568开发板上基于OpenHarmony3.2 Release版本的镜像验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
-
 ## 开发环境
-
 - ubuntu20.04
 - [OpenHarmony3.2Release镜像](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fdayu200_standard_arm32.tar.gz)
 - [ohos_sdk_public 4.0.8.1 (API Version 10 Release)](https://gitee.com/link?target=http%3A%2F%2Fdownload.ci.openharmony.cn%2Fversion%2FMaster_Version%2FOpenHarmony_4.0.8.1%2F20230608_091058%2Fversion-Master_Version-OpenHarmony_4.0.8.1-20230608_091058-ohos-sdk-public.tar.gz)
@@ -16,48 +14,58 @@
   ```
 - 三方库目录结构
   ```
-  tpc_c_cplusplus/thirdparty/xxHash #三方库的目录结构如下
+  tpc_c_cplusplus/thirdparty/lua-amf3   #三方库lua-amf3的目录结构如下
   ├── docs                              #三方库相关文档的文件夹
   ├── HPKBUILD                          #构建脚本
   ├── SHA512SUM                         #三方库校验文件
+  ├── OAT.xml              			  #OAT文件
   ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
   ├── README_zh.md   
   ```
   
 - 在lycium目录下编译三方库
   编译环境的搭建参考[准备三方库构建环境](../../../lycium/README.md#编译环境准备)
+  
   ```
   cd lycium
-  ./build.sh xxHash
+  ./build.sh lua-amf3
   ```
 - 三方库头文件及生成的库
-  在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库和头文件
+  在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
   ```
-  xxHash/arm64-v8a
-  xxHash/armeabi-v7a
+  lua-amf3/armeabi-v7a lua-amf3/arm64-v8a
   ```
-
+  
 - [测试三方库](#测试三方库)
 
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件拷贝到该目录下，将编译生成的三方库全部（动态库名字带版本号和不带版本号的都需要）拷贝到工程的libs目录下，如下图所示
-&nbsp;![thirdparty_install_dir](pic/install_dir.png)
+- 在IDE的cpp目录下新增thirdparty\lua-amf3\arm64-v8a\include目录和thirdparty\lua-amf3\armeabi-v7a\include目录，将编译机器上面的tpc_c_cplusplus/thirdparty/lua-amf3/lua-amf3-2.0.5/src路径下的amf3.h文件拷贝到工程的cpp\thirdparty\lua-amf3\arm64-v8a\include目录下
+32位的拷贝到工程的cpp\thirdparty\lua-amf3\armeabi-v7a\include目录下
+- 在IDE的libs目录下新增arm64-v8a目录和armeabi-v7a目录，分别将64位和32位的amf3.so文件放到该目录下,如下图所示：
+
+&nbsp;![thirdparty_install_dir](pic/screen_cut.jpg)
+
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
+  ```
+  #将三方库加入工程中
+  target_link_libraries(entry PRIVATE -L${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/amf3.so)
+  #将三方库的头文件加入工程中
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/lua-amf3/${OHOS_ARCH}/include)
+  ```
   
-```
-#将三方库加入工程中
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libxxhash.so)
-#将三方库的头文件加入工程中
-target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/xxHash/${OHOS_ARCH}/include)
-```
-  ![thirdparty_usage](pic/usage.png)
 ## 测试三方库
-三方库的测试使用原库自带的测试用例来做测试
+三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../tools/README.md#ci环境准备)
 
-进入到构建目录获取,执行ctest，运行测试用例（xxHash-arm64-v8a-build为构建64位的目录，xxHash-armeabi-v7a-build为构建32位的目录）
-&nbsp;![thirdparty_test_result](pic/test_result.png)
+- 进入到构建目录,执行如下命令（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
+注意:以下为64位命令，如需测试32位，请将arm64-v8a替换为armeabi-v7a。
+```
+ctest
+```
 
+测试用例运行结果如下：
+
+&nbsp;![lua-amf3_test](pic/run_screen_cut.jpg)
 
 ## 参考资料
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
