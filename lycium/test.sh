@@ -172,6 +172,7 @@ checkhpk(){
 }
 
 main(){
+    mount -o remount,rw /
     # 环境检测
     checktestenv
     getcpuarchitecture
