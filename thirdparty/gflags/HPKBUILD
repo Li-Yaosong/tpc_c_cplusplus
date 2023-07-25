@@ -30,15 +30,26 @@ build() {
 }
 
 package() {
-    cd "$builddir"
+    cd $builddir
     make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
     cd $OLDPWD
+    return $ret
 }
 
 check() {
+    cd $builddir/$ARCH-build/test
+    ohos_sdk_path=${OHOS_SDK//\//\\\/}"\/native\/build-tools\/cmake\/bin\/cmake" 
+    cat CTestTestfile.cmake | sed 's/'$ohos_sdk_path'/\/usr\/bin\/cmake/' > CTestTestfile_temp.cmake
+    rm CTestTestfile.cmake
+    mv CTestTestfile_temp.cmake CTestTestfile.cmake
+    ret=$?
+    cd $OLDPWD 
     echo "The test must be on an OpenHarmony device!"
+    # ctest
+    return $ret
 }
 
-cleanbuild(){
+cleanbuild() {
     rm -rf ${PWD}/$builddir #${PWD}/$packagename
 }
