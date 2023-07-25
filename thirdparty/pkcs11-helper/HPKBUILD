@@ -22,19 +22,21 @@ source envset.sh
 host=
 prepare() {
     cp -arf $builddir $builddir-$ARCH-build
-    if [ $ARCH == ${archs[0]} ]
-    then
+    if [ $ARCH == ${archs[0]} ]; then
         setarm32ENV
         host=arm-linux        
-    fi
-    if [ $ARCH == ${archs[1]} ]
-    then
+    elif [ $ARCH == ${archs[1]} ]; then
         setarm64ENV
-        host=aarch64-linux
-    fi
+        host=aarch64-linux        
+    else
+        echo "cant not support this ARCH($ARCH) type!!!"
+        return -1
+    fi   
     cd $builddir-$ARCH-build
     autoreconf -ifv > `pwd`/build.log 2>&1
     cd $OLDPWD
+
+    unset host  
 }
 
 build() {
@@ -51,13 +53,12 @@ package() {
     cd $builddir-$ARCH-build
     make install >> `pwd`/build.log 2>&1
     cd $OLDPWD
-    if [ $ARCH == ${archs[0]} ]
-    then
+    if [ $ARCH == ${archs[0]} ]; then
         unsetarm32ENV
-    fi
-    if [ $ARCH == ${archs[1]} ]
-    then
+    elif [ $ARCH == ${archs[1]} ]; then
         unsetarm64ENV
+    else
+        echo "cant not support this ARCH($ARCH) type!!!"      
     fi
 
     unset host
