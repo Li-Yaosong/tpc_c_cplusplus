@@ -1,0 +1,83 @@
+# Contributor: Jeff Han <hanjinfei@foxmail.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
+pkgname=Chipmunk2D
+pkgver=Chipmunk-7.0.3
+pkgrel=0
+pkgdesc="A fast and lightweight 2D game physics library."
+url="https://github.com/slembcke/Chipmunk2D"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("MIT")
+depends=()
+makedepends=()
+
+source="https://github.com/slembcke/$pkgname/archive/refs/tags/$pkgver.zip"
+
+autounpack=true
+downloadpackage=true
+patchflag=true
+
+builddir=$pkgname-${pkgver}
+packagename=$builddir.zip
+source envset.sh
+# patch Chipmunk2D-Chipmunk-7.0.3/src/cpHastySpace.c
+prepare() {
+    if $patchflag
+    then
+        cd $builddir
+        patch -p1 < `pwd`/../Chipmunk2D_oh_pkg.patch
+        # patch只需要打一次,关闭打patch
+        patchflag=false
+        cd $OLDPWD
+    fi
+    mkdir -p $builddir/$ARCH-build
+}
+
+build() {
+    cd $builddir
+    # 关闭 demo，demo 依赖OpenGL
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DBUILD_DEMOS=OFF -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
+    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd "$builddir"
+    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # 由于demo需要依赖OpenGL导致编译不过，现使用Chipmunk2D官网文档中Hello Chipmunk Example源码作为测试用例，编译如下：
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        setarm32ENV
+    fi
+    if [ $ARCH == "arm64-v8a" ]
+    then
+        setarm64ENV
+    fi
+
+    cd $builddir
+    $CC -I include/chipmunk -L $ARCH-build/src -lchipmunk -o $ARCH-build/Chipmunk2D_test Chipmunk2D_test.c
+    cd $OLDPWD
+
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        unsetarm32ENV
+    fi
+    if [ $ARCH == "arm64-v8a" ]
+    then
+        unsetarm64ENV
+    fi
+    unset host
+    # real test CMD
+    # LD_LIBRARY_PATH=./src/ ./Chipmunk2D_test
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
