@@ -1,24 +1,24 @@
 # Contributor: 城meto <myxuan475@126.com>
 # Maintainer: 城meto <myxuan475@126.com>
 
-pkgname=bctoolbox
-pkgver=5.2.91
+pkgname=libical
+pkgver=v3.0.16
 pkgrel=0
-pkgdesc="Utilities library used by Belledonne Communications softwares like belle-sip, mediastreamer2 and liblinphone."
-url="https://github.com/BelledonneCommunications/bctoolbox"
+pkgdesc="Libical is an implementation of iCalendar protocols and data formats."
+url="https://github.com/libical/libical"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("GPL-3.0 license")
-depends=("mbedtls_2_4_2" "bcunit" "erlang-libdecaf")
+license=("LGPL v2.1")
+depends=()
 makedepends=()
-source="https://codeload.github.com/BelledonneCommunications/$pkgname/zip/refs/tags/$pkgver"
+source="https://github.com/libical/$pkgname/releases/download/$pkgver/$pkgname-$pkgver.tar.gz"
 buildtools="cmake"
 
-autounpack=true
+autounpack=false
 downloadpackage=true
 patchflag=true
 
 builddir=$pkgname-$pkgver
-packagename=$pkgname-$pkgver.zip
+packagename=$pkgname-$pkgver.tar.gz
 
 source envset.sh
 
@@ -80,5 +80,6 @@ check() {
 
 # 清理环境
 cleanbuild(){
-    rm -rf $builddir
+    # rm -rf $builddir
+    return 0
 }

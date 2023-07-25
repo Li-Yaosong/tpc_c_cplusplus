@@ -89,7 +89,7 @@
 
 进入到构建目录,执行如下命令ctest（arm64-v8a-build为构建64位的目录, armeabi-v7a-build为构建32位的目录）
 
-![bctoolbox_test](pic/bctoolbox_test.png)
+![bctoolbox_test](pic/bctoolbox-test.png)
 
 ## 参考资料
 
