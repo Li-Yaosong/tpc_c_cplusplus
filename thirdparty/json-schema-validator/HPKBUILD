@@ -9,7 +9,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("MIT")
 depends=("json")
 makedepends=()
-install=
+
 source="https://github.com/pboettch/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
 autounpack=true
@@ -48,12 +48,18 @@ package() {
 }
 
 check() {
+    cd $builddir/$ARCH-build/test
+    # 测试用例涉及到install,因此屏蔽掉
+    sed -i '/.*subdirs("cmake-install")*/c\#subdirs("cmake-install")' CTestTestfile.cmake 
+    ret=$?
+    cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
     # 在OpenHarmony开发板中执行用例
     # ctest
+    return $ret
 }
 
 # 清理环境
-cleanbuild(){
+cleanbuild() {
     rm -rf ${PWD}/$builddir #${PWD}/$packagename
 }
