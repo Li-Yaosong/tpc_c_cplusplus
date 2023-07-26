@@ -1,7 +1,7 @@
 [
     {
         "Name": "md5-c",
-        "License": "BSD-3-Clause license",
+        "License": "unlicense",
         "License File": "LICENSES",
         "Version Number": "main",
         "Owner": "qiandinge@isoftstone.com",
