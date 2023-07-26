@@ -33,11 +33,11 @@ prepare() {
     if $buildhostprotoc
     then 
         mkdir -p $builddir/third_party/abseil-cpp/
-        tar -zxf $LYCIUM_ROOT/main/abseil-cpp/abseil-cpp*.tar.gz -C $builddir/third_party/abseil-cpp
+        tar -zxf $PKGBUILD_ROOT/../abseil-cpp/abseil-cpp*.tar.gz -C $builddir/third_party/abseil-cpp
         mv $builddir/third_party/abseil-cpp/abseil-cpp-*/* $builddir/third_party/abseil-cpp/
 
         mkdir -p $builddir/third_party/googletest/
-        tar -zxf $LYCIUM_ROOT/main/googletest/googletest*.tar.gz -C $builddir/third_party/googletest
+        tar -zxf $PKGBUILD_ROOT/../googletest/googletest*.tar.gz -C $builddir/third_party/googletest
         mv $builddir/third_party/googletest/googletest-*/* $builddir/third_party/googletest/
 
         cp -rf $builddir $builddir-host-build
