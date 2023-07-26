@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "tink",
+        "License": "Apache License 2.0",
+        "License File": "LICENSE",
+        "Version Number": "v1.7.0",
+        "Owner": "3415239542@qq.com",
+        "Upstream URL": "https://github.com/google/tink/archive/refs/tags/v1.7.0.tar.gz",
+        "Description": "A multi-language, cross-platform library that provides cryptographic APIs that are secure, easy to use correctly, and hard(er) to misuse"
+    }
+]
