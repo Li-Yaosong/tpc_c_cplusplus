@@ -201,7 +201,7 @@ buildthirdparty() {
 build() {
     buildthirdparty "$@"
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@;$LYCIUM_ROOT/usr/caffe/$ARCH" -DOHOS_ARCH=$ARCH -B$ARCH-build -DUSE_LMDB=OFF -DBLAS=clbas -DBUILD_python=OFF  -DBUILD_python_layer=OFF -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=FALSE -DProtobuf_PROTOC_EXECUTABLE=$protoc -DCMAKE_SHARED_LINKER_FLAGS="$blaslibs $cblaslibs" -DCMAKE_CXX_FLAGS="-I$cblasinclude" -S./ -L > $ARCH-build/build.log 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@;$LYCIUM_ROOT/usr/caffe/$ARCH" -DOHOS_ARCH=$ARCH -DCAFFE_TARGET_SOVERSION="1" -B$ARCH-build -DUSE_LMDB=OFF -DBLAS=clbas -DBUILD_python=OFF  -DBUILD_python_layer=OFF -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=FALSE -DProtobuf_PROTOC_EXECUTABLE=$protoc -DCMAKE_SHARED_LINKER_FLAGS="$blaslibs $cblaslibs" -DCMAKE_CXX_FLAGS="-I$cblasinclude" -S./ -L > $ARCH-build/build.log 2>&1
     make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1 && make -j4 test.testbin -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
