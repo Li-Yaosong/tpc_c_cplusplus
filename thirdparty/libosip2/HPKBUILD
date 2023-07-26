@@ -55,7 +55,7 @@ check() {
     sed -i '/check: check-am/c\#check: check-am' src/test/Makefile
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
-    #编译生成目录$ARCH-build/src/test下执行make chech
+    #编译生成目录$ARCH-build/src/test下执行make check
 }
 
 # 清理环境
