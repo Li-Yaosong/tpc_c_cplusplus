@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "vid.stab",
+        "License": "GPL",
+        "License File": "LICENSE",
+        "Version Number": "v1.1.1",
+        "Owner": "3415239542@qq.com",
+        "Upstream URL": "https://github.com/georgmartius/vid.stab/archive/refs/tags/v1.1.1.tar.gz",
+        "Description": "Vidstab is a video stabilization library which can be plugged-in with Ffmpeg and Transcode."
+    }
+]
