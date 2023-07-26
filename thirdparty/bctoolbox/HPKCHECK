@@ -4,15 +4,12 @@
 source HPKBUILD > /dev/null 2>&1    # 导入HPKBUILD文件
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
-checkprepare(){
-    cd $builddir/${ARCH}-build
-    chmod a+rx tester/bctoolbox_tester
-    cd $OLDPWD
-}
-
 # 在OH环境执行测试的接口
-openharmonycheck() {                          
+openharmonycheck() {   
+    res=0                       
     cd ${builddir}/${ARCH}-build   
-    tester/bctoolbox_tester > ${logfile} 2>&1            
-    cd $OLDPWD                          
+    tester/bctoolbox_tester > ${logfile} 2>&1 
+    res=$?           
+    cd $OLDPWD
+    return $res                          
 }

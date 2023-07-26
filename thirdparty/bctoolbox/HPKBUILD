@@ -20,8 +20,6 @@ patchflag=true
 builddir=$pkgname-$pkgver
 packagename=$pkgname-$pkgver.zip
 
-source envset.sh
-
 prepare() {
     # 因编译器差异问题， 不支持mallinfo函数，需要打patch
     if [ $patchflag == true ];then
@@ -31,23 +29,15 @@ prepare() {
         cd $OLDPWD
     fi
     mkdir -p $builddir/$ARCH-build
-    if [ $ARCH == "armeabi-v7a" ];then
-        setarm32ENV
-    elif [ $ARCH == "arm64-v8a" ];then
-        setarm64ENV
-    else
-        echo "$ARCH not support"
-        return -1
-    fi
 }
 
 build() {
     cd $builddir
     # mbedtls 版本不能太高，否则部分接口无法使用
     PKG_CONFIG_PATH="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
-        -DCMAKE_C_FLAGS="${CFLAGS} -I${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/include -Wno-error=unused-parameter" \
-        -DCMAKE_CXX_FLAGS="${CXXFLAGS} -I${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/include" \
-        -DCMAKE_SHARED_LINKER_FLAGS="${LDFLAGS} -L${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/lib" \
+        -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} -I${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/include -Wno-error=unused-parameter" \
+        -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -I${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/include" \
+        -DCMAKE_SHARED_LINKER_FLAGS="${CMAKE_SHARED_LINKER_FLAGS} -L${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/lib" \
         -DMBEDTLS_INCLUDE_DIRS=${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/include \
         -DDecaf_DIR=${LYCIUM_ROOT}/usr/erlang-libdecaf/${ARCH}/share/decaf/cmake \
         -DBcUnit_DIR=${LYCIUM_ROOT}/usr/bcunit/${ARCH}/share/BCunit/cmake  \
@@ -61,14 +51,6 @@ build() {
 package() {
     cd $builddir
     make -C $ARCH-build install VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
-    # 还原
-    if [ $ARCH == "armeabi-v7a" ];then
-        unsetarm32ENV
-    elif [ $ARCH == "arm64-v8a" ];then
-        unsetarm64ENV
-    else
-        echo "$ARCH not support"
-    fi
     cd $OLDPWD
 }
 
@@ -80,6 +62,5 @@ check() {
 
 # 清理环境
 cleanbuild(){
-    # rm -rf $builddir
-    return 0
+    rm -rf $builddir
 }
