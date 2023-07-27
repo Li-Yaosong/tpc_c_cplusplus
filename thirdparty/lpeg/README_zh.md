@@ -6,7 +6,6 @@ LPEG是一个供lua使用的基于 Parsing Expression Grammars 的模式匹配�
 - SDK版本：ohos_sdk_public 4.0.8.1 (API Version 10 Release)
 - 三方库版本：master
 - 当前适配的功能：LPEG是一个供lua使用的基于 Parsing Expression Grammars 的模式匹配库
-- [BSD-3-Clause license](http://www.inf.puc-rio.br/~roberto/lpeg/#license)
 
 ## 集成方式
 + [应用hap包集成](docs/hap_ingtegrate.md)
