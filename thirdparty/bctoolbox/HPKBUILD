@@ -34,13 +34,10 @@ prepare() {
 build() {
     cd $builddir
     # mbedtls 版本不能太高，否则部分接口无法使用
-    PKG_CONFIG_PATH="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    PKG_CONFIG_LIBDIR ="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
         -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} -I${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/include -Wno-error=unused-parameter" \
         -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -I${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/include" \
         -DCMAKE_SHARED_LINKER_FLAGS="${CMAKE_SHARED_LINKER_FLAGS} -L${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/lib" \
-        -DMBEDTLS_INCLUDE_DIRS=${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/include \
-        -DDecaf_DIR=${LYCIUM_ROOT}/usr/erlang-libdecaf/${ARCH}/share/decaf/cmake \
-        -DBcUnit_DIR=${LYCIUM_ROOT}/usr/bcunit/${ARCH}/share/BCunit/cmake  \
         -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L  > `pwd`/$ARCH-build/build.log 2>&1
     make -j4 -C $ARCH-build VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
     ret=$?
