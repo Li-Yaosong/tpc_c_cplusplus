@@ -48,7 +48,7 @@ prepare() {
 build() {
     cd $builddir-$ARCH-build
     # 默认采用 curl client 通信,如果不采用curl, 可以删除 CURL_CONFIG=xxx, 并--disable-curl-client
-    PKG_CONFIG_PATH="${pkgconfigpath}" CURL_CONFIG=`pwd`/../../../usr/curl/$ARCH/bin/curl-config ./configure "$@" --host=$host > `pwd`/build.log 2>&1
+    PKG_CONFIG_PATH="${pkgconfigpath}" CURL_CONFIG=${LYCIUM_ROOT}/usr/curl/$ARCH/bin/curl-config ./configure "$@" --host=$host > `pwd`/build.log 2>&1
     make CC_FOR_BUILD=gcc CFLAGS_FOR_BUILD="" LDFLAGS_FOR_BUILD="" CFLAGS="-I $LYCIUM_ROOT/usr/openssl/$ARCH/include" LDFLAGS="-L $LYCIUM_ROOT/usr/openssl/$ARCH/lib" -j4 >> `pwd`/build.log 2>&1
     ret=$?
     cd $OLDPWD
