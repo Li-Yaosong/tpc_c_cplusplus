@@ -136,7 +136,8 @@ checkhpk(){
             checkprepare > /dev/null 2>&1       # 执行测试前准备工作
         fi
         openharmonycheck > /dev/null 2>&1   # 执行测试
-        if [ $? -ne 0 ]
+        checkret=$?
+        if [ $checkret -ne 0 ]
         then
             failedlibs[${#failedlibs[@]}]=${libdir##*/}
             echo -e "check ${libdir##*/} \033[31m failed \033[0m"   # 红色显示失败
@@ -148,6 +149,11 @@ checkhpk(){
         if [ -f ${libdir##*/}_${ARCH}_${OHOS_SDK_VER}_test.log ]
         then
             cp ${libdir##*/}_${ARCH}_${OHOS_SDK_VER}_test.log $LOG_PATH    # 将测试的log收集到指定目录
+            if [ $checkret -ne 0 ]
+            then
+                mkdir -p $LYCIUM_FAULT_PATH/${libdir##*/}
+                cp ${libdir##*/}_${ARCH}_${OHOS_SDK_VER}_test.log $LYCIUM_FAULT_PATH/${libdir##*/}
+            fi
         fi
 
         cd $OLDPWD
