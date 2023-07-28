@@ -40,13 +40,13 @@
 
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的库头文件拷贝到该目录下, 如下图所示
+- 在IDE的entry/src/main/cpp目录下新增thirdparty目录，将编译生成的protobuf_v3.6.1和zlib库头文件拷贝到该目录下, ,同时在entry/libs下增加32和64位文件目录,将编译生成的libz.so.1、libprotobuf.a、libprotofc.a文件拷贝到对应目录，如下图所示
 &nbsp;![thirdparty_install_dir](pic/screen_cut.jpg)
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
   ```
   #将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libz.so)
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libz.so.1)
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libprotobuf.a)
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libprotoc.a)
   #将三方库的头文件加入工程中
