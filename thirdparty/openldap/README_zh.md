@@ -8,7 +8,11 @@ OpenLDAP（Lightweight Directory Access Protocol）是一个开源的实现LDAP�
 
 - SDK：ohos_sdk_public 4.0.8.1 (API Version 10 Release)
 
-- 三方库版本：3.3.10
+- 三方库版本：2.5.14
+
+- 当前适配功能: 支持目录服务提供支持LDAP协议，并提供了用于管理目录树、条目和属性的API和工具。
+               用户认证和授权，支持基于LDAP的身份验证，并提供了灵活的访问控制策略，允许管理员定义谁可以访问目录中的哪些数据。
+               目录同步和复制，可以在多个OpenLDAP服务器之间实现数据复制。
 
 
 ## 集成方式
