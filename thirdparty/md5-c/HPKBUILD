@@ -1,7 +1,7 @@
 # Contributor: wupingyuan <wupingyuan@huawei.com>
-# Maintainer: wupingyuan <wupingyuan@huawei.com>
+# Maintainer: dingqian <1052888395@qq.com>
 pkgname="md5-c"
-pkgver="main"
+pkgver="f3529b666b7ae8b80b0a9fa88ac2a91b389909c7"
 pkgrel=0
 pkgdesc="A simple, commented reference implementation of the MD5 hash algorithm"
 url="https://github.com/Zunawe/md5-c"
@@ -10,18 +10,35 @@ license=("The Unlicense")
 depends=()
 makedepends=()
 
-source="https://github.com/Zunawe/$pkgname/archive/refs/heads/$pkgver.zip"
+source="https://github.com/Zunawe/$pkgname.git"
 
-autounpack=true
-downloadpackage=true
+autounpack=false
+downloadpackage=false
 patchflag=true
 buildtools="make"
 builddir=$pkgname-${pkgver}
-packagename=$builddir.zip
+cloneflag=true
 cc=
 ar=
 
 prepare() {
+    if [ $cloneflag == true ]
+    then
+        mkdir $builddir
+        git clone -b main $source $builddir
+        if [ $? -ne 0 ]
+        then
+            return -1
+        fi
+        cd $builddir
+        git reset --hard $pkgver
+        if [ $? -ne 0 ]
+        then
+            return -2
+        fi
+        cd $OLDPWD
+        cloneflag=false
+    fi
     if $patchflag
     then
         cd $builddir
