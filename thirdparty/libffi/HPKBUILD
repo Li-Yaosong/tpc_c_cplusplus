@@ -1,0 +1,68 @@
+# Contributor: wlxuz <wlxuz@isoftstone.com>
+# Maintainer: wlxuz <wlxuz@isoftstone.com>
+
+pkgname=libffi
+pkgver=v3.4.4
+pkgrel=0
+pkgdesc="The libffi library provides a portable, high level programming interface to various calling conventions. This allows a programmer to call any function specified by a call interface description at run time."
+url="https://github.com/libffi/libffi"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("GPL-2.0 license")
+depends=()
+makedepends=()
+source="https://github.com/$pkgname/$pkgname/releases/download/$pkgver/$pkgname-${pkgver:1}.tar.gz"
+buildtools="configure"
+
+autounpack=true
+downloadpackage=true
+genconfigure=true
+
+builddir=$pkgname-${pkgver:1}
+packagename=$pkgname-$pkgver.tar.gz
+
+source envset.sh
+host=
+
+prepare() {
+    mkdir $builddir/$ARCH-build
+    cd $builddir
+    chmod a+x ./configure
+    cd $OLDPWD
+    if [ $ARCH == "armeabi-v7a" ];then
+        setarm32ENV
+        host=arm-linux
+        # armv7a汇编指令需要使用fp registers, 否则汇编代码报错，无法编译
+        export CFLAGS="$CFLAGS -mfloat-abi=softfp"
+    elif [ $ARCH == "arm64-v8a" ];then
+        setarm64ENV
+        host=aarch64-linux
+    else
+        echo "$ARCH not support"
+        return -1
+    fi
+}
+
+build() {
+    cd $builddir
+    ./configure "$@" --host=$host --enable-static=yes --disable-multi-os-directory --enable-builddir=$ARCH-build > `pwd`/$ARCH-build/build.log 2>&1
+    make -C $ARCH-build -j4  VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    make -C $ARCH-build install VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # real test
+}
+
+# 清理环境
+cleanbuild(){
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
