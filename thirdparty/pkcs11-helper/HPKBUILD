@@ -39,7 +39,8 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    PKG_CONFIG_PATH="${pkgconfigpath}" ./configure "$@" --host=$host >> `pwd`/build.log 2>&1
+    PKG_CONFIG_PATH="${pkgconfigpath}" ./configure "$@" --disable-crypto-engine-nss  --disable-crypto-engine-gnutls \
+                    --disable-crypto-engine-mbedtls --host=$host >> `pwd`/build.log 2>&1
     make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
     ret=$?
     cd $OLDPWD
