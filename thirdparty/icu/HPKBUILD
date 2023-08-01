@@ -49,10 +49,8 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    echo "$@"
     CXXFLAGS="$CXXFLAGS -std=c++11" ../icu4c/source/configure "$@" --host=$host --with-cross-build=`pwd`/../host-build > `pwd`/build.log 2>&1
     make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
-
     ret=$?
     cd $OLDPWD
     return $ret
@@ -62,11 +60,19 @@ package() {
     cd $builddir/$ARCH-build
     make install VERBOSE=1 >> `pwd`/build.log 2>&1
     cd $OLDPWD
+    if [ $ARCH == "armeabi-v7a" ];then
+        unsetarm32ENV
+    elif [ $ARCH == "arm64-v8a" ];then
+        unsetarm64ENV
+    else
+        echo "$ARCH not support"
+        return -1
+    fi
 }
 
 check() {
     echo "The test must be on an OpenHarmony device!"
-    # real test
+    # TODO
 }
 
 # 清理环境
