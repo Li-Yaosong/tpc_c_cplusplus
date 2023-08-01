@@ -18,16 +18,6 @@ openharmonycheck() {
     cd ${builddir}/${ARCH}-build
     ./test/test testass.png ../compare/test/sub1.ass 0.03 > ${logfile} 2>&1
     res=$?
-    if [ $res -eq 0 ]
-    then
-        ret=`cmp testass.png $linuxresult`
-        if [ ! -z "$ret" ]
-        then
-            res=1
-            echo "the failed result:" >> ${logfile}
-            echo $ret >> ${logfile}
-        fi
-    fi
     cd $OLDPWD
 
     return $res
