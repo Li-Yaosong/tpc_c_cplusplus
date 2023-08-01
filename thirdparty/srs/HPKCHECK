@@ -56,6 +56,16 @@ openharmonycheck() {
         mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
         cp ./objs/srs.log ${LYCIUM_FAULT_PATH}/${pkgname}/
     fi
+    # 测试结束主动结束守护进程srs
+    srs_run_status=`./etc/init.d/srs stop | grep OK`
+    if [ -z "$srs_run_status" ]
+    then
+        echo "error: the srs service stop filed" >> ${logfile} 2>&1
+        mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
+        cp ./objs/srs.log ${LYCIUM_FAULT_PATH}/${pkgname}/
+        cd $OLDPWD
+        return -1;
+    fi
     cd $OLDPWD
 
     return $res
