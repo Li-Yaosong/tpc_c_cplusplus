@@ -19,12 +19,13 @@
   ```
   tpc_c_cplusplus/thirdparty/uavs3d  # 三方库uavs3d的目录结构如下
   ├── docs                           # 三方库相关文档的文件夹
-  ├── HPKCHECK                       # 编译文件
+  ├── HPKBUILD                       # 编译文件
+  ├── HPKCHECK
   ├── OAT.xml
-  ├── ohos_uavs3d.patch              # patch文件
-  ├── README.OpenSource              # 说明三方库源码的下载地址，版本，license等信息
+  ├── uavs3d_oh_pkg.patch           # patch文件
+  ├── README.OpenSource             # 说明三方库源码的下载地址，版本，license等信息
   ├── README_zh.md
-  ├── SHA512SUM
+  └── SHA512SUM
   ```
   
 - 将uavs3d拷贝至lycium/main目录下(没有main目录就手动创建一下)
