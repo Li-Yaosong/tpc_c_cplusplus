@@ -14,7 +14,6 @@
   ```
   git clone https://gitee.com/openharmony-sig/tpc_c_cplusplus.git --depth=1
   ```
-  
 - 三方库目录结构
   ```
   tpc_c_cplusplus/thirdparty/xxHash #三方库的目录结构如下
@@ -25,22 +24,19 @@
   ├── README_zh.md   
   ```
   
-- 编译三方库
+- 在lycium目录下编译三方库
   编译环境的搭建参考[准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
-  
   ```
   cd lycium
   ./build.sh xxHash
   ```
-  
 - 三方库头文件及生成的库
-  在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库和头文件
-  
+  在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库和头文件
   ```
   xxHash/arm64-v8a
   xxHash/armeabi-v7a
   ```
-  
+
 - [测试三方库](#测试三方库)
 
 ## 应用中使用三方库
@@ -55,6 +51,7 @@ target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${
 #将三方库的头文件加入工程中
 target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/xxHash/${OHOS_ARCH}/include)
 ```
+  ![thirdparty_usage](pic/usage.png)
 ## 测试三方库
 三方库的测试使用原库自带的测试用例来做测试
 
