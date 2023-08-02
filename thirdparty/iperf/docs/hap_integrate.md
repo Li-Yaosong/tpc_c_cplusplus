@@ -27,8 +27,9 @@
   ├── HPKBUILD                        #构建脚本
   ├── HPKCHECK                        #自动化测试脚本
   ├── SHA512SUM                       #三方库校验文件
+  ├── OAT.xml                         #OAT开源审查文本
   ├── README.OpenSource               #说明三方库源码的下载地址，版本，license等信息
-  ├── README_zh.md   
+  ├── README_zh.md
   ```
 
 - 在lycium目录下编译三方库
