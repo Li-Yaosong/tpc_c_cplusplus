@@ -17,6 +17,7 @@
   tpc_c_cplusplus/thirdparty/coturn            #三方库coturn的目录结构如下
   ├── docs                                     #三方库相关文档的文件夹
   ├── HPKBUILD                                 #构建脚本
+  ├── HPKCHECK                                 #自动化测试脚本
   ├── SHA512SUM                                #三方库校验文件
   ├── OAT.xml              			         #OAT文件
   ├── README.OpenSource                        #说明三方库源码的下载地址，版本，license等信息
@@ -31,7 +32,7 @@
   ./build.sh coturn
   ```
 - 三方库头文件及生成的库
-  在tools目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
+  在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
   ```
   coturn/armeabi-v7a coturn/arm64-v8a
   ```
