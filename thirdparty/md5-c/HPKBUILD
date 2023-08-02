@@ -1,5 +1,5 @@
-# Contributor: wupingyuan <wupingyuan@huawei.com>
-# Maintainer: dingqian <1052888395@qq.com>
+# Contributor: wupingyuan <wupingyuan@huawei.com>, dingqian <1052888395@qq.com>
+# Maintainer: wupingyuan <wupingyuan@huawei.com>
 pkgname="md5-c"
 pkgver="f3529b666b7ae8b80b0a9fa88ac2a91b389909c7"
 pkgrel=0
