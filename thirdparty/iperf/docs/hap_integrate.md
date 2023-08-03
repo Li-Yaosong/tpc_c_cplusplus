@@ -52,7 +52,9 @@
 
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
+- 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下
+  在IDE的libs目录下新增iperf目录，在iperf目录下新增arm64-v8a目录和armeabi-v7a目录，
+  分别将，iperf库编译生成的64位和32位的so文件放到该目录下，如下图所示
   &nbsp;
 
   ![thirdparty_install_dir](pic/iperf_install_dir.png)
