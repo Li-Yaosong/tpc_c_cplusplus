@@ -35,15 +35,11 @@ prepare() {
         echo "${ARCH} not support"
         return -1;
     fi
-    cd $builddir
-    cd $OLDPWD
 }
 
 build() {
     cd $builddir/$ARCH-build
-    ../configure "$@" --host=$host \
-	LDFLAGS="${LDFLAGS} -L${LYCIUM_ROOT}/usr/openssl/${ARCH}/lib" \
-	CFLAGS="${CFLAGS} -I${LYCIUM_ROOT}/usr/openssl/${ARCH}/include" > `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ../configure "$@" --host=$host > `pwd`/build.log 2>&1
     make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
     ret=$?
     cd $OLDPWD
