@@ -1,0 +1,31 @@
+# Contributor: chengkan <kanchengc@isoftstone.com>
+# Maintainer: chengkan <kanchengc@isoftstone.com>
+source HPKBUILD > /dev/null 2>&1
+logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
+HASSED=false
+checkprepare(){
+    export LIBXSLT_PLUGINS_PATH=`pwd`/$builddir-$ARCH-build/tests/.libs
+
+    # 检查/usr/bin目录下是否存在sed软连接
+    if [ ! -L "/usr/bin/sed" ]; then
+        # 创建软连接
+        ln -s /usr/bin/busybox /usr/bin/sed
+    else
+        HASSED = true
+    fi        
+}
+openharmonycheck() {
+    res=0
+    cd $builddir-$ARCH-build/tests
+    /usr/bin/make check_test >> ${logfile} 2>&1
+    res=$?
+    
+    unset LIBXSLT_PLUGINS_PATH
+    cd $OLDPWD
+
+    if [ $HASSED == false ];then
+        rm -rf /usr/bin/sed
+    fi    
+    
+    return $res
+}
