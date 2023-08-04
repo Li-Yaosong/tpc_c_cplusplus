@@ -25,10 +25,11 @@ host=
 
 prepare() {
     mkdir $builddir/$ARCH-build
-    if [ genconfigure ];then
+    if [ $genconfigure == true ];then
         cd $builddir
         # 需要linux 安装automake, autoconf(2.7.1以上),libtool, libltdl7-dev
         ./autogen.sh
+        genconfigure=false
         cd $OLDPWD
     fi
     if [ $ARCH == "armeabi-v7a" ];then
