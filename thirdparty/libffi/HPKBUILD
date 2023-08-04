@@ -1,4 +1,4 @@
-# Contributor: wlxuz <wlxuz@isoftstone.com>
+# Contributor:  <wlxuz@isoftstone.com>
 # Maintainer: wlxuz <wlxuz@isoftstone.com>
 
 pkgname=libffi
@@ -10,7 +10,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("GPL-2.0 license")
 depends=()
 makedepends=()
-source="https://github.com/$pkgname/$pkgname/releases/download/$pkgver/$pkgname-${pkgver:1}.tar.gz"
+source="https://github.com/libffi/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 buildtools="configure"
 
 autounpack=true
