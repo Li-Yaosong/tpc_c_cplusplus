@@ -64,18 +64,8 @@ openharmonycheck() {
         return res;
     fi
     # 查询minidlna服务器程序运行状态
-    minidlna_pid=`cat ${LYCIUM_ROOT}/usr/${pkgname}/$ARCH/minidlna.pid 2>/dev/null`
-    res=$?
-    if [ $res -ne 0 ]
-    then
-        echo "No pid file" >> ${logfile} 2>&1
-        mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
-        cp ${LYCIUM_ROOT}/usr/${pkgname}/$ARCH/log/* ${LYCIUM_FAULT_PATH}/${pkgname}/
-        return res;
-    fi
-    ps -p ${minidlna_pid} | grep minidlnad >/dev/null 2>/dev/null
-    res=$?
-    if [ $res -ne 0 ]
+    minidlna_pid=`ps -ef | grep minidlnad | grep -v grep | awk '{print $2}'`
+    if [ -z "$minidlna_pid" ]
     then
         echo "error: the minidlna service exited" >> ${logfile} 2>&1
         mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
