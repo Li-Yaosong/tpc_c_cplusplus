@@ -25,9 +25,12 @@ host=
 
 prepare() {
     mkdir $builddir/$ARCH-build
-    cd $builddir
-    chmod a+x ./configure
-    cd $OLDPWD
+    if [ genconfigure ];then
+        cd $builddir
+        # 需要linux 安装automake, autoconf(2.7.1以上),libtool, libltdl7-dev
+        ./autogen.sh
+        cd $OLDPWD
+    fi
     if [ $ARCH == "armeabi-v7a" ];then
         setarm32ENV
         host=arm-linux
