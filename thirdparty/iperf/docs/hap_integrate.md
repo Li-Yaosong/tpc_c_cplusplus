@@ -52,9 +52,7 @@
 
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下
-  在IDE的libs目录下新增iperf目录，在iperf目录下新增arm64-v8a目录和armeabi-v7a目录，
-  分别将，iperf库编译生成的64位和32位的so文件放到该目录下，如下图所示
+- 在IDE的cpp目录下新增thirdparty目录，将编译生成的库和依赖的库拷贝到该目录下
   &nbsp;
 
   ![thirdparty_install_dir](pic/iperf_install_dir.png)
@@ -65,7 +63,7 @@
   #将三方库加入工程中
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/openssl/${OHOS_ARCH}/lib/libcrypto.a)
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/openssl/${OHOS_ARCH}/lib/libssl.a)
-  target_link_libraries(entry PRIVATE -L${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/iperf/${OHOS_ARCH}/libiperf.so.0)
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/iperf/${OHOS_ARCH}/lib/libiperf.a)
   #将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/openssl/${OHOS_ARCH}/include)
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/iperf/${OHOS_ARCH}/include)
