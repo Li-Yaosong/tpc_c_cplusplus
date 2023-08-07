@@ -30,15 +30,35 @@ build() {
 }
 
 package() {
-    cd "$builddir"
+    cd $builddir
     make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
     cd $OLDPWD
+    return $ret
 }
 
 check() {
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        cp ${OHOS_SDK}/native/llvm/lib/arm-linux-ohos/libc++_shared.so $builddir/$ARCH-build
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        cp ${OHOS_SDK}/native/llvm/lib/aarch64-linux-ohos/libc++_shared.so $builddir/$ARCH-build
+    else
+        echo "${ARCH} not support"
+    fi
+    cd $builddir/$ARCH-build/test
+    ohos_sdk_cmake_path=${OHOS_SDK//\//\\\/}"\/native\/build-tools\/cmake\/bin\/cmake" 
+    cat CTestTestfile.cmake | sed 's/'$ohos_sdk_cmake_path'/\/usr\/bin\/cmake/' > CTestTestfile_temp.cmake
+    rm CTestTestfile.cmake
+    mv CTestTestfile_temp.cmake CTestTestfile.cmake
+    ret=$?
+    cd $OLDPWD 
     echo "The test must be on an OpenHarmony device!"
+    # ctest
+    return $ret
 }
 
-cleanbuild(){
+cleanbuild() {
     rm -rf ${PWD}/$builddir #${PWD}/$packagename
 }
