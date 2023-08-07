@@ -1,7 +1,7 @@
 [
     {
         "Name": "iperf",
-        "License": " BSD-3-Clause license",
+        "License": "BSD-3-Clause",
         "License File": "https://github.com/esnet/iperf/blob/master/LICENSE",
         "Version Number": "3.14",
         "Owner": "cmxud@isoftstone.com",
