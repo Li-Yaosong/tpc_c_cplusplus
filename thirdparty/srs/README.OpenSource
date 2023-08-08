@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "srs",
+        "License": "MIT",
+        "License File": "https://github.com/ossrs/srs/blob/develop/LICENSE",
+        "Version Number": "v6.0-d0",
+        "Owner": "sttangc@isoftstone.com",
+        "Upstream URL": "https://github.com/ossrs/srs/releases/download/v6.0-d0/srs-server-6.0-d0.tar.gz",
+        "Description": "SRS is a simple, high efficiency and realtime video server, supports RTMP/WebRTC/HLS/HTTP-FLV/SRT."
+    }
+]
