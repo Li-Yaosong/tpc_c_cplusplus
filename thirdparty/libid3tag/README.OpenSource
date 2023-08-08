@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libid3tag",
+        "License": "GPL-2.0-or-later",
+        "License File": "https://github.com/audacity/libid3tag/blob/master/COPYRIGHT",
+        "Version Number": "0.15.1b",
+        "Owner": "1393302983@qq.com",
+        "Upstream URL": "https://launchpadlibrarian.net/414577184/libid3tag_0.15.1b.orig.tar.gz",
+        "Description": "libid3tag is a library for reading and writing ID3 tags."
+    }
+]
