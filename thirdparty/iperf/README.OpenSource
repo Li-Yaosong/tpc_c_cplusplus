@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "iperf",
+        "License": "BSD-3-Clause",
+        "License File": "https://github.com/esnet/iperf/blob/master/LICENSE",
+        "Version Number": "3.14",
+        "Owner": "cmxud@isoftstone.com",
+        "Upstream URL": "https://github.com/esnet/iperf/archive/refs/tags/3.14.tar.gz",
+        "Description": "iperf3: A TCP, UDP, and SCTP network bandwidth measurement tool"
+    }
+]
