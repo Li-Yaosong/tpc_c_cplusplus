@@ -39,7 +39,7 @@ build() {
         -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -I${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/include" \
         -DCMAKE_SHARED_LINKER_FLAGS="${CMAKE_SHARED_LINKER_FLAGS} -L${LYCIUM_ROOT}/usr/mbedtls_2_4_2/${ARCH}/lib" \
         -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L  > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -47,7 +47,7 @@ build() {
 
 package() {
     cd $builddir
-    make -C $ARCH-build install VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
     cd $OLDPWD
 }
 
