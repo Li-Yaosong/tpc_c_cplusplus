@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "taglib",
+        "License": "LGPL-2.1-only","MPL-1.1"
+        "License File": "LICENSE",
+        "Version Number": "v1.13.1",
+        "Owner": "1052888395@qq.com",
+        "Upstream URL": "https://codeload.github.com/taglib/taglib/zip/refs/tags/v1.13.1",
+        "Description": "TagLib Audio Meta-Data Library"
+    }
+]
