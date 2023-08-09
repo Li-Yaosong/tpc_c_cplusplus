@@ -50,9 +50,9 @@ prepare() {
         cd $OLDPWD
     fi
 
+    # 编译指定版本libtool工具
     if $buildlibtoolflag
     then
-        # 编译指定版本libtool工具
         sure buildlibtool
         buildlibtoolflag=false
     fi
@@ -75,8 +75,8 @@ prepare() {
     # 经过尝试设置PKG_CONFIG_PATH="${pkgconfigpath}"之后并无效果因为
     # attr库的configure没有去查找gettext的头文件路径以及库文件路径
     # 此处需要手动指定gettext的头文件路径以及库文件路径，且需要链接libintl库
-    export CFLAGS="${CFLAGS} -I ${LYCIUM_ROOT}/usr/gettext/$ARCH/include"
-    export LDFLAGS="${LDFLAGS} -L${LYCIUM_ROOT}/usr/gettext/$ARCH/lib -lintl"
+    export CFLAGS="-I${LYCIUM_ROOT}/usr/gettext/$ARCH/include ${CFLAGS}"
+    export LDFLAGS="-L${LYCIUM_ROOT}/usr/gettext/$ARCH/lib -lintl ${LDFLAGS}"
 }
 
 build() {
@@ -100,6 +100,7 @@ package() {
 }
 
 check() {
+    unset host support64 originpath
     if [ $ARCH == "armeabi-v7a" ]
     then
         unsetarm32ENV
@@ -110,7 +111,6 @@ check() {
         echo "${ARCH} not support"
         return -1
     fi
-    unset host support64 originpath
     echo "The test must be on an OpenHarmony device!"
 }
 
