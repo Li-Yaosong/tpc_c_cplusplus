@@ -76,7 +76,8 @@ check() {
 
     # 编译测试程序
     make check >> `pwd`/build.log 2>&1
-
+    cd $OLDPWD
+    
     echo "The test must be on an OpenHarmony device!"
     ## real test CMD
     ## 进入到编译目录下的tests目录执行
