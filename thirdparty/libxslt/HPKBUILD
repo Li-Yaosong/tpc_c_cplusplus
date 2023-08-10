@@ -40,19 +40,7 @@ prepare() {
 build() {
     cd $builddir-$ARCH-build
     PKG_CONFIG_LIBDIR=$pkgconfigpath ./configure "$@" --enable-static --without-python --host=$host >> `pwd`/build.log 2>&1
-
-    # 增加check_test目标用来执行测试程序,禁止make check阶段运行测试程序
-    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/Makefile
-    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/xmlspec/Makefile
-    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/XSLTMark/Makefile
-    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/fuzz/Makefile
-    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/multiple/Makefile
-    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/xinclude/Makefile
-    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/docbook/Makefile
-
     make -j4 >> `pwd`/build.log 2>&1
-    # 编译测试程序
-    make check >> `pwd`/build.log 2>&1
 
     ret=$?
     cd $OLDPWD
@@ -76,6 +64,19 @@ package() {
 }
 
 check() {
+    cd $builddir-$ARCH-build
+    # 增加check_test目标用来执行测试程序,禁止make check阶段运行测试程序
+    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/Makefile
+    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/xmlspec/Makefile
+    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/XSLTMark/Makefile
+    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/fuzz/Makefile
+    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/multiple/Makefile
+    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/xinclude/Makefile
+    sed -i 's/\t$(MAKE) $(AM_MAKEFLAGS) check-local/check_test: $(MAKE) $(AM_MAKEFLAGS) check-local/g' ./tests/docbook/Makefile    
+
+    # 编译测试程序
+    make check >> `pwd`/build.log 2>&1
+
     echo "The test must be on an OpenHarmony device!"
     ## real test CMD
     ## 进入到编译目录下的tests目录执行
