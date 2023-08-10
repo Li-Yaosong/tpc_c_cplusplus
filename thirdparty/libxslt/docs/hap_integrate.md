@@ -38,7 +38,8 @@
   在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
   
   ```
-  libxslt/arm64-v8a   libxslt/armeabi-v7a          
+  libxslt/arm64-v8a   libxslt/armeabi-v7a   libxml2/arm64-v8a   libxml2/armeabi-v7a  
+  xz/arm64-v8a   xz/armeabi-v7a   zlib/arm64-v8a   zlib/armeabi-v7a   
   ```
   
 - [测试三方库](#测试三方库)
