@@ -16,7 +16,7 @@
 
 ### 编译三方库
 
-- :tw-1f195: [Linux环境使用 OHOS SDK 编译三方库](../tools/doc/ohos_use_sdk/OHOS_SDK-Usage.md)
+- :tw-1f195: [Linux环境使用 OHOS SDK 编译三方库](../lycium/doc/ohos_use_sdk/OHOS_SDK-Usage.md)
 - :tw-1f195: [OpenHarmony C/C++三方库移植适配指导说明](thirdparty_port.md)
   
 ### 在应用包（hap）中集成三方库
