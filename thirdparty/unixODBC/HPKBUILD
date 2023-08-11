@@ -69,7 +69,7 @@ check() {
     sed -i '/.*all-am: Makefile $(LTLIBRARIES)/c\all-am: #Makefile $(LTLIBRARIES)' libltdl/Makefile
     sed -i '/.*all-am: Makefile $(LTLIBRARIES)/c\all-am: #Makefile $(LTLIBRARIES)' odbcinst/Makefile
     sed -i '/.*all-am: Makefile $(LTLIBRARIES)/c\all-am: #Makefile $(LTLIBRARIES)' DriverManager/Makefile
-    sed -i '/.*all-am: Makefile $(LTLIBRARIES)/c\all-am: #Makefile $(PROGRAMS)' exe/Makefile
+    sed -i '/.*all-am: Makefile $(PROGRAMS)/c\all-am: #Makefile $(PROGRAMS)' exe/Makefile
     sed -i '/.*all-am: Makefile $(LTLIBRARIES)/c\all-am: #Makefile $(LTLIBRARIES)' cur/Makefile
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
