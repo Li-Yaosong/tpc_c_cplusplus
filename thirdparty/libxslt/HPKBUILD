@@ -23,7 +23,6 @@ source envset.sh
 host=
 
 prepare() {
-
     cp -arf $builddir $builddir-$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]; then
         setarm32ENV        
