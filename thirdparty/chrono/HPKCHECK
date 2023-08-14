@@ -7,7 +7,8 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     cd $builddir/$ARCH-build
-    # Using the RK3568 development board, the test case test time takes about 11 hours
+    echo "Using the RK3568 development board, the test case test time takes about 11 hours"
+    echo "start test times: `date`"
     ctest --timeout 40000 >> ${logfile} 2>&1
     res=$?
     if [ $res -ne 0 ]
@@ -15,6 +16,8 @@ openharmonycheck() {
         mkdir -p ${LYCIUM_FAULT_PATH}/${pkgname}
         cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/
     fi
+
+    echo "end test times: `date`"
     cd $OLDPWD
 
     return $res
