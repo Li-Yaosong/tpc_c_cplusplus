@@ -1,0 +1,49 @@
+# Contributor: xuzhao <xuzhaor@isoftstone.com>
+# Maintainer: xuzhao <xuzhaor@isoftstone.com>
+pkgname=libsndfile
+pkgver=1.2.0
+pkgrel=0
+pkgdesc="libsndfile is a C library for reading and writing files containing sampled audio data."
+url="https://github.com/libsndfile/libsndfile"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("LGPLv2.1") 
+depends=()
+makedepends=()
+
+source="https://github.com/libsndfile/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+autounpack=true
+downloadpackage=true
+buildtools="cmake"
+builddir=$pkgname-${pkgver}
+packagename=$builddir.tar.gz
+
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+}
+
+build() {
+    cd $builddir
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH  -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
+    make VERBOSE=1 -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # TODO
+}
+
+cleanbuild(){
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
+
