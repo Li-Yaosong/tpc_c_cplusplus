@@ -48,7 +48,9 @@
   ```
   #将三方库加入工程中
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libcap.a
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libattr.a)
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libpsx.a
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libattr.a)
+
   #将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/attr/${OHOS_ARCH}/include
@@ -58,13 +60,11 @@
 ## 测试三方库
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
-- 进入到构建目录,执行如下命令（libcap-libcap-2.24-arm64-v8a-build为构建64位的目录，libcap-libcap-2.24-armeabi-v7a-build为构建32位的目录）
+- 进入到构建目录,执行如下命令（libcap-2.69-arm64-v8a-build为构建64位的目录，libcap-2.69-armeabi-v7a-build为构建32位的目录）
 注意:以下为64位命令，如需测试32位，请将arm64-v8a替换为armeabi-v7a。
 ```
-mount -o remount,rw /
-export LD_LIBRARY_PATH=${BUILD_PATH}/usr/libcap/arm64-v8a/lib:$LD_LIBRARY_PATH
-cd ${BUILD_PATH}/../thirdparty/libcap/libcap-libcap-2.24-arm64-v8a-build/progs
-./capsh --print
+cd ${BUILD_PATH}/../thirdparty/libcap/libcap-2.69-arm64-v8a-build/tests
+make test
 ```
 注意:上述BUILD_PATH变量为编译路径，需自行修改为正确的路径
 
