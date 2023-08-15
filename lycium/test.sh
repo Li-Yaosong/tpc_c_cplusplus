@@ -135,7 +135,7 @@ checkhpk(){
         then
             checkprepare > /dev/null 2>&1       # 执行测试前准备工作
         fi
-        openharmonycheck > /dev/null 2>&1   # 执行测试
+        openharmonycheck                        # 执行测试
         checkret=$?
         if [ $checkret -ne 0 ]
         then
