@@ -76,6 +76,7 @@ openharmonycheck() {
     sleep 300
     kill -9 ${minidlna_pid}
     res=$?
+    cat ${LYCIUM_ROOT}/usr/${pkgname}/$ARCH/log/minidlna.log >> ${logfile} 2>&1
 
     return $res
 }
