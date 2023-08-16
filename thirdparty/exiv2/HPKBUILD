@@ -40,6 +40,10 @@ package() {
 
 check() {
     echo "The test must be on an OpenHarmony device!"
+    save_path="$LYCIUM_ROOT/../thirdparty/$pkgname/exiv2.jpg"
+    curl -o $save_path -L http://clanmills.com/Stonehenge.jpg
+    cp $LYCIUM_ROOT/../thirdparty/$pkgname/$builddir/test/data/large.icc  $LYCIUM_ROOT/../thirdparty/$pkgname/exiv2.icc
+
     # 在OpenHarmony开发板中执行用例
     # 由于ctest测试使用到了python无法在开发板中正常测试，因此使用sample测试
     # 读取iptc
