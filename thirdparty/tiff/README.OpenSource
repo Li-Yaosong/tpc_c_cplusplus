@@ -1,11 +1,11 @@
 [
     {
         "Name": "tiff",
-        "License": "1991-1997 Silicon Graphics, Inc",
-        "License File": "COPYRIGHT",
-        "Version Number": "v4.5.0",
+        "License": "LibTIFF license",
+        "License File": "https://gitlab.com/libtiff/libtiff/-/blob/master/LICENSE.md?ref_type=heads",
+        "Version Number": "4.5.0",
         "Owner": "huangminzhong2@huawei.com",
-        "Upstream URL": "https://gitlab.com/libtiff/libtiff.git",
+        "Upstream URL": "http://download.osgeo.org/libtiff/tiff-4.5.0.tar.xz",
         "Description": "a small collection of tools for doingsimple manipulations of TIFF images, and documentation on the library and tools."
     }
 ]

@@ -1,5 +1,5 @@
 # Contributor: Jeff Han <hanjinfei@foxmail.com>
-# Maintainer: Jeff Han <hanjinfei@foxmail.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>, chengkan <kanchengc@isoftstone.com>
 pkgname=tiff
 pkgver=4.5.0
 pkgrel=0
@@ -13,7 +13,6 @@ makedepends=()
 source="http://download.osgeo.org/libtiff/$pkgname-$pkgver.tar.xz"
 
 autounpack=true
-patchflag=true
 downloadpackage=true
 
 builddir=$pkgname-${pkgver}
@@ -39,6 +38,11 @@ package() {
 }
 
 check() {
+    cd $builddir/$ARCH-build
+    # 强制使用单板cmake程序进行测试
+    find . -name "CTestTestfile.cmake" | xargs sed -i 's#".*/cmake"#"/usr/bin/cmake"#g'
+    cd $OLDPWD
+
     echo "The test must be on an OpenHarmony device!"
     # 设置LD_LIBRARY_PATH环境变量
     # ctest 测试
