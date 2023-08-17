@@ -333,3 +333,9 @@ main() {
 }
 
 main $*
+
+# 编译任务不成功, 返回-1
+if [ ${#buildfalselist[*]} -ne 0 ]
+then
+    exit -1
+fi

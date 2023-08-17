@@ -36,6 +36,7 @@
             </filefilter>
             <filefilter name="defaultPolicyFilter" desc="Filters for compatibility，license header policies">
                 <filteritem type="fileitem" name="HPKBUILD" desc="自己编写的shell脚本,不涉及版权问题"/>
+                <filteritem type="fileitem" name="HPKCHECK" desc="自己编写的shell脚本,不涉及版权问题"/>
                 <filteritem type="fileitem" name="SHA512SUM" desc="自己编写的shell脚本,不涉及版权问题"/>
                 <filteritem type="filepath" name="LuaXML-7cd4a7ab5db85222edb4c955d53e5674afd170b6/.*" desc="三方库代码"/>
                 <filteritem type="filepath" name="LuaXML-7cd4a7ab5db85222edb4c955d53e5674afd170b6-arm64-v8a-build/.*" desc="三方库代码"/>
@@ -43,6 +44,7 @@
             </filefilter>
             <filefilter name="copyrightPolicyFilter" desc="Filters for copyright header policies">
                 <filteritem type="fileitem" name="HPKBUILD" desc="自己编写的shell脚本,不涉及版权问题"/>
+                <filteritem type="fileitem" name="HPKCHECK" desc="自己编写的shell脚本,不涉及版权问题"/>
                 <filteritem type="fileitem" name="SHA512SUM" desc="自己编写的shell脚本,不涉及版权问题"/>
                 <filteritem type="filepath" name="LuaXML-7cd4a7ab5db85222edb4c955d53e5674afd170b6/.*" desc="三方库代码"/>
                 <filteritem type="filepath" name="LuaXML-7cd4a7ab5db85222edb4c955d53e5674afd170b6-arm64-v8a-build/.*" desc="三方库代码"/>

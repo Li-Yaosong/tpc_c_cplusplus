@@ -16,15 +16,14 @@
   
 - 三方库目录结构
   ```
-  tpc_c_cplusplus/thirdparty/tiff          #三方库tiff的目录结构如下
-  ├── adapted                              #存放三方库适配需要的代码文件
-  ├── BUILD.gn                             # 构建脚本，支持rom包集成
-  ├── docs                                 #三方库相关文档的文件夹
-  ├── bundle.json                          #三方库组件定义文件
-  ├── HPKBUILD                             #构建脚本
-  ├── SHA512SUM                            #三方库校验文件
-  ├── README.OpenSource                    #说明三方库源码的下载地址，版本，license等信息
-  ├── README_zh.md      
+  tpc_c_cplusplus/thirdparty/tiff       #三方库tiff的目录结构如下
+  ├── docs                              #三方库相关文档的文件夹
+  ├── HPKBUILD                          #构建脚本
+  ├── SHA512SUM                         #三方库校验文件
+  ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
+  ├── HPKCHECK                          #自动化测试脚本
+  ├── OAT.xml                           #版权检验文件  
+  ├── README_zh.md
   ```
   
 - 编译三方库
@@ -49,15 +48,27 @@
 
 ## 应用中使用三方库
 - 拷贝动态库到`\\entry\libs\${OHOS_ARCH}\`目录：
-  动态库需要在`\\entry\libs\${OHOS_ARCH}\`目录，才能集成到hap包中，所以需要将对应的so文件拷贝到对应CPU架构的目录
+  动态库需要在`\\entry\libs\${OHOS_ARCH}\`目录，才能集成到hap包中，所以需要将编译生成的所有库的so文件拷贝到对应的目录
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
 &nbsp;![tiff_install](pic/tiff_install.png)
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
   ```
   #将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libtiff.so)
+   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libtiff.so.6
+                        ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libdeflate.so.0
+                        ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libjpeg.so.62
+                        ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/liblzma.so.5
+                        ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libzstd.so.1
+                        ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libwebp.so.7)
   #将三方库的头文件加入工程中
-  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/tiff/${OHOS_ARCH}/include)
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/tiff/${OHOS_ARCH}/include
+                        ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/jbigkit/${OHOS_ARCH}/include
+                        ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libdeflate/${OHOS_ARCH}/include
+                        ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libjpeg-turbo/${OHOS_ARCH}/include
+                        ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libpng/${OHOS_ARCH}/include
+                        ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libwebp/${OHOS_ARCH}/include
+                        ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/xz/${OHOS_ARCH}/include
+                        ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/zstd/${OHOS_ARCH}/include)
   ```
 ## 测试三方库
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
@@ -83,6 +94,10 @@
 export LD_LIBRARY_PATH=/data/local/tmp/lycium/usr/libjpeg-turbo/armeabi-v7a/lib:/data/local/tmp/lycium/usr/libdeflate/armeabi-v7a/lib:/data/local/tmp/lycium/usr/xz/armeabi-v7a/lib:/data/local/tmp/lycium/usr/zstd/armeabi-v7a/lib:/data/local/tmp/lycium/usr/libpng/armeabi-v7a/lib:/data/local/tmp/lycium/usr/tiff/armeabi-v7a/lib:/data/local/tmp/lycium/usr/libwebp/armeabi-v7a/lib:/data/local/tmp/lycium/usr/jbigkit/armeabi-v7a/lib
 ##64位系统
 export LD_LIBRARY_PATH=/data/local/tmp/lycium/usr/libjpeg-turbo/arm64-v8a/lib:/data/local/tmp/lycium/usr/libdeflate/arm64-v8a/lib:/data/local/tmp/lycium/usr/xz/arm64-v8a/lib:/data/local/tmp/lycium/usr/zstd/arm64-v8a/lib:/data/local/tmp/lycium/usr/libpng/arm64-v8a/lib:/data/local/tmp/lycium/usr/tiff/arm64-v8a/lib:/data/local/tmp/lycium/usr/libwebp/arm64-v8a/lib:/data/local/tmp/lycium/usr/jbigkit/arm64-v8a/lib
+```
+- 进入到构建目录输入以下指令
+```
+find . -name "CTestTestfile.cmake" | xargs sed -i 's#".*/cmake"#"/usr/bin/cmake"#g'
 ```
 - 进入到构建目录执行 ctest 运行测试用例，如下截图（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
 

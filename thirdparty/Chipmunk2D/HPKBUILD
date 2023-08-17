@@ -54,25 +54,29 @@ check() {
     if [ $ARCH == "armeabi-v7a" ]
     then
         setarm32ENV
-    fi
-    if [ $ARCH == "arm64-v8a" ]
+    elif [ $ARCH == "arm64-v8a" ]
     then
         setarm64ENV
+    else
+        echo "${ARCH} not support"
+        return -1
     fi
 
     cd $builddir
     $CC -I include/chipmunk -L $ARCH-build/src -lchipmunk -o $ARCH-build/Chipmunk2D_test Chipmunk2D_test.c
     cd $OLDPWD
 
+    unset host
     if [ $ARCH == "armeabi-v7a" ]
     then
         unsetarm32ENV
-    fi
-    if [ $ARCH == "arm64-v8a" ]
+    elif [ $ARCH == "arm64-v8a" ]
     then
         unsetarm64ENV
+    else
+        echo "${ARCH} not support"
+        return -1
     fi
-    unset host
     # real test CMD
     # LD_LIBRARY_PATH=./src/ ./Chipmunk2D_test
 }
