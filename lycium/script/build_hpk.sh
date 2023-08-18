@@ -7,7 +7,7 @@ sure() {
     if [ "$err" != "0" ]
     then
         echo "ERROR during : $*"
-        echo "ERROR during : $* $err" > last_error
+        echo "ERROR during : $*: $err" > last_error
         exit 1
     fi
 }
@@ -36,8 +36,8 @@ checksum() {
     ret=$?
     if [ $ret -ne 0 ]
     then
-        echo ${PWD}/$1" ERROR!"
-        echo "请检查$pkgname SHA512SUM 文件, 并重新下载src压缩包."
+        echo "$pkgname SHA512SUM 校验失败, 请确认 SHA512SUM 无误后, 重新编译."
+        rm -rf $packagename
         exit $ret
     fi
 }
@@ -116,8 +116,8 @@ recordbuildlibs() {
 
 buildargs=
 pkgconfigpath=
-cmakedependpath() {
-    buildargs="-DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_RPATH=ON -DCMAKE_SKIP_INSTALL_RPATH=ON -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$LYCIUM_ROOT/usr/$pkgname/$1 -G \"Unix Makefiles\" "
+cmakedependpath() { # 参数1为cpu type
+    buildargs="-DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_RPATH=ON -DCMAKE_SKIP_INSTALL_RPATH=ON -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$LYCIUM_ROOT/usr/$pkgname/$1 -G \"Unix Makefiles\" -DOHOS_ARCH=$1 "
     pkgconfigpath=""
     if [ ${#depends[@]} -ne 0 ] 
     then
@@ -178,6 +178,8 @@ checkmakedepends() {
     fi
 }
 
+buildlog=
+publicbuildlog=
 builpackage() {
     donelist=($*)
     builddepends "${donelist[*]}"
@@ -210,6 +212,8 @@ builpackage() {
         # TODO archs1 编译失败，继续编译archs2
         echo "Compileing OpenHarmony $arch $pkgname $pkgver libs..." 
         ARCH=$arch
+        buildlog=$PKGBUILD_ROOT/$pkgname-$pkgver-$ARCH"-lycium_build.log"
+        publicbuildlog=$PKGBUILD_ROOT/$pkgname"-public-lycium_build.log"
         sure prepare
         if [ ! $buildtools ] || [ $buildtools == "cmake" ]
         then
@@ -233,6 +237,7 @@ builpackage() {
 
 cleanhpk() {
     sure cleanbuild
+    rm -rf *-lycium_build.log
 }
 
 main() {
