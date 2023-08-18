@@ -8,6 +8,7 @@ checkprepare() {
     then
        ln -s /usr/bin/busybox /usr/bin/env
     fi
+
     return 0
 }
 
