@@ -1,0 +1,58 @@
+# Contributor: 城meto <myxuan475@126.com>
+# Maintainer: 城meto <myxuan475@126.com>
+
+pkgname=tesseract
+pkgver=5.3.2
+pkgrel=0
+pkgdesc="Tesseract contains an OCR engine - libtesseract and a command line program"
+url="https://github.com/tesseract-ocr/tesseract"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("Apache-2.0 license")
+depends=("curl" "tiff" "leptonica" "libarchive" "icu")
+makedepends=()
+source="https://github.com/tesseract-ocr/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+
+autounpack=false
+downloadpackage=true
+
+builddir=$pkgname-$pkgver
+packagename=$pkgname-$pkgver.tar.gz
+
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+}
+
+build() {
+    cd $builddir
+    echo "$@, ${pkgconfigpath}"
+    PKG_CONFIG_PATH="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+        -DCMAKE_C_COMPILER_AR=${OHOS_SDK}/native/llvm/bin/llvm-ar \
+        -DCMAKE_C_COMPILER_RANLIB=${OHOS_SDK}/native/llvm/bin/llvm-ranlib \
+        -DCMAKE_CXX_COMPILER_AR=${OHOS_SDK}/native/llvm/bin/llvm-ar \
+        -DCMAKE_CXX_COMPILER_RANLIB=${OHOS_SDK}/native/llvm/bin/llvm-ranlib \
+        -DLeptonica_DIR=${LYCIUM_ROOT}/usr/${ARCH}/ \
+        -DUSE_SYSTEM_ICU=ON \
+        -DOHOS_ARCH=$ARCH -B${ARCH}-build -S./ -L  > `pwd`/$ARCH-build/build.log 2>&1
+    make -j4 -C $ARCH-build VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    make -C $ARCH-build install VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # real test
+    # ctest
+}
+
+# 清理环境
+cleanbuild(){
+    # rm -rf ${PWD}/$builddir #${PWD}/$packagename
+    return 0
+}
