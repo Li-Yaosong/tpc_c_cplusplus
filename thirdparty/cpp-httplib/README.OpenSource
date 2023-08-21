@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "cpp-httplib",
+        "License": "MIT License",
+        "License File": "https://github.com/yhirose/cpp-httplib/blob/master/LICENSE",
+        "Version Number": "v0.13.1",
+        "Owner": "614222069@qq.com",
+        "Upstream URL": "https://github.com/yhirose/cpp-httplib/archive/refs/tags/v0.13.1.tar.gz",
+        "Description": "A C++11 single-file header-only cross platform HTTP/HTTPS library."
+    }
+]

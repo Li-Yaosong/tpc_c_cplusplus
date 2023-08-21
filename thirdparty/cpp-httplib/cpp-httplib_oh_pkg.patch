@@ -1,0 +1,230 @@
+diff --git a/Makefile b/Makefile
+index 9feae74..825baf2 100755
+--- a/Makefile
++++ b/Makefile
+@@ -1,11 +1,17 @@
+-CXX = clang++
+-CXXFLAGS = -g -std=c++11 -I. -Wall -Wextra -Wtype-limits -Wconversion -Wshadow # -fno-exceptions -DCPPHTTPLIB_NO_EXCEPTIONS -fsanitize=address
++#CXX = clang++
++ifeq ($(BUILD_ARC), armeabi-v7a)
++    CXXFLAGS = -g -std=c++11 -I. -Wall -Wextra -Wtype-limits -Wconversion -Wshadow -march=armv7-a
++else
++    CXXFLAGS = -g -std=c++11 -I. -Wall -Wextra -Wtype-limits -Wconversion -Wshadow
++endif
++#CXXFLAGS = -g -std=c++11 -I. -Wall -Wextra -Wtype-limits -Wconversion -Wshadow # -fno-exceptions -DCPPHTTPLIB_NO_EXCEPTIONS -fsanitize=address
++$(info    CXXFLAGS is $(CXXFLAGS))
+ 
+ PREFIX = /usr/local
+ #PREFIX = $(shell brew --prefix)
+ 
+-OPENSSL_DIR = $(PREFIX)/opt/openssl@1.1
+-#OPENSSL_DIR = $(PREFIX)/opt/openssl@3
++OPENSSL_DIR =$(BUILD_PATH)/openssl/$(BUILD_ARC)
++$(info    OPENSSL_DIR is $(OPENSSL_DIR))
+ OPENSSL_SUPPORT = -DCPPHTTPLIB_OPENSSL_SUPPORT -I$(OPENSSL_DIR)/include -L$(OPENSSL_DIR)/lib -lssl -lcrypto
+ 
+ ifneq ($(OS), Windows_NT)
+@@ -15,9 +21,12 @@ ifneq ($(OS), Windows_NT)
+ 	endif
+ endif
+ 
+-ZLIB_SUPPORT = -DCPPHTTPLIB_ZLIB_SUPPORT -lz
++ZIP_DIR = $(BUILD_PATH)/zlib/$(BUILD_ARC)
++$(info    ZIP_DIR is $(ZIP_DIR))
++ZLIB_SUPPORT = -DCPPHTTPLIB_ZLIB_SUPPORT -I$(ZIP_DIR)/include -L$(ZIP_DIR)/lib -lz
+ 
+-BROTLI_DIR = $(PREFIX)/opt/brotli
++BROTLI_DIR = $(BUILD_PATH)/brotli/$(BUILD_ARC)
++$(info    BROTLI_DIR is $(BROTLI_DIR))
+ BROTLI_SUPPORT = -DCPPHTTPLIB_BROTLI_SUPPORT -I$(BROTLI_DIR)/include -L$(BROTLI_DIR)/lib -lbrotlicommon -lbrotlienc -lbrotlidec
+ 
+ TEST_ARGS = gtest/gtest-all.cc gtest/gtest_main.cc $(OPENSSL_SUPPORT) $(ZLIB_SUPPORT) $(BROTLI_SUPPORT) -pthread
+diff --git a/test.cc b/test.cc
+index 7750a51..9c0d9df 100755
+--- a/test.cc
++++ b/test.cc
+@@ -423,6 +423,7 @@ TEST(ChunkedEncodingTest, FromHTTPWatch_Online) {
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   auto port = 443;
+   SSLClient cli(host, port);
++  cli.enable_server_certificate_verification(false);
+ #else
+   auto port = 80;
+   Client cli(host, port);
+@@ -471,6 +472,7 @@ TEST(ChunkedEncodingTest, WithContentReceiver_Online) {
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   auto port = 443;
+   SSLClient cli(host, port);
++  cli.enable_server_certificate_verification(false);
+ #else
+   auto port = 80;
+   Client cli(host, port);
+@@ -499,6 +501,7 @@ TEST(ChunkedEncodingTest, WithResponseHandlerAndContentReceiver_Online) {
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   auto port = 443;
+   SSLClient cli(host, port);
++  cli.enable_server_certificate_verification(false);
+ #else
+   auto port = 80;
+   Client cli(host, port);
+@@ -537,6 +540,7 @@ TEST(RangeTest, FromHTTPBin_Online) {
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   auto port = 443;
+   SSLClient cli(host, port);
++  cli.enable_server_certificate_verification(false);
+ #else
+   auto port = 80;
+   Client cli(host, port);
+@@ -690,10 +694,12 @@ TEST(CancelTest, NoCancel_Online) {
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   auto port = 443;
+   SSLClient cli(host, port);
++  cli.enable_server_certificate_verification(false);
+ #else
+   auto port = 80;
+   Client cli(host, port);
+ #endif
++
+   cli.set_connection_timeout(std::chrono::seconds(5));
+ 
+   auto res = cli.Get(path, [](uint64_t, uint64_t) { return true; });
+@@ -714,6 +720,7 @@ TEST(CancelTest, WithCancelSmallPayload_Online) {
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   auto port = 443;
+   SSLClient cli(host, port);
++  cli.enable_server_certificate_verification(false);
+ #else
+   auto port = 80;
+   Client cli(host, port);
+@@ -737,6 +744,7 @@ TEST(CancelTest, WithCancelLargePayload_Online) {
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   auto port = 443;
+   SSLClient cli(host, port);
++  cli.enable_server_certificate_verification(false);
+ #else
+   auto port = 80;
+   Client cli(host, port);
+@@ -762,6 +770,7 @@ TEST(BaseAuthTest, FromHTTPWatch_Online) {
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   auto port = 443;
+   SSLClient cli(host, port);
++  cli.enable_server_certificate_verification(false);
+ #else
+   auto port = 80;
+   Client cli(host, port);
+@@ -830,6 +839,7 @@ TEST(DigestAuthTest, FromHTTPWatch_Online) {
+ 
+   auto port = 443;
+   SSLClient cli(host, port);
++  cli.enable_server_certificate_verification(false);
+ 
+   {
+     auto res = cli.Get(unauth_path);
+@@ -905,6 +915,7 @@ TEST(AbsoluteRedirectTest, Redirect_Online) {
+ 
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   SSLClient cli(host);
++  cli.enable_server_certificate_verification(false);
+ #else
+   Client cli(host);
+ #endif
+@@ -920,6 +931,7 @@ TEST(RedirectTest, Redirect_Online) {
+ 
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   SSLClient cli(host);
++  cli.enable_server_certificate_verification(false);
+ #else
+   Client cli(host);
+ #endif
+@@ -935,6 +947,7 @@ TEST(RelativeRedirectTest, Redirect_Online) {
+ 
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   SSLClient cli(host);
++  cli.enable_server_certificate_verification(false);
+ #else
+   Client cli(host);
+ #endif
+@@ -950,6 +963,7 @@ TEST(TooManyRedirectTest, Redirect_Online) {
+ 
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   SSLClient cli(host);
++  cli.enable_server_certificate_verification(false);
+ #else
+   Client cli(host);
+ #endif
+@@ -964,6 +978,8 @@ TEST(TooManyRedirectTest, Redirect_Online) {
+ TEST(YahooRedirectTest, Redirect_Online) {
+   Client cli("yahoo.com");
+ 
++  cli.enable_server_certificate_verification(false);
++
+   auto res = cli.Get("/");
+   ASSERT_TRUE(res);
+   EXPECT_EQ(301, res->status);
+@@ -1011,6 +1027,7 @@ TEST(HttpsToHttpRedirectTest3, Redirect_Online) {
+ 
+ TEST(UrlWithSpace, Redirect_Online) {
+   SSLClient cli("edge.forgecdn.net");
++  cli.enable_server_certificate_verification(false);
+   cli.set_follow_location(true);
+ 
+   auto res = cli.Get("/files/2595/310/Neat 1.4-17.jar");
+@@ -4482,6 +4499,7 @@ TEST(ClientDefaultHeadersTest, DefaultHeaders_Online) {
+ 
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+   SSLClient cli(host);
++  cli.enable_server_certificate_verification(false);
+ #else
+   Client cli(host);
+ #endif
+@@ -4752,6 +4770,8 @@ TEST(SSLClientTest, ServerNameIndication_Online) {
+ #endif
+ 
+   SSLClient cli(host, 443);
++  cli.enable_server_certificate_verification(false);
++
+   auto res = cli.Get(path);
+   ASSERT_TRUE(res);
+   ASSERT_EQ(200, res->status);
+@@ -5327,6 +5347,8 @@ TEST(ServerLargeContentTest, DISABLED_SendLargeContent) {
+ #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+ TEST(YahooRedirectTest2, SimpleInterface_Online) {
+   Client cli("http://yahoo.com");
++  cli.enable_server_certificate_verification(false);  
++
+ 
+   auto res = cli.Get("/");
+   ASSERT_TRUE(res);
+@@ -5341,6 +5363,7 @@ TEST(YahooRedirectTest2, SimpleInterface_Online) {
+ 
+ TEST(YahooRedirectTest3, SimpleInterface_Online) {
+   Client cli("https://yahoo.com");
++  cli.enable_server_certificate_verification(false);
+ 
+   auto res = cli.Get("/");
+   ASSERT_TRUE(res);
+@@ -5355,6 +5378,7 @@ TEST(YahooRedirectTest3, SimpleInterface_Online) {
+ 
+ TEST(YahooRedirectTest3, NewResultInterface_Online) {
+   Client cli("https://yahoo.com");
++  cli.enable_server_certificate_verification(false);
+ 
+   auto res = cli.Get("/");
+   ASSERT_TRUE(res);
+@@ -5380,6 +5404,8 @@ TEST(YahooRedirectTest3, NewResultInterface_Online) {
+ #ifdef CPPHTTPLIB_BROTLI_SUPPORT
+ TEST(DecodeWithChunkedEncoding, BrotliEncoding_Online) {
+   Client cli("https://cdnjs.cloudflare.com");
++  cli.enable_server_certificate_verification(false);
++
+   auto res =
+       cli.Get("/ajax/libs/jquery/3.5.1/jquery.js", {{"Accept-Encoding", "br"}});
+ 
+@@ -5388,6 +5414,7 @@ TEST(DecodeWithChunkedEncoding, BrotliEncoding_Online) {
+   EXPECT_EQ(287630U, res->body.size());
+   EXPECT_EQ("application/javascript; charset=utf-8",
+             res->get_header_value("Content-Type"));
++  cli.enable_server_certificate_verification(true);
+ }
+ #endif
+ 
