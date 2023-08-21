@@ -58,6 +58,12 @@ package() {
     ./b2 install >> `pwd`/build.log 2>&1
     cd $OLDPWD
     unset compileflags
+    # 为方便IDE集成该库，删除动态库，如果有动态库需求，自行屏蔽下面操作
+    lib_dir=$LYCIUM_ROOT/usr/$pkgname/$ARCH
+    mv $lib_dir/lib/libboost_unit_test_framework.so* $lib_dir
+    rm $lib_dir/lib/*.so*
+    rm $lib_dir/lib/cmake -rf
+    mv $lib_dir/libboost_unit_test_framework.so* $lib_dir/lib
 }
 
 check() {
