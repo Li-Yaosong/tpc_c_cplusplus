@@ -38,7 +38,7 @@ export CLANG_VERSION=${CLANG_VERSION}
 jobFlag=true
 
 # 记录依赖库
-export LYCIUM_DEPEND_PKGNAMES="/tmp/$USER-lycium_deps"
+export LYCIUM_DEPEND_PKGNAMES="/tmp/$USER-lycium_deps-`date +%s`"
 
 hpksdir="../thirdparty/" # 所有 hpk 项目存放的目录
 
@@ -335,7 +335,7 @@ main() {
 main $*
 
 # 编译任务不成功, 返回-1
-if [ ${#buildfalselist[*]} -ne 0 ]
+if [ ${#buildfalselist[*]} -ne 0 -o ${#nextroundlist[*]} -ne 0 ]
 then
     exit -1
 fi
