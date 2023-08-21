@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "bctoolbox",
+        "License": "GPL-3.0 license",
+        "License File": "LICENSE.txt",
+        "Version Number": "5.2.91",
+        "Owner": "myxuan475@126.com",
+        "Upstream URL": "https://codeload.github.com/BelledonneCommunications/bctoolbox/zip/refs/tags/5.2.91",
+        "Description": "Utilities library used by Belledonne Communications softwares like belle-sip, mediastreamer2 and liblinphone."
+    }
+]
