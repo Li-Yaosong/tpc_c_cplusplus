@@ -64,7 +64,7 @@ package() {
 
 check() {
     echo "The test must be on an OpenHarmony device!"
-    # 编译生成目录$builddir/$ARCH-build下执行cat /system/etc/capture.ogg | ./test_example 1 > tremolo_test_out.pcm
+    # 编译生成目录$builddir/$ARCH-build下执行cat ./../../capture.ogg | ./test_example 1 > tremolo_test_out.pcm
     # 可以使用audacity工具查看生成的音频，官网下载地址https://www.audacityteam.org/download/windows/ 查看步骤：打开软件->文件->导入->原始数据->
     # 选择生成的文件->配置:编码(16bit pcm)-字节序(默认尾端)-声道(立体声)-偏移(0)-总计导入(100%)-采样率(44100HZ)->导入
 }

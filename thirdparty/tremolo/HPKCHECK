@@ -19,7 +19,7 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     cd $builddir/$ARCH-build
-    cat /system/etc/capture.ogg | ./test_example 1 > tremolo_test_out.pcm 2>> ${logfile}
+    cat ${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/capture.ogg | ./test_example 1 > tremolo_test_out.pcm 2>> ${logfile}
     res=$?
     if [ $res -eq 0 ]
     then

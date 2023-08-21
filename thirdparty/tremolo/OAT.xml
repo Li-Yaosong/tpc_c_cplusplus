@@ -16,6 +16,7 @@
             </filefilter>
             <filefilter name="binaryFileTypePolicyFilter" desc="Filters for resources files policies">
                 <filteritem type="filename" name="*.jpg" desc="指导文档需要的jpg图片"/>
+                <filteritem type="filename" name="*.ogg" desc="测试需要的音频文件"/>
             </filefilter>
         </filefilterlist>
     </oatconfig>

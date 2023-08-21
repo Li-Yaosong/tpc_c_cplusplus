@@ -15,6 +15,7 @@
 - 三方库目录结构
   ```
   tpc_c_cplusplus/thirdparty/tremolo      #三方库tremolo的目录结构如下
+  ├── capture.ogg                       #测试音频文件
   ├── docs                              #三方库相关文档的文件夹
   ├── HPKBUILD                          #构建脚本
   ├── HPKCHECK                          #自动化测试脚本
@@ -63,7 +64,7 @@
 
 - 将编译生成的可执行文件及生成的动态库准备好
 
-- 将准备好的文件推送到开发板，进入到构建的目录thirdparty/tremolo/Tremolo008/arm64-v8a-build(64位)下执行cat /system/etc/capture.ogg | ./test_example 1 > tremolo_test_out.pcm
+- 将准备好的文件推送到开发板，进入到构建的目录thirdparty/tremolo/Tremolo008/arm64-v8a-build(64位)下执行cat ./../../capture.ogg | ./test_example 1 > tremolo_test_out.pcm
 
 &nbsp;![tremolo_test](pic/tremolo_test.jpg)
 
