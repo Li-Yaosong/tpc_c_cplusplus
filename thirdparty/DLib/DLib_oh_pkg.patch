@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 975b55b..648ed61 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -62,7 +62,8 @@ if(BUILD_DVision)
+     src/DVision/PixelPointFile.cpp
+     ${SRCS})
+
+   find_package(Boost QUIET)  # For dynamic_bitset
++  include_directories(${Boost_INCLUDE_DIR})
+   if (Boost_FOUND)
+     set(HDRS include/DVision/BRIEF.h ${HDRS})
+     set(SRCS src/DVision/BRIEF.cpp ${SRCS})
