@@ -37,8 +37,19 @@ echo "CLANG_VERSION="${CLANG_VERSION}
 export CLANG_VERSION=${CLANG_VERSION}
 jobFlag=true
 
-# 记录依赖库
-export LYCIUM_DEPEND_PKGNAMES="/tmp/$USER-lycium_deps-`date +%s`"
+# 依赖库暂存文件
+while :
+do
+    build_time=`date +%s`
+    depend_tmp_file="/tmp/$USER-lycium_deps-$build_time"
+    if [ -f $depend_tmp_file ]
+    then
+        sleep 2 # 杜绝重复的，依赖库暂存文件
+    else
+        export LYCIUM_DEPEND_PKGNAMES=$depend_tmp_file
+        break
+    fi
+done
 
 hpksdir="../thirdparty/" # 所有 hpk 项目存放的目录
 
@@ -150,11 +161,6 @@ makelibsdir() {
 # 找到main目录下的所有目录
 # 参数1 为项目根路径
 findmainhpkdir() {
-    # hpkPaths=`find $1 -maxdepth 1 -type d`
-    # # echo $hpkPaths
-    # # remove root dir
-    # hpkPaths=(${hpkPaths[*]/$1})
-
     tmplibs=()
     for file in $(ls $1)
     do
@@ -182,10 +188,12 @@ prepareshell() {
 cleanhpkdir() {
     for hpkdir in ${hpkPaths[@]}
     do
-        cd $hpkdir
-        rm -rf build_hpk.sh envset.sh
-        cd ${OLDPWD}
+        rmovelinkfiles $hpkdir
     done
+}
+
+rmovelinkfiles() {
+    rm -rf $1/build_hpk.sh $1/envset.sh
 }
 
 # 编译库本身
@@ -221,6 +229,7 @@ buildhpk() {
                 done
                 if ! $isdone
                 then
+                    rmovelinkfiles ${notdonelist[$i]}
                     donelist[${#donelist[@]}]=${notdonelist[$i]##*/}
                 fi
                 echo donelist:${donelist[*]} > $LYCIUM_ROOT/lycium_build_intl.log
@@ -236,7 +245,7 @@ buildhpk() {
                         if [[ -d $tmppath  && -f $tmppath/HPKBUILD ]]
                         then
                             doneflag=false
-                            for libname in ${donelist[@]}
+                            for libname in ${donelist[@]} # 不在已完成的列表中
                             do
                                 if [ $tmppath == $LYCIUM_ROOT/$hpksdir/$libname ]
                                 then
@@ -244,7 +253,7 @@ buildhpk() {
                                 fi
                             done
                             nextflag=false
-                            for libname in ${nextroundlist[@]}
+                            for libname in ${nextroundlist[@]} # 不在待编译的列表中
                             do
                                 if [ $tmppath == $libname ]
                                 then
@@ -252,14 +261,22 @@ buildhpk() {
                                 fi
                             done
                             notdoneflag=false
-                            for libname in ${notdonelist[@]}
+                            for libname in ${notdonelist[@]} # 不在未完成的列表中
                             do
                                 if [ $tmppath == $libname ]
                                 then
                                     notdoneflag=true
                                 fi
                             done
-                            if ! $doneflag && ! $nextflag && ! $notdoneflag
+                            buildfalseflag=false
+                            for libname in ${buildfalselist[@]} # 不在编译失败的列表中
+                            do
+                                if [ $tmppath == $libname ]
+                                then
+                                    buildfalseflag=true
+                                fi
+                            done
+                            if ! $doneflag && ! $nextflag && ! $notdoneflag && ! $buildfalseflag # 添加到下一轮的编译中
                             then
                                 nextroundlist[${#nextroundlist[@]}]=$tmppath
                                 hpkPaths[${#hpkPaths[@]}]=$tmppath
@@ -286,6 +303,7 @@ buildhpk() {
                 fi
                 echo nextroundlist:${nextroundlist[*]} > $LYCIUM_ROOT/lycium_build_intl.log
             else
+                rmovelinkfiles ${notdonelist[$i]}
                 echo "${notdonelist[$i]} build ERROR. errno: $res"
                 buildfalselist[${#buildfalselist[@]}]=${notdonelist[$i]}
             fi
@@ -306,6 +324,11 @@ buildhpk() {
         then
             echo "Please check the dependencies of these items:"
             echo " "${nextroundlist[*]}
+            if [ ${#buildfalselist[*]} -ne 0 ]
+            then
+                echo "The follow pkg build error!"
+                echo ${buildfalselist[*]}
+            fi
             jobFlag=false
         fi
         lastroundfirstjob=${nextroundlist[0]}
