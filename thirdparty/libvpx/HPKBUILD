@@ -39,6 +39,7 @@ libvpxtestresourcepkgname=libvpx_test_resource
 libvpxtestresource="https://github.com/N22E114/$libvpxtestresourcepkgname/archive/refs/heads/$libvpxtestresourcepkgver.zip"
 libvpxtestresourcebuilddir=$libvpxtestresourcepkgname-$libvpxtestresourcepkgver
 libvpxtestresourcepackagename=$libvpxtestresourcebuilddir.zip
+
 host=
 
 prepare() {
@@ -81,6 +82,7 @@ package() {
     make install VERBOSE=1 >> `pwd`/build.log 2>&1
     cd $OLDPWD
 
+    unset host
     if [ $ARCH == "armeabi-v7a" ]
     then
         unsetarm32ENV
@@ -91,7 +93,6 @@ package() {
         echo "${ARCH} not support"
         return -1
     fi
-    unset host
 }
 
 check() {
