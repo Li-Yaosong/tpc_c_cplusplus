@@ -1,0 +1,68 @@
+diff --git a/include/saslutil.h b/include/saslutil.h
+index e0fa47c..5b7fb7c 100755
+--- a/include/saslutil.h
++++ b/include/saslutil.h
+@@ -90,6 +90,8 @@ LIBSASL_API void sasl_config_done(void);
+ LIBSASL_API int getopt(int argc, char **argv, char *optstring);
+ #endif
+ LIBSASL_API char * getpass(const char *prompt);
++#elif defined(__OHOS__)
++LIBSASL_API char * getpass(const char *prompt);
+ #endif /* WIN32 */
+ 
+ #ifdef __cplusplus
+diff --git a/lib/saslutil.c b/lib/saslutil.c
+index 46c628c..4a44e8c 100644
+--- a/lib/saslutil.c
++++ b/lib/saslutil.c
+@@ -785,6 +785,17 @@ const char *prompt;
+ 	return(pbuf);
+ }
+ 
+-
++#elif defined(__OHOS__)
++// The getpass function is not supported on the OHOS platform, so define it here
++char *getpass(const char *prompt) {
++    static char password[128];
++    printf("%s", prompt);
++    fflush(stdout);  // Flush the output buffer to avoid password echo
++    if (fgets(password, sizeof(password), stdin) == NULL) {
++        return NULL;  // Return NULL on end-of-file or error
++    }
++    password[strcspn(password, "\n")] = '\0';  // Remove the newline character at the end
++    return password;
++}
+ 
+ #endif /* WIN32 */
+diff --git a/sample/client.c b/sample/client.c
+index e723c6b..b40c634 100644
+--- a/sample/client.c
++++ b/sample/client.c
+@@ -61,6 +61,7 @@
+ 
+ #include <sasl.h>
+ #include <saslplug.h>
++#include <saslutil.h>
+ 
+ #include "common.h"
+ 
+@@ -129,6 +130,7 @@ static int simple(void *context __attribute__((unused)),
+     default:
+ 	return SASL_BADPARAM;
+     }
++    fflush(stdout);
+ 
+     fgets(b, 1024, stdin);
+     chop(b);
+diff --git a/sample/http_digest_client.c b/sample/http_digest_client.c
+index 6a2ae59..924d6ce 100644
+--- a/sample/http_digest_client.c
++++ b/sample/http_digest_client.c
+@@ -19,6 +19,7 @@
+ #include <netdb.h>
+ 
+ #include <sasl.h>
++#include <saslutil.h>
+ 
+ #define SUCCESS 0
+ #define ERROR   1
