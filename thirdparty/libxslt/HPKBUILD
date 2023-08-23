@@ -10,8 +10,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# Contributor: chengkan <kanchengc@isoftstone.com>
-# Maintainer: chengkan <kanchengc@isoftstone.com>
+# Contributor: Jeff Han <hanjinfei@foxmail.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>,chengkan <kanchengc@isoftstone.com>
 pkgname=libxslt
 pkgver=1.1.38
 pkgrel=0
@@ -62,6 +62,7 @@ package() {
     cd $builddir-$ARCH-build
     make install >> `pwd`/build.log 2>&1
     cd $OLDPWD
+    unset host
 
     if [ $ARCH == "armeabi-v7a" ]; then
         unsetarm32ENV
@@ -69,9 +70,7 @@ package() {
         unsetarm64ENV
     else
         echo "$ARCH not support!"      
-    fi
-
-    unset host
+    fi    
 }
 
 check() {
