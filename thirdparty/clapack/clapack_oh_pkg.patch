@@ -1,0 +1,50 @@
+diff -Nur clapack-3.2.1-CMAKE/BLAS/TESTING/CMakeLists.txt clapack-3.2.1-CMAKE_patch/BLAS/TESTING/CMakeLists.txt
+--- clapack-3.2.1-CMAKE/BLAS/TESTING/CMakeLists.txt	2009-08-11 01:47:54.000000000 +0800
++++ clapack-3.2.1-CMAKE_patch/BLAS/TESTING/CMakeLists.txt	2023-08-10 13:38:38.995960601 +0800
+@@ -30,7 +30,7 @@
+   get_filename_component(baseNAME ${src} NAME_WE)
+   set(TEST_INPUT "${CLAPACK_SOURCE_DIR}/BLAS/${baseNAME}.in")
+   add_executable(${name} ${src})
+-  get_target_property(TEST_LOC ${name} LOCATION)
++  # get_target_property(TEST_LOC ${name} LOCATION)
+   target_link_libraries(${name} blas)
+   if(EXISTS "${TEST_INPUT}")
+     add_test(${name} "${CMAKE_COMMAND}"
+diff -Nur clapack-3.2.1-CMAKE/CMakeLists.txt clapack-3.2.1-CMAKE_patch/CMakeLists.txt
+--- clapack-3.2.1-CMAKE/CMakeLists.txt	2009-08-11 02:46:33.000000000 +0800
++++ clapack-3.2.1-CMAKE_patch/CMakeLists.txt	2023-08-10 14:32:47.189259927 +0800
+@@ -21,7 +21,8 @@
+ add_subdirectory(F2CLIBS)
+ add_subdirectory(BLAS)
+ add_subdirectory(SRC)
+-add_subdirectory(TESTING)
++# NO_BLAS_WRAP=1 test 编译会出现 函数重定义的问题
++# add_subdirectory(TESTING)
+ set(CLAPACK_VERSION 3.2.1)
+ set(CPACK_PACKAGE_VERSION_MAJOR 3)
+ set(CPACK_PACKAGE_VERSION_MINOR 2)
+diff -Nur clapack-3.2.1-CMAKE/F2CLIBS/libf2c/CMakeLists.txt clapack-3.2.1-CMAKE_patch/F2CLIBS/libf2c/CMakeLists.txt
+--- clapack-3.2.1-CMAKE/F2CLIBS/libf2c/CMakeLists.txt	2009-08-11 02:06:06.000000000 +0800
++++ clapack-3.2.1-CMAKE_patch/F2CLIBS/libf2c/CMakeLists.txt	2023-08-10 14:19:55.104461564 +0800
+@@ -1,7 +1,7 @@
+ set(MISC 
+   f77vers.c i77vers.c main.c s_rnge.c abort_.c exit_.c getarg_.c iargc_.c
+   getenv_.c signal_.c s_stop.c s_paus.c system_.c cabs.c ctype.c
+-  derf_.c derfc_.c erf_.c erfc_.c sig_die.c uninit.c)
++  derf_.c derfc_.c erf_.c erfc_.c sig_die.c ) # uninit.c 依赖头文件fpu_control.h
+ set(POW pow_ci.c pow_dd.c pow_di.c pow_hh.c pow_ii.c pow_ri.c pow_zi.c pow_zz.c)
+ set(CX 	c_abs.c c_cos.c c_div.c c_exp.c c_log.c c_sin.c c_sqrt.c)
+ set(DCX	z_abs.c z_cos.c z_div.c z_exp.c z_log.c z_sin.c z_sqrt.c)
+diff -Nur clapack-3.2.1-CMAKE/F2CLIBS/libf2c/sysdep1.h clapack-3.2.1-CMAKE_patch/F2CLIBS/libf2c/sysdep1.h
+--- clapack-3.2.1-CMAKE/F2CLIBS/libf2c/sysdep1.h	2009-08-11 01:47:54.000000000 +0800
++++ clapack-3.2.1-CMAKE_patch/F2CLIBS/libf2c/sysdep1.h	2023-08-10 14:21:25.169858972 +0800
+@@ -3,6 +3,9 @@
+ #undef USE_LARGEFILE
+ #ifndef NO_LONG_LONG
+ 
++// 缺少类型定义
++typedef long long __off64_t;
++
+ #ifdef __sun__
+ #define USE_LARGEFILE
+ #define OFF_T off64_t
