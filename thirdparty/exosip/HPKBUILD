@@ -53,7 +53,6 @@ prepare() {
 build() {
     cd $builddir-$ARCH-build    
     PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" --enable-static --host=$host >> `pwd`/build.log 2>&1
-
     make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
     ret=$?
     cd $OLDPWD
@@ -65,6 +64,7 @@ package() {
     cd $builddir-$ARCH-build
     make install >> `pwd`/build.log 2>&1
     cd $OLDPWD
+    unset host  
 
     if [ $ARCH == "armeabi-v7a" ]; then
         unsetarm32ENV
@@ -73,12 +73,11 @@ package() {
     else
         echo "$ARCH not support!"
     fi
-    unset host  
 }
 
 check() {
     echo "The test must be on an OpenHarmony device!"
-    #需要通过./sip_monitor 连接服务器测试
+    # 需要通过./sip_monitor 连接服务器测试
 }
 
 # 清理环境
