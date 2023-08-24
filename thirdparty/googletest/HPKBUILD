@@ -8,14 +8,14 @@ pkgdesc="googletest是由谷歌的测试技术团队开发的测试框架，使�
 url="https://github.com/google/googletest" #
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD-3-Clause license")
-source="https://github.com/google/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip" # "https://github.com/google/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
 patchflag=false
 autounpack=true
 downloadpackage=true
 
-builddir=$pkgname-${pkgver:1}
-packagename=$builddir.tar.gz
+builddir=$pkgname-$pkgver
+packagename=$builddir.zip
 
 prepare() {
     mkdir -p $builddir/$ARCH-build
