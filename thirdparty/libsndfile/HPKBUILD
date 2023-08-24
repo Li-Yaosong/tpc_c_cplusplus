@@ -10,12 +10,12 @@ license=("LGPLv2.1")
 depends=()
 makedepends=()
 
-source="https://github.com/libsndfile/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 autounpack=true
 downloadpackage=true
 buildtools="cmake"
 builddir=$pkgname-${pkgver}
-packagename=$builddir.tar.gz
+packagename=$builddir.zip
 
 prepare() {
     mkdir -p $builddir/$ARCH-build
