@@ -19,8 +19,16 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     cd $builddir-$ARCH-build/testsuite
+    # 测试时需要创建下面两个文件夹
+    mkdir /var/run/netns -p
+    mkdir /data/local/tmp/ -p
     make test > ${logfile} 2>&1
     res=$?
+    if [ $res -ne 0 ]
+    then
+        mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
+        cp -r results ${LYCIUM_FAULT_PATH}/${pkgname}/
+    fi
     cd $OLDPWD
 
     return $res
