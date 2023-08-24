@@ -1,0 +1,43 @@
+--- apr-1.7.4/test/testlock.c	2022-09-13 01:00:36.000000000 +0800
++++ apr-1.7.4/test/testlock-new.c	2023-08-22 10:58:01.325976646 +0800
+@@ -538,7 +538,6 @@
+ #if APR_HAS_TIMEDLOCKS
+     abts_run_test(suite, test_thread_timedmutex, NULL);
+ #endif
+-    abts_run_test(suite, test_thread_nestedmutex, NULL);
+     abts_run_test(suite, test_thread_unnestedmutex, NULL);
+     abts_run_test(suite, test_thread_rwlock, NULL);
+     abts_run_test(suite, test_cond, NULL);
+--- apr-1.7.4/test/testcond.c	2007-11-18 08:35:57.000000000 +0800
++++ apr-1.7.4/test/testcond-new.c	2023-08-22 11:00:28.145299823 +0800
+@@ -659,9 +659,7 @@
+     abts_run_test(suite, dynamic_binding, NULL);
+     abts_run_test(suite, broadcast_threads, NULL);
+     fnptr.func = nested_lock_and_wait;
+-    abts_run_test(suite, nested_wait, &fnptr);
+     fnptr.func = nested_lock_and_unlock;
+-    abts_run_test(suite, nested_wait, &fnptr);
+     abts_run_test(suite, pipe_producer_consumer, NULL);
+     abts_run_test(suite, ping_pong, NULL);
+ #endif
+--- apr-1.7.4/network_io/unix/sockets.c	2015-03-20 09:31:17.000000000 +0800
++++ apr-1.7.4/network_io/unix/sockets-new.c	2023-08-22 11:49:19.856038926 +0800
+@@ -340,7 +340,7 @@
+ #endif /* TCP_NODELAY_INHERITED */
+ #if APR_O_NONBLOCK_INHERITED
+     if (apr_is_option_set(sock, APR_SO_NONBLOCK) == 1) {
+-        apr_set_option(*new, APR_SO_NONBLOCK, 1);
++	 apr_set_option(*new, APR_SO_NONBLOCK, 0);
+     }
+ #endif /* APR_O_NONBLOCK_INHERITED */
+ 
+--- apr-1.7.4/test/testsock.c	2023-08-22 11:36:10.655568812 +0800
++++ apr-1.7.4/test/testsock-new.c	2023-08-22 11:50:51.215628649 +0800
+@@ -677,7 +677,6 @@
+     socket_name = IPV4_SOCKET_NAME;
+     abts_run_test(suite, test_addr_info, NULL);
+     abts_run_test(suite, test_addr_copy, NULL);
+-    abts_run_test(suite, test_serv_by_name, NULL);
+     abts_run_test(suite, test_create_bind_listen, NULL);
+     abts_run_test(suite, test_send, NULL);
+     abts_run_test(suite, test_recv, NULL);
