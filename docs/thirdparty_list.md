@@ -89,7 +89,7 @@
 | [thrift](../thirdparty/thrift/README_zh.md)                  |      | 是   |
 | [caffe](../thirdparty/caffe/README_zh.md)                    |      | 是   |
 | [libyuv](../thirdparty/libyuv/README_zh.md)                  |      | 是   |
-| [ffmpeg](../thirdparty/ffmpeg/README_zh.md)                  |      | 是   |
+| [FFmpeg](../thirdparty/FFmpeg/README_zh.md)                  |      | 是   |
 | [fftw3](../thirdparty/fftw3/README_zh.md)                    |      | 是   |
 | [avro](../thirdparty/avro/README_zh.md)                      |      | 是   |
 | [libarchive](../thirdparty/libarchive/README_zh.md)          |      | 是   |
