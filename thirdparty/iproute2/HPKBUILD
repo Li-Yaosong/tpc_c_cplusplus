@@ -13,7 +13,7 @@
 # Contributor: shann <swkec@isoftstone.com>
 # Maintainer: shann <swkec@isoftstone.com>
 pkgname=iproute2
-pkgver=6.4.0
+pkgver=v6.4.0
 pkgrel=0
 pkgdesc="iproute2 is a Linux utility package that can be used to configure, monitor and manage networking stack components. It provides a set of command line tools and an API to process data package routing, network equipment, network address, and protocol. The iproute2 library is part of iproute2, and it provides a set of functions and data structures for creating and managing network devices."
 url="https://mirrors.edge.kernel.org/pub/linux/utils/net/iproute2/"
@@ -22,14 +22,15 @@ license="GPL-2.0 license"
 depends=("libmnl" "libelf")
 makedepends=("bison")
 install=
-source="https://mirrors.edge.kernel.org/pub/linux/utils/net/$pkgname/$pkgname-$pkgver.tar.gz"
+# source="https://mirrors.edge.kernel.org/pub/linux/utils/net/$pkgname/$pkgname-$pkgver.tar.gz"
+source="https://gitee.com/mirrors/iproute2/repository/archive/$pkgver.zip"
 
 autounpack=true
 downloadpackage=true
 buildtools="configure"
 
 builddir=$pkgname-${pkgver}
-packagename=$builddir.tar.gz
+packagename=$builddir.zip
 
 source envset.sh
 host=
