@@ -30,21 +30,52 @@ buildtools="configure"
 autounpack=true
 downloadpackage=true
 genconfigure=true
+autoconfbuild=true
 
 builddir=$pkgname-$pkgver
 packagename=$pkgname-$pkgver.zip
+autoconfver="2.71"
+autoconfdir=autoconf-$autoconfver
+oldpath=$PATH
 
 source envset.sh
 host=
 
+ # 编译autoconf
+buildautoconf() {
+    if [ $autoconfbuild == true ];then
+        down=0
+        rm -rf $autoconfdir
+        if [ ! -f  $autoconfdir.tar.xz ];then
+            wget -O $autoconfdir.tar.gz -c http://ftp.gnu.org/gnu/autoconf/$autoconfdir.tar.xz
+            down=$?
+        fi
+        if [ $down -ne 0 ];then
+            return -1
+        fi
+        tar -xf $autoconfdir.tar.gz
+        cd $autoconfdir
+        ./configure >> `pwd`/build.log 2>&1
+        make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
+        if [ $? -ne 0 ];then
+            return -2
+        fi
+        export PATH=$PATH:`pwd`/bin
+        autoconfbuild=false
+        cd $OLDPWD
+    fi
+}
+
 prepare() {
+    # 需要linux 安装automake, autoconf(2.71以上),libtool, libltdl7-dev
+    buildautoconf
+
     mkdir $builddir/$ARCH-build
     if [ $genconfigure == true ];then
         cd $builddir
-        # 需要linux 安装automake, autoconf(2.7.1以上),libtool, libltdl7-dev
-        ./autogen.sh
+        ./autogen.sh >> `pwd`/build.log 2>&1
         if [ $? -ne 0 ];then
-            return -2
+            return -3
         fi
         genconfigure=false
         cd $OLDPWD
@@ -77,6 +108,7 @@ package() {
     make -C $ARCH-build install VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
     cd $OLDPWD
     unset host
+    export PATH=$oldpath
     if [ $ARCH == "armeabi-v7a" ];then
         unsetarm32ENV
     elif [ $ARCH == "arm64-v8a" ];then
