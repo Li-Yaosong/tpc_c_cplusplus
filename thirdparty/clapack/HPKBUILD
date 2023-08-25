@@ -10,8 +10,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# Contributor: Chen Xu <chenxu.unix@gmail.com>
+
+# Contributor: Chen Xu <chenxu.unix@gmail.com>, Jeff Han <hanjinfei@foxmail.com>
 # Maintainer:  Chen Xu <chenxu.unix@gmail.com>
+
 pkgname=clapack
 pkgver="3.2.1"
 pkgrel=0
@@ -53,11 +55,11 @@ prepare() {
     then
         mkdir -p $builddir/host-build
         cd $builddir
-        cmake -G "Unix Makefiles" -DCMAKE_C_FLAGS=-Wno-format-security -Bhost-build -S./ -L > `pwd`/host-build/build.log 2>&1
-        make arithchk -j4 -C host-build VERBOSE=1 >> `pwd`/host-build/build.log 2>&1
+        cmake -G "Unix Makefiles" -DCMAKE_C_FLAGS=-Wno-format-security \
+            -Bhost-build -S./ -L > $publicbuildlog 2>&1
+        make arithchk -j4 -C host-build VERBOSE=1 >> $publicbuildlog 2>&1
         ret=$?
         cd $OLDPWD
-
         if [ $ret -ne 0 ]
         then
             return $ret
@@ -70,17 +72,15 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DCMAKE_C_FLAGS=-Wno-format-security -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DCMAKE_C_FLAGS=-Wno-format-security \
+        -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > $buildlog 2>&1
+    make -j4 -C $ARCH-build >> $buildlog 2>&1
 
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
-    
     # 由于是交叉编译，需要使用arithchk生成头文件arith.h才能继续编译
     originpath=$PATH
     export PATH=`pwd`/host-build/F2CLIBS/libf2c/:$PATH
-
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    make -j4 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
-
     export PATH=$originpath
     cd $OLDPWD
     return $ret
