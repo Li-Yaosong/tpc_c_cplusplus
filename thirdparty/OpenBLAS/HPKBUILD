@@ -22,14 +22,15 @@ license=("BSD-3-Clause license")
 depends=()
 makedepends=("gcc")
 
-source="https://github.com/xianyi/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+# source="https://github.com/xianyi/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 
 downloadpackage=true
 autounpack=true
 buildtools="make"
 
-builddir=$pkgname-${pkgver:1}
-packagename=$builddir.tar.gz
+builddir=$pkgname-$pkgver
+packagename=$builddir.zip
 
 source envset.sh
 openblastarget=
