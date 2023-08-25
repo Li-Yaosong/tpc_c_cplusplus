@@ -1,0 +1,94 @@
+# Contributor: 城meto <myxuan475@126.com>
+# Maintainer: 城meto <myxuan475@126.com>
+pkgname=glib_with_host
+pkgver=2.77.1
+pkgrel=0
+pkgdesc="GLib is a general-purpose, portable utility library, which provides many useful data types, macros, type conversions, string utilities, file utilities, a mainloop abstraction, and so on."
+url="https://docs.gtk.org/glib/"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("Apache 2.0" "CC0-1.0" "GPL-2.0" "LGPL-2.1" "LLVM" "old-glib" "MIT")
+depends=("libffi" "pcre2")    # 将依赖库独立编译，两个库都比较大
+makedepends=("meson" "ninja") 
+
+source="https://github.com/GNOME/${pkgname:0:4}/archive/refs/tags/$pkgver.tar.gz"
+
+downloadpackage=true
+autounpack=true
+buildtools="meson"
+
+builddir=${pkgname:0:4}-$pkgver
+packagename=${pkgname:0:4}-$pkgver.tar.gz
+
+buildhost=true
+clonesrcflag=true
+pkgconfigpath=
+
+prepare() {
+    # git clone对网络要求太高了，而且耗时长，这个版本使用压缩包
+    if $clonesrcflag
+    then
+        cd $builddir
+        git clone https://github.com/GNOME/gvdb.git subprojects/gvdb
+        cd $OLDPWD
+        clonesrcflag=false
+    fi
+
+    # 编译host版本，其他多个库需要使用
+    if [ $buildhost == true ];then
+        mkdir -p $builddir/host-build
+        cd $builddir
+        meson setup host-build --prefix=$LYCIUM_ROOT/usr/$pkgname/$(uname -m) > `pwd`/host-build/build.log 2>&1
+        ninja -j4 -C host-build -v >> `pwd`/host-build/build.log 2>&1
+        ninja install -j4 -C host-build -v >> `pwd`/host-build/build.log 2>&1
+        cd $OLDPWD
+        buildhost=false
+    fi
+
+    # 依赖库加入 pkg_config_path 路径
+    for depend in ${depends[@]}
+    do
+        dependpath=$LYCIUM_ROOT/usr/$depend/$ARCH/lib/pkgconfig
+        if [ ! -d ${dependpath} ]
+        then
+            continue
+        fi
+        pkgconfigpath=$pkgconfigpath"${dependpath}:"
+    done
+    pkgconfigpath=${pkgconfigpath%:*}
+
+    cp $ARCH-cross-file.txt $builddir
+    mkdir -p $builddir/$ARCH-build
+}
+
+build() {
+    cd $builddir
+    ohos_sdk_path=${OHOS_SDK//\//\\\/}
+    sed -i 's/ohos_sdk/'"$ohos_sdk_path"'/g' $ARCH-cross-file.txt
+
+    # 需要设置pkg路径
+    meson setup $ARCH-build --cross-file $ARCH-cross-file.txt \
+        --pkg-config-path $pkgconfigpath \
+        --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH > $ARCH-build/build.log 2>&1
+    ninja -C $ARCH-build -v >> $ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    ninja -v -C $ARCH-build install >> build.log 2>&1
+    # 还原
+    pkgconfigpath=""
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # TODO
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir
+}
