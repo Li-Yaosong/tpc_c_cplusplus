@@ -20,9 +20,14 @@ openharmonycheck() {
     res=0
     cd $builddir/$ARCH-build
     # 本测试用例最大解码数据不超过一帧，所以输入的mp3文件刚好是一帧的数据解码出来才能听到，
-    #  否者可能解码出来的数据因为太短而听不到
+    # 否者可能解码出来的数据因为太短而听不到
     ./mp3_test oh_hello_test.mp3 output.pcm > ${logfile} 2>&1
     res=$?
+    if [ $res -eq 0 ]
+    then
+        mkdir ${LYCIUM__MANUAL_CONFIRM_PATH}/${pkgname}
+        cp output.pcm ${LYCIUM__MANUAL_CONFIRM_PATH}/${pkgname}/
+    fi
     cd $OLDPWD
 
     return $res
