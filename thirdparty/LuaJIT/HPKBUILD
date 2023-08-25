@@ -1,5 +1,6 @@
 # Contributor: Jeff Han <hanjinfei@foxmail.com>
 # Maintainer: Jeff Han <hanjinfei@foxmail.com>
+
 pkgname=LuaJIT
 pkgver=2.1.0-beta3
 pkgrel=0
