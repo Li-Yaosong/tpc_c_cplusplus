@@ -40,6 +40,10 @@ prepare() {
         cd ${builddir}/host-build
         cmake -DWITH_JAVA=OFF -DWITH_JAVASCRIPT=OFF -DWITH_NODEJS=OFF  -DWITH_C_GLIB=OFF -DWITH_PYTHON=OFF .. -L > build.log 2>&1
         make -j4 >> build.log 2>&1
+        if [ $? -ne 0 ]
+        then
+            return -1
+        fi
         buildhostthrift=false
         cd $OLDPWD
     fi
