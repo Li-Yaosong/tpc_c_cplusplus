@@ -26,7 +26,6 @@ source="https://github.com/PCRE2Project/$pkgname/archive/refs/tags/$pkgver.tar.g
 
 autounpack=true
 downloadpackage=true
-patchflag=true
 
 builddir=$pkgname-$pkgver
 packagename=$pkgname-$pkgver.tar.gz
