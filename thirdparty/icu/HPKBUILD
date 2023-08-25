@@ -44,9 +44,10 @@ prepare() {
         cd $builddir/host-build
         ../icu4c/source/configure > `pwd`/build.log 2>&1
         make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
-        if [ $? -eq 0 ];then
-            buildhost=false
+        if [ $? -ne 0 ];then
+            return -1
         fi
+        buildhost=false
         cd $OLDPWD
     fi
     mkdir -p $builddir/$ARCH-build
