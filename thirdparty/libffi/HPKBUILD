@@ -22,29 +22,21 @@ url="https://github.com/libffi/libffi"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("GPL-2.0 license")
 depends=()
-makedepends=()
-source="git@gitee.com:lycium_pkg_mirror/libffi.git"
+makedepends=("autoconf" "libtool")
+source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver.zip"
 buildtools="configure"
 
-autounpack=false
-downloadpackage=false
+autounpack=true
+downloadpackage=true
 genconfigure=true
-clonesrcflag=true
 
-builddir=$pkgname-${pkgver:1}
+builddir=$pkgname-$pkgver
 packagename=$pkgname-$pkgver.zip
 
 source envset.sh
 host=
 
 prepare() {
-    if [ $clonesrcflag == true ];then
-        git clone -b $pkgver $source $builddir
-        if [ $? -ne 0 ];then
-            return -1
-        fi
-        clonesrcflag=false
-    fi
     mkdir $builddir/$ARCH-build
     if [ $genconfigure == true ];then
         cd $builddir
