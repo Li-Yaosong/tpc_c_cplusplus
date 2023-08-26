@@ -9,7 +9,8 @@ archs=("armeabi-v7a" "arm64-v8a")
 license="Apache License"
 depends=("boost" "openssl" "zlib")
 makedepends=()
-source="https://github.com/apache/${pkgname}/archive/refs/tags/${pkgver}.tar.gz"
+# 官方下载地址source="https://github.com/apache/${pkgname}/archive/refs/tags/${pkgver}.tar.gz"受网络影响可能存在下载失败的情况，现使用gitee镜像可以与官方仓库保持同步
+source="https://gitee.com/mirrors/Thrift-Apache/repository/archive/${pkgver}.zip"
 
 autounpack=true
 downloadpackage=true
@@ -17,14 +18,32 @@ buildtools="cmake"
 buildhostthrift=true
 
 builddir=$pkgname-${pkgver:1}
-packagename=$builddir.tar.gz
+packagename=$builddir.zip
+patchflag=true
+unpackagename=Thrift-Apache
 
 prepare() {
+    if $patchflag
+    then
+        # 修改包名同步官方库名
+        mv $unpackagename-${pkgver} $builddir
+        cd ${builddir}
+        # 修复locale函数处理本地化(locale)相关的操作时遇到平台不支持导致测试失败的情况
+        patch -p1 < ../thrift_oh_pkg.patch
+        cd $OLDPWD
+        # patch只需要打一次,关闭打patch
+        patchflag=false
+    fi
+    
     if [ $buildhostthrift ]; then
         mkdir -p ${builddir}/host-build
         cd ${builddir}/host-build
         cmake -DWITH_JAVA=OFF -DWITH_JAVASCRIPT=OFF -DWITH_NODEJS=OFF  -DWITH_C_GLIB=OFF -DWITH_PYTHON=OFF .. -L > build.log 2>&1
         make -j4 >> build.log 2>&1
+        if [ $? -ne 0 ]
+        then
+            return -1
+        fi
         buildhostthrift=false
         cd $OLDPWD
     fi
