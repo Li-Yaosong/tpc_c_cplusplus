@@ -10,13 +10,14 @@ license=("MIT")
 depends=()
 makedepends=()
 
-source="https://github.com/google/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+#官方地址 "https://github.com/google/$pkgname/archive/refs/tags/$pkgver.tar.gz"， 因网络原因使用镜像地址
+source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver.zip"
 
 autounpack=true
 downloadpackage=true
 
-builddir=$pkgname-${pkgver:1}
-packagename=$builddir.tar.gz
+builddir=$pkgname-$pkgver
+packagename=$builddir.zip
 
 prepare() {
     mkdir -p $builddir/$ARCH-build
