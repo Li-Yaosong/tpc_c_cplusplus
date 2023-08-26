@@ -30,6 +30,10 @@ buildtools="configure"
 autounpack=true
 downloadpackage=true
 buildhost=true
+libiconvbuild=true
+prefixpath=""
+oldlibpath=$LD_LIBRARY_PATH
+oldpath=$PATH
 
 builddir=$pkgname-$pkgver
 packagename=$pkgname-$pkgver.zip
@@ -37,7 +41,45 @@ packagename=$pkgname-$pkgver.zip
 source envset.sh
 host=
 
+ # 编译gnu工具
+buildgnutool() {
+    toolname=$1
+    toolver=$2
+    toolpath=$toolname-$toolver
+    prefixpath=`pwd`/$toolpath/install
+    down=0
+    rm -rf $toolpath
+    if [ ! -f  $toolname-$toolver.tar.gz ];then
+        wget -O $toolname-$toolver.tar.gz -c http://ftp.gnu.org/gnu/$toolname/$toolname-$toolver.tar.gz
+        down=$?
+    fi
+    if [ $down -ne 0 ];then
+        return -1
+    fi
+    tar -xf $toolname-$toolver.tar.gz
+    cd $toolpath
+    ./configure --prefix=$prefixpath >> `pwd`/build.log 2>&1
+    make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
+    make -j4 install VERBOSE=1 >> `pwd`/build.log 2>&1
+    if [ $? -ne 0 ];then
+        return -2
+    fi
+    cd $OLDPWD
+}
+
 prepare() {
+    # 需要libiconv工具
+    if [ $libiconvbuild == true ];then
+        buildgnutool libiconv 1.17
+        if [ $? -ne 0 ];then
+            return -1
+        fi 
+        export LD_LIBRARY_PATH=$prefixpath/lib:$LD_LIBRARY_PATH
+        export PATH=$prefixpath/bin:$PATH
+        libiconvbuild=false
+        unset prefixpath
+    fi
+
     # 需要先编译host版本
     if [ $buildhost == true ];then
         mkdir -p $builddir/host-build
@@ -45,9 +87,11 @@ prepare() {
         ../icu4c/source/configure > `pwd`/build.log 2>&1
         make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
         if [ $? -ne 0 ];then
-            return -1
+            return -2
         fi
         buildhost=false
+        export LD_LIBRARY_PATH=$oldlibpath
+        export PATH=$oldpath
         cd $OLDPWD
     fi
     mkdir -p $builddir/$ARCH-build
@@ -60,7 +104,7 @@ prepare() {
         host=aarch64-linux
     else
         echo "$ARCH not support"
-        return -1
+        return -3
     fi
 }
 
