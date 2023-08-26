@@ -43,7 +43,7 @@ prepare() {
         mkdir -p $builddir/host-build
         cd $builddir/host-build
         CXXFLAGS="-DU_USING_ICU_NAMESPACE=0" \
-        LDFLAGS="-lstdc++" \
+        LIBS="-lstdc++" \
         ../icu4c/source/configure -v > `pwd`/build.log 2>&1
         make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
         if [ $? -ne 0 ];then
