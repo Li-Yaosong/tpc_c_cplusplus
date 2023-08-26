@@ -1,9 +1,9 @@
 [binaries]
-c = '/data/local/ohos-sdk/linux/native/llvm/bin/arm-linux-ohos-clang'
-cpp = '/data/local/ohos-sdk/linux/native/llvm/bin/arm-linux-ohos-clang++'
-ar = '/data/local/ohos-sdk/linux/native/llvm/bin/llvm-ar'
-strip = '/data/local/ohos-sdk/linux/native/llvm/bin/llvm-strip'
-ld = '/data/local/ohos-sdk/linux/native/llvm/bin/ld.lld'
+c = 'ohos_sdk/native/llvm/bin/arm-linux-ohos-clang'
+cpp = 'ohos_sdk/native/llvm/bin/arm-linux-ohos-clang++'
+ar = 'ohos_sdk/native/llvm/bin/llvm-ar'
+strip = 'ohos_sdk/native/llvm/bin/llvm-strip'
+ld = 'ohos_sdk/native/llvm/bin/ld.lld'
 
 pkgconfig = '/usr/bin/pkg-config'
 
