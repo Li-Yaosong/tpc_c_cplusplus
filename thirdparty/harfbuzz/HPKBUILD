@@ -1,3 +1,15 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # Contributor: 小肉头君 <chenbaodi@huawei.com>
 # Maintainer: 小肉头君 <chenbaodi@huawei.com>
 
@@ -8,7 +20,7 @@ pkgdesc="HarfBuzz text shaping engine."
 url="https://github.com/harfbuzz/harfbuzz"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("Old MIT")
-depends=()
+depends=("freetype2")
 makedepends=()
 source="https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
@@ -20,11 +32,9 @@ builddir=$pkgname-$pkgver
 packagename=$builddir.tar.gz
 
 source envset.sh
-autogenflag=true
 host=
 
 prepare() {
-    mkdir -p $builddir/$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]
     then
         setarm32ENV
@@ -35,18 +45,16 @@ prepare() {
         setarm64ENV
         host=aarch64-linux
     fi
-    if $autogenflag
-    then
-        cd $builddir
-        ./autogen.sh > `pwd`/build.log 2>&1
-        cd $OLDPWD
-        autogenflag=false
-    fi
+    mkdir -p $builddir/$ARCH-build
+    # autogen可直接生产Makefile, 应直接生成到编译目录
+    cd $builddir/$ARCH-build
+    ../autogen.sh > `pwd`/build.log 2>&1
+    cd $OLDPWD
 }
 
 build() {
     cd $builddir/$ARCH-build
-    ../configure "$@" --host=$host --with-freetype=no --with-icu=no --with-glib=no -with-cairo=no --enable-static > `pwd`/build.log 2>&1
+    PKG_CONFIG_PATH="${pkgconfigpath}" ../configure "$@" --host=$host --with-freetype=yes --with-icu=no --with-glib=no -with-cairo=no --enable-static > `pwd`/build.log 2>&1
     make -j4 >> `pwd`/build.log 2>&1
     ret=$?
     cd $OLDPWD
