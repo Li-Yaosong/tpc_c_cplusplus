@@ -1,0 +1,53 @@
+diff -rupN pango-1.90.0/pango/pango-font-face.c pango-1.90.0-patched/pango/pango-font-face.c
+--- pango-1.90.0/pango/pango-font-face.c	2022-06-23 04:02:31.000000000 +0800
++++ pango-1.90.0-patched/pango/pango-font-face.c	2023-06-20 09:34:29.011915332 +0800
+@@ -24,30 +24,31 @@
+ #include "pango-font-family.h"
+ 
+ #ifdef __linux__
+-#include <execinfo.h>
++// #include <execinfo.h>
+ 
+ static inline char *
+ get_backtrace (void)
+ {
+-  void *buffer[1024];
+-  int size;
+-  char **symbols;
+-  GString *s;
++//  void *buffer[1024];
++//  int size;
++//  char **symbols;
++//  GString *s;
++
++//  size = backtrace (buffer, 1024);
++//  symbols = backtrace_symbols (buffer, size);
++
++//  s = g_string_new ("");
++
++//  for (int i = 0; i < size; i++)
++//    {
++//      g_string_append (s, symbols[i]);
++//      g_string_append_c (s, '\n');
++//    }
+ 
+-  size = backtrace (buffer, 1024);
+-  symbols = backtrace_symbols (buffer, size);
++//  free (symbols);
+ 
+-  s = g_string_new ("");
+-
+-  for (int i = 0; i < size; i++)
+-    {
+-      g_string_append (s, symbols[i]);
+-      g_string_append_c (s, '\n');
+-    }
+-
+-  free (symbols);
+-
+-  return g_string_free (s, FALSE);
++//  return g_string_free (s, FALSE);
++  return NULL;
+ }
+ #endif
+ 

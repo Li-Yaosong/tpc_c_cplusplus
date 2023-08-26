@@ -1,0 +1,27 @@
+[binaries]
+c = 'ohos_sdk/native/llvm/bin/aarch64-linux-ohos-clang'
+cpp = 'ohos_sdk/native/llvm/bin/aarch64-linux-ohos-clang++'
+ar = 'ohos_sdk/native/llvm/bin/llvm-ar'
+strip = 'ohos_sdk/native/llvm/bin/llvm-strip'
+ld = 'ohos_sdk/native/llvm/bin/ld.lld'
+
+pkgconfig = '/usr/bin/pkg-config'
+
+[host_machine]
+system = 'linux'
+cpu_family = 'aarch64'
+cpu = 'arm64-v8a'
+endian = 'little'
+
+[properties]
+needs_exe_wrapper = true
+skip_sanity_check = true
+sys_root = ''
+platform = 'generic'
+pkg_config_libdir = 'lycium_root/usr/glib/arm64-v8a/lib/pkgconfig:lycium_root/usr/fribidi/arm64-v8a/lib/pkgconfig:lycium_root/usr/harfbuzz/arm64-v8a/lib/pkgconfig:lycium_root/usr/fontconfig/arm64-v8a/lib/pkgconfig:lycium_root/usr/freetype2/arm64-v8a/lib/pkgconfig:lycium_root/usr/zlib/arm64-v8a/lib/pkgconfig:lycium_root/usr/libpng/arm64-v8a/lib/pkgconfig:lycium_root/usr/brotli/arm64-v8a/lib/pkgconfig:lycium_root/usr/libxml2/arm64-v8a/lib/pkgconfig:lycium_root/usr/cairo/arm64-v8a/lib/pkgconfig:lycium_root/usr/pixman/arm64-v8a/lib/pkgconfig:lycium_root/usr/libexpat/arm64-v8a/lib/pkgconfig'
+
+[built-in options]
+c_args = ['-D__MUSL__=1']
+cpp_args = ['-D__MUSL__=1']
+c_link_args = []
+cpp_link_args = []

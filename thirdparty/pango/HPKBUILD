@@ -1,0 +1,78 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: Jeff Han <hanjinfei@foxmail.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
+
+pkgname=pango
+pkgver=1.90.0
+pkgrel=0
+pkgdesc="Pango is a library for laying out and rendering of text, with an emphasis on internationalization. Pango can be used anywhere that text layout is needed, though most of the work on Pango so far has been done in the context of the GTK widget toolkit. Pango forms the core of text and font handling for GTK."
+url="https://pango.gnome.org/"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("GPL-2")
+depends=("glib_with_host" "fribidi" "harfbuzz" "fontconfig" "freetype2" "zlib" "libpng" "brotli" "libxml2" "cairo" "pixman" "libexpat") # TODO pkg deps auto gen
+makedepends=("meson" "ninja")
+
+source="https://download.gnome.org/sources/$pkgname/1.90/$pkgname-$pkgver.tar.xz"
+
+downloadpackage=true
+autounpack=true
+buildtools="meson"
+patchflag=true
+
+builddir=$pkgname-$pkgver
+packagename=$builddir.tar.xz
+
+prepare() {
+    if $patchflag
+    then
+        cd $builddir
+        # openharmony 在编译 backtrace 相关功能时报错. backtrace 不影响 pango 主要能力. 采用patch屏蔽 backtrace 功能
+        patch -p1 < `pwd`/../pango_oh_pkg.patch
+        # patch只需要打一次,关闭打patch
+        patchflag=false
+        cd $OLDPWD
+    fi
+    cp $ARCH-cross-file.txt $builddir
+    mkdir -p $builddir/$ARCH-build
+}
+
+build() {
+    cd $builddir
+    ohos_sdk_path=${OHOS_SDK//\//\\\/}
+    sed -i 's/ohos_sdk/'"$ohos_sdk_path"'/g' $ARCH-cross-file.txt
+    lycium_root_path=${LYCIUM_ROOT//\//\\\/}
+    sed -i 's/lycium_root/'"$lycium_root_path"'/g' $ARCH-cross-file.txt
+    # meson 过程会下载代码, 可能时间较久, 请保持网络通常
+    meson $ARCH-build --cross-file $ARCH-cross-file.txt --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH > $PKGBUILD_ROOT/$builddir/$ARCH-build/build.log 2>&1
+    ninja -v -C $ARCH-build >> $PKGBUILD_ROOT/$builddir/$ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    ninja -v -C $ARCH-build install >> $PKGBUILD_ROOT/$builddir/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}

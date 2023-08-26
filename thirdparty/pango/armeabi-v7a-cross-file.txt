@@ -1,0 +1,27 @@
+[binaries]
+c = 'ohos_sdk/native/llvm/bin/arm-linux-ohos-clang'
+cpp = 'ohos_sdk/native/llvm/bin/arm-linux-ohos-clang++'
+ar = 'ohos_sdk/native/llvm/bin/llvm-ar'
+strip = 'ohos_sdk/native/llvm/bin/llvm-strip'
+ld = 'ohos_sdk/native/llvm/bin/ld.lld'
+
+pkgconfig = '/usr/bin/pkg-config'
+
+[host_machine]
+system = 'linux'
+cpu_family = 'arm'
+cpu = 'armeabi-v7a'
+endian = 'little'
+
+[properties]
+needs_exe_wrapper = true
+skip_sanity_check = true
+sys_root = ''
+platform = 'generic'
+pkg_config_libdir = 'lycium_root/usr/glib/armeabi-v7a/lib/pkgconfig:lycium_root/usr/fribidi/armeabi-v7a/lib/pkgconfig:lycium_root/usr/harfbuzz/armeabi-v7a/lib/pkgconfig:lycium_root/usr/fontconfig/armeabi-v7a/lib/pkgconfig:lycium_root/usr/freetype2/armeabi-v7a/lib/pkgconfig:lycium_root/usr/zlib/armeabi-v7a/lib/pkgconfig:lycium_root/usr/libpng/armeabi-v7a/lib/pkgconfig:lycium_root/usr/brotli/armeabi-v7a/lib/pkgconfig:lycium_root/usr/libxml2/armeabi-v7a/lib/pkgconfig:lycium_root/usr/cairo/armeabi-v7a/lib/pkgconfig:lycium_root/usr/pixman/armeabi-v7a/lib/pkgconfig:lycium_root/usr/libexpat/armeabi-v7a/lib/pkgconfig'
+
+[built-in options]
+c_args = ['-D__MUSL__=1']
+cpp_args = ['-D__MUSL__=1']
+c_link_args = []
+cpp_link_args = []
