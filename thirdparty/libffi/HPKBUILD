@@ -87,6 +87,7 @@ prepare() {
         fi
         export PATH=$PATH:$prefixpath/bin:$prefixpath/share
         export AUTOCONF=$prefixpath/bin/autoconf
+        export AUTORECONF=$prefixpath/bin/autoreconf
         autoconfbuild=false
         unset prefixpath
     fi
@@ -94,7 +95,7 @@ prepare() {
     mkdir $builddir/$ARCH-build
     if [ $genconfigure == true ];then
         cd $builddir
-        ./autogen.sh >> `pwd`/build.log 2>&1
+        $AUTORECONF -v -i >> `pwd`/build.log 2>&1
         if [ $? -ne 0 ];then
             return -3
         fi
