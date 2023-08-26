@@ -46,16 +46,6 @@ prepare() {
         clonesrcflag=false
     fi
 
-    # 编译host版本，其他多个库需要使用
-    if [ $buildhost == true ];then
-        mkdir -p $builddir/host-build
-        cd $builddir
-        meson setup host-build --prefix=$LYCIUM_ROOT/usr/$pkgname/$(uname -m) > `pwd`/host-build/build.log 2>&1
-        ninja -j4 -C host-build -v >> `pwd`/host-build/build.log 2>&1
-        cd $OLDPWD
-        buildhost=false
-    fi
-
     # 依赖库加入 pkg_config_path 路径
     for depend in ${depends[@]}
     do
