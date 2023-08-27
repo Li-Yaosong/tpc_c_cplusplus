@@ -10,6 +10,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 # Contributor: 城meto <myxuan475@126.com>
 # Maintainer: 城meto <myxuan475@126.com>
 
@@ -22,15 +23,24 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD license")
 depends=()
 makedepends=()
-source="https://github.com/PCRE2Project/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+# 原仓位置: https://github.com/PCRE2Project/$pkgname/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用镜像
+source="https://gitee.com/lycium_pkg_mirror/pcre2.git"
 
-autounpack=true
-downloadpackage=true
+autounpack=false
+downloadpackage=false
+clonesrcflag=true
 
 builddir=$pkgname-$pkgver
 packagename=$pkgname-$pkgver.tar.gz
 
 prepare() {
+    if [ $clonesrcflag == true ];then
+        git clone -b $pkgver $source $builddir
+        if [ $? -ne 0 ];then
+            return -1
+        fi
+        clonesrcflag=false
+    fi
     mkdir -p $builddir/$ARCH-build
 }
 
