@@ -20,14 +20,16 @@ pkgdesc="Cairo is a 2D graphics library with support for multiple output devices
 url="https://gitlab.freedesktop.org/cairo/cairo"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("LGPL-2.1" "MPL 1.1")
-depends=("glib_with_host" "freetype2" "fontconfig" "libpng" "zlib" "pixman" "libxml2" "libffi" "pcre2")
+depends=("glib" "freetype2" "fontconfig" "libpng" "zlib" "pixman" "libxml2" "libffi" "pcre2")
 makedepends=("meson" "ninja")
 
-source="https://gitlab.freedesktop.org/cairo/$pkgname/-/archive/$pkgver/$pkgname-$pkgver.tar.gz"
+# 原仓地址: https://gitlab.freedesktop.org/cairo/$pkgname/-/archive/$pkgver/$pkgname-$pkgver.tar.gz ,因网络原因使用镜像
+source="https://gitee.com/mirrors/cairo.git"
 
-downloadpackage=true
-autounpack=true
 buildtools="meson"
+downloadpackage=false
+autounpack=false
+clonesrcflag=true
 
 builddir=$pkgname-$pkgver
 packagename=$pkgname-$pkgver.tar.gz
@@ -35,8 +37,16 @@ packagename=$pkgname-$pkgver.tar.gz
 pkgconfigpath=
 
 prepare() {
-    # 依赖库单独编译,meson 自动下载老是失败
-    echo "depends: ${#depends[@]}"
+    # 下载
+    if [ $clonesrcflag == true ];then
+        git clone -b $pkgver $source $builddir
+        if [ $? -ne 0 ];then
+            return -1
+        fi
+        clonesrcflag=false
+    fi
+    
+    # meson 编译没有配置pkgconfigpath,需自己配置
     for depend in ${depends[@]}
     do
         dependpath=$LYCIUM_ROOT/usr/$depend/$ARCH/lib/pkgconfig
