@@ -50,9 +50,12 @@ prepare() {
         git checkout --detach 0854af0fdb6d527a8d1999835ac2c5059976c210
         ret=$?
         cd $OLDPWD
-        if [ $ret != 0 ]
-        then 
+        if [ $ret != 0 ];then 
             return -2
+        fi
+        git  clone --depth 1 --branch 0.4 https://github.com/frida/proxy-libintl.git $builddir/subprojects/proxy-libintl
+        if [ $? != 0 ];then 
+            return -3
         fi
         clonesrcflag=false
     fi
