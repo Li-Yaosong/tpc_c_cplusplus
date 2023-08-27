@@ -35,7 +35,7 @@ packagename=$pkgname-$pkgver.tar.gz
 
 buildhost=true
 clonesrcflag=true
-# pkgconfigpath=
+pkgconfigpath=
 
 prepare() {
     # git clone对网络要求太高了，而且耗时长，这个版本使用压缩包
@@ -57,17 +57,17 @@ prepare() {
         clonesrcflag=false
     fi
 
-    # 依赖库加入 pkg_config_path 路径
-    # for depend in ${depends[@]}
-    # do
-    #     dependpath=$LYCIUM_ROOT/usr/$depend/$ARCH/lib/pkgconfig
-    #     if [ ! -d ${dependpath} ]
-    #     then
-    #         continue
-    #     fi
-    #     pkgconfigpath=$pkgconfigpath"${dependpath}:"
-    # done
-    # pkgconfigpath=${pkgconfigpath%:*}
+    # meson 编译需要自己配置pkg_config_path 路径
+    for depend in ${depends[@]}
+    do
+        dependpath=$LYCIUM_ROOT/usr/$depend/$ARCH/lib/pkgconfig
+        if [ ! -d ${dependpath} ]
+        then
+            continue
+        fi
+        pkgconfigpath=$pkgconfigpath"${dependpath}:"
+    done
+    pkgconfigpath=${pkgconfigpath%:*}
 
     cp $ARCH-cross-file.txt $builddir
     mkdir -p $builddir/$ARCH-build
