@@ -21,16 +21,17 @@ pkgdesc="HarfBuzz text shaping engine."
 url="https://github.com/harfbuzz/harfbuzz"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("Old MIT")
-depends=("freetype2")
+depends=() #"freetype2"
 makedepends=()
-source="https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+# 原仓地址: https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用镜像
+source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver.zip"
 
 autounpack=true
 downloadpackage=true
 buildtools="configure"
 
 builddir=$pkgname-$pkgver 
-packagename=$builddir.tar.gz
+packagename=$builddir.zip
 
 source envset.sh
 host=
