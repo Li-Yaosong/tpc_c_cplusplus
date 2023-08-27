@@ -1,5 +1,19 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # Contributor: Jeff Han <hanjinfei@foxmail.com>
 # Maintainer: Jeff Han <hanjinfei@foxmail.com>
+
 pkgname=libpng
 pkgver=1.6.39
 pkgrel=0
@@ -10,14 +24,16 @@ license=("PNG Reference Library License version 2")
 depends=()
 makedepends=()
 install=
-source="https://sourceforge.net/projects/$pkgname/files/libpng16/$pkgver/$pkgname-$pkgver.tar.xz"
+
+# 原仓地址: https://sourceforge.net/projects/$pkgname/files/libpng16/$pkgver/$pkgname-$pkgver.tar.xz, 因网络原因使用镜像
+source="https://gitee.com/mirrors/$pkgname/repository/archive/v$pkgver.zip"
 
 autounpack=true
 downloadpackage=true
 buildtools="configure"
 
-builddir=$pkgname-${pkgver}
-packagename=$builddir.tar.xz
+builddir=$pkgname-v$pkgver
+packagename=$builddir.zip
 
 source envset.sh
 host=

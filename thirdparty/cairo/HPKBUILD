@@ -13,6 +13,7 @@
 
 # Contributor: 城meto <myxuan475@126.com>
 # Maintainer: 城meto <myxuan475@126.com>
+
 pkgname=cairo
 pkgver=1.17.8
 pkgrel=0
@@ -24,28 +25,18 @@ depends=("glib" "freetype2" "fontconfig" "libpng" "zlib" "pixman" "libxml2" "lib
 makedepends=("meson" "ninja")
 
 # 原仓地址: https://gitlab.freedesktop.org/cairo/$pkgname/-/archive/$pkgver/$pkgname-$pkgver.tar.gz ,因网络原因使用镜像
-source="https://gitee.com/mirrors/cairo.git"
+source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 
 buildtools="meson"
-downloadpackage=false
-autounpack=false
-clonesrcflag=true
+downloadpackage=true
+autounpack=true
 
 builddir=$pkgname-$pkgver
-packagename=$pkgname-$pkgver.tar.gz
+packagename=$pkgname-$pkgver.zip
 
 pkgconfigpath=
 
 prepare() {
-    # 下载
-    if [ $clonesrcflag == true ];then
-        git clone -b $pkgver $source $builddir
-        if [ $? -ne 0 ];then
-            return -1
-        fi
-        clonesrcflag=false
-    fi
-    
     # meson 编译没有配置pkgconfigpath,需自己配置
     for depend in ${depends[@]}
     do
@@ -68,7 +59,7 @@ build() {
     sed -i 's/ohos_sdk/'"$ohos_sdk_path"'/g' $ARCH-cross-file.txt
 
     meson setup $ARCH-build --cross-file $ARCH-cross-file.txt \
-        --pkg-config-path $pkgconfigpath \
+        --pkg-config-path=$pkgconfigpath \
         --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH > $ARCH-build/build.log 2>&1
     ninja -v -C $ARCH-build >> $ARCH-build/build.log 2>&1
     ret=$?
@@ -79,7 +70,7 @@ build() {
 package() {
     cd $builddir
     ninja -v -C $ARCH-build install >> $ARCH-build/build.log 2>&1
-    pkgconfigpath=""
+    unset pkgconfigpath
     cd $OLDPWD
 }
 
