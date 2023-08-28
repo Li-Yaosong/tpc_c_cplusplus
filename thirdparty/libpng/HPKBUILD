@@ -15,7 +15,7 @@
 # Maintainer: Jeff Han <hanjinfei@foxmail.com>
 
 pkgname=libpng
-pkgver=1.6.39
+pkgver=v1.6.39
 pkgrel=0
 pkgdesc=""
 url=""

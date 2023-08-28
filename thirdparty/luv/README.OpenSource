@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "luv",
+        "License": "Apache License 2.0",
+        "License File": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+        "Version Number": "1.45.0-0",
+        "Owner": "1393302983@qq.com",
+        "Upstream URL": "https://github.com/luvit/luv/archive/refs/tags/1.45.0-0.tar.gz",
+        "Description": "Bare libuv bindings for lua."
+    }
+]

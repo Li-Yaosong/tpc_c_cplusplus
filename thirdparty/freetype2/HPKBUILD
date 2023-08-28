@@ -1,5 +1,19 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # Contributor: tyBrave <tianyong13@huawei.com>
 # Maintainer: tyBrave <tianyong13@huawei.com>
+
 pkgname=freetype2
 pkgver=2.13.0
 pkgrel=0
@@ -7,7 +21,7 @@ pkgdesc=""
 url="https://sourceforge.net/projects/freetype"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("GPL FTL")
-depends=("zlib" "bzip2" "brotli" "libpng" "harfbuzz")
+depends=("zlib" "bzip2" "brotli" "libpng")
 makedepends=()
 source="https://sourceforge.net/projects/freetype/files/$pkgname/$pkgver/freetype-$pkgver.tar.xz"
 
@@ -53,7 +67,6 @@ check() {
     add_executable(freetype-cmake-test main.c)\n
 	
     target_link_libraries(freetype-cmake-test PUBLIC $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib/libfreetype.a)\n
-    target_link_libraries(freetype-cmake-test PUBLIC $LYCIUM_ROOT/usr/harfbuzz/$ARCH/lib/libharfbuzz.so)\n
     target_link_libraries(freetype-cmake-test PUBLIC $LYCIUM_ROOT/usr/brotli/$ARCH/lib/libbrotlidec.so)\n
     target_link_libraries(freetype-cmake-test PUBLIC $LYCIUM_ROOT/usr/bzip2/$ARCH/lib/libbz2.a)\n
     target_link_libraries(freetype-cmake-test PUBLIC $LYCIUM_ROOT/usr/libpng/$ARCH/lib/libpng.a)\n
