@@ -21,7 +21,7 @@ pkgdesc="PaddlePaddle High Performance Deep Learning Inference Engine for Mobile
 url="www.paddlepaddle.org.cn/lite"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("Apache-2.0 license")
-depends=("protobuf_v3.6.1" "glog")
+depends=("protobuf_v3.6.1" "glog" "gflags")
 makedepends=()
 
 # 原仓地址 https://github.com/PaddlePaddle/$pkgname/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用下列地址
@@ -31,16 +31,13 @@ buildtools="cmake"
 autounpack=true
 patchflag=true
 downloadpackage=true
-downloadcheck=
 
 builddir=$pkgname-${pkgver:1}
 packagename=$pkgname-$pkgver.zip
 
-thirdparty_url=https://paddlelite-data.bj.bcebos.com/third_party_libs
-thirdparty_tar=third-party-91a9ab3.zip
-buildhostprotoc=true
-protobuf_host_dir=""
+protobuf_host_dir=
 extracflags=
+downloadcheck=
 
 # 准备三方代码
 clonesubmodule() {
@@ -89,19 +86,16 @@ prepare() {
         cd $OLDPWD
     fi
     mkdir -p $builddir/$ARCH-build
-
-    # 1. 准备三方库，参考$builddir/lite/tools/build_android.sh 的做法
-    # prepare_thirdpary $builddir
     
-    # 2. protobuf host进程目录
-    protobuf_host_dir=$LYCIUM_ROOT/../thirdparty/protobuf_v3.6.1/protobuf-3.6.1-host-build
+    # 1. protobuf host进程目录
+    protobuf_host_dir=$PKGBUILD_ROOT/../protobuf_v3.6.1/protobuf-3.6.1-host-build
 
-    # 3. 准备分析工具
+    # 2. 准备分析工具
     cd $builddir
     mkdir -pv $ARCH-build/lite/tools/debug
     cp -v lite/tools/debug/analysis_tool.py $ARCH-build/lite/tools/debug
 
-    #4. 准备生成源码文件
+    #3. 准备生成源码文件
     mkdir -pv $ARCH-build/lite/gen_code
     touch $ARCH-build/lite/gen_code/__generated_code__.cc
     cd $OLDPWD
