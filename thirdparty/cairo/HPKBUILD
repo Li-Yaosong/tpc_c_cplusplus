@@ -32,7 +32,7 @@ downloadpackage=true
 autounpack=true
 
 builddir=$pkgname-$pkgver
-packagename=$pkgname-$pkgver.tar.gz
+packagename=$pkgname-$pkgver.zip
 
 pkgconfigpath=
 
