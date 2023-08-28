@@ -13,6 +13,7 @@
 
 # Contributor: 城meto<myxuan475@126.com>
 # Maintainer: 城meto<myxuan475@126.com>
+
 pkgname=tesseract
 pkgver=5.3.2
 pkgrel=0
@@ -20,7 +21,7 @@ pkgdesc="Tesseract contains an OCR engine - libtesseract and a command line prog
 url="https://github.com/tesseract-ocr/tesseract"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("Apache-2.0 license")
-depends=("glib_with_host" "curl" "tiff" "leptonica" "libarchive" "icu" "pango" "cairo" "fontconfig" "harfbuzz" "libpng" "freetype2" "fribidi" "libwebp" "openjpeg" "libjpeg-turbo")
+depends=("glib" "curl" "tiff" "leptonica" "libarchive" "icu" "pango" "cairo" "fontconfig" "harfbuzz" "libpng" "freetype2" "fribidi" "libwebp" "openjpeg" "libjpeg-turbo")
 makedepends=("libtool" "automake" "cabextract")
 source="https://github.com/tesseract-ocr/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 buildtools="configure"
