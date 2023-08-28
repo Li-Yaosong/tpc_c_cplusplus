@@ -49,7 +49,7 @@ folders=(
     "third-party/googletest"
 )
 # branches
-branches=(
+commitIDs=(
     "77592648e3f3be87d6c7123eb81cbad75f9aef5a"           # gflags
     "ec44c6c1675c25b9827aacd08c02433cccde7780"           # googletest
 )
