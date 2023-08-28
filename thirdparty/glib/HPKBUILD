@@ -28,13 +28,13 @@ makedepends=("meson" "ninja")
 source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 
 downloadpackage=true
-clonesubmodule=true
 autounpack=true
 buildtools="meson"
 
 builddir=$pkgname-$pkgver
 packagename=$pkgname-$pkgver.zip
 pkgconfigpath=
+clonesubmodule=true
 
 prepare() {
     # 下载子模块
