@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "Paddle-Lite",
+        "License": "Apache-2.0 license",
+        "License File": "LICENSE.txt",
+        "Version Number": "v2.12",
+        "Owner": "myxuan475@126.com",
+        "Upstream URL": "https://github.com/PaddlePaddle/Paddle-Lite/archive/refs/tags/v2.12.tar.gz",
+        "Description": "PaddlePaddle High Performance Deep Learning Inference Engine for Mobile and Edge."
+    }
+]
