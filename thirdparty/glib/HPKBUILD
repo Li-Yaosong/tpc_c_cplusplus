@@ -40,19 +40,18 @@ prepare() {
     # 下载子模块
     if $clonesubmodule
     then
-        ret=0
         # 下载gvdb,因网络原因使用镜像， 原仓地址： https://github.com/GNOME/gvdb.git
         git clone https://gitee.com/lycium_pkg_mirror/gvdb.git $builddir/subprojects/gvdb
+        if [ $? -ne 0 ];then
+            return -1
+        fi
         cd $builddir/subprojects/gvdb
         git checkout --detach 0854af0fdb6d527a8d1999835ac2c5059976c210
-        ret=$?
         cd $OLDPWD
         # 下载 libintl, meson 下载会失败, 原仓地址: https://github.com/frida/proxy-libintl.git 
         git  clone --depth 1 --branch 0.4 https://gitee.com/lycium_pkg_mirror/proxy-libintl.git $builddir/subprojects/proxy-libintl
-
-        # 通过关键文件判断是否下载成功
-        if [ $? -ne 0 -o $ret -ne 0 ];then
-            return -1
+        if [ $? -ne 0 ];then
+            return -2
         fi
         clonesubmodule=false
     fi
