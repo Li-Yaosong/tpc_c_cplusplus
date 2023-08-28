@@ -10,7 +10,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("MIT License")
 depends=("freetype2" "libxml2" "libpng" "json-c")
 makedepends=("gperf" "gettextize" "autopoint" "libtool")
-source="https://gitlab.freedesktop.org/fontconfig/${pkgname}/-/archive/2.14.2/${pkgname}-${pkgver}.tar.gz"
+source="https://www.freedesktop.org/software/${pkgname}/release/${pkgname}-${pkgver}.tar.gz"
 
 autounpack=true
 downloadpackage=true
