@@ -24,23 +24,15 @@ license=("BSD license")
 depends=()
 makedepends=()
 # 原仓位置: https://github.com/PCRE2Project/$pkgname/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用镜像
-source="https://gitee.com/lycium_pkg_mirror/pcre2.git"
+source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver.zip"
 
-autounpack=false
-downloadpackage=false
-clonesrcflag=true
+autounpack=true
+downloadpackage=true
 
 builddir=$pkgname-$pkgver
-packagename=$pkgname-$pkgver.tar.gz
+packagename=$pkgname-$pkgver.zip
 
 prepare() {
-    if [ $clonesrcflag == true ];then
-        git clone -b $pkgver $source $builddir
-        if [ $? -ne 0 ];then
-            return -1
-        fi
-        clonesrcflag=false
-    fi
     mkdir -p $builddir/$ARCH-build
 }
 
