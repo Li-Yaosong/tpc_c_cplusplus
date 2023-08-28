@@ -22,7 +22,7 @@ url="www.paddlepaddle.org.cn/lite"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("Apache-2.0 license")
 depends=("protobuf_v3.6.1" "glog" "gflags")
-makedepends=()
+makedepends=("python3")
 
 # 原仓地址 https://github.com/PaddlePaddle/$pkgname/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用下列地址
 source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver.zip"
@@ -53,7 +53,7 @@ branches=(
     "77592648e3f3be87d6c7123eb81cbad75f9aef5a"           # gflags
     "ec44c6c1675c25b9827aacd08c02433cccde7780"           # googletest
 )
-clonesubmodule() {
+clonesrc() {
     for (( i=0; i<${#repos[@]}; i++ ));do
         repo=${repos[$i]}
         folder=${folders[$i]}
@@ -73,8 +73,8 @@ prepare() {
     # 下载子模块
     if [ $downloadpackage == true ];then
         cd $builddir
-        clonesubmodule
-        if [ $? == false ];then
+        clonesrc
+        if [ $? -ne 0 ];then
             return -1
         fi
         downloadpackage=false
@@ -130,12 +130,12 @@ build() {
     # 其他选项参考Android默认设置, $builddir/lite/tools/build_android.sh
     PKG_CONFIG_PATH="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
         -DARM_TARGET_OS="ohos" -DARM_TARGET_LANG="clang" -DOHOS_SDK=${OHOS_SDK} \
-        -DCMAKE_CXX_FLAGS="-mfloat-abi=softfp -Wno-error=register -Wno-unused-but-set-variable $extracflags"  \
-        -DCMAKE_C_FLAGS="-mfloat-abi=softfp $extracflags"  \
+        -DCMAKE_CXX_FLAGS="-mfloat-abi=softfp -Wno-error=register -Wno-unused-but-set-variable $extracflags" \
+        -DCMAKE_C_FLAGS="-mfloat-abi=softfp $extracflags" \
         -DCMAKE_CXX_STANDARD=17 -DARM_TARGET_ARCH_ABI=${ARCH} \
         -DLITE_WITH_STATIC_LIB=ON \
         -Dprotobuf_host_PROTOC_EXECUTABLE=$protobufhostdir/cmake/protoc \
-        -DPROTOBUF_ROOT=$LYCIUM_ROOT/usr/protobuf_v3.6.1/$ARCH  \
+        -DPROTOBUF_ROOT=$LYCIUM_ROOT/usr/protobuf_v3.6.1/$ARCH \
         -DLITE_WITH_OPENMP=OFF \
         -DLITE_BUILD_EXTRA=ON \
         -DWITH_COVERAGE=ON \
@@ -174,6 +174,7 @@ check() {
         cp $OHOS_SDK/native/llvm/lib/aarch64-linux-ohos/libc++_shared.so $builddir/$ARCH-build/
     else
         echo "$ARCH not support!"
+        return -1
     fi
     echo "The test must be on an OpenHarmony device!"
     # real test
