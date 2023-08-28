@@ -61,7 +61,7 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    PKG_CONFIG_PATH=${pkgconfigpath} ../configure "$@" --host=$host --with-freetype=yes --with-icu=no --with-glib=no -with-cairo=no --enable-static > `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR=${pkgconfigpath} ../configure "$@" --host=$host --with-freetype=yes --with-icu=no --with-glib=no -with-cairo=no --enable-static > `pwd`/build.log 2>&1
     make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
     ret=$?
     cd $OLDPWD
