@@ -62,8 +62,8 @@
 
   ```shell
   #将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/Paddle-Lite/${OHOS_ARCH}/lib/libpaddle_light_api_shared.a)
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/Paddle-Lite/${OHOS_ARCH}/lib/libpaddle_full_api_shared.a)
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/Paddle-Lite/${OHOS_ARCH}/lib/libpaddle_api_light_shared.a)
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/Paddle-Lite/${OHOS_ARCH}/lib/libpaddle_api_full_shared.a)
 
   #将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/Paddle-Lite/${OHOS_ARCH}/include)
