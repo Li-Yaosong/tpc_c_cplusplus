@@ -1,7 +1,7 @@
 # Contributor: Jeff Han <hanjinfei@foxmail.com>
 # Maintainer: Jeff Han <hanjinfei@foxmail.com>
 pkgname=libpng
-pkgver=1.6.39
+pkgver=v1.6.39
 pkgrel=0
 pkgdesc=""
 url=""
@@ -10,14 +10,16 @@ license=("PNG Reference Library License version 2")
 depends=()
 makedepends=()
 install=
-source="https://sourceforge.net/projects/$pkgname/files/libpng16/$pkgver/$pkgname-$pkgver.tar.xz"
+
+# 官方下载地址source="https://sourceforge.net/projects/$pkgname/files/libpng16/$pkgver/$pkgname-$pkgver.tar.xz"受网络影响可能存在下载失败的情况，现使用gitee镜像可以与官方仓库保持同步
+source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 
 autounpack=true
 downloadpackage=true
 buildtools="configure"
 
 builddir=$pkgname-${pkgver}
-packagename=$builddir.tar.xz
+packagename=$builddir.zip
 
 source envset.sh
 host=
