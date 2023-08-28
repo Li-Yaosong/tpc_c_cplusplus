@@ -49,7 +49,7 @@ prepare() {
         git  clone --depth 1 --branch 0.4 https://gitee.com/lycium_pkg_mirror/proxy-libintl.git $builddir/subprojects/proxy-libintl
 
         # 通过关键文件判断是否下载成功
-        if [ ! -f $builddir/subprojects/gvdb/messon.build ] || [ ! -f $builddir/subprojects/proxy-libintl/meson.build ];then
+        if [ ! -f $builddir/subprojects/gvdb/messon.build -o ! -f $builddir/subprojects/proxy-libintl/meson.build ];then
             return -1
         fi
         clonesubmodule=false
