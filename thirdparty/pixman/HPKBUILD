@@ -24,7 +24,7 @@ packagename=$builddir.zip
 source envset.sh
 host=
 
-firstflag=true
+autogenflag=true
 
 prepare() {
     mkdir -p $builddir/$ARCH-build
@@ -40,7 +40,7 @@ prepare() {
     fi
     export CFLAGS="$CFLAGS -munaligned-access"
 
-    if $firstflag
+    if $autogenflag
     then
         cd $builddir
         ./autogen.sh
