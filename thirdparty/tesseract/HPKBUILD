@@ -166,24 +166,24 @@ check() {
         rm tessdata-4.1.0.tar.gz
 
         # 原仓地址: https://codeload.github.com/tesseract-ocr/tessdata_best/tar.gz/refs/tags/4.1.0, 因网络原因使用镜像
-        wget -O tessdata_best-4.1.0.tar.gz -q -c https://gitee.com/mirrors_tesseract-ocr/tessdata_best/repository/archive/4.1.0.zip
+        wget -O tessdata_best-4.1.0.zip -q -c https://gitee.com/mirrors_tesseract-ocr/tessdata_best/repository/archive/4.1.0.zip
         if [ $? -ne 0 ];then
             return -1
         fi
-        tar -xvf tessdata_best-4.1.0.tar.gz 
+        unzip tessdata_best-4.1.0.zip
         rm -rf tessdata_best 
         mv tessdata_best-4.1.0 tessdata_best
-        rm tessdata_best-4.1.0.tar.gz
+        rm tessdata_best-4.1.0.zip
 
         # 原仓地址: https://codeload.github.com/tesseract-ocr/tessdata_fast/tar.gz/refs/tags/4.1.0, 因网络原因使用镜像
-        wget -O tessdata_fast-4.1.0.tar.gz -q -c https://gitee.com/mirrors_tesseract-ocr/tessdata_fast/repository/archive/4.1.0.zip
+        wget -O tessdata_fast-4.1.0.zip -q -c https://gitee.com/mirrors_tesseract-ocr/tessdata_fast/repository/archive/4.1.0.zip
         if [ $? -ne 0 ];then
             return -1
         fi
-        tar -xvf tessdata_fast-4.1.0.tar.gz
+        tar -xvf tessdata_fast-4.1.0.zip
         rm -rf tessdata_fast 
         mv tessdata_fast-4.1.0 tessdata_fast
-        rm tessdata_fast-4.1.0.tar.gz
+        rm tessdata_fast-4.1.0.zip
 
         wget -O langdata_lstm-main.zip -q -c https://codeload.github.com/tesseract-ocr/langdata_lstm/zip/refs/heads/main
         if [ $? -ne 0 ];then
