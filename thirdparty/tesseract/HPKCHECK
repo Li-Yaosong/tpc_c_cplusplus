@@ -39,7 +39,6 @@ openharmonycheck() {
 
     # 拷贝log,每个测试用例有独立的log文件
     if [ $res -ne 0 ];then
-        rm -rf ${LYCIUM_FAULT_PATH}/${pkgname}
         mkdir -p ${LYCIUM_FAULT_PATH}/${pkgname}
         for test in $(awk -F':' '/^FAIL:/ {print $2}' test-suite.log)
         do 
