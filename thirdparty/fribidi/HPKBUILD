@@ -30,7 +30,7 @@ autounpack=true
 downloadpackage=true
 buildtools="configure"
 
-builddir=$pkgname-${pkgver:1}
+builddir=$pkgname-$pkgver
 packagename=$builddir.zip
 
 source envset.sh
@@ -43,7 +43,8 @@ prepare() {
     # 编译c2man
     if $buildhostc2man
     then
-        curl -f -L https://github.com/fribidi/c2man/archive/refs/heads/master.zip -o c2man.zip
+        # 原仓地址: https://github.com/fribidi/c2man/archive/refs/heads/master.zip，因网络原因使用镜像
+        curl -f -L https://gitee.com/mirrors_fribidi/c2man/repository/archive/master.zip -o c2man.zip
         unzip c2man.zip > `pwd`/build.log 2>&1
         if [ $? != 0 ]
         then
