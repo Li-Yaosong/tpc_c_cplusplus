@@ -33,8 +33,21 @@ patchflag=true
 
 builddir=$pkgname-$pkgver
 packagename=$builddir.tar.xz
+pkgconfigpath=
 
 prepare() {
+    # 依赖库加入 pkg_config_path 路径
+    for depend in ${depends[@]}
+    do
+        dependpath=$LYCIUM_ROOT/usr/$depend/$ARCH/lib/pkgconfig
+        if [ ! -d ${dependpath} ]
+        then
+            continue
+        fi
+        pkgconfigpath=$pkgconfigpath"${dependpath}:"
+    done
+    pkgconfigpath=${pkgconfigpath%:*}
+
     if $patchflag
     then
         cd $builddir
@@ -55,7 +68,8 @@ build() {
     lycium_root_path=${LYCIUM_ROOT//\//\\\/}
     sed -i 's/lycium_root/'"$lycium_root_path"'/g' $ARCH-cross-file.txt
     # meson 过程会下载代码, 可能时间较久, 请保持网络通常
-    meson $ARCH-build --cross-file $ARCH-cross-file.txt --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH > $PKGBUILD_ROOT/$builddir/$ARCH-build/build.log 2>&1
+    meson $ARCH-build --cross-file $ARCH-cross-file.txt \
+        --pkg-config-path=$pkgconfigpath --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH > $PKGBUILD_ROOT/$builddir/$ARCH-build/build.log 2>&1
     ninja -v -C $ARCH-build >> $PKGBUILD_ROOT/$builddir/$ARCH-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
