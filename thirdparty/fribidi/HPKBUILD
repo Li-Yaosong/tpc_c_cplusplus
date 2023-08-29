@@ -44,12 +44,12 @@ prepare() {
     if $buildhostc2man
     then
         # 原仓地址: https://github.com/fribidi/c2man/archive/refs/heads/master.zip，因网络原因使用镜像
-        curl -f -L https://gitee.com/mirrors_fribidi/c2man/repository/archive/master.zip -o c2man.zip
-        unzip c2man.zip > `pwd`/build.log 2>&1
+        curl -f -L https://gitee.com/lycium_pkg_mirror/c2man/repository/archive/master.zip -o c2man.zip
         if [ $? != 0 ]
         then
             return -1
         fi
+        unzip c2man.zip > `pwd`/build.log 2>&1
         cd c2man-master
         ./Configure -d -e > `pwd`/build.log 2>&1
         make -j4 >> `pwd`/build.log 2>&1
