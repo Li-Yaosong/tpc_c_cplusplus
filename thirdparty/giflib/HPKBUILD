@@ -10,14 +10,15 @@ license=("1997  Eric S. Raymond")
 depends=()
 makedepends=()
 
-source="https://sourceforge.net/projects/$pkgname/files/$pkgname-$pkgver.tar.gz"
+# 原仓地址: https://sourceforge.net/projects/$pkgname/files/$pkgname-$pkgver.tar.gz, 因网络原因使用镜像地址
+source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver.zip"
 
 autounpack=true
 downloadpackage=true
 buildtools="make"
 
 builddir=$pkgname-$pkgver
-packagename=$builddir.tar.gz
+packagename=$builddir.zip
 patchflag=true
 
 cc=
