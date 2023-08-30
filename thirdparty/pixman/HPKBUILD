@@ -24,8 +24,6 @@ packagename=$builddir.zip
 source envset.sh
 host=
 
-autogenflag=true
-
 prepare() {
     mkdir -p $builddir/$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]
@@ -39,19 +37,12 @@ prepare() {
         host=aarch64-linux
     fi
     export CFLAGS="$CFLAGS -munaligned-access"
-
-    if $autogenflag
-    then
-        cd $builddir
-        ./autogen.sh
-        cd $OLDPWD
-    fi
 }
 
 build() {
     cd $builddir/$ARCH-build
     # 开启 simd neon 会导致编译失败
-    PKG_CONFIG_PATH="${pkgconfigpath}" ../configure "$@" --host=$host --enable-libpng --disable-silent-rules --disable-arm-simd --disable-arm-neon --disable-arm-a64-neon > `pwd`/build.log 2>&1
+    PKG_CONFIG_PATH="${pkgconfigpath}" ../autogen.sh "$@" --host=$host --enable-libpng --disable-silent-rules --disable-arm-simd --disable-arm-neon --disable-arm-a64-neon > `pwd`/build.log 2>&1
     make VERBOSE=1 -j4 >> `pwd`/build.log 2>&1
     ret=$?
     cd $OLDPWD
