@@ -22,7 +22,7 @@ url="https://github.com/libffi/libffi"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("GPL-2.0 license")
 depends=()
-makedepends=("automake")
+makedepends=("automake" "makeinfo") # makeinfo需要安装的是texinfo
 # 官方下载地址https://github.com/libffi/$pkgname/archive/refs/tags/$pkgver.tar.gz受网络影响可能存在下载失败的情况，现使用gitee镜像可以与官方仓库保持同步
 source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver.zip"
 buildtools="configure"
@@ -76,6 +76,7 @@ prepare() {
         fi 
         export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$prefixpath/lib
         export LIBTOOL=$prefixpath/bin/libtool
+        export LIBTOOLIZE=$prefixpath/bin/libtoolize
         export ACLOCAL_PATH=$prefixpath/share/aclocal
         libtoolbuild=false
         unset prefixpath
@@ -101,7 +102,7 @@ prepare() {
         genconfigure=false
         # 恢复环境变量
         export LD_LIBRARY_PATH=$oldlibpath
-        unset LIBTOOL ACLOCAL_PATH AUTOCONF AUTORECONF
+        unset LIBTOOL LIBTOOLIZE ACLOCAL_PATH AUTOCONF AUTORECONF
         cd $OLDPWD
     fi
     if [ $ARCH == "armeabi-v7a" ];then
