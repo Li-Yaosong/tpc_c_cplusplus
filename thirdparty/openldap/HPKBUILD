@@ -12,17 +12,43 @@ makedepends=()
 
 source="https://mirror-hk.koddos.net/OpenLDAP/$pkgname-release/$pkgname-$pkgver.tgz"
 
-autounpack=true
-downloadpackage=true
+autounpack=false
+downloadpackage=false
 buildtools="configure"
 patchflag=true
 
 builddir=$pkgname-${pkgver}
 packagename=$builddir.tgz
 
+downloadsouce=true
+ispackageunzip=true
+
 source envset.sh
 host=
 prepare() {
+    if [ -s $packagename ]; then
+        if $ispackageunzip; then
+            ispackageunzip=false
+            echo $packagename"，存在"
+            tar -xvf $packagename > /dev/null
+        fi
+    else
+        # 本地无法验证官网的CA证书，导致本地不能下载，这里使用不校验的方式下载源码包
+        if $downloadsouce; then
+            res=0
+            curl -f -L -k $source > $packagename
+            res=$?
+
+            if [ $res -ne 0 ]; then
+                echo "download $source fail"
+                return $res
+            fi
+            tar -xvf $packagename > /dev/null
+            ispackageunzip=false
+            downloadsouce=false
+        fi
+    fi
+
     if $patchflag
     then
         cd $builddir
