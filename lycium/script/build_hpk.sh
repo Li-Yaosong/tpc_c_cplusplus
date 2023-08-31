@@ -25,7 +25,7 @@ download() {
     then
         echo ${PWD}/$2"，存在"
     else
-        curl -f -L -- "$1" > ${PWD}/$2
+        curl -f -L -k -- "$1" > ${PWD}/$2
         return $?
     fi
 }
