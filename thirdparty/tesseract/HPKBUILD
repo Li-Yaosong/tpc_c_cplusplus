@@ -37,7 +37,7 @@ packagename=$pkgname-$pkgver.zip
 source envset.sh
 host=
 downloadsubmodules=true
-downloadtest=false
+downloadtest=true
 
 # 准备三方代码
 repos=(
@@ -115,7 +115,7 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ../configure "$@" \
+    PKG_CONFIG_PATH="${pkgconfigpath}" ../configure "$@" \
         --srcdir=`pwd`/../ \
         --host=$host \
         --with-curl \
@@ -142,7 +142,6 @@ check() {
         cp $OHOS_SDK/native/llvm/lib/arm-linux-ohos/libc++_shared.so $builddir/$ARCH-build/
     elif [ $ARCH == "arm64-v8a" ];then
         cp $OHOS_SDK/native/llvm/lib/aarch64-linux-ohos/libc++_shared.so $builddir/$ARCH-build/
-        downloadtest=true
     else
         echo "$ARCH not support!"
     fi
@@ -150,6 +149,7 @@ check() {
     cd $builddir/$ARCH-build
     make check VERBOSE=1 >> `pwd`/build.log 2>&1
     # 注释掉一些依赖，让测试在板端跳过编译
+    cp Makefile Makefile2
     sed -i '/\($(srcdir)\/Makefile.in:\)/,/\($(am__aclocal_m4_deps):\)/{s/^/#/}' Makefile
     sed -i 's/\([a-zA-Z_]\.log:\)/\1 #/' Makefile
     sed -i 's/\(check-TESTS:\)/\1 #/' Makefile
@@ -157,15 +157,14 @@ check() {
 
     # 下载测试资源
     if [ $downloadtest == true ];then
-        # 在测试环境解压
-        wget -O tessdata-4.1.0.tar.gz -q -c -T 300 -t 3 https://codeload.github.com/tesseract-ocr/tessdata/tar.gz/refs/tags/4.1.0 &
-        # if [ $? -ne 0 ];then
-        #     return -1
-        # fi
-        # tar -xvf tessdata-4.1.0.tar.gz
-        # rm -rf tessdata 
-        # mv tessdata-4.1.0 tessdata
-        # rm tessdata-4.1.0.tar.gz
+        wget -O tessdata-4.1.0.tar.gz -q -c https://codeload.github.com/tesseract-ocr/tessdata/tar.gz/refs/tags/4.1.0
+        if [ $? -ne 0 ];then
+            return -1
+        fi
+        tar -xvf tessdata-4.1.0.tar.gz
+        rm -rf tessdata 
+        mv tessdata-4.1.0 tessdata
+        rm tessdata-4.1.0.tar.gz
 
         # 原仓地址: https://codeload.github.com/tesseract-ocr/tessdata_best/tar.gz/refs/tags/4.1.0, 因网络原因使用镜像
         wget -O tessdata_best-4.1.0.zip -q -c https://gitee.com/mirrors_tesseract-ocr/tessdata_best/repository/archive/4.1.0.zip
@@ -175,8 +174,7 @@ check() {
         unzip tessdata_best-4.1.0.zip
         rm -rf tessdata_best 
         mv tessdata_best-4.1.0 tessdata_best
-        rm tessdata_best-4.1.0.zip
-
+        rm tessdata_best-4.1.0.z
         # 原仓地址: https://codeload.github.com/tesseract-ocr/tessdata_fast/tar.gz/refs/tags/4.1.0, 因网络原因使用镜像
         wget -O tessdata_fast-4.1.0.zip -q -c https://gitee.com/mirrors_tesseract-ocr/tessdata_fast/repository/archive/4.1.0.zip
         if [ $? -ne 0 ];then
@@ -187,15 +185,14 @@ check() {
         mv tessdata_fast-4.1.0 tessdata_fast
         rm tessdata_fast-4.1.0.zip
 
-        # 在测试环境解压
-        wget -O langdata_lstm-main.zip -q -c -T 300 -t 3 https://codeload.github.com/tesseract-ocr/langdata_lstm/zip/refs/heads/main &
-        # if [ $? -ne 0 ];then
-        #     return -1
-        # fi
-        # unzip langdata_lstm-main.zip
-        # rm -rf langdata_lstm
-        # mv langdata_lstm-main langdata_lstm
-        # rm langdata_lstm-main.zip
+        wget -O langdata_lstm-main.zip -q -c https://codeload.github.com/tesseract-ocr/langdata_lstm/zip/refs/heads/main
+        if [ $? -ne 0 ];then
+            return -1
+        fi
+        unzip langdata_lstm-main.zip
+        rm -rf langdata_lstm
+        mv langdata_lstm-main langdata_lstm
+        rm langdata_lstm-main.zip
 
         downloadtest=false
     fi
