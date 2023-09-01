@@ -18,21 +18,6 @@ source HPKBUILD > /dev/null 2>&1    # 导入HPKBUILD文件
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
 checkprepare() {
-    if [ ! -f tessdata-4.1.0.tar.gz ];then
-        return -1
-    fi
-    rm -rf tessdata 
-    tar -xvf tessdata-4.1.0.tar.gz
-    mv tessdata-4.1.0 tessdata
-    rm tessdata-4.1.0.tar.gz
-    if [ ! -f langdata_lstm-main.zip ];then
-        return -1
-    fi
-    rm -rf langdata_lstm
-    busybox unzip langdata_lstm-main.zip
-    mv langdata_lstm-main langdata_lstm
-    rm langdata_lstm-main.zip
-    
     # libc++_shared.so 的路径加入环境变量
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:`pwd`/$builddir/$ARCH-build
     export TESSDATA_PREFIX=`pwd`/$builddir/$ARCH-build/
