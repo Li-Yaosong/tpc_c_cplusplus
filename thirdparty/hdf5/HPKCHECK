@@ -23,6 +23,8 @@ openharmonycheck() {
     # 该export是必选项，因为要链接本地bin文件
     export LD_LIBRARY_PATH=$LYCIUM_THIRDPARTY_ROOT/$pkgname/$pkgname-$pkgver/$ARCH-build/bin/:$LD_LIBRARY_PATH
     # 创建软链接
+    mv /tmp /data/tmp/
+    ln -s /data/tmp /tmp
     mkdir -p /usr/local/bin
     ln -s /usr/bin/cmake /usr/local/bin
     mkdir -p /usr/local/share
