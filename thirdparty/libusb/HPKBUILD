@@ -1,0 +1,86 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: huangminzhong <huangminzhong2@huawei.com>
+# Maintainer:  huangminzhong <huangminzhong2@huawei.com>
+
+pkgname=libusb
+pkgver=v1.0.26
+pkgrel=0
+pkgdesc="A cross-platform library to access USB devices"
+url="https://github.com/libusb/libusb"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("GNU Lesser General Public License v2.1")
+depends=()
+makedepends=()
+source="https://gitee.com/mirrors/${pkgname}/repository/archive/${pkgver}.zip"
+
+autounpack=true
+downloadpackage=true
+buildtools="configure"
+
+builddir=${pkgname}-${pkgver}
+packagename=$builddir.zip
+
+source envset.sh
+host=
+prepare() {
+    cp -arf $builddir $builddir-$ARCH-build
+    if [ $ARCH == ${archs[0]} ]
+    then
+        setarm32ENV
+        host=arm-linux
+    fi
+    if [ $ARCH == ${archs[1]} ]
+    then
+        setarm64ENV
+        host=aarch64-linux
+    fi
+    cd $builddir-$ARCH-build
+    autoreconf -ifv > `pwd`/build.log 2>&1
+    cd $OLDPWD
+}
+
+build() {
+    cd $builddir-$ARCH-build
+    ./configure "$@" --host=$host --disable-udev --enable-tests-build >> `pwd`/build.log 2>&1
+    make -j16 >> `pwd`/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir-$ARCH-build
+    make install >> `pwd`/build.log 2>&1
+    cd $OLDPWD
+    if [ $ARCH == ${archs[0]} ]
+    then
+        unsetarm32ENV
+    fi
+    if [ $ARCH == ${archs[1]} ]
+    then
+        unsetarm64ENV
+    fi
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # 进入到tests目录执行
+    # ./stress
+}
+
+# 清理环境
+cleanbuild(){
+    rm -rf ${PWD}/$builddir ${PWD}/$builddir-${archs[0]}-build ${PWD}/$builddir-${archs[1]}-build #${PWD}/$packagename
+}
