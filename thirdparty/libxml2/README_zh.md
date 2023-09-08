@@ -1,6 +1,6 @@
 # libxml2三方库说明
 ## 功能简介
-libxml2 是一个XML格式解析库。
+libxml2是一个用于解析XML文档的C语言库。它提供了一组API，可以用于读取、修改和创建XML文档
 ## 使用约束
 - IDE版本：DevEco Studio 3.1 Release
 - SDK版本：ohos_sdk_public 4.0.8.1 (API Version 10 Release)
