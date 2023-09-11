@@ -14,9 +14,6 @@ sure() {
 
 PKGBUILD_ROOT=$(cd $(dirname ${BASH_SOURCE[0]}); pwd)
 
-# 加载库信息
-source ${PWD}/HPKBUILD
-
 # 下载库压缩包
 # 参数1 链接地址
 # 参数2 压缩包名
@@ -30,18 +27,6 @@ download() {
     fi
 }
 
-# 库的完整性校验
-checksum() {
-    sha512sum -c ${PWD}/$1
-    ret=$?
-    if [ $ret -ne 0 ]
-    then
-        echo "$pkgname SHA512SUM 校验失败, 请确认 SHA512SUM 无误后, 重新编译."
-        rm -rf $packagename
-        exit $ret
-    fi
-}
-
 # 解压库
 # 参数1 压缩包名
 unpack() {
@@ -49,24 +34,19 @@ unpack() {
     then
         if [[ "$1" == *.tar.gz ]]
         then
-            echo ${PWD}/$1
             tar -zxvf ${PWD}/$1 > /dev/null
         elif [[ "$1" == *.tgz ]]
         then
-            echo ${PWD}/$1
             tar -zxvf ${PWD}/$1 > /dev/null
         
         elif [[ "$1" == *.tar.xz ]]
         then
-            echo ${PWD}/$1
             tar -xvJf ${PWD}/$1 > /dev/null
         elif [[ "$1" == *.tar.bz2 ]]
         then
-            echo ${PWD}/$1
             tar -xvjf ${PWD}/$1 > /dev/null
         elif [[ "$1" == *.zip ]]
         then
-            echo ${PWD}/$1
             unzip ${PWD}/$1 > /dev/null
         else
             echo "ERROR Package Format!"
@@ -75,6 +55,21 @@ unpack() {
     else
         echo "ERROR Package Not Found!"
         exit 2
+    fi
+}
+
+# 加载库信息
+source ${PWD}/HPKBUILD
+
+# 库的完整性校验
+checksum() {
+    sha512sum -c ${PWD}/$1
+    ret=$?
+    if [ $ret -ne 0 ]
+    then
+        echo "$pkg2name SHA512SUM 校验失败, 请确认 SHA512SUM 无误后, 重新编译."
+        rm -rf $packagename
+        exit $ret
     fi
 }
 
@@ -117,7 +112,7 @@ recordbuildlibs() {
 buildargs=
 pkgconfigpath=
 cmakedependpath() { # 参数1为cpu type
-    buildargs="-DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_RPATH=ON -DCMAKE_SKIP_INSTALL_RPATH=ON -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$LYCIUM_ROOT/usr/$pkgname/$1 -G \"Unix Makefiles\" -DOHOS_ARCH=$1 "
+    buildargs="-LH -DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_RPATH=ON -DCMAKE_SKIP_INSTALL_RPATH=ON -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$LYCIUM_ROOT/usr/$pkgname/$1 -G \"Unix Makefiles\" -DOHOS_ARCH=$1 "
     pkgconfigpath=""
     if [ ${#depends[@]} -ne 0 ] 
     then
@@ -167,8 +162,6 @@ checkmakedepends() {
         then
             echo "请先安装 $makedepend 命令, 才可以编译 $1"
             ismakedependready=false
-        else
-            echo "$makedepend 已安装"
         fi
     done
     if ! $ismakedependready
@@ -229,6 +222,11 @@ builpackage() {
         if $LYCIUM_BUILD_CHECK
         then
             sure check
+        fi
+        f=`type -t recoverpkgbuildenv`
+        if [ "x$f" = "xfunction" ]
+        then
+            sure recoverpkgbuildenv
         fi
         sure recordbuildlibs $ARCH $pkgname $pkgver
     done
