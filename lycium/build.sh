@@ -23,6 +23,10 @@ fi
 export LYCIUM_BUILD_CHECK=$buildcheckflag
 export LYCIUM_BUILD_OS=$osname
 export LYCIUM_ROOT=$LYCIUM_ROOT
+
+export MAKE="make -j32"
+export NINJA="ninja -j32"
+
 if [ -z ${OHOS_SDK} ]
 then
     echo "OHOS_SDK 未设置, 请先下载安装ohos SDK, 并设置OHOS_SDK环境变量. "
@@ -54,48 +58,18 @@ done
 hpksdir="../thirdparty/" # 所有 hpk 项目存放的目录
 
 checkbuildenv() {
-    which gcc >/dev/null 2>&1
-    if [ $? -ne 0 ]
-    then
-        echo "gcc 命令未安装, 请先安装 gcc 命令"
-        exit 1
-    fi
-    echo "gcc 命令已安装"
-    which cmake >/dev/null 2>&1
-    if [ $? -ne 0 ]
-    then
-        echo "cmake 命令未安装, 请先安装 cmake 命令"
-        exit 1
-    fi
-    echo "cmake 命令已安装"
-    which make >/dev/null 2>&1
-    if [ $? -ne 0 ]
-    then
-        echo "make 命令未安装. 请先安装 make 命令"
-        exit 1
-    fi
-    echo "make 命令已安装"
-    which pkg-config >/dev/null 2>&1
-    if [ $? -ne 0 ]
-    then
-        echo "pkg-config 命令未安装, 请先安装 pkg-config 命令"
-        exit 1
-    fi
-    echo "pkg-config 命令已安装"
-    which autoreconf >/dev/null 2>&1
-    if [ $? -ne 0 ]
-    then
-        echo "autoreconf 命令未安装, 请先安装 autoreconf 命令"
-        exit 1
-    fi
-    echo "autoreconf 命令已安装"
-    which patch >/dev/null 2>&1
-    if [ $? -ne 0 ]
-    then
-        echo "patch 命令未安装, 请先安装 patch 命令"
-        exit 1
-    fi
-    echo "patch 命令已安装"
+    cmdlist=("gcc" "cmake" "make" "pkg-config" "autoconf" "autoreconf" "automake" \
+             "patch" "unzip" "tar" "git" "ninja" "curl" "sha512sum")
+    for cmd in ${cmdlist[@]}
+    do
+        which $cmd >/dev/null 2>&1
+        if [ $? -ne 0 ]
+        then
+            echo "$cmd 命令未安装, 请先安装 $cmd 命令"
+            exit 1
+        fi
+    done
+
     if [ ! -d $LYCIUM_ROOT/usr ]
     then
         echo "创建 $LYCIUM_ROOT/usr 目录"
