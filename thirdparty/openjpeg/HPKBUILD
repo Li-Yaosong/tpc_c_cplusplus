@@ -12,7 +12,7 @@
 # limitations under the License.
 
 # Contributor: liulihong <llh_01129@163.com>    modify : lpzhong <278527840@qq.com>
-# Maintainer: liulihong <llh_01129@163.com>     modify : lpzhong <278527840@qq.com>
+# Maintainer: liulihong <llh_01129@163.com>
 
 pkgname=openjpeg
 pkgver=v2.5.0
