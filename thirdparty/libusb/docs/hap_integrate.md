@@ -17,7 +17,7 @@
 - 三方库目录结构
 
   ```shell
-  tpc_c_cplusplus/thirdparty/libusb     #三方库FFmpeg的目录结构如下
+  tpc_c_cplusplus/thirdparty/libusb     #三方库libusb的目录结构如下
   ├── docs                              #三方库相关文档的文件夹
   ├── HPKBUILD                          #构建脚本
   ├── HPKCHECK                          #测试脚本
