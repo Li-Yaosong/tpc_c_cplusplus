@@ -43,7 +43,7 @@ prepare() {
 build() {
     cd $builddir
     # -DCMAKE_C_FLAGS="-ffp-contract=off" 禁用 floating-point expression contraction.否则会因为浮点精度问题造成测试用例失败。
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DBUILD_UNIT_TESTS=ON -DBUILD_TESTING=ON \
+    PKG_CONFIG_LIBDIR="" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DBUILD_UNIT_TESTS=ON -DBUILD_TESTING=ON \
     -DOPJ_DATA_ROOT=${PKGBUILD_ROOT}/openjpeg-data -DCMAKE_C_FLAGS="-ffp-contract=off" -B$ARCH-build -S./ \
     > $buildlog 2>&1
     $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
