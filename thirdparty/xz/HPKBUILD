@@ -29,34 +29,71 @@ source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver.
 
 autounpack=true
 downloadpackage=true
+buildtools="configure"
 
 builddir=$pkgname-${pkgver}
 packagename=$builddir.zip
 
+source envset.sh
+host=
+autogenflags=true
+
 prepare() {
     mkdir -p $builddir/$ARCH-build
-    cd "$builddir"
-
-    cd $OLDPWD # 1> /dev/null
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        setarm32ENV
+        host=arm-linux
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        setarm64ENV
+        host=aarch64-linux
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
+    if $autogenflags
+    then
+        cd $builddir
+        ./autogen.sh > $publicbuildlog 2>&1
+        cd ${OLDPWD}
+    fi
 }
 
 build() {
-    cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $builddir/$ARCH-build
+    ../configure "$@" --host=$host --disable-xzdec --disable-lzmadec \
+        --disable-xz  --disable-lzmainfo > $buildlog 2>&1
+    $MAKE >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
 }
 
 package() {
-    cd "$builddir"
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $builddir/$ARCH-build
+    $MAKE install >> $buildlog 2>&1
+    ret=$?
     cd $OLDPWD
+    return $ret
 }
 
 check() {
     echo "The test must be on an OpenHarmony device!"
+}
+
+recoverpkgbuildenv() {
+    unset host
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        unsetarm32ENV
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        unsetarm64ENV
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
 }
 
 # 清理环境
