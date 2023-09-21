@@ -36,6 +36,19 @@ packagename=$builddir.zip
 
 source envset.sh
 host=
+
+fix_test() {
+    #设备版本4.0.0.13测试ok,
+    #rk3568 3.2release测试ok，
+    #设备4.0.0.52,测试失败，
+    #系统api不太稳定，如下几个测试用例先关闭
+    sed -i 's/ccthin2_reg//g'  prog/Makefile.am
+    sed -i 's/ioformats_reg//g'  prog/Makefile.am
+    sed -i 's/jp2kio_reg//g'  prog/Makefile.am
+    sed -i 's/pnmio_reg//g'  prog/Makefile.am
+    sed -i 's/pixcomp_reg//g'  prog/Makefile.am
+}
+
 prepare() {
     cp -rf $builddir $builddir-$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]
@@ -49,6 +62,7 @@ prepare() {
         host=aarch64-linux
     fi
     cd $builddir-$ARCH-build
+    fix_test
     ./autogen.sh -i > `pwd`/build.log 2>&1
     cd $OLDPWD
 }
@@ -238,5 +252,5 @@ check() {
 
 # 清理环境
 cleanbuild(){
-    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+    rm -rf ${PWD}/$builddir $builddir-armeabi-v7a-build $builddir-arm64-v8a-build  #${PWD}/$packagename
 }
