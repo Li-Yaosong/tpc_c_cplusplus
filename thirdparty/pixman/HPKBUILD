@@ -10,14 +10,16 @@ license=("MIT")
 depends=("libpng")
 makedepends=()
 
-source="https://www.cairographics.org/releases/$pkgname-$pkgver.tar.gz"
+unpkgname=Pixman
+# 官方下载地址source="https://www.cairographics.org/releases/$pkgname-$pkgver.tar.gz"受网络影响可能存在下载失败的情况，现使用gitee镜像可以与官方仓库保持同步
+source="https://gitee.com/mirrors/$unpkgname/repository/archive/$pkgname-$pkgver.zip"
 
 autounpack=true
 downloadpackage=true
 buildtools="configure"
 
-builddir=$pkgname-${pkgver}
-packagename=$builddir.tar.gz
+builddir=$unpkgname-$pkgname-${pkgver}
+packagename=$builddir.zip
 
 source envset.sh
 host=
@@ -40,7 +42,7 @@ prepare() {
 build() {
     cd $builddir/$ARCH-build
     # 开启 simd neon 会导致编译失败
-    PKG_CONFIG_PATH="${pkgconfigpath}" ../configure "$@" --host=$host --enable-libpng --disable-silent-rules --disable-arm-simd --disable-arm-neon --disable-arm-a64-neon > `pwd`/build.log 2>&1
+    PKG_CONFIG_PATH="${pkgconfigpath}" ../autogen.sh "$@" --host=$host --enable-libpng --disable-silent-rules --disable-arm-simd --disable-arm-neon --disable-arm-a64-neon > `pwd`/build.log 2>&1
     make VERBOSE=1 -j4 >> `pwd`/build.log 2>&1
     ret=$?
     cd $OLDPWD

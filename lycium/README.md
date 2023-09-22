@@ -4,14 +4,14 @@
 
 ## 使用
 
-执行脚本build.sh,自动编译main目录下的所有开源库，并打包安装到 usr\/\$pkgname-$ARCH-install 目录
+执行脚本build.sh,自动编译thridparty目录下的所有开源库，并打包安装到 usr\/\$pkgname/$ARCH 目录
 
 ```shell
-    ./build.sh # 默认编译 main 目录下的多有库
+    ./build.sh # 默认编译 thirdparty 目录下的多有库
 ```
 
 ```shell
-    ./build.sh aaa bbb ccc ... # 编译 main 目录下指定的 aaa bbb ccc ...库 当 aaa 库存在依赖时，必须保证入参中包含依赖，否则 aaa 库不会编译
+    ./build.sh aaa bbb ccc ... # 编译 thirdparty 目录下指定的 aaa bbb ccc ...库 当 aaa 库存在依赖时，必须保证入参中包含依赖，否则 aaa 库不会编译
 ```
 
 ## 原则
@@ -48,11 +48,9 @@
 
 Buildtools: 存放编译环境准备说明
 
-main: 被移植构建的库信息存放的目录
-
 script: 项目依赖的脚本
 
-template: main 目录中库的构建模板
+template: thirdparty 目录中库的构建模板
 
 build.sh: 顶层构建脚本
 

@@ -11,7 +11,6 @@
 - API版本：
 - 三方库版本：
 - 当前适配的功能：完成了xxx功能的适配
-- [License:xxx](./README_zh.md)（链接指向源三方库中的license）
 
 ## 集成方式
 

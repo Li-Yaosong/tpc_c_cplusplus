@@ -1,5 +1,19 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # Contributor: 小肉头君 <chenbaodi@huawei.com>
 # Maintainer: 小肉头君 <chenbaodi@huawei.com>
+
 pkgname=fribidi
 pkgver=v1.0.12
 pkgrel=0
@@ -9,14 +23,15 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("LGPL-2.1 license")
 depends=()
 makedepends=("unzip")
-source="https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+# 原仓地址: https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用镜像
+source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 
 autounpack=true
 downloadpackage=true
 buildtools="configure"
 
-builddir=$pkgname-${pkgver:1}
-packagename=$builddir.tar.gz
+builddir=$pkgname-$pkgver
+packagename=$builddir.zip
 
 source envset.sh
 autogenflag=true
@@ -28,12 +43,13 @@ prepare() {
     # 编译c2man
     if $buildhostc2man
     then
-        curl -f -L https://github.com/fribidi/c2man/archive/refs/heads/master.zip -o c2man.zip
-        unzip c2man.zip > `pwd`/build.log 2>&1
+        # 原仓地址: https://github.com/fribidi/c2man/archive/refs/heads/master.zip，因网络原因使用镜像
+        curl -f -L https://gitee.com/lycium_pkg_mirror/c2man/repository/archive/master.zip -o c2man.zip
         if [ $? != 0 ]
         then
             return -1
         fi
+        unzip c2man.zip > `pwd`/build.log 2>&1
         cd c2man-master
         ./Configure -d -e > `pwd`/build.log 2>&1
         make -j4 >> `pwd`/build.log 2>&1

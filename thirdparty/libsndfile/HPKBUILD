@@ -10,12 +10,13 @@ license=("LGPLv2.1")
 depends=()
 makedepends=()
 
-source="https://github.com/libsndfile/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+# 官方下载地址https://github.com/libsndfile/$pkgname/archive/refs/tags/$pkgver.tar.gz受网络影响可能存在下载失败的情况，现使用gitee镜像可以与官方仓库保持同步
+source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 autounpack=true
 downloadpackage=true
 buildtools="cmake"
 builddir=$pkgname-${pkgver}
-packagename=$builddir.tar.gz
+packagename=$builddir.zip
 
 prepare() {
     mkdir -p $builddir/$ARCH-build

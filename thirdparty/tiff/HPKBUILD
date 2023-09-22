@@ -1,7 +1,21 @@
-# Contributor: Jeff Han <hanjinfei@foxmail.com>
-# Maintainer: Jeff Han <hanjinfei@foxmail.com>, chengkan <kanchengc@isoftstone.com>
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: Jeff Han <hanjinfei@foxmail.com>, chengkan <kanchengc@isoftstone.com>, 城meto <myxuan475@126.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
+
 pkgname=tiff
-pkgver=4.5.0
+pkgver=v4.5.0
 pkgrel=0
 pkgdesc=""
 url=""
@@ -10,13 +24,14 @@ license="LibTIFF license"
 depends=("zstd" "libjpeg-turbo" "xz" "libwebp" "libdeflate" "jbigkit") # TODO LERC 循环依赖：libwebp 与 tiff 互相依赖, 这里为了不阻塞自动化构建，采用 libwebp 不依赖 tiff，tiff 依赖 libwebp
 makedepends=()
 
-source="http://download.osgeo.org/libtiff/$pkgname-$pkgver.tar.xz"
+# 原仓地址: http://download.osgeo.org/libtiff/$pkgname-$pkgver.tar.xz, 因网络原因使用镜像地址
+source="https://gitee.com/mirrors/lib$pkgname/repository/archive/$pkgver.zip"
 
 autounpack=true
 downloadpackage=true
 
-builddir=$pkgname-${pkgver}
-packagename=$builddir.tar.xz
+builddir=lib$pkgname-$pkgver
+packagename=$builddir.zip
 
 prepare() {
     mkdir -p $builddir/$ARCH-build

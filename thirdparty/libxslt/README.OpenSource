@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libxslt",
+        "License": "MIT license",
+        "License File": "https://gitlab.gnome.org/GNOME/libxslt/-/wikis/home",
+        "Version Number": "1.1.38",
+        "Owner": "kanchengc@isoftstone.com",
+        "Upstream URL": "https://download.gnome.org/sources/libxslt/1.1/libxslt-1.1.38.tar.xz",
+        "Description": "libxslt itself is a an XML language to define transformation for XML."
+    }
+]

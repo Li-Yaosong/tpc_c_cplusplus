@@ -8,7 +8,7 @@ pkgdesc="Apache Avro is a data serialization system."
 url="https://github.com/apache/avro"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("Apache-2.0 license")
-depends=("boost" "snappy")
+depends=("zlib" "boost" "snappy")
 makedepends=()
 source="https://github.com/apache/avro/archive/refs/tags/$pkgver.tar.gz"
 
@@ -45,6 +45,7 @@ build() {
     # 编译avro c++的版本
     cd $builddir
     PKG_CONFIG_PATH="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+        -DCMAKE_CXX_FLAGS="${LYCIUM_ROOT}/usr/zlib/${ARCH}/lib/libz.a" \
         -DAVROGENCPPCMD=$(pwd)/host-build/avrogencpp -DOHOS_ARCH=$ARCH -B$ARCH-build \
         -Slang/c++ -L  > `pwd`/$ARCH-build/build.log 2>&1
     make -j4 -C $ARCH-build VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1

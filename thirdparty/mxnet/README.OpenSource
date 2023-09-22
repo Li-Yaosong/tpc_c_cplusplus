@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "mxnet",
+        "License": "Apache-2.0 license",
+        "License File": "https://github.com/apache/incubator-mxnet/blob/master/LICENSE",
+        "Version Number": "1.9.1",
+        "Owner": "357489213@qq.com",
+        "Upstream URL": "https://mxnet.apache.org/versions/master/",
+        "Description": "Apache MXNet is a deep learning framework designed for both efficiency and flexibility."
+    }
+]

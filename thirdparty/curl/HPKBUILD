@@ -1,23 +1,38 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # Contributor: Jeff Han <hanjinfei@foxmail.com>
 # Maintainer: Jeff Han <hanjinfei@foxmail.com>
+
 pkgname=curl
 pkgver=curl-8_0_1
 pkgrel=0
-pkgdesc=""
-url=""
+pkgdesc="A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS. libcurl offers a myriad of powerful features"
+url="https://curl.se/"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD/ISC/curl")
 depends=("openssl" "zstd" "nghttp2") # QUICHE/WEBSOCKETS
 makedepends=()
 
-source="https://github.com/curl/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+# 官方下载地址: https://github.com/curl/$pkgname/archive/refs/tags/$pkgver.tar.gz，因网络原因采用gitee mirrors
+source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 
 autounpack=true
 downloadpackage=true
 patchflag=true
 
 builddir=$pkgname-${pkgver}
-packagename=$builddir.tar.gz
+packagename=$builddir.zip
 
 prepare() {
     if $patchflag
