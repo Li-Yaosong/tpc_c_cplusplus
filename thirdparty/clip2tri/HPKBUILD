@@ -17,7 +17,7 @@
 pkgname=clip2tri
 pkgver=f62a734d22733814b8a970ed8a68a4d94c24fa5f
 pkgrel=0
-pkgdesc=""
+pkgdesc="Using clipper and poly2tri together for robust triangulation"
 url="https://github.com/raptor/clip2tri"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("The MIT License")
@@ -36,8 +36,18 @@ prepare() {
     if [ "$download_and_patch_flag" == true ]
     then
         git clone $source $builddir
+	ret=$?
+	if [ $ret -ne 0 ]
+        then
+          echo "git clone failed!" >> $buildlog
+        fi
         cd $builddir
         git reset --hard $pkgver
+	ret=$?
+	if [ $ret -ne 0 ]
+        then
+          echo "git reset failed!" >> $buildlog
+        fi
 	patch -p1 < ../clip2tri.patch 
         cd $OLDPWD
         download_and_patch_flag=false
@@ -47,8 +57,8 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -B$ARCH-build -S./ > $buildlog 2>&1
+    $MAKE -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -56,7 +66,7 @@ build() {
 
 package() {
     cd $builddir
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    $MAKE -C $ARCH-build install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
