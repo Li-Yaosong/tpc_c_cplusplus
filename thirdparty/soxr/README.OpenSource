@@ -1,7 +1,7 @@
 [
     {
         "Name": "soxr",
-        "License": "LGPLv2 license",
+        "License": "LGPL v2.1 or later",
         "License File": "https://sourceforge.net/p/soxr/code/ci/0.1.3/tree/LICENCE",
         "Version Number": "0.1.3",
         "Owner": "sttangc@isoftstone.com",
