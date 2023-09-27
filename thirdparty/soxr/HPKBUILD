@@ -7,7 +7,7 @@ pkgrel=0
 pkgdesc="The SoX Resampler library 'libsoxr' performs one-dimensional sample-rate conversion—it may be used, for example, to resample PCM-encoded audio."
 url="https://sourceforge.net/projects/soxr/"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("LGPLv2")
+license=("LGPL v2.1 or later")
 depends=()
 makedepends=()
 
