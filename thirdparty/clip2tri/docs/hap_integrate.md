@@ -24,7 +24,7 @@
   ├── SHA512SUM                         #三方库校验文件
   ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
   ├── README_zh.md   
-  ├── clip2tri.patch
+  ├── clip2tri_ohos_test.patch
   ```
 
 - 在lycium目录下编译三方库
