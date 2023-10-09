@@ -25,7 +25,7 @@ export LYCIUM_BUILD_OS=$osname
 export LYCIUM_ROOT=$LYCIUM_ROOT
 
 export MAKE="make -j32"
-export NINJA="ninja -j32"
+export Ninja="ninja -j32"
 
 if [ -z ${OHOS_SDK} ]
 then
