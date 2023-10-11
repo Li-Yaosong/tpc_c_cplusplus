@@ -1,0 +1,56 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# This project is dual licensed under the Eclipse Public License 2.0 and the
+# Eclipse Distribution License 1.0 as described in the epl-v20 and edl-v10 files.
+
+# Contributor: Jeff Han <hanjinfei@foxmail.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
+
+pkgname=paho.mqtt.c
+pkgver=v1.3.12
+pkgrel=0
+pkgdesc="Eclipse Paho C Client Library for the MQTT Protocol"
+url="https://github.com/eclipse/paho.mqtt.c"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("Eclipse Public License 2.0 & Eclipse Distribution License 1.0")
+depends=("openssl")
+makedepends=()
+
+# 官方下载地址"https://github.com/mirrors/$pkgname/repository/archive/$pkgver.zip"受网络影响可能存在下载失败的情况，现使用gitee镜像可以与官方仓库保持同步
+source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
+
+autounpack=true
+downloadpackage=true
+buildtools="cmake"
+builddir=$pkgname-${pkgver}
+packagename=$builddir.zip
+
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+}
+
+#参数1
+build() {
+  cd $builddir
+    PKG_CONFIG_PATH="${pkgconfigpath}" cmake "$@" -DMZ_BUILD_TESTS=ON -DMZ_BUILD_UNIT_TESTS=ON -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
+    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd "$builddir"
+    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # real test cmd
+    # ctest
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}

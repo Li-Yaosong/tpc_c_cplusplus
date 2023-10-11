@@ -123,4 +123,5 @@
 | [libusb](../thirdparty/libusb/README_zh.md)                  |
 | [bzip2](../thirdparty/bzip2/README_zh.md)                    |
 | [GmSSL](../thirdparty/GmSSL/README_zh.md)                    |
+| [paho.mqtt.c](../thirdparty/paho.mqtt.c/README_zh.md)        |
 

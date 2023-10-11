@@ -1,0 +1,10 @@
+[
+    {
+        "Name": "paho.mqtt.c",
+        "License": "Eclipse Public License - v 2.0",
+        "License File": "LICENSE",
+        "Version Number": "paho.mqtt.c-v1.3.12",
+        "Upstream URL": "https://github.com/eclipse/paho.mqtt.c/archive/refs/tags/v1.3.12.zip",
+        "Description": "This repository contains the source code for the Eclipse Paho MQTT C client library."
+    }
+]
