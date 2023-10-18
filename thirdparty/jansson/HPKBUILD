@@ -1,20 +1,35 @@
-# Contributor: 小肉头君 <chenbaodi@huawei.com>
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License
+
+# Contributor: 小肉头君 <chenbaodi@huawei.com> zhaoxu <357489213@qq.com>
 # Maintainer: 小肉头君 <chenbaodi@huawei.com>
 
 pkgname=jansson
 pkgver=v2.14
 pkgrel=0
 pkgdesc="C library for encoding, decoding and manipulating JSON data"
-url="https://github.com/google/googletest"
+url="https://github.com/akheron/jansson"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("MIT license")
-source="https://github.com/akheron/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+# source="https://github.com/akheron/$pkgname/archive/refs/tags/$pkgver.tar.gz" 下载缓慢，使用gitee镜像
+source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 
 autounpack=true
 downloadpackage=true
 
-builddir=$pkgname-${pkgver:1}
-packagename=$builddir.tar.gz
+builddir=$pkgname-${pkgver}
+# packagename=$builddir.tar.gz
+packagename=${pkgver}.zip
 
 prepare() {
     mkdir -p $builddir/$ARCH-build
@@ -22,8 +37,8 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -B$ARCH-build -S./ > $buildlog 2>&1
+    $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     # 对最关键一步的退出码进行判断
     ret=$?
     cd $OLDPWD
@@ -33,7 +48,7 @@ build() {
 # 安装打包
 package() {
     cd $builddir
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    $MAKE -C $ARCH-build install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
