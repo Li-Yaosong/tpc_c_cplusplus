@@ -38,7 +38,17 @@ source envset.sh
 autogenflag=true
 host=
 
+firstflag=true
+
 prepare() {
+
+    if [ $firstflag == true ]
+    then
+        firstflag=false
+        #这里屏蔽使用python脚本来检测参数，oh上面不支持python
+        sed -i 's/^TESTS += \$(dist_check_SCRIPTS/#TESTS += \$(dist_check_SCRIPTS/g' $builddir/src/Makefile.am
+    fi   
+
     mkdir -p $builddir/$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]
     then
@@ -78,8 +88,7 @@ package() {
 # 测试，需要在 ohos 设备上进行
 check() {
     cd $builddir/$ARCH-build/src
-    make test-algs test-array test-bimap test-iter test-machinery test-map test-multimap test-number test-ot-tag test-priority-queue test-set test-serialize test-unicode-ranges test-vector test-repacker test-classdef-graph  \
-    check-c-linkage-decls.py check-externs.py check-header-guards.py check-includes.py check-static-inits.py check-symbols.py  check-libstdc++.py >> `pwd`/../build.log 2>&1
+    make test-algs test-array test-bimap test-iter test-machinery test-map test-multimap test-number test-ot-tag test-priority-queue test-set test-serialize test-unicode-ranges test-vector test-repacker test-classdef-graph >> `pwd`/../build.log 2>&1
     if [ $ARCH == "armeabi-v7a" ]
     then
         unsetarm32ENV
@@ -88,6 +97,25 @@ check() {
     then
         unsetarm64ENV
     fi
+
+    sed -i 's/^check-TESTS: \$(check_PROGRAMS/check-TESTS: #\$(check_PROGRAMS/g' Makefile
+    sed -i 's/^test-algs.log: test-algs/test-algs.log:# test-algs/g' Makefile
+    sed -i 's/^test-array.log: test-array/test-array.log:# test-array/g' Makefile
+    sed -i 's/^test-bimap.log: test-bimap/test-bimap.log:# test-bimap/g' Makefile
+    sed -i 's/^test-iter.log: test-iter/test-iter.log:# test-iter/g' Makefile
+    sed -i 's/^test-machinery.log: test-machinery/test-machinery.log:# test-machinery/g' Makefile
+    sed -i 's/^test-map.log: test-map/test-map.log:# test-map/g' Makefile
+    sed -i 's/^test-multimap.log: test-multimap/test-multimap.log:# test-multimap/g' Makefile
+    sed -i 's/^test-number.log: test-number/test-number.log:# test-number/g' Makefile
+    sed -i 's/^test-ot-tag.log: test-ot-tag/test-ot-tag.log:# test-ot-tag/g' Makefile
+    sed -i 's/^test-priority-queue.log: test-priority-queue/test-priority-queue.log:# test-priority-queue/g' Makefile
+    sed -i 's/^test-set.log: test-set/test-set.log:# test-set/g' Makefile
+    sed -i 's/^test-serialize.log: test-serialize/test-serialize.log:# test-serialize/g' Makefile
+    sed -i 's/^test-unicode-ranges.log: test-unicode-ranges/test-unicode-ranges.log:# test-unicode-ranges/g' Makefile
+    sed -i 's/^test-vector.log: test-vector/test-vector.log:# test-vector/g' Makefile
+    sed -i 's/^test-repacker.log: test-repacker/test-repacker.log:# test-repacker/g' Makefile
+    sed -i 's/^test-classdef-graph.log: test-classdef-graph/test-classdef-graph.log:# test-classdef-graph/g' Makefile
+
     cd $OLDPWD
     unset host
     echo "The test must be on an OpenHarmony device!"
