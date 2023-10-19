@@ -5,7 +5,7 @@
         "License File": "LICENSE.md",
         "Version Number": "2.1.91",
         "Owner": "zhongluping1@huawei.com",
-        "Upstream URL": "https://github.com/libjpeg-turbo/libjpeg-turbo",
+        "Upstream URL": "https://gitee.com/mirrors/libjpeg-turbo/repository/archive/2.1.91.zip",
         "Description": "libjpeg-turbo is a JPEG image codec that uses SIMD instructions to accelerate baseline JPEG compression and decompression"
     }
 ]
