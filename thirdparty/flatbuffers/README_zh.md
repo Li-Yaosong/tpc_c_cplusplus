@@ -1,6 +1,6 @@
-# hdf5 三方库说明
+# flatbuffers 三方库说明
 ## 功能简介
-FlatBuffers 是一个跨平台的序列化库，其架构能最大限度地提高内存效率。
+flatbuffers 是一个跨平台的序列化库，其架构能最大限度地提高内存效率。
 ## 使用约束
 - IDE版本：DevEco Studio 3.1 Release
 - SDK版本：ohos_sdk_public 4.0.8.1 (API Version 10 Release)
