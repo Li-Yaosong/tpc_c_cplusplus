@@ -4,12 +4,7 @@
 
 ## 开发环境
 
-- ubuntu20.04
-- [OpenHarmony3.2Release镜像](https://gitee.com/link?target=https%3A%2F%2Frepo.huaweicloud.com%2Fopenharmony%2Fos%2F3.2-Release%2Fdayu200_standard_arm32.tar.gz)
-- [ohos_sdk_public 4.0.8.1 (API Version 10 Release)](http://download.ci.openharmony.cn/version/Master_Version/OpenHarmony_4.0.8.1/20230608_091016/version-Master_Version-OpenHarmony_4.0.8.1-20230608_091016-ohos-sdk-full.tar.gz)
-- [DevEco Studio 3.1 Release](https://contentcenter-vali-drcn.dbankcdn.cn/pvt_2/DeveloperAlliance_package_901_9/81/v3/tgRUB84wR72nTfE8Ir_xMw/devecostudio-windows-3.1.0.501.zip?HW-CC-KV=V1&HW-CC-Date=20230621T074329Z&HW-CC-Expire=315360000&HW-CC-Sign=22F6787DF6093ECB4D4E08F9379B114280E1F65DA710599E48EA38CB24F3DBF2)
-- [准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
-- [准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
+- [开发环境准备](../../../docs/hap_integrate_environment.md)
 
 ## 编译三方库
 
@@ -22,12 +17,14 @@
 - 三方库目录结构
 
   ```shell
-  tpc_c_cplusplus/thirdparty/libjpeg-turbo  # 三方库libjpeg-turbo的目录结构如下
-  ├── docs                                  # 三方库相关文档的文件夹
-  ├── HPKBUILD                              # 构建脚本
-  ├── SHA512SUM                             # 三方库校验文件
-  ├── README.OpenSource                     # 说明三方库源码的下载地址，版本，license等信息
-  ├── README_zh.md   
+  tpc_c_cplusplus/thirdparty/libjpeg-turbo    # 三方库libjpeg-turbo的目录结构如下
+  ├── docs                                    # 三方库相关文档的文件夹
+  ├── HPKBUILD                                # 编译脚本
+  ├── HPKCHECK                                # 测试脚本
+  ├── OAT.xml                                 # OAT开源审查文本
+  ├── README.OpenSource                       # 说明三方库源码的下载地址，版本，license等信息
+  ├── README_zh.md                            # 三方库说明文档
+  ├── SHA512SUM                               # 三方库校验文件
   ```
 
 - 在lycium目录下编译三方库
@@ -53,7 +50,7 @@
 
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
 
-  &nbsp;![thirdparty_install_dir](../../thirdparty_template/docs/pic/xxx_install_dir.png)
+  &nbsp;![thirdparty_install_dir](pic/libjpeg-turbo_install_dir.png)
 
   其中xxx代表的是库名，本库即为libjpeg-turbo。
 
@@ -62,19 +59,20 @@
   ```shell
   # 将三方库加入工程中
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libjpeg-turbo/${OHOS_ARCH}/lib/libjpeg.a)
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libjpeg-turbo/${OHOS_ARCH}/lib/libturbojpeg.a)
   # 将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libjpeg-turbo/${OHOS_ARCH}/include)
   ```
 
-  ![libjpeg-turbo_usage](../../thirdparty_template/pic/../docs/pic/xxx_usage.png)
-
+  ![libjpeg-turbo_usage](pic/libjpeg-turbo_usage.png)
+``
 ## 测试三方库
 
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
 进入到构建目录执行`ctest`运行测试用例（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
 
-&nbsp;![libjpeg-turbo_test](pic/jpeg_test.png)
+&nbsp;![libjpeg-turbo_test](pic/libjpeg-turbo_test.png)
 
 ## 参考资料
 
