@@ -25,6 +25,8 @@ makedepends=()
 source="https://ftp.gnu.org/pub/gnu/$pkgname/$pkgname-$pkgver.tar.gz"
 buildtools="configure"
 
+
+
 autounpack=true
 downloadpackage=true
 
