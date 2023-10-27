@@ -24,7 +24,7 @@ license=("Eclipse Public License 2.0 & Eclipse Distribution License 1.0")
 depends=("openssl")
 makedepends=()
 
-# 官方下载地址"https://github.com/mirrors/$pkgname/repository/archive/$pkgver.zip"受网络影响可能存在下载失败的情况，现使用  gitee镜像可以与官方仓库保持同步
+# 官方下载地址"https://github.com/eclipse/$pkgpaho/archive/refs/tags/$pkgver.zip"受网络影响可能存在下载失败的情况，现使用  gitee镜像可以与官方仓库保持同步
 source="https://gitee.com/mirrors/$pkgpaho/repository/archive/$pkgver.zip"
 
 autounpack=true
