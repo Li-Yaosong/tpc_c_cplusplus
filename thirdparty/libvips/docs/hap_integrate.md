@@ -92,7 +92,9 @@
       ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libpng/${OHOS_ARCH}/include
       ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libffi/${OHOS_ARCH}/include
       ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libjpeg-turbo/${OHOS_ARCH}/include
+      ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glib/${OHOS_ARCH}/include/glibconfig.h
       ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glib/${OHOS_ARCH}/include
+      ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glib/${OHOS_ARCH}/include/glib-2.0
       ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libexpat/${OHOS_ARCH}/include
       ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pcre2/${OHOS_ARCH}/include
       ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/zlib/${OHOS_ARCH}/include)
