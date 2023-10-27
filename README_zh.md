@@ -4,6 +4,16 @@
 
 本仓库主要用于存放已经适配OpenHarmony的C/C++三方库的适配脚本和OpenHarmony三方库适配指导文档、三方库适配相关的工具。
 
+本仓库适配的三方库主要是通过[openharmony linux SDK进行交叉编译](lycium/doc/ohos_use_sdk/OHOS_SDK-Usage.md)并集成到北向应用中。基于该交叉编译方式，提供了一套快速交叉编译的工具：lycium交叉编译工具.
+
+## lycium交叉编译工具
+
+lycium交叉编译工具的使用请阅读[lycium交叉编译框架](lycium/README.md)。
+
+## 北向应用集成三方库
+
+- [北向应用集成三方库](docs/thirdparty_knowledge.md)
+
 ## 本仓库目录
 
 ```shell
@@ -16,16 +26,16 @@ tpc_c_cplusplus
 ......
 ```
 
+## 三方库列表
+
+- [C/C++三方库列表](docs/thirdparty_list.md)
+
 ## 如何贡献
 
 - [遵守仓库目录结构](#本仓库目录)
 - [遵守OpenHarmony编码贡献规范](https://gitee.com/openharmony-sig/knowledge_demo_smart_home/blob/master/dev/docs/contribute/README.md)
 - [贡献三方库](thirdparty/README_zh.md)
 
-## 三方库列表
+## FAQ
 
-- [C/C++三方库列表](docs/thirdparty_list.md)
-
-## 北向应用集成三方库
-
-- [北向应用集成三方库](docs/thirdparty_knowledge.md)
+[C/C++三方库常见FAQ](./)。
