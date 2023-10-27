@@ -36,8 +36,17 @@ prepare() {
     if [ "$download_and_patch_flag" == true ]
     then
         git clone $source $builddir
+        if [ $? -ne 0 ]
+        then
+            return -1
+        fi
         cd $builddir
         git reset --hard $pkgver
+        if [ $? -ne 0 ]
+        then
+            cd $OLDPWD
+            return -2
+        fi
         patch -p1 < ../sha_ohos.patch
         cd $OLDPWD
         download_and_patch_flag=false
@@ -47,8 +56,8 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -B$ARCH-build -S./ > $buildlog 2>&1
+    $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -56,7 +65,7 @@ build() {
 
 package() {
     cd $builddir
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    $MAKE VERBOSE=1 -C $ARCH-build install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
