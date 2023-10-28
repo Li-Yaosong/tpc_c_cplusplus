@@ -47,14 +47,14 @@ prepare() {
         host=aarch64-linux
     fi
     cd $builddir-$ARCH-build
-    autoreconf -ifv > `pwd`/build.log 2>&1
+    autoreconf -ifv > $buildlog 2>&1
     cd $OLDPWD
 }
 
 build() {
     cd $builddir-$ARCH-build
-    ./configure "$@" --host=$host --disable-udev --enable-tests-build >> `pwd`/build.log 2>&1
-    make -j16 >> `pwd`/build.log 2>&1
+    ./configure "$@" --host=$host --disable-udev --enable-tests-build >> $buildlog 2>&1
+    ${MAKE} >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -62,15 +62,21 @@ build() {
 
 package() {
     cd $builddir-$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    ${MAKE} install >> $buildlog 2>&1
     cd $OLDPWD
-    if [ $ARCH == ${archs[0]} ]
+}
+
+recoverpkgbuildenv() {
+    unset host
+    if [ $ARCH == "armeabi-v7a" ]
     then
         unsetarm32ENV
-    fi
-    if [ $ARCH == ${archs[1]} ]
+    elif [ $ARCH == "arm64-v8a" ]
     then
         unsetarm64ENV
+    else
+        echo "${ARCH} not support"
+        return -1
     fi
 }
 
@@ -82,5 +88,5 @@ check() {
 
 # 清理环境
 cleanbuild(){
-    rm -rf ${PWD}/$builddir ${PWD}/$builddir-${archs[0]}-build ${PWD}/$builddir-${archs[1]}-build #${PWD}/$packagename
+    rm -rf ${PWD}/$builddir ${PWD}/$builddir-armeabi-v7a-build ${PWD}/$builddir-arm64-v8a-build #${PWD}/$packagename
 }
