@@ -36,9 +36,9 @@ builddir=$pkgname\_${pkgver}
 packagename=$builddir.zip
 
 prepare() {
-    unzip -q -o $packagename -d $builddir
-    if $patchflag
+    if [ "$patchflag" == true ]
     then
+        unzip -q -o $packagename -d $builddir
         # 解压后有C# cpp delphi等语言，我们只编译cpp，故设置builddir/cpp目录
         cd $builddir/cpp
         patch -p2 < `pwd`/../../clipper_oh_test.patch
