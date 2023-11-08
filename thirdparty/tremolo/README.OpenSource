@@ -1,7 +1,7 @@
 [
     {
         "Name": "tremolo",
-        "License": "GNU GPL",
+        "License": "BSD-3-Clause",
         "License File": "http://wss.co.uk/pinknoise/tremolo/index.html",
         "Version Number": "008",
         "Owner": "swkec@isoftstone.com",

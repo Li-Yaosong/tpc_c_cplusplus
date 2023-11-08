@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="BoringSSL is a fork of OpenSSL that is designed to meet Google's needs."
 url="https://boringssl.googlesource.com/boringssl"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("Apache License 2.0") # under OpenSSL licensing
+license=("Apache License 2.0 and ISC License") # under OpenSSL licensing
 depends=()
 makedepends=("perl" "go")
 

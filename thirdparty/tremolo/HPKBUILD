@@ -18,7 +18,7 @@ pkgrel=0
 pkgdesc="Tremolo is an ARM optimised version of the Tremor lib from xiph.org. For those that don't know, the Tremor lib is an integer only library for doing Ogg Vorbis decompression."
 url="http://wss.co.uk/pinknoise/tremolo/index.html"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("GNU GPL")
+license=("BSD-3-Clause")
 depends=()
 makedepends=()
 
