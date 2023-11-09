@@ -1,7 +1,7 @@
 [
     {
         "Name": "DBoW2",
-        "License": "Copyright (c) 2015 Dorian Galvez-Lopez. http://doriangalvez.com All rights reserved.",
+        "License": "BSD-3-Clause",
         "License File": "https://github.com/dorian3d/DBoW2/blob/master/LICENSE.txt",
         "Version Number": "v1.1-free",
         "Owner": "357489213@qq.com",

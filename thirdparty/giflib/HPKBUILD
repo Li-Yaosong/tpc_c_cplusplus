@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="giflib is a library for reading and writing gif images. "
 url="https://sourceforge.net/projects/giflib/"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("1997  Eric S. Raymond")
+license=("MIT license")
 depends=()
 makedepends=("xmlto") # 从sourceforge仓库获取的代码需要生成html格式文件,需要xmlto工具
 
