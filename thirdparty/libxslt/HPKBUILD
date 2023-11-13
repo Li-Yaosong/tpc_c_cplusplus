@@ -10,8 +10,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# Contributor: Jeff Han <hanjinfei@foxmail.com>
-# Maintainer: Jeff Han <hanjinfei@foxmail.com>,chengkan <kanchengc@isoftstone.com>
+# Contributor: Jeff Han <hanjinfei@foxmail.com>,chenxiong <chenxiong44@h-partners.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
 pkgname=libxslt
 pkgver=1.1.38
 pkgrel=0
