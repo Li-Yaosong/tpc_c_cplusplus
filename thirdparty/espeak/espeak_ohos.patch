@@ -1,0 +1,22 @@
+diff -Naur espeak-1.48.04-source/src/event.cpp espeak-1.48.04-source_ohos/src/event.cpp
+--- espeak-1.48.04-source/src/event.cpp	2014-03-04 08:47:15.000000000 -0800
++++ espeak-1.48.04-source_ohos/src/event.cpp	2023-11-01 02:19:33.268631600 -0700
+@@ -720,7 +720,6 @@
+ 
+ 	if (thread_inited)
+ 	{
+-		pthread_cancel(my_thread);
+ 		pthread_join(my_thread,NULL);
+ 		pthread_mutex_destroy(&my_mutex);
+ 		sem_destroy(&my_sem_start_is_required);
+diff -Naur espeak-1.48.04-source/src/fifo.cpp espeak-1.48.04-source_ohos/src/fifo.cpp
+--- espeak-1.48.04-source/src/fifo.cpp	2014-03-04 08:47:15.000000000 -0800
++++ espeak-1.48.04-source_ohos/src/fifo.cpp	2023-11-01 02:20:00.377179298 -0700
+@@ -595,7 +595,6 @@
+ {
+   ENTER("fifo_terminate");
+ 
+-  pthread_cancel(my_thread);
+   pthread_join(my_thread,NULL);
+   pthread_mutex_destroy(&my_mutex);
+   sem_destroy(&my_sem_start_is_required);
