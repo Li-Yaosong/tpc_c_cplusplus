@@ -22,44 +22,36 @@ openharmonycheck() {
     cd $builddir/$ARCH-build
 
     # 测试项ssl_test
-    # 这个测试项因为域名不匹配失败，测试结果与x86上一致,用--gtest_filter=*-SSLTest.HostMatching屏蔽掉。
+    # 这个测试项因为域名不匹配失败，测试结果与x86 Ubuntu 20.04.6上一致,用--gtest_filter=*-SSLTest.HostMatching屏蔽掉。
     ./ssl/ssl_test --gtest_filter=*-SSLTest.HostMatching > ${logfile} 2>&1
-    res=$?
-    if [ $res -ne 0 ]
+    if [ $? -ne 0 ]
     then
         echo "ssl test failed" >> ${logfile} 2>&1
-	cd $OLDPWD
-	return res
+        res=1
     fi
 
     # 测试项crypto_test
     ./crypto/crypto_test >> ${logfile} 2>&1
-    res=$?
-    if [ $res -ne 0 ]
+    if [ $? -ne 0 ]
     then
         echo "crypto test failed" >> ${logfile} 2>&1
-	cd $OLDPWD
-	return res
+        res=2
     fi
 
     # 测试项urandom_test
     ./crypto/urandom_test >> ${logfile} 2>&1
-    res=$?
-    if [ $res -ne 0 ]
+    if [ $? -ne 0 ]
     then
         echo "urandom test failed" >> ${logfile} 2>&1
-	cd $OLDPWD
-	return res
+        res=3
     fi
 
     # 测试项decrepit_test
     ./decrepit/decrepit_test >> ${logfile} 2>&1
-    res=$?
-    if [ $res -ne 0 ]
+    if [ $? -ne 0 ]
     then
         echo "decrepit test failed" >> ${logfile} 2>&1
-	cd $OLDPWD
-	return res
+        res=4
     fi
 
     cd $OLDPWD
