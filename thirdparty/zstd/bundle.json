@@ -1,7 +1,7 @@
 {
     "name": "@ohos/zstd_lib",
     "description": "Zstd, short for Zstandard, is a fast lossless compression algorithm, targeting real-time compression scenarios at zlib-level compression ratio.",
-    "version": "3.1",
+    "version": "v1.5.4",
     "license": "BSD and GPLv2",
     "publishAs": "code-segment",
     "segment": {

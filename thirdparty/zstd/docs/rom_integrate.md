@@ -11,12 +11,16 @@
   ```
 - 三方库目录结构
   ```
-  tpc_c_cplusplus/thirdparty/zstd
-  |-- docs			    # 存放三方库相关文档的文件夹
-  |-- BUILD.gn		    # 构建脚本，支持rom包集成
-  |-- bundle.json			# 三方库组件定义文件
-  ├── README.OpenSource   # 说明三方库源码的下载地址，版本，license等信息
-  ├── README_zh.md  
+  tpc_c_cplusplus/thirdparty/zstd       # 三方库zstd的目录结构如下
+  ├── docs                              # 三方库相关文档的文件夹
+  ├── BUILD.gn                          # gn文件
+  ├── bundle.json                       # 三方库元数据声明
+  ├── HPKBUILD                          # 构建脚本
+  ├── HPKCHECK                          # 测试脚本
+  ├── SHA512SUM                         # 三方库校验文件
+  ├── README.OpenSource                 # 说明三方库源码的下载地址，版本，license等信息
+  ├── README_zh.md                      # 三方库说明文档
+  ├── OAT.xml                           # OAT开源审查文本
   ```
 - 将本仓库文件夹拷贝到third_party下
   ```
@@ -25,7 +29,7 @@
 ## 准备三方库源码
 - 将源码下载到zstd目录并将其解压出来。
 ```
-cd ~/openharmony/third_party/zstd						        # 进入到zstd目录
+cd ~/openharmony/third_party/zstd						                    # 进入到zstd目录
 git clone -b v1.5.2 https://github.com/facebook/zstd.git        # 下载三方库
 ```
 ## 系统Rom中引入三方库

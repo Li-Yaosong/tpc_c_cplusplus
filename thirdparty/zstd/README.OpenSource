@@ -3,9 +3,9 @@
         "Name": "zstd",
         "License": "BSD and GPLv2",
         "License File": "COPYRIGHT",
-        "Version Number": "v1.5.2",
+        "Version Number": "v1.5.4",
         "Owner": "caiqi14@huawei.com",
         "Upstream URL": "https://github.com/facebook/zstd",
-        "Description": "Zstandard, or zstd as short version, is a fast lossless compression algorithm, targeting real-time compression scenarios at zlib-level and better compression ratios. "
+        "Description": "Zstandard, or zstd as short version, is a fast lossless compression algorithm, targeting real-time compression scenarios at zlib-level and better compression ratios."
     }
 ]
