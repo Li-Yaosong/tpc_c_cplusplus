@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "cairo",
+        "License": "GNU LESSER GENERAL PUBLIC LICENSE","MOZILLA PUBLIC LICENSE",
+        "License File": "COPYING","COPYING-LGPL-2.1","COPYING-MPL-1.1"
+        "Version Number": "cairo-1.17.8",
+        "Owner": "zhangxin546@h-partners.com",
+        "Upstream URL": "https://gitee.com/mirrors/cairo/repository/archive/1.17.8.zip",
+        "Description": "Cairo is a 2D graphics library with support for multiple output devices."
+    }
+]
