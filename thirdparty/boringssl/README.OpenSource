@@ -1,7 +1,7 @@
 [
     {
         "Name": "boringssl",
-        "License": "Apache License 2.0",
+        "License": "Apache License 2.0 and ISC License",
         "License File": "https://github.com/google/boringssl/blob/master/LICENSE",
         "Version Number": "fips-20220613",
         "Owner": "tangshaoteng@163.com",
