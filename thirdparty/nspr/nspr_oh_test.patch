@@ -1,0 +1,12 @@
+diff -Naur nspr-4.35/nspr/pr/tests/abstract.c nspr-4.35_new/nspr/pr/tests/abstract.c
+--- nspr-4.35/nspr/pr/tests/abstract.c	2022-09-12 19:40:15.000000000 +0800
++++ nspr-4.35_new/nspr/pr/tests/abstract.c	2023-11-03 15:06:33.680529611 +0800
+@@ -10,7 +10,7 @@
+ #include <string.h>
+ #include "nspr.h"
+ 
+-static const char abstractSocketName[] = "\0testsocket";
++static const char abstractSocketName[] = "/tmp/sock";
+ 
+ static void
+ ClientThread(void* aArg)
