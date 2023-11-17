@@ -32,28 +32,40 @@ buildtools="configure"
 
 patchflag=true
 
-builddir=speechd-${pkgver}
+builddir=${pkgname}-${pkgver}
 packagename=$builddir.zip
 
 source envset.sh
 host=
 prepare() {
-    cp -arf $builddir $builddir-$ARCH-build
-    if [ $ARCH == ${archs[0]} ]
+    if $patchflag
+    then
+        cd $builddir
+        # pthread_cancel等函数openharmony目前不支持，将pthread_join修改成pthread_detach
+        # setvbuf接口导致pipe使用异常
+        patch -p1 < ../speechd_ohos.patch > $buildlog 2>&1
+        # patch只需要打一次,关闭打patch
+        patchflag=false
+        cd $OLDPWD
+    fi
+
+    cp -rf ${builddir} $builddir-${ARCH}-build
+
+    if [ $ARCH == "armeabi-v7a" ]
     then
         setarm32ENV
         host=arm-linux
-    fi
-    if [ $ARCH == ${archs[1]} ]
+    elif [ $ARCH == "arm64-v8a" ]
     then
         setarm64ENV
         host=aarch64-linux
+    else
+        echo "${ARCH} not support"
+        return -1
     fi
+
     cd $builddir-$ARCH-build
-    # pthread_cancel等函数openharmony目前不支持，将pthread_join修改成pthread_detach
-    # setvbuf接口导致pipe使用异常
-    patch -p1 < ../speechd_ohos.patch 
-    autoreconf -ifv > $buildlog 2>&1
+    autoreconf -ifv >> $buildlog 2>&1
     cd $OLDPWD
     
 }
@@ -67,7 +79,7 @@ build() {
     -I$LYCIUM_ROOT/usr/espeak/$ARCH/include -Wno-int-conversion" \
     CXXFLAGS="-I$LYCIUM_ROOT/usr/libsndfile/$ARCH/include -I$LYCIUM_ROOT/usr/dotconf/$ARCH/include \
     -I$LYCIUM_ROOT/usr/espeak/$ARCH/include -Wno-int-conversion" >> $buildlog 2>&1
-    echo "# define gettext(Msgid) ((const char *) (Msgid))" >> config.h
+    sed -i '$a\ # define gettext(Msgid) ((const char *) (Msgid))' config.h
     ${MAKE} V=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
@@ -78,6 +90,16 @@ package() {
     cd $builddir-$ARCH-build
     ${MAKE} install >> $buildlog 2>&1
     cd $OLDPWD
+}
+
+check() {
+    cd $builddir-$ARCH-build
+    $MAKE check >> $buildlog 2>&1
+    cd $OLDPWD
+    echo "The test must be on an OpenHarmony device!"
+    # how to run test
+    # cd $builddir-$ARCH-build/src/tests
+    # ../../run-speechd && ./clibrary
 }
 
 recoverpkgbuildenv() {
@@ -92,16 +114,6 @@ recoverpkgbuildenv() {
         echo "${ARCH} not support"
         return -1
     fi
-}
-
-check() {
-    cd $builddir-$ARCH-build
-    $MAKE check >> $buildlog 2>&1
-    cd $OLDPWD
-    echo "The test must be on an OpenHarmony device!"
-    # how to run test
-    # cd $builddir-$ARCH-build/src/tests
-    # ../../run-speechd && ./clibrary
 }
 
 # 清理环境
