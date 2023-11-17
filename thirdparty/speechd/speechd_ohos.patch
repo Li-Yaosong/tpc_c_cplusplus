@@ -52,7 +52,7 @@ diff -Naur speech-dispatcher-0.11.5/src/audio/nas.c speech-dispatcher-0.11.5_oho
  	if (nas_id == NULL)
  		return -2;
 -
-+#ifndef __OHOS
++#ifndef __OHOS__
  	pthread_cancel(nas_id->nas_event_handler);
  	pthread_join(nas_id->nas_event_handler, NULL);
 -
