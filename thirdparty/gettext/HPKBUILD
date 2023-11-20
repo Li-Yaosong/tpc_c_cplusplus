@@ -11,6 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
+
 # Contributor: 城meto <myxuan475@126.com>
 # Maintainer: 城meto <myxuan475@126.com>
 pkgname=gettext
@@ -25,14 +27,22 @@ makedepends=()
 source="https://ftp.gnu.org/pub/gnu/$pkgname/$pkgname-$pkgver.tar.gz"
 buildtools="configure"
 
+
+
 autounpack=true
 downloadpackage=true
+
+
 
 builddir=$pkgname-$pkgver
 packagename=$pkgname-$pkgver.tar.gz
 
+
+
 source envset.sh
 host=
+
+
 
 prepare() {
     mkdir $builddir/$ARCH-build
@@ -48,6 +58,11 @@ prepare() {
     fi
 }
 
+
+
+
+
+
 build() {
     cd $builddir/$ARCH-build
     LDFLAGS="--static $LDFLAGS" CFLAGS="-static -Wno-error=int-conversion $CFLAGS" \
@@ -57,6 +72,9 @@ build() {
     cd $OLDPWD
     return $ret
 }
+
+
+
 
 package() {
     cd $builddir/$ARCH-build
@@ -72,10 +90,14 @@ package() {
     fi
 }
 
+
+
 check() {
     echo "The test must be on an OpenHarmony device!"
     # TODO
 }
+
+
 
 # 清理环境
 cleanbuild(){
