@@ -1,0 +1,12 @@
+[
+    {
+        "Name": "libavif",
+        "License": "BSD",
+        "License File": "LICENSE",
+        "Version Number": "1.0.1",
+        "Owner": "iweu@qq.com",
+        "Upstream URL": "https://github.com/AOMediaCodec/libavif/archive/refs/tags/v1.0.1.tar.gz",
+        "Description": "This library aims to be a friendly, portable C implementation of the AV1 Image File Format"
+    }
+]
+
