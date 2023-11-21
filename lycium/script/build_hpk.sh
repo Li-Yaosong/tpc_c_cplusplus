@@ -185,7 +185,7 @@ builpackage() {
         done
         exit 101
     fi
-    echo "Build $pkgname $pkgver strat!"
+    echo "Build $pkgname $pkgver start!"
     if [ ! $downloadpackage ] || [ $downloadpackage != false ]
     then
         sure download $source $packagename
@@ -203,7 +203,7 @@ builpackage() {
     for arch in ${archs[@]}
     do
         # TODO archs1 编译失败，继续编译archs2
-        echo "Compileing OpenHarmony $arch $pkgname $pkgver libs..." 
+        echo "Compile OpenHarmony $arch $pkgname $pkgver libs..." 
         ARCH=$arch
         buildlog=$PKGBUILD_ROOT/$pkgname-$pkgver-$ARCH"-lycium_build.log"
         publicbuildlog=$PKGBUILD_ROOT/$pkgname"-public-lycium_build.log"
