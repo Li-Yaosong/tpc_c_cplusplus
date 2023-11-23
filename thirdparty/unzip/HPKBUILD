@@ -18,11 +18,19 @@ buildtools="make"
 
 builddir=$pkgname${pkgver}
 packagename=$builddir.tar.gz
+patch_flag=true
 
 cc=
 as=
 # zip 采用makefile编译构建，为了保留构建环境(方便测试)。因此同一份源码在解压后分为两份,各自编译互不干扰
 prepare() {
+    if [ "$patch_flag" == true ]
+    then
+        cd $builddir
+        patch -p1 < ../unzip_ohos_pkg.patch > $buildlog 2>&1  #调整unix/Makefile
+        cd $OLDPWD
+        patch_flag=false
+    fi
     cp -rf $builddir $builddir-$ARCH-build
     # 将 bzip2 源码加入到 unzip 项目，使 unzip 支持 bzip2 算法，如果不需要 bzip2 算法可以不拷贝。此处 copy 有 bzip2 带版本号的目录，导致 bzip2 的版本变更会影响到 unzip 的编译，为了避免两个项目耦合过深，所以在 unzip 项目，我这里设置为默认是不支持 bzip2 注释28行。如果需要只需解开28行注释确认版本号目录即可。
     # cp -rf `pwd`/../bzip2/bzip2-1.0.6/*  $builddir-$ARCH-build/bzip2/
@@ -42,11 +50,11 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    make CC=${cc} AS=${as} -f unix/Makefile -j4 generic > `pwd`/build.log 2>&1
+    $MAKE CC=${cc} AS=${as} -f unix/Makefile generic > $buildlog 2>&1
     ret=$?
     if [ $ret == 0 ]
     then
-        make CC=${cc} AS=${as} -f unix/Makefile -j4 generic_shlib >> `pwd`/build.log 2>&1
+        $MAKE CC=${cc} AS=${as} -f unix/Makefile generic_shlib >> $buildlog 2>&1
         ret=$?
     fi
     cd $OLDPWD
@@ -55,7 +63,7 @@ build() {
 
 package() {
     cd $builddir-$ARCH-build
-    make prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH -f unix/Makefile install >> `pwd`/build.log 2>&1
+    $MAKE prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH -f unix/Makefile install >> $buildlog 2>&1
     # make install没有拷贝so和.h文件，需cp到usr目录
     mkdir -p $LYCIUM_ROOT/usr/$pkgname/$ARCH/include
     cp ./*.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include
