@@ -9,17 +9,20 @@
 
 ## 拷贝编译工具
 ```
+    cd lycium/Buildtools
     # 校验压缩包
     sha512sum -c SHA512SUM
-    #输出 toolchain.tar.gz: OK
-    # 解压拷贝编译工具
+    # 输出 toolchain.tar.gz: OK
+    # 解压toolchain.tar.gz
     tar -zxvf toolchain.tar.gz
+    # 将 toolchain 中的文件 copy 到 ${OHOS_SDK}/native/llvm/bin
     cp toolchain/* ${OHOS_SDK}/native/llvm/bin
+    cd ${OLDPWD}
 ```
 
 ## 设置编译机cmake识别OHOS系统
-由于sdk中的cmake版本过低, 导致很多开源库在cmake阶段报错. 这个时候就需要用户在编译机上安装一个高版本的cmake(推荐使用3.26版本). 但是
-cmake官方是不支持OHOS的. 解决方案:
+由于 OpenHarmony SDK 中的 cmake 版本过低, 导致很多开源库在 cmake 阶段报错. 这个时候就需要用户在编译机上安装一个高版本的 cmake (推荐使用3.26版本). 但是官方版本的 cmake 是不支持 OHOS 的. 
+解决方案如下: 将 SDK 中, 关于 OHOS Platform 的描述文件拷贝到系统 cmake 中.
 ```
-cp $OHOS_SDK/native/build-tools/cmake/share/cmake-3.16/Modules/Platform/OHOS.cmake xxx(代表你编译机安装的cmake的路径)/cmake-3.26.3-linux-x86_64/share/cmake-3.26/Modules/Platform
+cp $OHOS_SDK/native/build-tools/cmake/share/cmake-3.16/Modules/Platform/OHOS.cmake xxx(代表你编译机安装的 cmake 的路径)/cmake-3.26.3-linux-x86_64/share/cmake-3.26/Modules/Platform
 ```
