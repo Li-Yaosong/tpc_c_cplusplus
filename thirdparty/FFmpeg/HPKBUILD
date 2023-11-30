@@ -7,7 +7,7 @@ pkgdesc="FFmpeg is a collection of libraries and tools to process multimedia con
 url="https://github.com/FFmpeg/FFmpeg/"
 archs=("armeabi-v7a" "arm64-v8a")
 license="GPL2/GPL3/LGPL3"
-depends=()
+depends=("openssl")
 makedepends=()
 source="https://github.com/FFmpeg/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
@@ -20,7 +20,7 @@ packagename=$builddir.tar.gz
 source envset.sh
 buildhost=true
 
-cpu=
+arch=
 ldflags=
 prepare() {
     if [ $buildhost == true ]
@@ -47,13 +47,13 @@ prepare() {
     if [ $ARCH == "armeabi-v7a" ]
     then
         setarm32ENV
-        cpu=arm
+        arch=arm
         ldflags="-L${OHOS_SDK}/native/sysroot/usr/lib/arm-linux-ohos"
     fi
     if [ $ARCH == "arm64-v8a" ]
     then
         setarm64ENV
-        cpu=aarch64
+        arch=aarch64
         ldflags="-L${OHOS_SDK}/native/sysroot/usr/lib/aarch64-linux-ohos"
     fi
 
@@ -62,7 +62,7 @@ prepare() {
 
 build() {
     cd $pkgname-$ARCH-build/$builddir
-    ./configure "$@" --disable-asm --enable-cross-compile --disable-x86asm --enable-static --enable-shared --disable-doc --disable-htmlpages --target-os=linux --disable-optimizations --cpu=$cpu --cc=${CC} --ld=${CC} --strip=${STRIP} --host-cc="${CC}" --host-ld="${CC}" --host-os=linux --host-ldflags=${ldflags} --sysroot=${OHOS_SDK}/native/sysroot > `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR=$pkgconfigpath ./configure "$@" --enable-asm --enable-cross-compile --enable-openssl --enable-neon --disable-vulkan --disable-x86asm --enable-static --enable-shared --disable-doc --disable-htmlpages --target-os=linux --disable-optimizations --arch=$arch --cc=${CC} --ld=${CC} --strip=${STRIP} --host-cc="${CC}" --host-ld="${CC}" --host-os=linux --host-ldflags=${ldflags} --sysroot=${OHOS_SDK}/native/sysroot > `pwd`/build.log 2>&1
     make -j4 >> `pwd`/build.log 2>&1
     ret=$?
     cd $OLDPWD
@@ -80,7 +80,7 @@ package() {
     then
         unsetarm64ENV
     fi
-    unset cpu
+    unset arch
     unset ldflags
 }
 checktestfiles() {
