@@ -14,10 +14,21 @@ source="https://github.com/Exiv2/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
 autounpack=true
 downloadpackage=true
+patchflag=true
 builddir=$pkgname-${pkgver:1}
 packagename=$builddir.tar.gz
 
 prepare() {
+    if $patchflag
+    then
+        cd ${builddir}
+        # 修复realpath接口第二个参数长度判断报错问题
+        patch -p1 < ../exiv2_oh_pkg.patch
+        cd $OLDPWD
+        # patch只需要打一次,关闭打patch
+        patchflag=false
+    fi
+
     mkdir -p $builddir/$ARCH-build
 }
 
