@@ -21,7 +21,7 @@ pkgdesc="The libarchive project develops a portable, efficient C library that ca
 url="http://www.libarchive.org/"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD")
-depends=()
+depends=("xz" "zstd")
 makedepends=()
 # 官网地址：https://github.com/libarchive/libarchive/archive/refs/tags/$pkgver.tar.gz，因网络原因采用gitee mirrors
 source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"

@@ -50,19 +50,15 @@
   
 ```
 #将三方库加入工程中
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libarchive/${OHOS_ARCH}/lib/libarchive.a)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libarchive.so)
 #将三方库的头文件加入工程中
 target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libarchive/${OHOS_ARCH}/include)
 ```
-  ![thirdparty_usage](pic/usage.png)
 ## 测试三方库
 三方库的测试使用原库自带的测试用例来做测试
 
 进入到构建目录获取,执行ctest，运行测试用例（libarchive-arm64-v8a-build为构建64位的目录，libarchive-armeabi-v7a-build为构建32位的目录）
 &nbsp;![thirdparty_test_result](pic/test_result.png)
-726个测试用例，35个无法通过，经过分析发现是因为
-char *setlocale(int category, const char *locale);
-在OpenHarmony和x86服务器上不一致，建议不要使用setlocale函数
 
 ## 参考资料
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
