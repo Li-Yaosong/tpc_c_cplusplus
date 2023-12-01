@@ -16,6 +16,6 @@
 
    文件属性与系统位数不匹配，故提示无法找到该文件。
 
-- Q2: 当前`lycium`交叉编译适配的CPU架构只支持armeabi-v7a和aarch64的，如若需新增其他CPU架构该如何操作?
+- Q2: 当前`lycium`交叉编译适配的CPU架构只支持arm32位和arm64位的，如若需新增其他CPU架构该如何操作?
   
-  本仓库中适配的三方库当前都是通过[lycium](../lycium/)适配且验证过的arm32位以及arm64位架构的三方库，如若需要添加其他CPU架构的编译适配，请参考文档[lycium上面适配OpenHarmony 不同架构的构建](./adpater_architecture.md)。
+  本仓库中适配的三方库当前都是通过[lycium工具](../lycium/)适配且验证过的arm32位以及arm64位架构的三方库，如若需要添加其他CPU架构的编译适配，请参考文档[lycium上面适配OpenHarmony 不同架构的构建](./adpater_architecture.md)。
