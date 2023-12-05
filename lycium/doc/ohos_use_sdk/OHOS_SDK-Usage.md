@@ -4,7 +4,7 @@ Ubuntu 20.04(推荐) 环境下 使用 OpenHarmony SDK 编译，OpenHarmony stand
 
 ### 下载SDK
 
-​		从 openHarmony SDK [官方发布渠道](https://gitee.com/openharmony-sig/oh-inner-release-management/blob/master/Release-Testing-Version.md)（13b8b5812ce3b3b135743baa6629ed84bd380d8c）下载SDK
+​		从 openHarmony SDK [官方发布渠道](https://gitee.com/openharmony-sig/oh-inner-release-management/blob/master/Release-Testing-Version.md)下载SDK
 
 ![](./ohos_sdk下载.png)
 
