@@ -48,7 +48,7 @@ prepare() {
 }
 
 build() {
-    cd $builddir-$ARCH-build
+    cd $builddir-$ARCH-build/src
     make CC=$cc AR=$ar >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
