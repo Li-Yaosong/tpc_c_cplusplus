@@ -2,9 +2,9 @@
     {
         "Name": "libffi",
         "License": "MIT",
-        "License File": "https://github.com/libffi/libffi",
+        "License File": "LICENSE",
         "Version Number": "3.4.4",
-        "Owner": "1393302983@qq.com",
+        "Owner": "huangminzhong2@huawei.com",
         "Upstream URL": "https://gitee.com/lycium_pkg_mirror/libffi/repository/archive/v3.4.4.zip",
         "Description": "The libffi library provides a portable, high level programming interface to various calling conventions."
     }
