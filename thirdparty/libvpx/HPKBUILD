@@ -70,8 +70,8 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    ../configure "$@" --target=$host --enable-unit-tests > `pwd`/build.log 2>&1
-    make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
+    ../configure "$@" --target=$host --enable-unit-tests > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -79,7 +79,7 @@ build() {
 
 package() {
     cd $builddir/$ARCH-build
-    make install VERBOSE=1 >> `pwd`/build.log 2>&1
+    $MAKE install VERBOSE=1 >> $buildlog 2>&1
     cd $OLDPWD
 
     unset host
@@ -108,7 +108,15 @@ check() {
 
     if $downloadresourceflag
     then
-        unzip $libvpxtestresourcepackagename
+        rm -rf $libvpxtestresourcebuilddir > $publicbuildlog 2>&1
+        unzip $libvpxtestresourcepackagename >> $publicbuildlog 2>&1
+        if [ $? -ne 0 ]
+        then
+            echo "unzip the test package $libvpxtestresourcepackagename failed! the package maybe damaged!" >>  $publicbuildlog 2>&1
+            rm -f $libvpxtestresourcepackagename
+            return 1
+        fi
+
         cd $libvpxtestresourcebuilddir
         cat *.yuv.tar.xz0* > desktop_office1.1280_720-020.yuv.tar.xz
         rm -rf *.yuv.tar.xz0*
@@ -123,7 +131,8 @@ check() {
 
     echo "The test must be on an OpenHarmony device!"
     # cd $builddir/$ARCH-build
-    # ./test_libvpx >> `pwd`/build.log 2>&1
+    # ./test_libvpx
+    return 0
 }
 
 cleanbuild() {
