@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libgphoto2",
+        "License": "LGPL-2.1",
+        "License File": "COPYING",
+        "Version Number": "v2.5.31",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/gphoto/libgphoto2/archive/refs/tags/v2.5.31.tar.gz",
+        "Description": "libgphoto2 is a library that can be used by applications to access various digital cameras."
+    }
+]
