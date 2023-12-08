@@ -18,7 +18,7 @@ pkgrel=0
 pkgdesc="eXosip is a library that hides the complexity of using the SIP protocol for mutlimedia session establishement"
 url="http://savannah.nongnu.org/projects/exosip"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("GNU General Public License v2")
+license=("GPL-2.0-or-later")
 depends=("openssl" "libosip2" "c-ares")
 makedepends=()
 
