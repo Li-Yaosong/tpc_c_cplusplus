@@ -21,7 +21,7 @@ pkgrel=0
 pkgdesc="Zstandard, or zstd as short version, is a fast lossless compression algorithm, targeting real-time compression scenarios at zlib-level and better compression ratios"
 url="https://github.com/facebook/zstd"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("BSD and GPLv2")
+license=("BSD or GPLv2")
 depends=()
 makedepends=()
 
