@@ -29,7 +29,7 @@ lycium
 
 ### 修改三方库的编译方式以及编译参数
 
-lycium框架提供了[HPKBUILD](./lycium/template/HPKBUILD)文件供开发者对相应的C/C++三方库的编译配置。具体方法：
+lycium框架提供了[HPKBUILD](./template/HPKBUILD)文件供开发者对相应的C/C++三方库的编译配置。具体方法：
 
 1. 在[thirdparty](../thirdparty/)目录下新建需要共建的三方库名字pkgname。
 2. 将[HPKBUILD](./template/HPKBUILD)模板文件拷贝到新建三方库目录下。
