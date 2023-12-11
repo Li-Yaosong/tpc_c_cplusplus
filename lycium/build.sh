@@ -16,6 +16,10 @@ then
     lyciumroot=`cygpath -w $PWD`
     LYCIUM_ROOT=${lyciumroot//\\/\/}
     buildcheckflag=false
+elif [ "$osname" == "Darwi" ] # Darwin
+then
+    echo "Build OS Darwin"
+    LYCIUM_ROOT=$(cd $(dirname ${BASH_SOURCE[0]}); pwd)
 else
     echo "System cannot recognize, exiting"
     exit 0
