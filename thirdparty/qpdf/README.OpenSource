@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "qpdf",
+        "License": "Apache License 2.0",
+        "License File": "LICENSE.txt",
+        "Version Number": "v11.6.3",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/qpdf/qpdf/archive/refs/tags/v11.6.3.tar.gz",
+        "Description": "QPDF is a command-line tool and C++ library that performs content-preserving transformations on PDF files. "
+    }
+]
