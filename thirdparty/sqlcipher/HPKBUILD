@@ -21,6 +21,7 @@ url="https://github.com/sqlcipher/sqlcipher"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD")
 depends=("openssl" "tcl")
+#安裝tclsh工具 sudo apt install tcl
 makedepends=("tclsh")
 source="https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
