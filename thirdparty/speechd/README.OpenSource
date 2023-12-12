@@ -1,8 +1,8 @@
 [
     {
         "Name": "",
-        "License": "GNU LESSER GENERAL PUBLIC LICENSE",
-        "License File": "COPYING.LGPL",
+        "License": "GPL2 or later",
+        "License File": "COPYING.LGPL COPYING.GPL-3 COPYING.GPL-2",
         "Version Number": "0.11.5",
         "Owner": "huangminzhong2@huawei.com",
         "Upstream URL": "https://github.com/brailcom/speechd/archive/refs/tags/0.11.5.zip",
