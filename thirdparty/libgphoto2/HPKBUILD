@@ -105,9 +105,11 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    ./configure "$@" --host=$host CPPFLAGS="-I${LYCIUM_ROOT}/usr/libtool/${ARCH}/include -I${LYCIUM_ROOT}/usr/jpeg/${ARCH}/include \
-        -I${LYCIUM_ROOT}/usr/libxml2/${ARCH}/include" \
-        LDFLAGS="-L${LYCIUM_ROOT}/usr/libtool/${ARCH}/lib -L${LYCIUM_ROOT}/usr/jpeg/${ARCH}/lib -L${LYCIUM_ROOT}/usr/libxml2/${ARCH}/lib" > $buildlog 2>&1
+    ./configure "$@" --host=$host \
+        CPPFLAGS="-I${LYCIUM_ROOT}/usr/libtool/${ARCH}/include -I${LYCIUM_ROOT}/usr/jpeg/${ARCH}/include \
+            -I${LYCIUM_ROOT}/usr/libxml2/${ARCH}/include" \
+        LDFLAGS="-L${LYCIUM_ROOT}/usr/libtool/${ARCH}/lib -L${LYCIUM_ROOT}/usr/jpeg/${ARCH}/lib \
+            -L${LYCIUM_ROOT}/usr/libxml2/${ARCH}/lib" > $buildlog 2>&1
     $MAKE >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
