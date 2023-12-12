@@ -55,7 +55,7 @@ prepare() {
 build() {
     cd $builddir/$ARCH-build
     c_flag=$CFLAGS" -DSQLITE_HAS_CODEC -DSQLCIPHER_TEST -I${LYCIUM_ROOT}/usr/openssl/${ARCH}/include"
-    PKG_CONFIG_LIBS="${pkgconfigpath}" LDFLAGS="-L${LYCIUM_ROOT}/usr/openssl/${ARCH}/lib -lcrypto \
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" LDFLAGS="-L${LYCIUM_ROOT}/usr/openssl/${ARCH}/lib -lcrypto \
     -I${LYCIUM_ROOT}/usr/tcl/${ARCH}/include -L${LYCIUM_ROOT}/usr/tcl/${ARCH}/lib -ltcl8.6" CFLAGS=$c_flag \
     ../configure "$@" --host=$host --enable-fts5 > $buildlog 2>&1
     $MAKE >> $buildlog 2>&1
