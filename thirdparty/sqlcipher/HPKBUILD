@@ -56,8 +56,8 @@ build() {
     cd $builddir/$ARCH-build
     c_flag=$CFLAGS" -DSQLITE_HAS_CODEC -DSQLCIPHER_TEST -I${LYCIUM_ROOT}/usr/openssl/${ARCH}/include"
     PKG_CONFIG_LIBDIR="${pkgconfigpath}" LDFLAGS="-L${LYCIUM_ROOT}/usr/openssl/${ARCH}/lib -lcrypto \
-    -I${LYCIUM_ROOT}/usr/tcl/${ARCH}/include -L${LYCIUM_ROOT}/usr/tcl/${ARCH}/lib -ltcl8.6" CFLAGS=$c_flag \
-    ../configure "$@" --host=$host --enable-fts5 > $buildlog 2>&1
+        -I${LYCIUM_ROOT}/usr/tcl/${ARCH}/include -L${LYCIUM_ROOT}/usr/tcl/${ARCH}/lib -ltcl8.6" CFLAGS=$c_flag \
+        ../configure "$@" --host=$host --enable-fts5 > $buildlog 2>&1
     $MAKE >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
@@ -76,15 +76,6 @@ check() {
     cd $builddir/$ARCH-build
     $MAKE testfixture >> $buildlog 2>&1
 
-    if [ $ARCH == "armeabi-v7a" ]
-    then
-        unsetarm32ENV
-    fi
-    if [ $ARCH == "arm64-v8a" ]
-    then
-        unsetarm64ENV
-    fi
-    unset host
     echo "The test must be on an OpenHarmony device!"
     #real test CMD
     #cd tpc_c_cplusplus/thirdparty/sqlcipher/sqlcipher-4.5.5/arm64-v8a-build/
@@ -93,6 +84,20 @@ check() {
     ret=$?
     cd $OLDPWD
     return $ret
+}
+
+recoverpkgbuildenv() {
+    unset host
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        unsetarm32ENV
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        unsetarm64ENV
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
 }
 
 # 清理环境

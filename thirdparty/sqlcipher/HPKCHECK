@@ -22,11 +22,6 @@ openharmonycheck() {
     cd $builddir/${ARCH}-build
     ./testfixture ../test/sqlcipher.test > ${logfile} 2>&1
     res=$?
-    if [ $res -ne 0 ]
-    then
-        mkdir -p ${LYCIUM_FAULT_PATH}/${pkgname}
-        cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/
-    fi
     cd $OLDPWD
 
     return $res
