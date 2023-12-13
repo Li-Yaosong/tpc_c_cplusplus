@@ -1,0 +1,24 @@
+diff -urN a/Modules/_cryptmodule.c b/Modules/_cryptmodule.c
+--- a/Modules/_cryptmodule.c	
++++ b/Modules/_cryptmodule.c	
+@@ -39,8 +39,8 @@
+     struct crypt_data data;
+     memset(&data, 0, sizeof(data));
+     crypt_result = crypt_r(word, salt, &data);
+-#else
+-    crypt_result = crypt(word, salt);
++//#else
++    //crypt_result = crypt(word, salt);
+ #endif
+     return Py_BuildValue("s", crypt_result);
+ }
+diff -urN a/Modules/socketmodule.h b/Modules/socketmodule.h
+--- a/Modules/socketmodule.h	
++++ b/Modules/socketmodule.h	
+@@ -1,5 +1,5 @@
+ /* Socket module header file */
+-
++#define CAN_RAW_FD_FRAMES 5
+ /* Includes needed for the sockaddr_* symbols below */
+ #ifndef MS_WINDOWS
+ #ifdef __VMS
