@@ -52,13 +52,13 @@ prepare() {
         unzip c2man.zip > `pwd`/build.log 2>&1
         cd c2man-master
         ./Configure -d -e > `pwd`/build.log 2>&1
-        make -j4 >> `pwd`/build.log 2>&1
+        $MAKE >> `pwd`/build.log 2>&1
         cd $OLDPWD
         buildhostc2man=false
     fi
     # 把c2man的路径配置到PATH中
     originalPath=$PATH
-    export PATH=$PATH:$LYCIUM_ROOT/main/$pkgname/c2man-master
+    export PATH=$PATH:$LYCIUM_ROOT/../thirdparty/$pkgname/c2man-master
     if [ $ARCH == "armeabi-v7a" ]
     then
         setarm32ENV
@@ -73,7 +73,7 @@ prepare() {
     if $autogenflag
     then
         cd $builddir
-        ./autogen.sh >> `pwd`/build.log 2>&1
+        ./autogen.sh > `pwd`/build.log 2>&1
         autogenflag=false
         cd $OLDPWD
     fi
@@ -82,9 +82,8 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    ../configure "$@" --host=$host --enable-static > `pwd`/build.log 2>&1
-    make -j4 >> `pwd`/build.log 2>&1
-    export PATH=$originalPath
+    ../configure "$@" --host=$host --enable-static > $buildlog 2>&1
+    $MAKE >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -92,13 +91,13 @@ build() {
 
 package() {
     cd $builddir/$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
 check() {
     cd $builddir/$ARCH-build
-    make -C test/unicode-conformance BidiTest BidiCharacterTest > `pwd`/build.log 2>&1
+    $MAKE -C test/unicode-conformance BidiTest BidiCharacterTest >> $buildlog 2>&1
     ret=$?
     if [ $ARCH == "armeabi-v7a" ]
     then
@@ -113,6 +112,7 @@ check() {
     mv test/unicode-conformance/tmp_Makefile test/unicode-conformance/Makefile
     cd $OLDPWD
     unset host
+    export PATH=$originalPath
     echo "The test must be on an OpenHarmony device!"
     # real test
     # make -C test/unicode-conformance/ check-TESTS
