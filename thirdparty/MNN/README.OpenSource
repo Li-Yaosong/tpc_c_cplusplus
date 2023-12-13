@@ -2,9 +2,9 @@
     {
         "Name": "MNN",
         "License": "Apache 2.0",
-        "License File": "",
+        "License File": "README",
         "Version Number": "2.6.3",
-        "Owner": "1393302983@qq.com",
+        "Owner": "huangminzhong2@huawei.com",
         "Upstream URL": "https://github.com/alibaba/MNN/archive/refs/tags/2.6.3.tar.gz",
         "Description": "MNN is a highly efficient and lightweight deep learning framework.It supports inference and training of deep learning models."
     }
