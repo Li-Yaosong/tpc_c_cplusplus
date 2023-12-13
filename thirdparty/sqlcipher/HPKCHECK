@@ -23,7 +23,6 @@ openharmonycheck() {
     ./testfixture ../test/sqlcipher.test > ${logfile} 2>&1
     res=$?
     cd $OLDPWD
-
     return $res
 }
 

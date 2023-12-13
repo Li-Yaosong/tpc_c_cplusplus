@@ -13,6 +13,7 @@
 
 # Contributor: OneJUGE <wangwenju5@h-partners.com>
 # Maintainer:  OneJUGE <wangwenju5@h-partners.com>
+
 pkgname=sqlcipher
 pkgver=v4.5.5
 pkgrel=0
@@ -75,12 +76,10 @@ package() {
 check() {
     cd $builddir/$ARCH-build
     $MAKE testfixture >> $buildlog 2>&1
-
     echo "The test must be on an OpenHarmony device!"
     #real test CMD
     #cd tpc_c_cplusplus/thirdparty/sqlcipher/sqlcipher-4.5.5/arm64-v8a-build/
     #./testfixture ../test/sqlcipher.test
-
     ret=$?
     cd $OLDPWD
     return $ret
