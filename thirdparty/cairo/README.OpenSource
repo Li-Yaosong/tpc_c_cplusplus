@@ -1,7 +1,7 @@
 [
     {
         "Name": "cairo",
-        "License": "LGPL-2.1","MPL 1.1",
+        "License": "LGPL-2.1 or MPL-1.1"
         "License File": "COPYING","COPYING-LGPL-2.1","COPYING-MPL-1.1"
         "Version Number": "1.17.8",
         "Owner": "huangminzhong2@huawei.com",
