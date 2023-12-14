@@ -20,10 +20,19 @@ buildtools="configure"
 builddir=$pkgname-${pkgver}
 packagename=$builddir.zip
 
+patch_flag=true
+
 source envset.sh
 
 prepare() {
     mkdir -p $builddir/$ARCH-build
+    if [ "$patch_flag" == true ]
+    then
+        cd $builddir
+        patch -p1 < ../zlib_ohos_pkg.patch
+        cd $OLDPWD
+        patch_flag=false
+    fi
     if [ $ARCH == "armeabi-v7a" ]
     then
         setarm32ENV
