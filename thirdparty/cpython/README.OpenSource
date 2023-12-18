@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "cpython",
+        "License": "BSD",
+        "License File": "LICENSE",
+        "Version Number": "3.8",
+        "Owner": "jia_jiahao@runkaihong.com.cn",
+        "Upstream URL": "https://github.com/python/cpython",
+        "Description": "The Python programming language"
+    }
+]
