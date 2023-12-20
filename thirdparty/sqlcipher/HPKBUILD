@@ -35,7 +35,6 @@ packagename=$builddir.tar.gz
 
 source envset.sh
 host=
-c_flag=
 
 prepare() {
     mkdir -p $builddir/$ARCH-build
@@ -49,13 +48,13 @@ prepare() {
         setarm64ENV
         host=aarch64-linux
     fi
-    c_flag=$CFLAGS" -DSQLITE_HAS_CODEC -DSQLCIPHER_TEST -I${LYCIUM_ROOT}/usr/openssl/${ARCH}/include"
 }
 
 build() {
     cd $builddir/$ARCH-build
     PKG_CONFIG_LIBDIR="${pkgconfigpath}" LDFLAGS="-L${LYCIUM_ROOT}/usr/openssl/${ARCH}/lib -lcrypto \
-        -I${LYCIUM_ROOT}/usr/tcl/${ARCH}/include -L${LYCIUM_ROOT}/usr/tcl/${ARCH}/lib -ltcl8.6" CFLAGS=$c_flag \
+        -I${LYCIUM_ROOT}/usr/tcl/${ARCH}/include -L${LYCIUM_ROOT}/usr/tcl/${ARCH}/lib -ltcl8.6" \
+        CFLAGS="$CFLAGS -DSQLITE_HAS_CODEC -DSQLCIPHER_TEST -I${LYCIUM_ROOT}/usr/openssl/${ARCH}/include" \
         ../configure "$@" --host=$host --enable-fts5 > $buildlog 2>&1
     $MAKE >> $buildlog 2>&1
     ret=$?
@@ -75,9 +74,9 @@ check() {
     cd $builddir/$ARCH-build
     $MAKE testfixture >> $buildlog 2>&1
     echo "The test must be on an OpenHarmony device!"
-    #real test CMD
-    #cd tpc_c_cplusplus/thirdparty/sqlcipher/sqlcipher-4.5.5/arm64-v8a-build/
-    #./testfixture ../test/sqlcipher.test
+    # real test CMD
+    # cd tpc_c_cplusplus/thirdparty/sqlcipher/sqlcipher-4.5.5/arm64-v8a-build/
+    # ./testfixture ../test/sqlcipher.test
     ret=$?
     cd $OLDPWD
     return $ret
@@ -99,5 +98,5 @@ recoverpkgbuildenv() {
 
 # 清理环境
 cleanbuild() {
-    rm -rf ${PWD}$builddir #${PWD}/$packagename
+    rm -rf ${PWD}$builddir # ${PWD}/$packagename
 }
