@@ -22,7 +22,7 @@ url="https://github.com/sqlcipher/sqlcipher"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD")
 depends=("openssl" "tcl")
-#安裝tclsh工具 sudo apt install tcl
+# 安裝tclsh工具 sudo apt install tcl
 makedepends=("tclsh")
 source="https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
@@ -43,19 +43,17 @@ prepare() {
     then
         setarm32ENV
         host=arm-linux
-	export LDFLAGS="${OHOS_SDK}/native/llvm/lib/clang/$CLANG_VERSION/lib/arm-linux-ohos/a7_hard_neon-vfpv4/libclang_rt.builtins.a ${LDFLAGS}"
     fi
     if [ $ARCH == "arm64-v8a" ]
     then
         setarm64ENV
         host=aarch64-linux
-        export LDFLAGS="${OHOS_SDK}/native/llvm/lib/clang/$CLANG_VERSION/lib/aarch64-linux-ohos/libclang_rt.builtins.a ${LDFLAGS}"
     fi
+    c_flag=$CFLAGS" -DSQLITE_HAS_CODEC -DSQLCIPHER_TEST -I${LYCIUM_ROOT}/usr/openssl/${ARCH}/include"
 }
 
 build() {
     cd $builddir/$ARCH-build
-    c_flag=$CFLAGS" -DSQLITE_HAS_CODEC -DSQLCIPHER_TEST -I${LYCIUM_ROOT}/usr/openssl/${ARCH}/include"
     PKG_CONFIG_LIBDIR="${pkgconfigpath}" LDFLAGS="-L${LYCIUM_ROOT}/usr/openssl/${ARCH}/lib -lcrypto \
         -I${LYCIUM_ROOT}/usr/tcl/${ARCH}/include -L${LYCIUM_ROOT}/usr/tcl/${ARCH}/lib -ltcl8.6" CFLAGS=$c_flag \
         ../configure "$@" --host=$host --enable-fts5 > $buildlog 2>&1
