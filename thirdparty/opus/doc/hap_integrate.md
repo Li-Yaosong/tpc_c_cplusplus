@@ -49,7 +49,7 @@
 
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
 
-- ![Snipaste_2023-12-25_15-29-07](C:\Users\CWX1312875\Desktop\opus\doc\pic\Snipaste_2023-12-25_15-29-07.png)
+- ![Snipaste_2023-12-25_15-29-07](pic/Snipaste_2023-12-25_15-29-07.png)
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
 
@@ -68,7 +68,7 @@
 
 执行多项测试要自己创建一个.sh脚本将opus_demo放去其中输入不同的参数，执行编码或解码测试
 
-![Snipaste_2023-12-25_15-33-25](C:\Users\CWX1312875\Desktop\opus\doc\pic\Snipaste_2023-12-25_15-33-25.png)
+![Snipaste_2023-12-25_15-33-25](pic/Snipaste_2023-12-25_15-33-25.png)
 
 ## 参考资料
 

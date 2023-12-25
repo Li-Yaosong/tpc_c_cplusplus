@@ -49,7 +49,7 @@
 
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
 
-  ![Snipaste_2023-12-25_17-45-11](C:\Users\CWX1312875\Desktop\shapelib\docs\pic\Snipaste_2023-12-25_17-45-11.png)
+  ![Snipaste_2023-12-25_17-45-11](pic/Snipaste_2023-12-25_17-45-11.png)
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
 
@@ -67,7 +67,7 @@
 
 若是进行单元测试需要设置环境变量链接库，将tests目录下的test1.sh，test2.sh，test3.sh拉入构建目录下，进入到对应版本build构建目录下的test目录执行如下命令./test1.sh ,./test2.sh,./test3.sh，如下图所示
 
-![Snipaste_2023-12-25_18-22-22](C:\Users\CWX1312875\Desktop\shapelib\docs\pic\Snipaste_2023-12-25_18-22-22.png)
+![Snipaste_2023-12-25_18-22-22](pic/Snipaste_2023-12-25_18-22-22.png)
 
 
 
