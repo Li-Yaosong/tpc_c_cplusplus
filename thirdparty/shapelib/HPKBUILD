@@ -6,23 +6,23 @@
 # Contributor: Your Name <youremail@domain.com>
 # Maintainer: Your Name <youremail@domain.com>
 
-pkgname=opus # 库名
-pkgver=1.4 # 库版本
+pkgname=shapelib # 库名
+pkgver=1.5.0 # 库版本
 pkgrel=0 # 发布号
-pkgdesc="Opus is a codec for interactive speech and audio transmission over the Internet." # 库描述
+pkgdesc="Mainly used for reading, writing, and manipulating ESRI Shapefile file formats, including .shp (spatial geometry information) and .dbf (attribute information) files" # 库描述
 archs=("armeabi-v7a" "arm64-v8a") # cpu 架构
-url="https://opus-codec.org"
-license=("the Modified(2-clause or 3-clause)BSD License or the Clear BSD License")
+url="https://github.com/OSGeo/shapelib"      
+license=( "LICENSE-LGPL,LICENSE-MIT")
 depends=() # 依赖库的目录名 必须保证被依赖的库的archs是当前库的archs的超集
 makedepends=() # 构建库时的依赖工具->需要用户安装的工具
-source="https://downloads.xiph.org/releases/opus/opus-1.4.tar.gz"
+source="https://download.osgeo.org/shapelib/shapelib-1.5.0.zip"
 
 downloadpackage=true # 是否自动下载压缩包，如若不写默认 true. (应对一些特殊情况，代码只能 git clone (项目中依赖 submoudle ))
 autounpack=true # 是否自动解压，如若不写默认 true, 如果为 false 则需要用户在 prepare 函数中自行解压
 buildtools= cmake # 编译方法, 暂时支持cmake, configure, make等, 是什么就填写什么. 如若不写默认为cmake.
 
 builddir=$pkgname-${pkgver} # 源码压缩包解压后目录名 编译目录名
-packagename=$builddir.tar.gz # 压缩包名
+packagename=$builddir.zip  # 压缩包名
 
 # 为编译设置环境，如设置环境变量，创建编译目录等
 prepare() {
