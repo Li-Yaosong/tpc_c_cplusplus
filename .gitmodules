@@ -1,4 +1,0 @@
-[submodule "thirdparty/OPUS"]
-	url  = https://gitee.com/hahachen123/tpc_c_cplusplus
-	path = thirdparty/OPUS
-
