@@ -25,7 +25,8 @@ license=()
 depends=() # 依赖库的目录名 必须保证被依赖的库的archs是当前库的archs的超集
 makedepends=() # 构建库时的依赖工具->需要用户安装的工具
 #官网下载链接
-source="https://github.com/Tencent/rapidjson/archive/master.zip" # 库源码下载链接
+#source="https://github.com/Tencent/rapidjson/archive/master.zip" # 库源码下载链接，网络问题
+source=https://bj.bcebos.com/v1/ai-studio-online/6d23b4be9dbd469c91c11b6f324c31adfb399cd6b8ce45858f695594c72217de?responseContentDisposition=attachment%3B%20filename%3Drapidjson-master.zip#镜像链接
 autounpack=true
 downloadpackage=true
 buildtools="cmake"
@@ -39,10 +40,10 @@ prepare() {
 }
 build() {
     cd $builddir
-     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
     -DCMAKE_CXX_FLAGS=-Wno-unused-command-line-argument -B${ARCH}-build -S./ >>$buildlog 2>&1
     cd $builddir
-    make  VERBOSE=1 -C ${ARCH}-build >> $buildlog 2>&1
+    make -j4 -C $ARCH-build >> $buildlog 2>&1
    
     ret=$?
     cd $OLDPWD
