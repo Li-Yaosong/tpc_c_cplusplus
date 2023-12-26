@@ -1,0 +1,68 @@
+#Tencent is pleased to support the open source community by making RapidJSON available.
+
+#Copyright (C) 2015 THL A29 Limited, a Tencent company, and Milo Yip.
+
+#Licensed under the MIT License (the "License"); you may not use this file except
+#in compliance with the License. You may obtain a copy of the License at
+
+#http://opensource.org/licenses/MIT
+
+#Unless required by applicable law or agreed to in writing, software distributed 
+#under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
+#CONDITIONS OF ANY KIND, either express or implied. See the License for the 
+#specific language governing permissions and limitations under the License.
+
+# Contributor: maoshanshan5@h-partners.com
+# Maintainer: maoshanshan5@h-partners.com
+
+pkgname=rapidjson # 库名
+pkgver=1.1.0 # 库版本
+pkgrel=0 # 发布号
+pkgdesc="A fast JSON parser" # 库描述
+url="https://rapidjson.org/" # 官网链接
+archs=("armeabi-v7a" "arm64-v8a") # cpu 架构
+license=()
+depends=() # 依赖库的目录名 必须保证被依赖的库的archs是当前库的archs的超集
+makedepends=() # 构建库时的依赖工具->需要用户安装的工具
+#官网下载链接
+source="https://github.com/Tencent/rapidjson/archive/master.zip" # 库源码下载链接
+autounpack=true
+downloadpackage=true
+buildtools="cmake"
+
+builddir=$pkgname-master
+packagename=${pkgname}-master.zip
+
+
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+}
+build() {
+    cd $builddir
+     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    -DCMAKE_CXX_FLAGS=-Wno-unused-command-line-argument -B${ARCH}-build -S./ >>$buildlog 2>&1
+    cd $builddir
+    make  VERBOSE=1 -C ${ARCH}-build >> $buildlog 2>&1
+   
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir/bin
+    make -C $ARCH-build install
+    cd $OLDPWD
+  
+}
+
+check() {
+
+echo "The test must be on an OpenHarmony device!"
+
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
