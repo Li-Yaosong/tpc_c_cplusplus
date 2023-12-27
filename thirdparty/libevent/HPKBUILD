@@ -1,26 +1,78 @@
-# Contributor: Chen Xu <chenxu.unix@gmail.com>
-# Maintainer:  Chen Xu <chenxu.unix@gmail.com>
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: Jeff Han <hanjinfei@foxmail.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
+
 pkgname=libevent
-pkgver=release-2.1.12-stable
+pkgver=2.1.12
 pkgrel=0
-pkgdesc="libevent is meant to replace the event loop found in event driven network servers. An application just needs to call event_dispatch() and then add or remove events dynamically without having to change the event loop."
+pkgdesc="I/O"
 url="https://libevent.org/"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("BSD-style license")
-depends=("openssl")
+license=("the 3-clause (or \"modified\") BSD license and Apache-2.0")
+depends=(openssl)
 makedepends=()
-source="https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+
+source="https://master.dl.sourceforge.net/project/libevent.mirror/release-2.1.12-stable/release-2.1.12-stable.zip?viasf=1"
+#gihub无法连接，下载失败
+#source="https://codeload.github.com/Tencent/rapidjson/zip/refs/heads/master"
+#官网下载链接,无法下载
+#source="https://objects.githubusercontent.com/github-production-release-asset-2e65be/1856976/1524bb00-bedd-11ea-8c51-a1125df41e13?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20231226%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231226T075300Z&X-Amz-Expires=300&X-Amz-Signature=4d2c529061f949fac717fdb00ba2507c5b5a70a611df723b0da0783166da59cd&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=1856976&response-content-disposition=attachment%3B%20filename%3Dlibevent-2.1.12-stable.tar.gz&response-content-type=application%2Foctet-stream"
+
 
 autounpack=true
 downloadpackage=true
+buildtools="cmake"
 
-builddir=$pkgname-${pkgver}
-packagename=$builddir.tar.gz
+builddir=libevent-libevent-4f12382
+packagename=release-2.1.12-stable.zip
+patchflag=true
 
+source envset.sh
+
+host=
 prepare() {
+    if $patchflag
+    then
+        cd $builddir
+        # 屏蔽测试bug
+        #patch -p1 < `pwd`/../openssl_oh_test.patch
+        # patch只需要打一次,关闭打patch
+        patchflag=false
+        cd $OLDPWD
+    fi
     mkdir -p $builddir/$ARCH-build
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        setarm32ENV
+        host=linux-generic32
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        setarm64ENV
+        host=linux-aarch64
+    elif [ $ARCH == "x86_64" ]
+    then
+        setx86_64ENV
+        host=linux-x86_64
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
+
 }
 
+#参数1
 build() {
     cd $builddir
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH \
@@ -32,17 +84,41 @@ build() {
     return $ret
 }
 
+
 package() {
-    cd $builddir
-    make -C $ARCH-build install VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $builddir/$ARCH-build
+    make install >> `pwd`/build.log 2>&1
     cd $OLDPWD
 }
 
 check() {
+    cd $builddir/$ARCH-build
+    make depend >> `pwd`/build.log 2>&1
+    cd $OLDPWD
+    unset host
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        unsetarm32ENV
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        unsetarm64ENV
+	elif [ $ARCH == "x86_64" ]
+	then
+		setx86_64ENV
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
     echo "The test must be on an OpenHarmony device!"
+    # real test CMD
+    # 将编译目录加到 LD_LIBRARY_PATH 环境变量
+    # make test
+    # make test TESTS=test_shlibload V=1 运行指定测试用例
+    # 32 个用例错误判定为误报, 不同系统错误描述不同(实际为正常)
+    # 8 个 dlopen 用例错误(尽量避开使用dlopen加载动态库), 进程退出时 signal 11. 系在特定平台，使用方法问题 典型问题，采用patch规避
 }
 
 # 清理环境
 cleanbuild() {
-    rm -rf ${PWD}/$builddir # ${PWD}/$packagename
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
 }
