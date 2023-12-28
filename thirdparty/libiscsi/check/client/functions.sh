@@ -82,5 +82,9 @@ success() {
 
 failure() {
     echo "[FAILED]"
+    echo "\n可能的错误原因：\n"
+    echo "    1.检查functions.sh中IPADDR是否已替换成服务端的IP地址;\n"
+    echo "    2.服务端对应的脚本是否已经先执行;\n"
+    echo "    3.functions.sh中配置的IP地址应是服务端的IP，并且可以被ping通。"
     exit 1
 }
