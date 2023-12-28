@@ -21,16 +21,28 @@ source envset.sh
 buildhost=true
 arch=
 ldflags=
+
 prepare() {
+    if [ "$LYCIUM_BUILD_OS" == "Linux" ]
+    then
+        hostosname=linux
+    elif [ "$LYCIUM_BUILD_OS" == "Darwi" ]
+    then
+        hostosname=darwin
+    else
+        echo "System cannot recognize, exiting"
+        return -1
+    fi
     if [ $buildhost == true ]
     then
         tar -zxf $packagename
         cd $builddir
-        ./configure --enable-static --enable-shared --disable-doc --disable-htmlpages --target-os=linux --disable-optimizations --prefix=`pwd`/hostbuild > $publicbuildlog 2>&1
+        ./configure --enable-static --enable-shared --disable-doc --disable-htmlpages \
+            --target-os=$hostosname --disable-optimizations --prefix=`pwd`/hostbuild > $publicbuildlog 2>&1
         $MAKE >> $publicbuildlog 2>&1
         $MAKE install >> $publicbuildlog 2>&1
         export LD_LIBRARY_PATH=`pwd`/hostbuild/lib:$LD_LIBRARY_PATH
-        sed -i 's/include $(SRC_PATH)\/tests\/fate\/source.mak/#include $(SRC_PATH)\/tests\/fate\/source.mak/g' tests/Makefile
+        sed -i.bak 's/include $(SRC_PATH)\/tests\/fate\/source.mak/#include $(SRC_PATH)\/tests\/fate\/source.mak/g' tests/Makefile
         $MAKE check >> $publicbuildlog 2>&1
         ret=$?
         buildhost=false
@@ -78,19 +90,8 @@ package() {
     cd $pkgname-$ARCH-build/$builddir
     $MAKE install >> $buildlog 2>&1
     cd $OLDPWD
-    unset arch
-    unset ldflags
-    if [ $ARCH == "armeabi-v7a" ]
-    then
-        unsetarm32ENV
-    elif [ $ARCH == "arm64-v8a" ]
-    then
-        unsetarm64ENV
-    else
-        echo "${ARCH} not support"
-        return -1
-    fi
 }
+
 checktestfiles() {
     cd $pkgname-$ARCH-build/$builddir/tests/ref
 
@@ -105,7 +106,7 @@ checktestfiles() {
             str=`cat $dir/$file | grep "\*tests"`
             if [ ! -z "$str" ]
             then
-                sed -i 's/\*tests/tests/g' $dir/$file
+                sed -i.bak 's/\*tests/tests/g' $dir/$file
             fi
         done
     done
@@ -125,11 +126,11 @@ copyhostbin() {
 check() {
     cd $pkgname-$ARCH-build/$builddir
     # disable running cmd
-    sed -i 's/	$(Q)$(SRC_PATH)\/tests\/fate-run.sh/#	$(Q)$(SRC_PATH)\/tests\/fate-run.sh/g' tests/Makefile
+    sed -i.bak 's/	$(Q)$(SRC_PATH)\/tests\/fate-run.sh/#	$(Q)$(SRC_PATH)\/tests\/fate-run.sh/g' tests/Makefile
     # disable check git sources
-    sed -i 's/include $(SRC_PATH)\/tests\/fate\/source.mak/#include $(SRC_PATH)\/tests\/fate\/source.mak/g' tests/Makefile
+    sed -i.bak 's/include $(SRC_PATH)\/tests\/fate\/source.mak/#include $(SRC_PATH)\/tests\/fate\/source.mak/g' tests/Makefile
     # disable check ffprobe,this use xmllint command, which ohos is not support
-    sed -i 's/include $(SRC_PATH)\/tests\/fate\/ffprobe.mak/#include $(SRC_PATH)\/tests\/fate\/ffprobe.mak/g' tests/Makefile
+    sed -i.bak 's/include $(SRC_PATH)\/tests\/fate\/ffprobe.mak/#include $(SRC_PATH)\/tests\/fate\/ffprobe.mak/g' tests/Makefile
 
     # change x86 cmd for generate test target
     mv ffmpeg ffmpeg.${ARCH}
@@ -168,7 +169,7 @@ check() {
     done
 
     # reduction running cmd for real test
-    sed -i 's/#	$(Q)$(SRC_PATH)\/tests\/fate-run.sh/	$(Q)$(SRC_PATH)\/tests\/fate-run.sh/g' tests/Makefile
+    sed -i.bak 's/#	$(Q)$(SRC_PATH)\/tests\/fate-run.sh/	$(Q)$(SRC_PATH)\/tests\/fate-run.sh/g' tests/Makefile
     cd $OLDPWD
     checktestfiles
 
@@ -178,6 +179,21 @@ check() {
     # make check
 
     return $ret
+}
+
+recoverpkgbuildenv() {
+    unset arch
+    unset ldflags
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        unsetarm32ENV
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        unsetarm64ENV
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
 }
 
 # 清理环境
