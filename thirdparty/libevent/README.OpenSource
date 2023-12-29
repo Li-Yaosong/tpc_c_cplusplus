@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libevent",
+        "License": "BSD-style license",
+        "License File": "LICENSE",
+        "Version Number": "release-2.1.12-stable",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/libevent/libevent/releases/tag/release-2.1.12-stable",
+        "Description": "Libevent supports /dev/poll, kqueue(2), event ports, POSIX select(2), Windows select(), poll(2), and epoll(4). Libevent additionally provides a sophisticated framework for buffered network IO, with support for sockets, filters, rate-limiting, SSL, zero-copy file transmission, and IOCP. Libevent includes support for several useful protocols, including DNS, HTTP, and a minimal RPC framework."
+    }
+]
