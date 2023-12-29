@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "opencv",
+        "License": "Apache License 2.0",
+        "License File": "LICENSE",
+        "Version Number": "4.8.0",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://gitee.com/lycium_pkg_mirror/opencv/repository/archive/4.8.0.zip",
+        "Description": "OpenCV (Open Source Computer Vision Library) is an open source computer vision and machine learning software library."
+    }
+]
