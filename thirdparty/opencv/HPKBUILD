@@ -51,7 +51,7 @@ prepare() {
 
     if [ $testresdownloadflag == true ];then
         cd $builddir
-        #下载opencv测试资源
+        # 下载opencv测试资源
         wget -O $test_data.tar.gz -c https://github.com/$pkgname/$test_data_name/archive/refs/tags/$test_data_version.tar.gz >> $publicbuildlog 2>&1
         if [ $? -ne 0 ];then
         echo "Download failed"
