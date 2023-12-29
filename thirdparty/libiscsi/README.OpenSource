@@ -1,0 +1,12 @@
+[
+    {
+        "Name": "libiscsi",
+        "License": "GPL-2.0",
+        "License File": "LICENCE-GPL-2.txt",
+        "Version Number": "1.19.0",
+        "Owner": "wangwenju5@h-partners.com",
+        "Upstream URL": "https://github.com/sahlberg/libiscsi/archive/refs/tags/1.19.0.tar.gz",
+        "Description": "Libiscsi is a client-side library to implement the iSCSI protocol that can be used to access the resources of an iSCSI target"
+    }
+]
+
