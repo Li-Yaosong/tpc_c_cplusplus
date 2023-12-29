@@ -1,8 +1,4 @@
----
-typora-root-url: D:\HWproject\rapidjson\docs\pic
----
-
-# cups集成到应用hap
+# rapidjson集成到应用hap
 
 本库是在RK3568开发板上基于OpenHarmony3.2 Release版本的镜像验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
 
@@ -16,12 +12,13 @@ typora-root-url: D:\HWproject\rapidjson\docs\pic
 
   ```shell
   git clone https://gitee.com/openharmony-sig/tpc_c_cplusplus.git --depth=1
+  git submodule update --init    #更新依赖的三方库代码
   ```
 
 - 三方库目录结构
 
   ```shell
-  tpc_c_cplusplus/thirdparty/rapidjson      #三方库cups的目录结构如下
+  tpc_c_cplusplus/thirdparty/rapidjson #三方库rapidjson的目录结构如下
   ├── docs                             #三方库相关文档的文件夹
   ├── HPKBUILD                         #构建脚本
   ├── HPKCHECK                         #测试脚本
@@ -49,9 +46,9 @@ typora-root-url: D:\HWproject\rapidjson\docs\pic
   
 - [测试三方库](#测试三方库)
 
-## 应用中使用三方库（图片待补充）
+## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
+- 在IDE的cpp目录下新增thirdparty目录，将编译生成的arm64-v8a和armeabi-v7a库拷贝到该目录下， 如下图所示,由于rapidjson是头文件库，所以并不会生成.a和.so文件，特此说明  
 
   ![3](.\pic\3.PNG)
 
@@ -59,11 +56,10 @@ typora-root-url: D:\HWproject\rapidjson\docs\pic
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
 
-  ![1](.\pic\1.png)
+  ![image-20231228202528676](..\docs\pic\1.png)
 
   ```cmake
-  #将三方库的头文件加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_SOURCE_DIR}/thirdparty/rapidjson/${OHOS_ARCH}/lib/pkgconfig/RapidJSON.pc)        
+  #将三方库的头文件加入工程中      
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/rapidjson/${OHOS_ARCH}/include)  
   ```
 
@@ -72,9 +68,27 @@ typora-root-url: D:\HWproject\rapidjson\docs\pic
 
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
-进入到对应版本build构建目录下的bin目录,执行编译后的可执行文件，这里以archivertest为例，输入如下命令./archivertest，打印测试信息。
+测试三方库需要依赖gtest架构，在测试前需要运行下面命令安装gtest架构
 
-![2](D:\HWproject\rapidjson\docs\pic\2.png)
+```
+sudo aptitude install libgtest-dev  #安装gtest第三方包
+cd /usr/src/gtest/                  #进入gtest目录
+sudo cmake CMakeLists.txt           #执行cmake
+sudo make                           #执行make
+sudo cp *.a /usr/lib/               #安装gtest
+```
+
+三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](https://gitee.com/openharmony-sig/tpc_c_cplusplus/blob/master/lycium/README.md#3ci环境准备)
+
+进入到构建目录,执行如下命令
+
+```
+ctest -v
+```
+
+（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
+
+![](..\docs\pic\2.png)
 
 &nbsp;
 
