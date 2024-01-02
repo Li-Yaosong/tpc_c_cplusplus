@@ -55,7 +55,7 @@ prepare() {
     then
         cd $builddir
         # 测试资源下载
-        wget https://raw.githubusercontent.com/uavs3/avs3stream/master/ES/City_1280x720_60_ra/test.avs3
+        wget https://raw.githubusercontent.com/uavs3/avs3stream/master/ES/City_1280x720_60_ra/test.avs3 --no-check-certificate
         if [ $? != 0 ]
         then
             return -3
