@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "opus",
+        "License": "BSD- License",
+        "License File": "LICENSE_PLEASE_READ.txt",
+        "Version Number": "opus-1.4",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://downloads.xiph.org/releases/opus/opus-1.4.tar.gz",
+        "Description": "Opus is a code for interactive speech and audio transmission over the Internet."
+    }
+]
