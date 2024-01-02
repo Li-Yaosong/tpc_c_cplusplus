@@ -4,13 +4,13 @@
 
 北向应用集成三方库的方法除了通过[源码方式集成](../../docs/adapter_thirdlib.md)，也可以直接集成已交叉编译好的二进制文件。本文主要介绍如何将二进制文件集成到应用中。
 
-**注意：集成到北向应用的二进制文件必须是通过OpenHarmony的linux下的SDK交叉编译生成的，不能是通过rom方式编译生成的。**
+**注意：集成到北向应用的二进制文件必须是通过OpenHarmony的SDK交叉编译生成的，不能是通过rom方式编译生成的。**
 
 ## 集成方法
 
 ### 交叉编译三方库
 
-交叉编译的方法可以参照文档[OpenHarmony Linux 环境 SDK 使用说明](./ohos_use_sdk/OHOS_SDK-Usage.md),也可以直接使用[lycium工具](../)进行交叉编译.
+交叉编译的方法可以参照文档[OpenHarmony SDK 使用说明](./ohos_use_sdk/OHOS_SDK-Usage.md),也可以直接使用[lycium工具](../)进行交叉编译.
 
 ### 应用中调用三方库
 

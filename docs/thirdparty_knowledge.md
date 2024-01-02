@@ -11,14 +11,8 @@
 - :tw-1f195: [Napi 生命周期](napi_life_cycle.md)
 - :tw-1f195: [Napi 对象导出](napi_export_object.md)
 - :tw-1f195: [OpenHarmony北向应用如何引用C/C++三方库](./app_call_thirdlib_hap.md)
+- :tw-1f195: Napi接口封装工具：[aki](https://gitee.com/openharmony-sig/aki/blob/master/README.md)
 
-## C/C++ 三方库适配方法
-
-### 编译三方库
-
-- :tw-1f195: [Linux环境使用 OHOS SDK 编译三方库](../lycium/doc/ohos_use_sdk/OHOS_SDK-Usage.md)
-- :tw-1f195: [OpenHarmony C/C++三方库移植适配指导说明](thirdparty_port.md)
-  
 ### 在应用包（hap）中集成三方库
 
 - :tw-1f195: [什么是OH的应用包(hap)](hap.md)

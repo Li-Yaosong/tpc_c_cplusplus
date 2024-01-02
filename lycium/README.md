@@ -23,11 +23,11 @@ lycium
 
 ## 通过lycium工具快速共建C/C++三方库
 
-### 编译环境准备
+### 1.编译环境准备
 
 请阅读 [Buildtools README](./Buildtools/README.md)
 
-### 修改三方库的编译方式以及编译参数
+### 2.修改三方库的编译方式以及编译参数
 
 lycium框架提供了[HPKBUILD](./template/HPKBUILD)文件供开发者对相应的C/C++三方库的编译配置。具体方法：
 
@@ -35,7 +35,7 @@ lycium框架提供了[HPKBUILD](./template/HPKBUILD)文件供开发者对相应�
 2. 将[HPKBUILD](./template/HPKBUILD)模板文件拷贝到新建三方库目录下。
 3. 根据三方库实际情况修改[HPKBUILD](./template/HPKBUILD)模板，文件修改可参考[minizip共建](../docs/thirdparty_port.md#快速适配三方库实例)。
 
-### 快速编译三方库
+### 3.快速编译三方库
 
 配置完三方库的编译方式参数后，在[lycium](./)目录执行./build.sh pkgname，进行自动编译三方库，并打包安装到当前目录的 usr/\$pkgname/$ARCH 目录
 
@@ -49,13 +49,13 @@ lycium框架提供了[HPKBUILD](./template/HPKBUILD)文件供开发者对相应�
 
 **lycium框架是通过linux shell脚本语言编写的，如果对shell语言不熟悉的开发者可以先学习[Linux Shell编程基础教程](https://blog.51cto.com/centos5/912584)。或者查找其他linux shell编程资料**
 
-### 编译后三方库在DevEco Studio上使用
+### 4.编译后三方库在DevEco Studio上使用
 
 请阅读[北向应用如何使用三方库二进制文件](doc/app_calls_third_lib.md)
 
-### 在OpenHarmony设备上快速验证C/C++三方库
+### 5.在OpenHarmony设备上快速验证C/C++三方库
 
-#### 测试环境准备
+#### 3CI环境准备
 
  业界内C/C++三方库测试框架多种多样，我们无法将其统一，因此为了保证原生库功能完整，我们基于原生库的测试用例进行测试验证。为此，我们需要集成了一套可以在OH环境上进行cmake, ctest等操作的环境，具体请阅读 [lycium CItools](./CItools/README_zh.md)。
 

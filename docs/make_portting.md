@@ -6,7 +6,7 @@ make 是一个标准的 Unix 构建工具，用于自动化编译过程。它读
 
 直接通过make方式构建的三方库，其原库的Makefie文件已固定，因此如果需要交叉编译此类三方库，需要先分析原库的Makefile文件，查看其编译工具的具体配置方式。
 
-本文通过bzip2三方库来分享如何通过OpenHarmony SDK来交叉编译make构建方式的三方库。
+本文通过bzip2三方库来分享如何通过OpenHarmony SDK在linux环境来交叉编译make构建方式的三方库。
 
 ## 编译前准备
 
