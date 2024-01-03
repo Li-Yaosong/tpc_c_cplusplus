@@ -10,8 +10,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
- 
- 
+
+
 # Contributor: Jiang Xu <xujiang16@h-partners.com>
 # Maintainer: huangminzhong <huangminzhong2@huawei.com>
 
@@ -57,7 +57,7 @@ prepare() {
 build() {
     cd $builddir-$ARCH-build
     PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" --host=$host >> $buildlog 2>&1
-    $MAKE VERBOSE=1 -j8 >> $buildlog 2>&1
+    MAKE VERBOSE=1 -j8 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -76,7 +76,10 @@ check() {
 }
 
 recoverpkgbuildenv() {
-    unset host                                                                                                                                                                             if [ $ARCH == "armeabi-v7a" ]                                                                                                                                                          then                                                                                                                                                                                       unsetarm32ENV
+    unset host
+    if [ $ARCH == "armeabi-v7a" ]                                                                                                                                                                         
+    then                                                                                                                                                                               
+        unsetarm32ENV
     elif [ $ARCH == "arm64-v8a" ]
     then
         unsetarm64ENV
@@ -92,3 +95,4 @@ cleanbuild() {
     rm -rf ${PWD}/$builddir-${archs[0]}-build 
     rm -rf ${PWD}/$builddir-${archs[1]}-build #${PWD}/$packagename
 }
+
