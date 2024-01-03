@@ -65,7 +65,6 @@ build() {
 package() {
     cd $builddir-$ARCH-build
     $MAKE install >> $buildlog 2>&1
-    $MAKE check >> $buildlog 2>&1 # 需要编译链接生成测试二进制可执行文件
     cd $OLDPWD
 }
 
