@@ -14,7 +14,6 @@
 # Contributor: Jiang Xu <xujiang16@h-partners.com>
 # Maintainer: huangminzhong <huangminzhong2@huawei.com>
 
-
 pkgname=ImageMagick
 pkgver=7.1.1-15
 pkgrel=0
