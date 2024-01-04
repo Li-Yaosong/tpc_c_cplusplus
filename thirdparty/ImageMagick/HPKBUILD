@@ -70,7 +70,6 @@ package() {
 
 check() {
     echo "The test must be on an OpenHarmony device!"
-    # $MAKE check >> $buildlog 2>&1 没有日志重定向
 }
 
 recoverpkgbuildenv() {
