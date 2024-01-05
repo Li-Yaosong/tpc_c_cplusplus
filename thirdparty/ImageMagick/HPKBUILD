@@ -72,10 +72,10 @@ check() {
     sed -i 's/$(MAKE) $(AM_MAKEFLAGS) check-TESTS check-local/#$(MAKE) $(AM_MAKEFLAGS) check-TESTS check-local/g'  Makefile
     $MAKE check >> $buildlog 2>&1
     ret=$?
+    cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
     # real test CMD
     # $MAKE check-TESTS >> $buildlog 2>&1
-    cd $OLDPWD
     return $ret
 }
 
