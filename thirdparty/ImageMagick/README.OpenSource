@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "ImageMagick",
+        "License": "ImageMagick License",
+        "License File": "LICENSE",
+        "Version Number": "ImageMagick-7.1.1-15",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/ImageMagick/ImageMagick/releases/tag/7.1.1-15",
+        "Description": "ImageMagick is a free and open-source software suite for displaying, converting, and editing raster image and vector image files. It can read and write over 200 image file formats, and can support a wide range of image manipulation operations, such as resizing, cropping, and color correction."
+    }
+]
