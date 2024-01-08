@@ -15,7 +15,7 @@
 # Maintainer:  huangminzhong <huangminzhong2@huawei.com>
 
 pkgname=shapelib
-pkgver=1.5.0
+pkgver=1.6.0
 pkgrel=0
 pkgdesc="Mainly used for reading, writing, and manipulating ESRI Shapefile file formats, including .shp (spatial geometry information) and .dbf (attribute information) files"
 archs=("armeabi-v7a" "arm64-v8a")
@@ -38,7 +38,9 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DEG_DATA:PATH=${PWD}/${ARCH}-build -DOHOS_ARCH=$ARCH -S../ > $buildlog 2>&1
+    #官网测试test1需要手动进行测试，并且提供的stream1.out与预期结果不符，官方pr有修复，但未合入所以暂时取消对test1的测试
+    #${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DEG_DATA:PATH=${PWD}/${ARCH}-build -DOHOS_ARCH=$ARCH -S../ > $buildlog 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -S../ > $buildlog 2>&1
     $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
@@ -52,7 +54,18 @@ package() {
 }
 
 check() {
-    echo "The test must be on an OpenHarmony device!"
+    cd $builddir/tests
+    if [ ! -f stream2.out ]
+    then
+        wget https://raw.githubusercontent.com/OSGeo/shapelib/master/tests/stream2.out >> $buildlog 2>&1
+    fi
+    if [ ! -f stream3.out ]
+    then
+        wget https://raw.githubusercontent.com/OSGeo/shapelib/master/tests/stream3.out >> $buildlog 2>&1
+    fi
+    cp stream2.out ../$ARCH-build
+    cp stream3.out ../$ARCH-build
+    cd $OLDPWD
 }
 
 cleanbuild() {
