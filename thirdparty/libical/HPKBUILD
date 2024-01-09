@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="Libical is an Open Source implementation of the iCalendar protocols and protocol data units."
 url="https://github.com/libical/libical"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("MPL v2.0" "LGPL 2.0")
+license=("MPL v2.0 or LGPL v2.1")
 depends=("icu" "libxml2")
 makedepends=()
 # 原仓地址: https://github.com/libical/$pkgname/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用镜像
