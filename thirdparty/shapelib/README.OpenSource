@@ -1,7 +1,7 @@
 [
     {
         "Name": "shapelib",
-        "License": "LICENSE-LGPL and LICENSE-MIT",
+        "License": "MIT OR LGPL-2.0-or-later",
         "License File": "LICENSE-LGPL and LICENSE-MIT",
         "Version Number": "shapelib-1.6.0",
         "Owner": "huangminzhong2@huawei.com",
