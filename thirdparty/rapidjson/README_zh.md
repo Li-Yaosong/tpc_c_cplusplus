@@ -7,3 +7,4 @@ RapidJson是一个跨平台的c++的json的解析器和生成器。
 - 当前适配的功能：支持json数据的解析和生成。
 ## 集成方式
 + [系统Rom包集成](docs/rom_integrate.md)
++ [应用包hap集成](/docs/hap_integrate.md)
