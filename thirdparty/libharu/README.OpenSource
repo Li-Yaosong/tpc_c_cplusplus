@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libharu",
+        "License": "zlib License",
+        "License File": "LICENSE",
+        "Version Number": "libharu-2.4.4",
+        "Owner": "huangminzhong2 <huangminzhong@huawei.com>",
+        "Upstream URL": "https://github.com/libharu/libharu/archive/refs/tags/v2.4.4.tar.gz",
+        "Description": "Haru is a free, cross platform, open-sourced software library for generating PDF."
+    }
+]
