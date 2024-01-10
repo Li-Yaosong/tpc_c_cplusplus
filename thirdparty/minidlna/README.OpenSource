@@ -2,9 +2,9 @@
     {
         "Name": "minidlna",
         "License": "GPLv2",
-        "License File": "https://sourceforge.net/projects/minidlna/",
+        "License File": "COPYING",
         "Version Number": "1.3.3",
-        "Owner": "sttangc@isoftstone.com",
+        "Owner": "huangminzhong2@huawei.com",
         "Upstream URL": "https://sourceforge.net/projects/minidlna/files/minidlna/1.3.3/minidlna-1.3.3.tar.gz",
         "Description": "MiniDLNA (aka ReadyDLNA) is server software with the aim of being fully compliant with DLNA/UPnP-AV clients."
     }
