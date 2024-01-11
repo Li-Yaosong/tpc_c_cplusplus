@@ -61,73 +61,73 @@ openharmonycheck() {
     fi
 
     runtest arc_demo
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest attach
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest character_map KSCms-UHC-HW-H BatangChe
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest encoding_list
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest encryption
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest ext_gstate_demo
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest font_demo
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest grid_sheet
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest image_demo
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest jpeg_demo
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest jpfont_demo
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest link_annotation
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest line_demo
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest outline_demo
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest permission
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest png_demo
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest raw_image_demo
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest slide_show_demo
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest text_annotation
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest text_demo
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest text_demo2
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest ttfont_demo ttfont/PenguinAttack.ttf
-    res=$((res+1))
+    res=$((res+$?))
 
     runtest ttfont_demo_jp ttfont/PenguinAttack.ttf
-    res=$((res+1))
+    res=$((res+$?))
 
     cd $OLDPWD
 
