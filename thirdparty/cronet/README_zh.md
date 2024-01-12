@@ -28,6 +28,12 @@ git apply --check cronet_TAG_107.0.5304.150_oh_pkg.patch # 检查patch是否可�
 git apply cronet_TAG_107.0.5304.150_oh_pkg.patch
 ```
 
+配置 OHOS_SDK
+
+```
+# 将 SDK 的 native 目录 copy 到，chromium 源码中 third_part 目录下的 ohos_sdk 目录。
+```
+
 进入src目录,执行:
 
 ```bash
