@@ -34,6 +34,11 @@ git apply cronet_TAG_107.0.5304.150_oh_pkg.patch
 # 将 SDK 的 native 目录 copy 到，chromium 源码中 third_part 目录下的 ohos_sdk 目录。
 ```
 
+配置 deps_tools
+```
+# 将 google depot_tool 拷贝到 third_part 目录下
+```
+
 进入src目录,执行:
 
 ```bash
