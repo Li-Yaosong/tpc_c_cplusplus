@@ -1,8 +1,8 @@
 [
     {
         "Name": "libiscsi",
-        "License": "GPL-2.0",
-        "License File": "LICENCE-GPL-2.txt",
+        "License": "GPL-2-or-later LGPL-2.1-or-later",
+        "License File": "COPYING",
         "Version Number": "1.19.0",
         "Owner": "wangwenju5@h-partners.com",
         "Upstream URL": "https://github.com/sahlberg/libiscsi/archive/refs/tags/1.19.0.tar.gz",
