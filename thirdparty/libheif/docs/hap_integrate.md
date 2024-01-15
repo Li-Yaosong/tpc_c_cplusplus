@@ -60,11 +60,14 @@
 
   ```shell
   #将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libheif/${OHOS_ARCH}/lib/libheif.a)
+  target_link_libraries(entry PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libheif/${OHOS_ARCH}/lib/libheif.so)
   #将三方库的头文件加入工程中
-  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libheif/${OHOS_ARCH}/include)
+  target_include_directories(entry PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libheif/${OHOS_ARCH}/include)
   ```
 
+![thirdparty_install_dir](pic/libheif_libs_dir.png)
+
+- 将libheif.so.1复制到libs下对应的arch文件夹中
 
 ## 测试三方库
 
