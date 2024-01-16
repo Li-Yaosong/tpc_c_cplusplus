@@ -52,6 +52,8 @@ package() {
 }
 
 check() {
+    #将测试用例使用的cmake改为CI工具的cmake
+    sed -i "s/\".*\/cmake\"/\"cmake\"/g" $builddir/$ARCH-build/CTestTestfile.cmake
     echo "The test must be on an OpenHarmony device!"
 }
 
