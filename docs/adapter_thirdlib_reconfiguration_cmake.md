@@ -158,7 +158,7 @@ cmake构建方式是开源三方库的主流构建方式。DevEco Studio目前�
 
 ### 加入编译构建
 
-原生库源码准备完后，我们需要将库加入到工程的编译构建中。在工程目录CPP下的CMakeLists.txt文件中，通过add_subdirectory将minizip-ng加入到编译中，并通过target_link_libraries添加对openjpeg的链接，如下图： <br>
+原生库源码准备完后，我们需要将库加入到工程的编译构建中。在工程目录CPP下的CMakeLists.txt文件中，通过add_subdirectory将minizip-ng加入到编译中，并通过target_link_libraries添加对minizip-ng的链接，如下图： <br>
 ![引入三方库编译](media/add_lib1.png)
 
 到此，我们的三方库适配已经完成，可以通过IDE上的`Run entry`按钮进行编译及运行了。
