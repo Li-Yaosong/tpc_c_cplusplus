@@ -8,5 +8,5 @@ C/C++ 三方库原生库的构建方式多种多样，而DevEco Studio目前只�
 
 下面以原生库的构建方式cmake以及非cmake的两种方式进行介绍如何通过DevEco Studio将C/C++三方库集成到hap包中。
 
-- [原生库cmake方式构建集成](./adapter_thirdlib_reconfiguration_cmake.md)
+- [原生库cmake方式构建集成](./adapter_thirdlib_with_cmake.md)
 - [原生库非cmake方式构建集成](./adapter_thirdlib_create_cmake.md)
