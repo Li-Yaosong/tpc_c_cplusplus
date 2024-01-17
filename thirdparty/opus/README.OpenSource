@@ -1,8 +1,8 @@
 [
     {
         "Name": "opus",
-        "License": "BSD- License",
-        "License File": "LICENSE_PLEASE_READ.txt",
+        "License": "BSD-3-Clause",
+        "License File": "COPYING",
         "Version Number": "opus-1.4",
         "Owner": "huangminzhong2@huawei.com",
         "Upstream URL": "https://github.com/xiph/opus/archive/refs/tags/v1.4.tar.gz",
