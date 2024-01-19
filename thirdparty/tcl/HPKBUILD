@@ -19,6 +19,9 @@ packagename=$builddir.src.tar.gz
 source envset.sh
 host=
 
+cv_sys_osname=
+sed_flag=true
+
 prepare() {
     mkdir -p $builddir/$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]
@@ -34,9 +37,20 @@ prepare() {
 }
 
 build() {
+    if [ "$LYCIUM_BUILD_OS" == "Darwi" ] && [ "$sed_flag" == "true" ]
+    then
+        cd $builddir
+        #因编译链之间差异，禁止configure主动添加Darwin环境的编译选项
+        for file in $(find . -name "configure");do
+            sed -i.bak 's|Darwin|ShieldDarwin|g' $file
+        done
+        cd $OLDPWD
+        sed_flag=false
+        cv_sys_osname=Linux
+    fi    
     cd $builddir/$ARCH-build
-    ../unix/configure "$@" --host=$host > `pwd`/build.log 2>&1
-    make -j4 >> `pwd`/build.log 2>&1
+    ../unix/configure "$@" --host=$host tcl_cv_sys_version=$cv_sys_osname > $buildlog 2>&1
+    $MAKE >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -44,7 +58,7 @@ build() {
 
 package() {
     cd $builddir/$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE install >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
