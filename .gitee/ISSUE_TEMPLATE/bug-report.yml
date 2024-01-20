@@ -1,0 +1,59 @@
+name: 问题反馈|Bug
+description: 当您再使用lycium的过程中出现了Bug，请使用此模板。
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您对lycium的支持与关注，欢迎反馈缺陷。
+  - type: textarea
+    attributes:
+      label: 发生了什么问题？
+      description: 提供尽可能多的信息描述产生了什么问题。
+      placeholder: ""
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 期望行为是什么？
+      description: 描述期望的行为应该是什么样子的。
+      placeholder: ""
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 如何复现该缺陷
+      description: 提供尽可能多的信息描述如何复现该缺陷。
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 您使用的运行环境是？
+      description: 提供运行环境的系统及版本。
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 您使用的 SDK 的版本是？
+      description: 提供使用的Openharmony/HarmonyOS SDK的版本。
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: 版本或分支信息
+      description: 在哪些版本、分支存在该缺陷的？
+      options:
+        - label: master 最新版本
+        - label: master 近一周
+        - label: master 近一月
+        - label: master 近三月
+        - label: master 超过3月
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 具体版本的commit ID
+      description: 提供使用时lycium的 commit ID(可选)
+    validations:
+      required: false
