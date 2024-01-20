@@ -28,7 +28,8 @@
 
 - windows平台构建
 
-  windwos平台下的交叉编译我们可以直接使用IDE进行编译，适配方法请参照[北向应用源码方式集成C/C++三方库](./docs/adapter_thirdlib.md)。
+ 1. [windows平台交叉编译](./docs/adapter_windows.md)
+ 2. [IDE通过源码方式集成C/C++三方库](./docs/adapter_thirdlib.md)。
 
 - MacOS平台构建指导
 
