@@ -1,0 +1,45 @@
+name: 新增开源库|需求
+description: 您希望lycium新增一个c/c++开源库，使用此模板。
+title: "[新增开源库名(官方版本)]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您提出新需求。
+  - type: textarea
+    attributes:
+      label: 新增开源库带来的价值、应用场景？
+      description: 请描述下该需求的价值，应用场景等。
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 新增开源库官方链接
+      description: 请输入项目官网地址
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 新增开源库源码下载链接
+      description: 请输入项目源码地址
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 新增开源库所属的技术领域分类
+      description: 请输入项目技术领域
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 新增开源库最新稳定版本
+      description: 请输入推荐的开源库版本（选填）
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: 新增开源库的其他信息
+      description: 请输入库的其他信息(选填).包含但不限于 license, 依赖库(三方库依赖的其他库), 编译脚本(cmake, configure, makefile, meson等), 编译时期依赖的特殊工具
+    validations:
+      required: false
