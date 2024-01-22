@@ -24,7 +24,9 @@
 
    ![so localtion](./media/so_location.png)
 
-   **动态库引用事项注意: IDE只识别不带版本号的库(即libxxx.so)，而一般的动态库的soname是带主版本号的（libxxx.so.1），所以我们需要同时将不带版本号以及带主版本号的so文件拷贝到entry/libs/${OHOS_ARCH}/`目录下。另外，不带版本号的动态库以及带主版本号的动态库在linux下是一个软连接，但拷贝到windows目录后变为实体，因此不需要做任何单独处理。**
+   **动态库引用事项注意: 应用在引用动态库的时候是通过soname来查找的，所以我们需要将名字为soname的库文件拷贝到entry/libs/${OHOS_ARCH}/目录下(soname查看方法：` $OHOS_SDK/llvm/bin/llvm-readelf -d libxxx.so`)。另外，不带版本号的动态库以及带主版本号的动态库在linux下是一个软连接，但拷贝到windows目录后变为实体，因此不需要做任何单独处理。**
+
+   &nbsp;![soname](./media/soname.png)
 
 2. 配置对应链接
 
