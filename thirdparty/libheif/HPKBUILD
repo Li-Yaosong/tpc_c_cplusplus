@@ -10,14 +10,16 @@ license=("GNU LESSER GENERAL PUBLIC LICENSE")
 depends=("jpeg" "libpng")
 makedepends=()
 
-source="https://github.com/strukturag/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+#网络原因更换成gitee下载源
+#source="https://github.com/strukturag/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+source=https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver
 
 autounpack=true
 downloadpackage=true
 buildtools="configure"
 
-builddir=$pkgname-${pkgver:1}
-packagename=$builddir.tar.gz
+builddir=$pkgname-${pkgver}
+packagename=$builddir.zip
 
 source envset.sh
 host=
@@ -28,7 +30,7 @@ prepare() {
     if $autogenflag
     then
         cd $builddir
-        ./autogen.sh > `pwd`/build.log 2>&1
+        ./autogen.sh > $buildlog 2>&1
         autogenflag=false
         cd $OLDPWD
     fi
@@ -51,7 +53,7 @@ build() {
     cd $builddir/$ARCH-build
     # 不强依赖jpeg和libpng, 下方的写法能找到libpng但是找不到jpeg. 显示开启测试
     PKG_CONFIG_PATH="${pkgconfigpath}" libpng_CFLAGS="-I$LYCIUM_ROOT/usr/libpng/$ARCH/include" libpng_LIBS="-L$LYCIUM_ROOT/usr/libpng/$ARCH/lib -lpng" ../configure "$@" --host=$host --enable-tests --disable-go --disable-gdk-pixbuf --disable-aom --disable-libde265 --disable-x265 --disable-rav1e --disable-dav1d --enable-svt > `pwd`/build.log 2>&1
-    make -j4 >> `pwd`/build.log 2>&1
+    $MAKE >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -59,7 +61,7 @@ build() {
 
 package() {
     cd $builddir/$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE install >> $buildlog 2>&1
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
     then
@@ -74,7 +76,7 @@ package() {
 
 check() {
     cd $builddir/$ARCH-build/tests
-    sed -i '/.*test-local: heif-unit-tests/c\test-local: #heif-unit-tests' Makefile
+    sed -i.bak 's|test-local: heif-unit-tests|test-local: #heif-unit-tests|g' Makefile
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
     # real test CMD
