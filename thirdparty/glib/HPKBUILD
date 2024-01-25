@@ -20,6 +20,8 @@ pkgrel=0
 pkgdesc="GLib is a general-purpose, portable utility library, which provides many useful data types, macros, type conversions, string utilities, file utilities, a mainloop abstraction, and so on."
 url="https://docs.gtk.org/glib/"
 archs=("armeabi-v7a" "arm64-v8a")
+
+
 license=("Apache 2.0" "CC0-1.0" "GPL-2.0" "LGPL-2.1" "LLVM" "old-glib" "MIT")
 depends=("libffi" "pcre2")
 makedepends=("meson" "ninja") 
