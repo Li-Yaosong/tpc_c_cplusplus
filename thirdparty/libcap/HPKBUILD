@@ -13,6 +13,7 @@
 # Contributor: Chen Xu <chenxu.unix@gmail.com>
 # Maintainer: Chen Xu <chenxu.unix@gmail.com>
 pkgname=libcap
+
 pkgver=2.69
 pkgrel=0
 pkgdesc="This is a library for getting and setting POSIX.1e (formerly POSIX 6)draft 15 capabilities."
