@@ -31,6 +31,10 @@ autounpack=true
 builddir=$pkgname-${pkgver}
 packagename=$builddir.zip
 
+# svg文件用于测试svg转换png程序
+svgfileurl=https://gitee.com/openharmony-sig/ohos-svg/raw/master/entry/src/main/resources/rawfile/line.svg
+lunasvgtestfile=./lunasvgtest.svg
+
 prepare() {
     mkdir -p $builddir/$ARCH-build
 }
@@ -55,6 +59,7 @@ package() {
 
 check() {
     echo "The test must be on an OpenHarmony device!"
+    curl ${svgfileurl} > ${lunasvgtestfile}
 }
 
 # 清理环境

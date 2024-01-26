@@ -16,17 +16,28 @@
 
 source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
-lunasvgtestfile=line.svg
-
-# svg文件用于测试svg转换png程序
-svgfileurl=https://gitee.com/openharmony-sig/ohos-svg/raw/master/entry/src/main/resources/rawfile/line.svg
+lunasvgtestfile=../../lunasvgtest.svg
+lunasvgpngfile=./lunasvgtest.svg.png
+lunasvgtestmd5="70773275c174867f27d901d21cb43030"
+lunasvgpngmd5="fd3c51c181b5e2b7e05c4d430e0cdd75"
 
 openharmonycheck() {
     res=0
     cd ${builddir}/${ARCH}-build
-    curl svgfileurl > ./${lunasvgtestfile}
-    ./svg2png ./${lunasvgtestfile} > ${logfile} 2>&1
+    ./svg2png ${lunasvgtestfile} > ${logfile} 2>&1
     res=$?
+    if [ $res -ne 0 ]; then
+        cd $OLDPWD
+        return $res
+    fi
+
+    #转换后的png图片的md5值不等于Linux下同一svg文件转换后的png图片的md5值，异常
+    testfilemd5=$(md5sum ${lunasvgtestfile} | awk '{print $1}')
+    pngfilemd5=$(md5sum ${lunasvgpngfile} | awk '{print $1}')
+    if [ "$testfilemd5" = "$lunasvgtestmd5" ] && [ "$pngfilemd5" != "$lunasvgpngmd5" ]; then
+        res=-1
+    fi
+    
     cd $OLDPWD
     return $res
 }
