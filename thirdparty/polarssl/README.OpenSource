@@ -4,7 +4,7 @@
         "License": "GPL-2.0 license",
         "License File": "https://github.com/Linphone-sync/polarssl/blob/polarssl-1.4/LICENSE",
         "Version Number": "1.4",
-        "Owner": "kanchengc@isoftstone.com",
+        "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://github.com/Linphone-sync/polarssl/archive/refs/heads/polarssl-1.4.zip",
         "Description": "The PolarSSL SSL library is an implementation of the SSL and TLS protocols and the respective cryptographic algorithms."
     }
