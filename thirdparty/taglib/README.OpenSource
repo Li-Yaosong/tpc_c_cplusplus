@@ -1,8 +1,8 @@
 [
     {
         "Name": "taglib",
-        "License": "LGPL-2.1-only","MPL-1.1"
-        "License File": "LICENSE",
+        "License": "LGPL-2.1","MPL-1.1"
+        "License File": "README",
         "Version Number": "v1.13.1",
         "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://codeload.github.com/taglib/taglib/zip/refs/tags/v1.13.1",
