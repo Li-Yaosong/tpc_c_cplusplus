@@ -68,7 +68,8 @@ prepare() {
 build() {
     cd $builddir
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DBUILD_PERF_TESTS=ON -DBUILD_TESTS=ON \
-        -DINSTALL_TESTS=ON -DOPENCV_TEST_DATA_PATH=./$test_data/testdata \
+        -DINSTALL_TESTS=ON -DCMAKE_C_FLAGS="-fvisibility=default" -DCMAKE_CXX_FLAGS="-fvisibility=default" \
+        -DENABLE_NEON=OFF -DOPENCV_TEST_DATA_PATH=./$test_data/testdata \
         -B$ARCH-build -S./ > $buildlog 2>&1
     $MAKE -C $ARCH-build VERBOSE=1 >> $buildlog 2>&1
     ret=$?
