@@ -1,10 +1,10 @@
 [
     {
         "Name": "sqlcipher",
-        "License": "BSD",
+        "License": "BSD-3-Clause",
         "License File": "LICENSE",
         "Version Number": "4.5.5",
-        "Owner": "wangwenju5@h-partners.com",
+        "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://github.com/sqlcipher/sqlcipher/archive/refs/tags/v4.5.5.tar.gz",
         "Description": "SQLCipher is a standalone fork of SQLite that adds 256 bit AES encryption of database files and other security features"
     }
