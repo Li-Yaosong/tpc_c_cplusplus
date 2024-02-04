@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="SQLCipher is a standalone fork of the SQLite database library that adds 256 bit AES encryption of database files"
 url="https://github.com/sqlcipher/sqlcipher"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("BSD")
+license=("BSD-3-Clause")
 depends=("openssl" "tcl")
 # 安裝tclsh工具 sudo apt install tcl
 makedepends=("tclsh")
