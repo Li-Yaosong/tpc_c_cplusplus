@@ -72,4 +72,4 @@ tpc_c_cplusplus
 
 ## FAQ
 
-[C/C++三方库常见FAQ](https://forums.openharmony.cn/misc.php?mod=tag&id=60)。
+- [C/C++三方库常见FAQ](./docs/FAQ.md)。
