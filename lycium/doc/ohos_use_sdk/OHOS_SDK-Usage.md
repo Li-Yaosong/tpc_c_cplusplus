@@ -245,7 +245,7 @@ ohos@ubuntu20:~/openHarmony/openssl$ export OHOS_SDK=/home/ohos/tools/OH_SDK/oho
 ohos@ubuntu20:~/openHarmony/openssl$ export AS=${OHOS_SDK}/native/llvm/bin/llvm-as
 ohos@ubuntu20:~/openHarmony/openssl$ export CC="${OHOS_SDK}/native/llvm/bin/clang  --target=aarch64-linux-ohos"
 ohos@ubuntu20:~/openHarmony/openssl$ export CXX="${OHOS_SDK}/native/llvm/bin/clang++  --target=aarch64-linux-ohos"
-ohos@ubuntu20:~/openHarmony/openssl$ export LD=${OHOS_SDK}/native/llvm/bin/lld
+ohos@ubuntu20:~/openHarmony/openssl$ export LD=${OHOS_SDK}/native/llvm/bin/ld.lld
 ohos@ubuntu20:~/openHarmony/openssl$ export STRIP=${OHOS_SDK}/native/llvm/bin/llvm-strip
 ohos@ubuntu20:~/openHarmony/openssl$ export RANLIB=${OHOS_SDK}/native/llvm/bin/llvm-ranlib
 ohos@ubuntu20:~/openHarmony/openssl$ export OBJDUMP=${OHOS_SDK}/native/llvm/bin/llvm-objdump
