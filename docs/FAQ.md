@@ -15,11 +15,13 @@
    ```
 
    文件属性与系统位数不匹配，故提示无法找到该文件。
+   
 
 - #### Q2: 当前`lycium`交叉编译适配的CPU架构只支持arm32位和arm64位的，如若需新增其他CPU架构该如何操作?
   
   本仓库中适配的三方库当前都是通过[lycium工具](../lycium/)适配且验证过的arm32位以及arm64位架构的三方库，如若需要添加其他CPU架构的编译适配，请参考文档[lycium上面适配OpenHarmony 不同架构的构建](./adpater_architecture.md)。
   
+
 - #### Q3: 交叉编译时出现ld.lld error：undefined symbol xxxx 以及 error: use of undeclared identifier 'XXXX'的情况
 
   情况一：系统本身的接口(SDK接口不支持的情况，通常在编译过程就会失败，如果成功编译出文件则注重检查交叉编译是否链接了SDK的静态库，存在此情况则可以尝试从将此静态库路径导入工程中与三方库一同编译) ，系统接口具体资料请参考下方系统符号参考中的 "附录"部分。
@@ -52,58 +54,16 @@
   
   <img src="./media/findbuildlog.png" alt="findbuildlog" width = 8000 height = 100/>
 
-
-
-- ##### Q5 FFmpeg在MAC环境编译可能遇到的问题
-
-  以下措施sed语句请注意修改文件所在的实际路径，如果修改错误可以尝试从同名+.bak的文件中恢复内容，并且sed修改的主要目的是为了通过编译，对于实际使用可能存在影响，需要仔细分辨。
-
-  ##### static declaration of 'xxx' follows non-static declaration
-
-  ```
-  sed -i.bak 's/#define HAVE_LLRINT 0/#define HAVE_LLRINT 1/g' config.h
-  sed -i.bak 's/#define HAVE_LLRINTF 0/#define HAVE_LLRINTF 1/g' config.h
-  sed -i.bak 's/#define HAVE_LRINT 0/#define HAVE_LRINT 1/g' config.h
-  sed -i.bak 's/#define HAVE_LRINTF 0/#define HAVE_LRINTF 1/g' config.h
-  sed -i.bak 's/#define HAVE_ROUND 0/#define HAVE_ROUND 1/g' config.h
-  sed -i.bak 's/#define HAVE_ROUNDF 0/#define HAVE_ROUNDF 1/g' config.h
-  sed -i.bak 's/#define HAVE_CBRT 0/#define HAVE_CBRT 1/g' config.h
-  sed -i.bak 's/#define HAVE_CBRTF 0/#define HAVE_CBRTF 1/g' config.h
-  sed -i.bak 's/#define HAVE_COPYSIGN 0/#define HAVE_COPYSIGN 1/g' config.h
-  sed -i.bak 's/#define HAVE_TRUNC 0/#define HAVE_TRUNC 1/g' config.h
-  sed -i.bak 's/#define HAVE_TRUNCF 0/#define HAVE_TRUNCF 1/g' config.h
-  sed -i.bak 's/#define HAVE_RINT 0/#define HAVE_RINT 1/g' config.h
-  sed -i.bak 's/#define HAVE_HYPOT 0/#define HAVE_HYPOT 1/g' config.h
-  sed -i.bak 's/#define HAVE_ERF 0/#define HAVE_ERF 1/g' config.h
-  sed -i.bak 's/#define HAVE_GMTIME_R 0/#define HAVE_GMTIME_R 1/g' config.h
-  sed -i.bak 's/#define HAVE_LOCALTIME_R 0/#define HAVE_LOCALTIME_R 1/g' config.h
-  sed -i.bak 's/#define HAVE_INET_ATON 0/#define HAVE_INET_ATON 1/g' config.h
-  ```
-
-  可以在编译编译脚本中添加对应选项的sed命令，或者执行完./configure命令后，执行make之前在终端手动执行对应选项的sed命令。脚本添加位置以及手动执行顺序参考如下示例
-
-  ```
-  #configure检查和生成配置之后使用sed替换配置内容再编译
-  ./configure
-  sed -i.bak 's/#define HAVE_LLRINT 0/#define HAVE_LLRINT 1/g' config.h
-  make
-  ```
-
-  ##### xxxxxxxxxx error: expected ')'
-
-  ./config.h:17:19: error: expected ')' before numeric constant
-  \#define getenv(x) NULL
-
-  ```
-  sed -i.bak 's|#define getenv(x) NULL||g' config.h
-  ```
-
-  ##### ld：-shared -Wl,- soname,xxxx.so unknown option
-  使用clang编译时需要将config.mak文件中的 **SHFLAGS=-shared -Wl,-soname** 修改为 **SHFLAGS=- shared -soname**，config.mak文件是configure后生成的文件，可以参考此语句修改
-  
-  ```
-  sed -i.bak 's|SHFLAGS=-shared -Wl,-soname|SHFLAGS=- shared -soname|g' 实际路径/config.mak
-  ```
   
   
+- #### [Q5：FFmpeg三方库综合问题](./FFmpegFAQ.md)
 
+- #### Q6：通用型错误辨识
+  ##### ERROR during ：download XXX.tar.gz
+
+  因为本仓库不承载三方库的源码部分，因此进行三方库编译时需要先从开源社区获取源码部分，此部分可能需要网络代理等方式保证对gitee、github等网站的连通，当出现此错误时代表wget等下载工具不能够正常获取代码，请检查网络配置。
+
+  ##### “请先安装 xxx命令，才可以编译”
+  此信息代表当前编译三方库强需求xxx工具或者命令，请先安装对应的工具以及确保安装后的环境变量能够在tpc_c_cplusplus仓库目录生效。
+
+##### 
