@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "XNNPACK",
+        "License": "BSD License",
+        "License File": "LICENSE",
+        "Version Number": "bced2c8f9be2221af2c8aa8dbe1a3553828398e8",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/google/XNNPACK",
+        "Description": "XNNPACK is a highly optimized solution for neural network inference on ARM, x86, WebAssembly, and RISC-V platforms"
+    }
+]

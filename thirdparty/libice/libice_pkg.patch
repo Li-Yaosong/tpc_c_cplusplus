@@ -1,0 +1,96 @@
+diff -Naur old/example/CMakeLists.txt new/example/CMakeLists.txt
+--- old/example/CMakeLists.txt	1970-01-01 08:00:00.000000000 +0800
++++ new/example/CMakeLists.txt	2024-02-26 22:10:22.594666100 +0800
+@@ -0,0 +1,25 @@
++# Copyright (c) 2023 Huawei Device Co., Ltd.
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++cmake_minimum_required(VERSION 3.16)
++
++# Project  创建工程文件
++project(LIBICETEST C CXX)
++
++
++#生成文件到指定位置
++include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include/X11/ICE/ ${CMAKE_CURRENT_SOURCE_DIR}/../include/)
++LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../src/.libs/)
++add_executable(icetest ${CMAKE_CURRENT_SOURCE_DIR}/main_test.c)
++target_link_libraries(icetest ICE)
++
+diff -Naur old/example/main_test.c new/example/main_test.c
+--- old/example/main_test.c	1970-01-01 08:00:00.000000000 +0800
++++ new/example/main_test.c	2024-02-26 22:01:20.903193700 +0800
+@@ -0,0 +1,63 @@
++#include <stdio.h>
++
++#include "ICElib.h"
++
++#define ICE_PROTOCOL_NAME "tcp"
++#define ICE_MAJOR_VERSION 1
++#define ICE_MINOR_VERSION 1
++
++extern void cIcePoProcessMsgProc(IceConn ice_conn, IcePointer client_data, int opcode, unsigned long length, Bool swap, 
++				IceReplyWaitInfo *reply_wait, Bool *reply_ready_ret);
++
++extern IcePoAuthStatus cIcePoAuthProc(IceConn ice_conn, IcePointer *authStatePtr, Bool cleanUp, Bool swap, 
++				int authDataLen, IcePointer authData, int *replyDataLenRet, IcePointer *replyDataRet, char **errorStringRet);
++
++// 假设的协议名称、供应商和版本信息
++const char *protocol_name = ICE_PROTOCOL_NAME;
++const char *vendor = "YourVendorName";
++const char *release = "1.0";
++  
++// 假设的协议版本信息  
++const int version_count = 1;
++IcePoVersionRec version_recs[] = {  
++    { ICE_MAJOR_VERSION, ICE_MINOR_VERSION, cIcePoProcessMsgProc }
++};
++
++// 假设的认证机制名称和处理函数（这里只是占位符，需要实际实现）
++const int auth_count = 1;
++const char *auth_names[] = { "MIT-MAGIC-COOKIE-1" };
++IcePoAuthProc auth_procs[] = { cIcePoAuthProc }; // 你需要实现这个函数
++
++
++//callback
++void cIcePoProcessMsgProc(IceConn ice_conn, IcePointer client_data, int opcode, unsigned long length, Bool swap, 
++		IceReplyWaitInfo *reply_wait, Bool *reply_ready_ret) {
++	//
++	return ;
++}
++
++IcePoAuthStatus cIcePoAuthProc(IceConn ice_conn, IcePointer *authStatePtr, Bool cleanUp, Bool swap, 
++		int	authDataLen, IcePointer authData, int *replyDataLenRet, IcePointer *replyDataRet, char **errorStringRet) {
++    //
++	IcePoAuthStatus enumStatus = IcePoAuthHaveReply;
++	return enumStatus;
++}
++
++int main(int argc, char **argv) {
++
++	int iOpcode = 0;
++	
++	printf("main enter...\n");
++	
++	iOpcode = IceRegisterForProtocolSetup(protocol_name, vendor, release, version_count, version_recs, auth_count, auth_names, auth_procs, NULL);
++	if (-1 == iOpcode) {
++		printf("IceRegisterForProtocolSetup failed, iOpcode = %d\n", iOpcode);
++		return 0;
++	} else {
++		printf("IceRegisterForProtocolSetup successed, iOpcode = %d\n", iOpcode);
++	}
++
++	printf("main leave...\n");
++	
++	return 0;
++}

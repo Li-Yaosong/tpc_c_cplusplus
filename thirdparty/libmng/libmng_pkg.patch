@@ -1,0 +1,28 @@
+diff -Naur old/libmng-2.0.3/CMakeLists.txt new/libmng-2.0.3/CMakeLists.txt
+--- old/libmng-2.0.3/CMakeLists.txt	2024-02-22 15:21:37.005716100 +0800
++++ new/libmng-2.0.3/CMakeLists.txt	2024-02-22 15:48:25.059763000 +0800
+@@ -467,4 +467,6 @@
+  README README.config README.dll README.footprint README.autoconf
+  README.contrib README.examples README.packaging CHANGES LICENSE
+  DESTINATION ${MNG_INSTALL_DOC_DIR} )
++
++add_subdirectory(contrib/gcc/mngtree)
+ #--- fin
+diff -Naur old/libmng-2.0.3/contrib/gcc/mngtree/CMakeLists.txt new/libmng-2.0.3/contrib/gcc/mngtree/CMakeLists.txt
+--- old/libmng-2.0.3/contrib/gcc/mngtree/CMakeLists.txt	1970-01-01 08:00:00.000000000 +0800
++++ new/libmng-2.0.3/contrib/gcc/mngtree/CMakeLists.txt	2024-02-22 15:48:59.486014500 +0800
+@@ -0,0 +1,14 @@
++set(MNGTREE_NAME "mngtree")
++
++set(LIBMNG_TEST_SOURCES
++  mngtree.c
++  )
++
++add_executable(mngtree ${LIBMNG_TEST_SOURCES})
++TARGET_LINK_LIBRARIES(${MNGTREE_NAME} ${JPEG_LIBRARY})
++TARGET_LINK_LIBRARIES(${MNGTREE_NAME} ${ZLIB_LIBRARY})
++TARGET_LINK_LIBRARIES(${MNGTREE_NAME} ${LCMS2_LIBRARY})
++TARGET_LINK_LIBRARIES(${MNGTREE_NAME} ${LCMS1_LIBRARY})
++TARGET_LINK_LIBRARIES(${MNGTREE_NAME} m)
++TARGET_LINK_LIBRARIES(${MNGTREE_NAME} mng)
++

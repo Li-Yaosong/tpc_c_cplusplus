@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "farmhash",
+        "License": "Apache-2.0 license",
+        "License File": "LICENSE",
+        "Version Number": "0d859a811870d10f53a594927d0d0b97573ad06d",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/google/farmhash.git",
+        "Description": "FarmHash provides hash functions for strings and other data.  The functions mix the input bits thoroughly but are not suitable for cryptography"
+    }
+]
