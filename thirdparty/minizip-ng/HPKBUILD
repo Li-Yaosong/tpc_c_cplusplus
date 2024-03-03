@@ -11,6 +11,8 @@ depends=("openssl" "xz" "bzip2" "zstd" "googletest")
 makedepends=()
 source="https://github.com/zlib-ng/${pkgname}/archive/refs/tags/${pkgver}.tar.gz"
 
+
+
 autounpack=true
 downloadpackage=true
 buildtools="cmake"
