@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libde265",
+        "License": "GNU Lesser",
+        "License File": "README.md",
+        "Version Number": "v1.0.15",
+        "Owner": "zhaoxiaoqing17@h-partners.com",
+        "Upstream URL": "https://github.com/strukturag/libde265",
+        "Description": "libde265 is an open source implementation of the h.265 video codec."
+    }
+]
