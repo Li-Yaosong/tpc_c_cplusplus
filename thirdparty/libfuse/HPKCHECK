@@ -25,10 +25,6 @@ openharmonycheck() {
     mkdir tempdir
     ./test_write_cache tempdir > ${logfile} 2>&1
     res=$?
-    if [ $res -ne 0 ]; then
-        cd $OLDPWD
-        return $res
-    fi
     cd $OLDPWD
     return $res
 }

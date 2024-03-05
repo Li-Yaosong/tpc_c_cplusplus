@@ -36,7 +36,7 @@
 
     ```shell
     cd lycium
-    ./build.sh luasvg
+    ./build.sh libfuse
     ```
 
 *   三方库头文件及生成的库
@@ -44,7 +44,7 @@
     在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
 
     ```shell
-    libfuse-fuse-3.16.2/arm64-v8a-build   libfuse-fuse-3.16.2/armeabi-v7a-build
+    libfuse/arm64-v8a-build   libfuse/armeabi-v7a-build
     ```
 
 *   [测试三方库](#测试三方库)
