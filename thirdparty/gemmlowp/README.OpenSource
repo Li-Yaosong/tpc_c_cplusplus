@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "gemmlowp",
+        "License": "Apache-2.0 license",
+        "License File": "LICENSE",
+        "Version Number": "16e8662c34917be0065110bfcd9cc27d30f52fdf",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/google/gemmlowp",
+        "Description": "a small self-contained low-precision GEMM library"
+    }
+]
