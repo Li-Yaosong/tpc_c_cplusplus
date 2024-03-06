@@ -1,0 +1,121 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: kangxiangjuan <179721749@qq.com>
+# Maintainer: kangxiangjuan <179721749@qq.com>
+
+pkgname=libhevc
+pkgver=simpleperf-release
+pkgrel=0
+pkgdesc="libhevc is a format codec library"
+url="https://android.googlesource.com/platform/external/libhevc"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("Apache License 2.0")
+depends=()
+makedepends=()
+source="https://android.googlesource.com/platform/external/$pkgname/+archive/refs/heads/$pkgver.tar.gz"
+
+# 自动解压文件会分散,不自动解压，需手动解压到文件夹中
+autounpack=false
+downloadpackage=true
+buildtools="cmake"
+patchflag=true
+
+builddir=$pkgname-$pkgver
+packagename=$builddir.tar.gz
+systempro=
+cc=
+prepare() {
+    if [ "$patchflag" == true ]
+    then
+        # 需要手动解压
+        mkdir $builddir
+        tar -xzf $packagename -C ./$builddir
+        cd $builddir
+        patch -p1 < ../libhevc_ohos_pkg.patch
+        cd $OLDPWD
+        patchflag=false
+    fi
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        systempro="aarch32"
+        cc=${OHOS_SDK}/native/llvm/bin/clang
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        systempro="aarch64"
+        cc=${OHOS_SDK}/native/llvm/bin/clang
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
+    mkdir -p $builddir/$ARCH-build  
+}
+
+build() {
+    cd $builddir
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake \
+    -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake \
+    -DCMAKE_SYSTEM_PROCESSOR=${systempro} \
+    -DCMAKE_C_FLAGS="-DENABLE_NEON" \
+    -DCMAKE_CXX_FLAGS="-DENABLE_NEON" \
+    -B$ARCH-build -S ./ > $buildlog 2>&1
+    $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    # 不能make install 需要手动拷贝静态库文件
+    cd $builddir/$ARCH-build
+    mkdir -p $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib/
+    mkdir -p $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
+    mkdir -p $LYCIUM_ROOT/usr/$pkgname/$ARCH/bin/
+    
+    cp *.a $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib/
+    cp hevcdec $LYCIUM_ROOT/usr/$pkgname/$ARCH/bin/
+    cp hevcenc $LYCIUM_ROOT/usr/$pkgname/$ARCH/bin/
+    
+    cd ../../ && cd $builddir/common
+    cp ../common/ihevc_typedefs.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
+    cp ../common/iv.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
+    cp ../common/ivd.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
+    cp ../common/ithread.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
+    
+    cp ../encoder/itt_video_api.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
+    cp ../encoder/ihevce_api.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
+    cp ../encoder/ihevce_plugin.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
+    cp ../encoder/ihevce_profile.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
+
+    cp ../decoder/ihevcd_cxa.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
+    cp ../../*.yuv ../../$builddir/test/decoder
+    cp ../../*.h265 ../../$builddir/test/encoder
+    
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+check() {
+    cp enc.cfg $builddir/$ARCH-build/
+    cp test.cfg $builddir/$ARCH-build/
+    cp *.yuv $builddir/$ARCH-build/
+    cp *.h265 $builddir/$ARCH-build/
+    echo "The test must be on an OpenHarmony device!"
+    # 测试方式 暂时没有编译可执行测试程序
+}
+
+# 清理环境
+cleanbuild(){
+    rm -rf ${PWD}/$builddir  #${PWD}/$packagename
+}
