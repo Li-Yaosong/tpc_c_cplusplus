@@ -19,15 +19,19 @@ openharmonycheck() {
     cd ${builddir}/${ARCH}-build
     ./hevcdec > ${logfile} 2>&1                                     # 解码
     search_string1="Output Width                    : 316
-	Output Height                   : 240"                          # 要查找的字符串
+    Output Height                   : 240"                          # 要查找的字符串
     if grep -q "$search_string1" $logfile; then
         res=0
+    else
+        res=1
     fi
             
     ./hevcenc >> ${logfile} 2>&1                                    # 编码    
     search_string2="Output file out.265"                            # 要查找的字符串
     if grep -q "$search_string2" $logfile; then
         res=0
+    else
+        res=1
     fi
     
     cd $OLDPWD                                                      # 返回上一次目录

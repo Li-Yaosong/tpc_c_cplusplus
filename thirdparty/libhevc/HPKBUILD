@@ -33,8 +33,7 @@ patchflag=true
 
 builddir=$pkgname-$pkgver
 packagename=$builddir.tar.gz
-systempro=
-cc=
+systemprocesser=
 prepare() {
     if [ "$patchflag" == true ]
     then
@@ -48,12 +47,10 @@ prepare() {
     fi
     if [ $ARCH == "armeabi-v7a" ]
     then
-        systempro="aarch32"
-        cc=${OHOS_SDK}/native/llvm/bin/clang
+        systemprocesser="aarch32"
     elif [ $ARCH == "arm64-v8a" ]
     then
-        systempro="aarch64"
-        cc=${OHOS_SDK}/native/llvm/bin/clang
+        systemprocesser="aarch64"
     else
         echo "${ARCH} not support"
         return -1
@@ -65,7 +62,7 @@ build() {
     cd $builddir
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake \
     -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake \
-    -DCMAKE_SYSTEM_PROCESSOR=${systempro} \
+    -DCMAKE_SYSTEM_PROCESSOR=${systemprocesser} \
     -DCMAKE_C_FLAGS="-DENABLE_NEON" \
     -DCMAKE_CXX_FLAGS="-DENABLE_NEON" \
     -B$ARCH-build -S ./ > $buildlog 2>&1
@@ -95,23 +92,22 @@ package() {
     cp ../encoder/ihevce_api.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
     cp ../encoder/ihevce_plugin.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
     cp ../encoder/ihevce_profile.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
-
     cp ../decoder/ihevcd_cxa.h $LYCIUM_ROOT/usr/$pkgname/$ARCH/include/
-    cp ../../*.yuv ../../$builddir/test/decoder
-    cp ../../*.h265 ../../$builddir/test/encoder
-    
+
     ret=$?
     cd $OLDPWD
     return $ret
 }
 
 check() {
+    #拷贝测试资源
     cp enc.cfg $builddir/$ARCH-build/
     cp test.cfg $builddir/$ARCH-build/
     cp *.yuv $builddir/$ARCH-build/
     cp *.h265 $builddir/$ARCH-build/
+    cp *.yuv $builddir/test/decoder
+    cp *.h265 $builddir/test/encoder
     echo "The test must be on an OpenHarmony device!"
-    # 测试方式 暂时没有编译可执行测试程序
 }
 
 # 清理环境
