@@ -1,0 +1,38 @@
+# This is an example HPKCHECK file. Use this as a start to creating your own,
+# and remove these comments.
+
+# Contributor: kangxiangjuan <179721749@qq.com>
+# Maintainer: kangxiangjuan <179721749@qq.com>
+
+source HPKBUILD > /dev/null 2>&1    # 导入HPKBUILD文件
+logfile1=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test1.log	#解码日志
+logfile2=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test2.log  #编码日志
+content=
+# 在OH环境执行测试的接口
+
+checkprepare() {
+    cd ${builddir}/${ARCH}-build
+	chmod 777 hevcdec					#添加权限
+	chmod 777 hevcenc					#添加权限
+}
+
+openharmonycheck() {
+    res=1                               # 记录返回值
+	
+	./hevcdec > ${logfile1} 2>&1			#解码
+	search_string1="Output Width                    : 316
+Output Height                   : 240" 							# 要查找的字符串
+ 
+	if grep -q "$search_string1" $logfile1; then
+		res=0
+	fi
+			
+	./hevcenc > ${logfile2} 2>&1			#编码	
+	search_string2="Output file out.265" 						# 要查找的字符串
+	if grep -q "$search_string2" $logfile2; then
+		res=0
+	fi
+	
+    cd $OLDPWD                          # 返回上一次目录
+    return $res                         # 返回测试值
+}
