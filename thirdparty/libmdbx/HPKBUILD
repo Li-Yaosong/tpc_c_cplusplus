@@ -32,6 +32,7 @@ cloneflag=true
 
 builddir=$pkgname-${pkgver:1}
 packagename=
+patchflag=true
 
 prepare() {
     if [ $cloneflag == true ]
@@ -45,12 +46,11 @@ prepare() {
         fi
         cloneflag=false
     fi
-    mkdir -p $builddir/$ARCH-build
 }
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DMDBX_LOCKING=5 -B$ARCH-build -S./ > $buildlog 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DMDBX_LOCKING=2001 -B$ARCH-build -S./ > $buildlog 2>&1
     $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
@@ -65,6 +65,25 @@ package() {
 
 check() {
     echo "The test must be on an OpenHarmony device!"
+    
+    # 编译example用于测试
+    cd $builddir/example    
+    if [ "$ARCH" = "armeabi-v7a" ]
+    then
+        ${OHOS_SDK}/native/llvm/bin/clang example-mdbx.c \
+        --target=arm-linux-ohos --sysroot=${OHOS_SDK}/native/sysroot -march=armv7a \
+        -L../$ARCH-build/ -lmdbx -I../ \
+        -o ../$ARCH-build/mdbx_example >> $buildlog 2>&1
+    else
+        ${OHOS_SDK}/native/llvm/bin/clang example-mdbx.c \
+        --target=aarch64-linux-ohos --sysroot=${OHOS_SDK}/native/sysroot \
+        -L../$ARCH-build/ -lmdbx -I../ \
+        -o ../$ARCH-build/mdbx_example >> $buildlog 2>&1
+    fi
+    
+    ret=$?
+    cd $OLDPWD
+    return $ret
 }
 
 # 清理环境

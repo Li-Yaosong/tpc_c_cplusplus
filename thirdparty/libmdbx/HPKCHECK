@@ -20,47 +20,49 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     cd ${builddir}/${ARCH}-build
-    ./mdbx_copy -V > ${logfile} 2>&1
+    ./mdbx_example > ${logfile} 2>&1
     res=$?
-    if [ $res -ne 0 ]; then
+    if [ $res -ne 0 ]
+    then
         cd $OLDPWD
         return $res
     fi
     
-    ./mdbx_load -V > ${logfile} 2>&1
+    ./mdbx_stat -e example-db >> ${logfile} 2>&1
     res=$?
-    if [ $res -ne 0 ]; then
+    if [ $res -ne 0 ]
+    then
         cd $OLDPWD
         return $res
     fi
     
-    ./mdbx_chk -V > ${logfile} 2>&1
+    ./mdbx_chk example-db >> ${logfile} 2>&1
     res=$?
-    if [ $res -ne 0 ]; then
+    if [ $res -ne 0 ]
+    then
+        cd $OLDPWD
+        return $res
+    fi
+    
+    ./mdbx_drop example-db >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]
+    then
         cd $OLDPWD
         return $res
     fi
 
-    ./mdbx_drop -V > ${logfile} 2>&1
+    ./mdbx_dump example-db >> ${logfile} 2>&1
     res=$?
-    if [ $res -ne 0 ]; then
+    if [ $res -ne 0 ]
+    then
         cd $OLDPWD
         return $res
     fi
 
-    ./mdbx_stat -V > ${logfile} 2>&1
+    ./mdbx_test --pathname example-db >> ${logfile} 2>&1
     res=$?
-    if [ $res -ne 0 ]; then
-        cd $OLDPWD
-        return $res
-    fi
-
-    ./mdbx_dump -V > ${logfile} 2>&1
-    res=$?
-    if [ $res -ne 0 ]; then
-        cd $OLDPWD
-        return $res
-    fi
+    
     cd $OLDPWD
     return $res
 }
