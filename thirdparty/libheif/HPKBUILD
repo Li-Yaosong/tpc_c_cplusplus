@@ -1,4 +1,4 @@
-# Contributor: Jeff Han <hanjinfei@foxmail.com>
+# Contributor: Jeff Han <hanjinfei@foxmail.com>,pappy-day <1833680962@qq.com>
 # Maintainer: Jeff Han <hanjinfei@foxmail.com>
 pkgname=libheif
 pkgver=v1.15.2
@@ -7,7 +7,7 @@ pkgdesc="libheif is an HEIF and AVIF file format decoder and encoder."
 url="https://github.com/strukturag/libheif"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("GNU LESSER GENERAL PUBLIC LICENSE")
-depends=("jpeg" "libpng")
+depends=("jpeg" "libpng" "libde265")
 makedepends=()
 
 #网络原因更换成gitee下载源
@@ -52,7 +52,10 @@ prepare() {
 build() {
     cd $builddir/$ARCH-build
     # 不强依赖jpeg和libpng, 下方的写法能找到libpng但是找不到jpeg. 显示开启测试
-    PKG_CONFIG_PATH="${pkgconfigpath}" libpng_CFLAGS="-I$LYCIUM_ROOT/usr/libpng/$ARCH/include" libpng_LIBS="-L$LYCIUM_ROOT/usr/libpng/$ARCH/lib -lpng" ../configure "$@" --host=$host --enable-tests --disable-go --disable-gdk-pixbuf --disable-aom --disable-libde265 --disable-x265 --disable-rav1e --disable-dav1d --enable-svt > `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" libpng_CFLAGS="-I$LYCIUM_ROOT/usr/libpng/$ARCH/include" \
+	libpng_LIBS="-L$LYCIUM_ROOT/usr/libpng/$ARCH/lib -lpng" \
+	../configure "$@" --host=$host --enable-tests --disable-go --disable-gdk-pixbuf --disable-aom \
+	--enable-libde265 --disable-x265 --disable-rav1e --disable-dav1d --enable-svt > $buildlog 2>&1
     $MAKE >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
