@@ -15,7 +15,7 @@
 # Maintainer: kangxiangjuan <179721749@qq.com>
 
 pkgname=libhevc
-pkgver=simpleperf-release
+pkgver=simpleperf-release   # 2024.02.02
 pkgrel=0
 pkgdesc="libhevc is a format codec library"
 url="https://android.googlesource.com/platform/external/libhevc"
@@ -23,10 +23,12 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("Apache License 2.0")
 depends=()
 makedepends=()
-source="https://android.googlesource.com/platform/external/$pkgname/+archive/refs/heads/$pkgver.tar.gz"
+# 原仓地址镜像下载失败，使用镜像仓
+# source="https://android.googlesource.com/platform/external/$pkgname/+archive/refs/heads/$pkgver.tar.gz"
+source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver.tar.gz"
 
 # 自动解压文件会分散,不自动解压，需手动解压到文件夹中
-autounpack=false
+autounpack=true
 downloadpackage=true
 buildtools="cmake"
 patchflag=true
@@ -35,14 +37,10 @@ builddir=$pkgname-$pkgver
 packagename=$builddir.tar.gz
 systemprocesser=
 prepare() {
+    cd $builddir
     if [ "$patchflag" == true ]
     then
-        # 需要手动解压
-        mkdir $builddir
-        tar -xzf $packagename -C ./$builddir
-        cd $builddir
         patch -p1 < ../libhevc_ohos_pkg.patch
-        cd $OLDPWD
         patchflag=false
     fi
     if [ $ARCH == "armeabi-v7a" ]
@@ -55,11 +53,9 @@ prepare() {
         echo "${ARCH} not support"
         return -1
     fi
-    mkdir -p $builddir/$ARCH-build  
 }
 
 build() {
-    cd $builddir
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake \
     -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake \
     -DCMAKE_SYSTEM_PROCESSOR=${systemprocesser} \
