@@ -11,8 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Contributor: 城meto <myxuan475@126.com>, liukai <liukai295@h-partners.com>
-# Maintainer: 城meto <myxuan475@126.com>
+# Contributor: liukai <liukai295@h-partners.com>
+# Maintainer: liukai <liukai295@h-partners.com>
 
 pkgname=Paddle-Lite-2.7
 pkgver=v2.7
@@ -24,8 +24,7 @@ license=("Apache-2.0 license")
 depends=()
 makedepends=("python3")
 
-# 原仓地址 https://github.com/PaddlePaddle/$pkgname/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用下列地址
-source="https://gitee.com/lycium_pkg_mirror/Paddle-Lite/repository/archive/$pkgver.zip"
+source="https://github.com/PaddlePaddle/Paddle-Lite/archive/refs/tags/$pkgver.zip"
 
 source envset.sh
 buildtools="cmake"
@@ -79,7 +78,6 @@ prepare() {
     # 下载子模块
     if [ $downloadpackage == true ];then
         cd $builddir
-        #clonesrc
         if [ $? -ne 0 ];then
             return -1
         fi
@@ -99,36 +97,14 @@ prepare() {
 
     mkdir -p $builddir/$ARCH-build
 
-    # 1. protobuf host进程目录
-    #protobufhostdir=$PKGBUILD_ROOT/../protobuf_v3.6.1/protobufsource-v3.6.1-host-build
-    #flatbuffershostdir=$PKGBUILD_ROOT/../flatbuffers/flatbuffers-host-build
-
-    # 2. 准备分析工具
-    cd $builddir
-    mkdir -pv $ARCH-build/lite/tools/debug
-    cp -v lite/tools/debug/analysis_tool.py $ARCH-build/lite/tools/debug
-
-    #3. 准备生成源码文件  ARM_TARGET_ARCH_ABI
-    mkdir -pv $ARCH-build/lite/gen_code
-    touch $ARCH-build/lite/gen_code/__generated_code__.cc
-    cd $OLDPWD
-
     if [ $ARCH == "armeabi-v7a" ];then
-        #extracflags="-march=armv7"
         openblastarget="armv7"
-        #cp ${OHOS_SDK}/native/llvm/lib/arm-linux-ohos/libc++_shared.so $builddir/$ARCH-build
-        #setarm32ENV
-        #host=arm-linux
         cc=${OHOS_SDK}/native/llvm/bin/clang
         cxx=${OHOS_SDK}/native/llvm/bin/clang++
         ar=${OHOS_SDK}/native/llvm/bin/llvm-ar
         ranlib=${OHOS_SDK}/native/llvm/bin/llvm-ranlib
     elif [ $ARCH == "arm64-v8a" ];then
-        #extracflags="-march=armv8.2-a+dotprod+nolse"
         openblastarget="armv8"
-        #cp ${OHOS_SDK}/native/llvm/lib/aarch64-linux-ohos/libc++_shared.so $builddir/$ARCH-build
-        #setarm64ENV
-        #host=aarch64-linux-ohos
         cc="${OHOS_SDK}/native/llvm/bin/clang"
         cxx="${OHOS_SDK}/native/llvm/bin/clang++"
         ar=${OHOS_SDK}/native/llvm/bin/llvm-ar
@@ -141,50 +117,26 @@ prepare() {
 
 build() {
     cd $builddir
-    if [ $ARCH == "armeabi-v7a" ];then
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake .. \
-        -DWITH_GPU=OFF \
-        -DWITH_MKL=OFF \
-        -DWITH_LITE=ON \
-        -DLITE_WITH_JAVA=OFF \
-        -DLITE_WITH_CUDA=OFF \
-        -DLITE_WITH_X86=OFF  \
-        -DLITE_WITH_ARM=ON   \
-        -DLITE_WITH_LIGHT_WEIGHT_FRAMEWORK=ON \
-        -DWITH_TESTING=OFF  \
-        -DLITE_WITH_LOG=OFF \
-        -DLITE_ON_TINY_PUBLISH=ON   \
-        -DARM_TARGET_OS=armlinux    \
-        -DARM_TARGET_ARCH_ABI=${openblastarget} \
-        -DARM_TARGET_LANG=gcc  \
-        -DLITE_WITH_OPENMP=OFF \
-        -DCMAKE_C_COMPILER=${OHOS_SDK}/native/llvm/bin/clang \
-        -DCMAKE_CXX_COMPILER=${OHOS_SDK}/native/llvm/bin/clang++ \
-        -DCC=${OHOS_SDK}/native/llvm/bin/clang    \
-        -DCXX=${OHOS_SDK}/native/llvm/bin/clang++ \
-        -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    elif [ $ARCH == "arm64-v8a" ];then
-        ${OHOS_SDK}/native/build-tools/cmake/bin/cmake .. \
-        -DWITH_GPU=OFF \
-        -DWITH_MKL=OFF \
-        -DWITH_LITE=ON \
-        -DLITE_WITH_JAVA=OFF \
-        -DLITE_WITH_CUDA=OFF \
-        -DLITE_WITH_X86=OFF  \
-        -DLITE_WITH_ARM=ON   \
-        -DLITE_WITH_LIGHT_WEIGHT_FRAMEWORK=ON \
-        -DWITH_TESTING=OFF  \
-        -DLITE_WITH_LOG=OFF \
-        -DLITE_ON_TINY_PUBLISH=ON \
-        -DARM_TARGET_OS=armlinux  \
-        -DARM_TARGET_ARCH_ABI=${openblastarget} \
-        -DARM_TARGET_LANG=gcc       \
-        -DCMAKE_C_COMPILER=${OHOS_SDK}/native/llvm/bin/clang     \
-        -DCMAKE_CXX_COMPILER=${OHOS_SDK}/native/llvm/bin/clang++ \
-        -DCC=${OHOS_SDK}/native/llvm/bin/clang    \
-        -DCXX=${OHOS_SDK}/native/llvm/bin/clang++ \
-        -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    fi
+    -DWITH_GPU=OFF \
+    -DWITH_MKL=OFF \
+    -DWITH_LITE=ON \
+    -DLITE_WITH_JAVA=OFF \
+    -DLITE_WITH_CUDA=OFF \
+    -DLITE_WITH_X86=OFF  \
+    -DLITE_WITH_ARM=ON   \
+    -DLITE_WITH_LIGHT_WEIGHT_FRAMEWORK=ON \
+    -DWITH_TESTING=OFF  \
+    -DLITE_WITH_LOG=OFF \
+    -DLITE_ON_TINY_PUBLISH=ON \
+    -DARM_TARGET_OS=armlinux  \
+    -DARM_TARGET_ARCH_ABI=${openblastarget} \
+    -DARM_TARGET_LANG=gcc       \
+    -DCMAKE_C_COMPILER=${OHOS_SDK}/native/llvm/bin/clang     \
+    -DCMAKE_CXX_COMPILER=${OHOS_SDK}/native/llvm/bin/clang++ \
+    -DCC=${OHOS_SDK}/native/llvm/bin/clang    \
+    -DCXX=${OHOS_SDK}/native/llvm/bin/clang++ \
+    -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
     make  CC="${cc}" CXX="${cxx}"  -j16 -C  $ARCH-build VERBOSE=1 >> `pwd`/$ARCH-build/make.log 2>&1
     ret=$?
     cd $OLDPWD
