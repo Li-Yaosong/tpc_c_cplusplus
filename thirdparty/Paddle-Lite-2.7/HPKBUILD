@@ -117,6 +117,7 @@ prepare() {
 
 build() {
     cd $builddir
+<<<<<<< HEAD
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake .. \
     -DWITH_GPU=OFF \
     -DWITH_MKL=OFF \
@@ -137,6 +138,52 @@ build() {
     -DCC=${OHOS_SDK}/native/llvm/bin/clang    \
     -DCXX=${OHOS_SDK}/native/llvm/bin/clang++ \
     -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
+=======
+#   if [ $ARCH == "armeabi-v7a" ];then
+#   ${OHOS_SDK}/native/build-tools/cmake/bin/cmake .. \
+#       -DWITH_GPU=OFF \
+#       -DWITH_MKL=OFF \
+#       -DWITH_LITE=ON \
+#       -DLITE_WITH_JAVA=OFF \
+#       -DLITE_WITH_CUDA=OFF \
+#       -DLITE_WITH_X86=OFF  \
+#       -DLITE_WITH_ARM=ON   \
+#       -DLITE_WITH_LIGHT_WEIGHT_FRAMEWORK=ON \
+#       -DWITH_TESTING=OFF  \
+#       -DLITE_WITH_LOG=OFF \
+#       -DLITE_ON_TINY_PUBLISH=ON   \
+#       -DARM_TARGET_OS=armlinux    \
+#       -DARM_TARGET_ARCH_ABI=${openblastarget} \
+#       -DARM_TARGET_LANG=gcc  \
+#       -DLITE_WITH_OPENMP=OFF \
+#       -DCMAKE_C_COMPILER=${OHOS_SDK}/native/llvm/bin/clang \
+#       -DCMAKE_CXX_COMPILER=${OHOS_SDK}/native/llvm/bin/clang++ \
+#       -DCC=${OHOS_SDK}/native/llvm/bin/clang    \
+#       -DCXX=${OHOS_SDK}/native/llvm/bin/clang++ \
+#       -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
+#   elif [ $ARCH == "arm64-v8a" ];then
+        ${OHOS_SDK}/native/build-tools/cmake/bin/cmake .. \
+        -DWITH_GPU=OFF \
+        -DWITH_MKL=OFF \
+        -DWITH_LITE=ON \
+        -DLITE_WITH_JAVA=OFF \
+        -DLITE_WITH_CUDA=OFF \
+        -DLITE_WITH_X86=OFF  \
+        -DLITE_WITH_ARM=ON   \
+        -DLITE_WITH_LIGHT_WEIGHT_FRAMEWORK=ON \
+        -DWITH_TESTING=OFF  \
+        -DLITE_WITH_LOG=OFF \
+        -DLITE_ON_TINY_PUBLISH=ON \
+        -DARM_TARGET_OS=armlinux  \
+        -DARM_TARGET_ARCH_ABI=${openblastarget} \
+        -DARM_TARGET_LANG=gcc       \
+        -DCMAKE_C_COMPILER=${OHOS_SDK}/native/llvm/bin/clang     \
+        -DCMAKE_CXX_COMPILER=${OHOS_SDK}/native/llvm/bin/clang++ \
+        -DCC=${OHOS_SDK}/native/llvm/bin/clang    \
+        -DCXX=${OHOS_SDK}/native/llvm/bin/clang++ \
+        -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
+    #fi
+>>>>>>> a80b0c6088b78d19a6a2a904fefb9740fb7f02da
     make  CC="${cc}" CXX="${cxx}"  -j16 -C  $ARCH-build VERBOSE=1 >> `pwd`/$ARCH-build/make.log 2>&1
     ret=$?
     cd $OLDPWD
