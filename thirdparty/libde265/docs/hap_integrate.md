@@ -67,7 +67,6 @@
 
 进入到构建目录执行（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
 ```shell
-  chmod 777 ./dec265/dec265                             #添加权限
   ./dec265/dec265 ../testdata/girlshy.h265              #执行测试用例
 ```
 &nbsp;![libde265_test](pic/libde265_test.png)

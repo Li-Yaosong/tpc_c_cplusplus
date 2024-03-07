@@ -17,12 +17,6 @@
 source HPKBUILD > /dev/null 2>&1    # 导入HPKBUILD文件
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
-# 测试前的准备, 如果不需要可以不写。
-checkprepare(){
-    cd ${builddir}/${ARCH}-build
-    chmod 777 ./dec265/dec265
-}
-
 # 在OH环境执行测试的接口
 openharmonycheck() {
     res=1
