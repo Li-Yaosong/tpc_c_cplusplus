@@ -31,7 +31,6 @@ autounpack=true
 downloadpackage=true
 buildtools="cmake"
 patchflag=true
-
 builddir=$pkgname-$pkgver
 packagename=$builddir.tar.gz
 systemprocesser=
