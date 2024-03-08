@@ -15,7 +15,7 @@
                 <filteritem type="filename" name="*.h265" desc=".h265文件，测试资源文件"/>
             </filefilter>
 			<filefilter name="binaryFileTypePolicyFilter" desc="Filters for resources files policies">
-                <filteritem type="filename" name="*.yuv" desc="*.yuv文件，测试资源文件"/>
+                <filteritem type="filename" name="*.yuv" desc=".yuv文件，测试资源文件"/>
             </filefilter>
 			<filefilter name="binaryFileTypePolicyFilter" desc="Filters for resources files policies">
                 <filteritem type="filename" name="*.265" desc=".265文件，测试资源文件"/>
