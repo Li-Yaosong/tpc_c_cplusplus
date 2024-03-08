@@ -31,7 +31,7 @@ autounpack=true
 patchflag=true
 downloadpackage=true
 
-builddir=$pkgname
+builddir=Paddle-Lite-v2.7
 packagename=$pkgname.zip
 extracflags=
 arch=
