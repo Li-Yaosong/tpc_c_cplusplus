@@ -14,7 +14,7 @@
 # Contributor: liukai <liukai295@h-partners.com>
 # Maintainer: liukai <liukai295@h-partners.com>
 
-pkgname=Paddle-Lite-2.7
+pkgname=Paddle-Lite-v2.7
 pkgver=v2.7
 pkgrel=0
 pkgdesc="PaddlePaddle High Performance Deep Learning Inference Engine for Mobile and Edge."
@@ -31,7 +31,7 @@ autounpack=true
 patchflag=true
 downloadpackage=true
 
-builddir=Paddle-Lite-v2.7
+builddir=$pkgname
 packagename=$pkgname.zip
 extracflags=
 arch=
