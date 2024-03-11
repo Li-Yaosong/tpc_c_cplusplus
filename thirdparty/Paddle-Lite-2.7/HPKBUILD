@@ -80,7 +80,6 @@ prepare() {
     fi
 
     # 1、大多数仿照Android移植修改。但Android的测试用例是单独写的，只使用了部分测试用例，
-    # 而OH是所有测试用例都跑，因此，发现了不少bug。
     # Android单元测试脚本： tools/ci_tools/ci_android_unit_test.sh
     # 2、有部分修改是测试用例存在明显错误，没有指定模型文件，或模型文件指向不对，
     #    参考issue: https://github.com/PaddlePaddle/Paddle-Lite/issues/10351
