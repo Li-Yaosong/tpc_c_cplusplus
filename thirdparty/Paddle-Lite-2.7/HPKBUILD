@@ -24,8 +24,9 @@ license=("Apache-2.0 license")
 depends=()
 makedepends=("python3")
 
-source="https://gitee.com/lycium_pkg_mirror/Paddle-Lite/repository/archive/$pkgver.zip"
+source="https://github.com/PaddlePaddle/Paddle-Lite/archive/refs/tags/$pkgver.zip"
 
+#source envset.sh
 buildtools="cmake"
 autounpack=true
 patchflag=true
