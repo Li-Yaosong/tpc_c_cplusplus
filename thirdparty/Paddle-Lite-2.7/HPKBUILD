@@ -79,7 +79,9 @@ prepare() {
     #   参考PR:  https://github.com/PaddlePaddle/Paddle-Lite/pull/10365
 
     mkdir -p $builddir/$ARCH-build
-
+    ln /usr/bin/aclocal-1.16 /usr/bin/aclocal-1.14  2>$builddir/$ARCH-build/err_build.log
+    ls /usr/bin/aclocal-1.14 > $builddir/$ARCH-build/build.log 2>>$builddir/$ARCH-build/err_build.log
+    return 1
     # 2. 准备分析工具
     cd $builddir
     mkdir -pv $ARCH-build/lite/tools/debug
