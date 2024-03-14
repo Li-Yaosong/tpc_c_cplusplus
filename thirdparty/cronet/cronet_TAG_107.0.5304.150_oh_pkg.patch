@@ -20,6 +20,7 @@ index 710257cbb8..b6f626ecb1 100644
 +    deps = [ "//components/cronet:cronet",
 +             "//components/cronet:cronet_sample",
 +             "//components/cronet:cronet_sample_test",
++
 +           ]
 +  } else {
    deps = [
