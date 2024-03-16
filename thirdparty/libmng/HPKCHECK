@@ -19,8 +19,8 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 
 openharmonycheck() {
     res=0
-    cd ${builddir}/${ARCH}-build/contrib/gcc/mngtree
-    ./mngtree ../../../../contrib/gcc/gtk-mng-view/linux.mng > ${logfile} 2>&1
+    cd ${builddir}/${ARCH}-build/bin
+    ./mngtree ../../contrib/gcc/gtk-mng-view/linux.mng > ${logfile} 2>&1
     res=$?
     cd $OLDPWD
     return $res

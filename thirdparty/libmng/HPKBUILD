@@ -44,8 +44,19 @@ build() {
     $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    $MAKE -C $ARCH-build install >> $buildlog 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    cd $builddir
     
-    #编译mngtree用于测试 
+    # 编译mngtree用于测试 
     if [ "$ARCH" = "armeabi-v7a" ]
     then
         ${OHOS_SDK}/native/llvm/bin/clang \
@@ -62,7 +73,7 @@ build() {
         -I $LYCIUM_ROOT/usr/lcms2/$ARCH/include \
         -I $LYCIUM_ROOT/usr/zlib/$ARCH/include \
         contrib/gcc/mngtree/mngtree.c \
-        -o ./$ARCH-build/contrib/gcc/mngtree/mngtree >> $buildlog 2>&1
+        -o ./$ARCH-build/bin/mngtree >> $buildlog 2>&1
     else
         ${OHOS_SDK}/native/llvm/bin/clang \
         --target=aarch64-linux-ohos \
@@ -77,20 +88,13 @@ build() {
         -I $LYCIUM_ROOT/usr/lcms2/$ARCH/include \
         -I $LYCIUM_ROOT/usr/zlib/$ARCH/include \
         contrib/gcc/mngtree/mngtree.c \
-        -o ./$ARCH-build/contrib/gcc/mngtree/mngtree >> $buildlog 2>&1
+        -o ./$ARCH-build/bin/mngtree >> $buildlog 2>&1
     fi
-    
-    return $ret
-}
-
-package() {
-    cd $builddir
-    $MAKE -C $ARCH-build install >> $buildlog 2>&1
+    ret=$?
     cd $OLDPWD
-}
-
-check() {
+    
     echo "The test must be on an OpenHarmony device!"
+    return $ret
 }
 
 # 清理环境
