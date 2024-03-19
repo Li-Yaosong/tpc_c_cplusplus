@@ -91,12 +91,8 @@
   #调用需注意
   #引入FFmpeg头文件时需要声明此处引入为C，参考如下
   extern "C"{
-  	#include libavcodec/ac3_parser.h
+  	#include "libavcodec/ac3_parser.h"
   }
-  ```
-
-  
-
 ## 测试三方库
 
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
