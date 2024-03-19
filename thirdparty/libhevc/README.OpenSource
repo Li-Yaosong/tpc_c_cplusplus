@@ -2,7 +2,7 @@
     {
         "Name": "libhevc",
         "License": "Apache License 2.0",
-        "License File": "COPYING",
+        "License File": "LICENSE",
         "Version Number": "simpleperf-release",
         "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://android.googlesource.com/platform/external/libhevc",
