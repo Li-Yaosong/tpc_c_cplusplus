@@ -1,7 +1,7 @@
 [
     {
         "Name": "libheif",
-        "License": "GNU LESSER GENERAL PUBLIC LICENSE",
+        "License": "LGPL3.0",
         "License File": "COPYING",
         "Version Number": "v1.15.2",
         "Owner": "xiafeng@huawei.com",
