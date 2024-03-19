@@ -59,6 +59,10 @@
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句，libz.a需要自己编译仓库里面的
 
   ```cmake
+  #修改文件CMakeLists.txt
+  #因为此三方库中存在汇编编译的部分，所以需要修改CFLAGS参考如下，符号不可抢占且优先使用本地符号
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-int-conversion -Wl,-Bsymbolic")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-int-conversion -Wl,-Bsymbolic")
   #将三方库加入工程中
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/FFmpeg/${OHOS_ARCH}/lib/libavcodec.a)
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/FFmpeg/${OHOS_ARCH}/lib/libavdevice.a)
@@ -75,6 +79,22 @@
   #将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/FFmpeg/${OHOS_ARCH}/include)
   ```
+  
+  ```cmake
+  #如果自行编译libz.a遇到问题，可以尝试直接导入libz
+  target_link_libraries(entry PRIVATE z)
+  ```
+  
+- 调用三方库须知
+
+  ```c
+  #调用需注意
+  #引入FFmpeg头文件时需要声明此处引入为C，参考如下
+  extern "C"{
+  	#include libavcodec/ac3_parser.h
+  }
+  ```
+
   
 
 ## 测试三方库
