@@ -22,9 +22,23 @@ openharmonycheck() {
     res=0
     export PATH=${builddir}/${ARCH}-build/util:$PATH
     cd ${builddir}/${ARCH}-build/test
-    mkdir tempdir
-    ./test_write_cache tempdir > ${logfile} 2>&1
+    
+    mkdir testhello
+    ../example/hello testhello > ${logfile} 2>&1
     res=$?
+    if [ $res -ne 0 ]
+    then
+        umount testhello
+        rm -rf testhello
+        cd $OLDPWD
+        return $res
+    fi 
+
+    ./test_write_cache testhello > ${logfile} 2>&1
+    res=$?
+
+    umount testhello
+    rm -rf testhello
     cd $OLDPWD
     return $res
 }
