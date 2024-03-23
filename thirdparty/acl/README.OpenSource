@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "acl",
+        "License": "MIT license",
+        "License File": "LICENSE",
+        "Version Number": "v2.1.0",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/nfrechette/acl",
+        "Description": "Animation Compression Library."
+    }
+]
