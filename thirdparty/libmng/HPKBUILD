@@ -29,7 +29,6 @@ source="https://cfhcable.dl.sourceforge.net/project/$pkgname/$pkgname-devel/$pkg
 
 autounpack=true
 downloadpackage=true
-patchflag=true
 builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
 
