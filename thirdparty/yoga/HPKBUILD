@@ -1,0 +1,71 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: kangxiangjuan <179721749@qq.com>
+# Maintainer: kangxiangjuan <179721749@qq.com>
+
+pkgname=yoga
+pkgver=v3.0.2
+pkgrel=0
+pkgdesc="libyoga is a UI control layout engine."
+url="https://github.com/facebook/yoga"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("MIT License")
+depends=()
+makedepends=()
+source="https://github.com/facebook/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+
+autounpack=true
+downloadpackage=true
+buildtools="cmake"
+
+builddir=$pkgname-${pkgver:1}
+packagename=$builddir.tar.gz
+
+prepare() {
+    mkdir -p $builddir/$ARCH-build
+}
+
+build() {
+    cd $builddir
+    # 使用系统cmake，需要下载至少3.26版本以上。测试时鸿蒙设备上的cmake版本与系统cmake版本保持一致
+    cmake "$@" -DCMAKE_C_FLAGS="-Wno-error=unused-command-line-argument" \
+    -DCMAKE_CXX_FLAGS="-Wno-error=unused-command-line-argument" \
+    -DCMAKE_GTEST_DISCOVER_TESTS_DISCOVERY_MODE="PRE_TEST" -B$ARCH-build -S./ > $buildlog 2>&1
+    $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    $MAKE VERBOSE=1 -C $ARCH-build install >> $buildlog 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    cd $builddir/$ARCH-build/tests/
+    # 删除系统默认路径中的local，匹配鸿蒙设备上cmake路径
+    sed -i 's/r\/local/r/g' yogatests[1]_include.cmake
+    echo "The test must be on an OpenHarmony device!"
+    cd $OLDPWD
+    # 测试方式
+    # 进入构建目录下tests目录
+    # 执行: ctest
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir  #${PWD}/$packagename
+}
