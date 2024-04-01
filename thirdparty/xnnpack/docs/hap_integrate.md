@@ -72,7 +72,11 @@
 
 - 编译出可执行的文件进行测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
-- 进入到构建目录tpc_c_cplusplus/thirdparty/xnnpack/XNNPACK-bc09d8f8b4681aaeaa82b9d9a078e7eae4838424/arm64-v8a-build执行ctest，运行测试用例（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
+- 进入到构建目录运行测试ctest（注意arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录），执行结果如图所示
+```
+/data/tpc_c_cplusplus/thirdparty/xnnpack/xnnpack-bc09d8f8b4681aaeaa82b9d9a078e7eae4838424/arm64-v8a-build
+ctest
+```
 
 &nbsp;![XNNPACK_test](pic/test-cmd-ret.png)
 
