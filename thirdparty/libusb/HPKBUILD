@@ -31,10 +31,24 @@ buildtools="configure"
 
 builddir=${pkgname}-${pkgver}
 packagename=$builddir.zip
+patchflag=true
 
 source envset.sh
 host=
 prepare() {
+    if [ $patchflag == true ]
+    then
+        cd $builddir
+        patch -p1 < ../libusb_ohos.patch > $buildlog 2>&1
+        if [ "$?" != "0" ]
+        then
+            cd $OLDPWD
+            return -1;
+        fi
+        cd $OLDPWD
+        patchflag=false
+    fi
+
     cp -arf $builddir $builddir-$ARCH-build
     if [ $ARCH == ${archs[0]} ]
     then
