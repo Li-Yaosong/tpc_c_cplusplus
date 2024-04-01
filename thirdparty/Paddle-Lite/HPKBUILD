@@ -31,10 +31,8 @@ buildtools="cmake"
 autounpack=true
 patchflag=true
 downloadpackage=true
-
 builddir=$pkgname-$pkgver
 packagename=$pkgname-$pkgver.zip
-
 protobufhostdir=
 extracflags=
 
