@@ -12,13 +12,37 @@ cronet是chromium,项目的网络子模块。承接了chromium网络通信相关
 - 当前适配的功能：支持cronet http/https 通信能力
 
 ## 使用方式
+源码下载：
 
-由于cronet属于chromium的一部分，因此编译构建 cronet，需要先[下载chromium源码](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md)。
-由于我们提供的移植cronet的patch是基于，chromium TAG 107.0.5304.150 因此获取源码后需要将代码, 切换到107.0.5304.150 tag点。
+由于cronet属于chromium的一部分。并且我们是针对指定版本适配的因此需要下载指定TAG点的chromium源码。
 
 ```bash
-git checkout 107.0.5304.150
+# 下载google depot_tools
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+# 将depot_tools目录添加到环境变量PATH中
+export PATH=/path/of/depot_tools/:$PATH
+# 下载指定tag点的chromium源码
+git clone --depth=1 -b 107.0.5304.150 https://chromium.googlesource.com/chromium/src.git src
+# 同步分支依赖
+# 创建 gclient config 文件 .gclient 文件与 src 同级目录
+touch .gclient
+# .gclient 文件内容如下
+solutions = [
+  {
+    "name": "src",
+    "url": "https://chromium.googlesource.com/chromium/src.git",
+    "managed": False,
+    "custom_deps": {},
+    "custom_vars": {},
+  },
+]
+# 同步源码依赖
+gclient sync
+# 进入 src 目录安装编译依赖
+bash ./build/install-build-deps.sh
+
 ```
+
 
 随后将我们的patch打入源码中,
 
@@ -33,12 +57,6 @@ git apply cronet_TAG_107.0.5304.150_oh_pkg.patch
 ```
 # 将 SDK 的 native 目录 copy 到，chromium 源码中 third_part 目录下的 ohos_sdk 目录。
 ```
-
-配置 deps_tools
-```
-# 将 google depot_tool 拷贝到 third_part 目录下
-```
-
 进入src目录,执行:
 
 ```bash
