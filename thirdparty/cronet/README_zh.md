@@ -37,9 +37,11 @@ solutions = [
   },
 ]
 # 同步源码依赖
-gclient sync
+gclient sync --nohooks
 # 进入 src 目录安装编译依赖
 bash ./build/install-build-deps.sh
+# 同步二进制依赖
+gclient runhooks
 
 ```
 
