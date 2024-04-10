@@ -67,7 +67,11 @@
 
 - 编译出可执行的文件进行测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
-- 如图所示，进入到构建目录运行测试用例（注意arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
+- 进入到构建目录运行测试用例（注意arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录），执行结果如图所示
+ ```
+  cd /data/tpc_c_cplusplus/thirdparty/gemmlowp/gemmlowp-16e8662c34917be0065110bfcd9cc27d30f52fdf/contrib/arm64-v8a-build
+  ./test_gemmlowp
+ ```
 
 &nbsp;![gemmlowp_test](pic/cmd-test-ret.png)
 
