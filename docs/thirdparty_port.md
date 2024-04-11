@@ -181,10 +181,10 @@ cleanbuild() {
 
 通过对minizip-ng三方库的分析，我们可以知道，该库依赖了openssl，lzma，bzip2，libz，zstd以及googletest等诸多其他的三方库，我们可以选择需要依赖的三方库，关闭不依赖的三方库，此例中我们选择lzma，openssl以及bzip2为依赖进行说明，而这3个依赖库的编译方式分别是cmake，configure以及make。
 
-- 在main目录下创建minizip-ng三方库目录，以及对应的xz(该库编译完后会生成liblzma.a以及对应的liblzma.so)，openssl和bzip2.
+- 在thirdparty目录下创建minizip-ng三方库目录，以及对应的xz(该库编译完后会生成liblzma.a以及对应的liblzma.so)，openssl和bzip2.
   
   ``` shell
-  cd lycium/main
+  cd thirdparty
   mkdir minizip-ng
   mkdir xz
   mkdir openssl
