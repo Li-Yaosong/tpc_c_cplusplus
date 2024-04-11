@@ -1,6 +1,7 @@
 # Windows上使用OpenHarmony SDK交叉编译指导
 
-OpenHarmony SDK提供了windwos下的cmake以及ninja工具，故我们可以在windows上通过OpenHarmony SDK交叉编译cmake构建的c/c++三方库。
+OpenHarmony SDK提供了windwos下的cmake以及ninja工具，故我们可以在windows上通过OpenHarmony SDK交叉编译cmake构建的c/c++三方库。<br>
+**此方法针对一些编译时依赖类unix系统命令的三方库不适用!**
 
 本文以cJSON三方库为例介绍如何通过OpenHarmony的SDK在Windows平台进行交叉编译。
 
