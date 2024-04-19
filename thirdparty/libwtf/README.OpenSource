@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libwtf",
+        "License": "MIT License",
+        "License File": "LICENSE",
+        "Version Number": "webkitgtk-2.41.90",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/WebKit/webkit",
+        "Description": "Libwtf is a network template framework."
+    }
+]
