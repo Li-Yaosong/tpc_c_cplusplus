@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "lua",
+        "License": "MIT license",
+        "License File": "readme.html",
+        "Version Number": "v5.4.6",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://www.lua.org",
+        "Description": "Lua is a powerful, efficient, lightweight, embeddable scripting language."
+    }
+]
