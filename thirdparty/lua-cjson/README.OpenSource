@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "lua-cjson",
+        "License": "MIT license",
+        "License File": "LICENSE",
+        "Version Number": "v2.1.0",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/mpx/lua-cjson",
+        "Description": "Lua CJSON is a fast JSON encoding/parsing module for Lua."
+    }
+]
