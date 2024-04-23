@@ -5,7 +5,7 @@
         "License File": "LICENSES",
         "Version Number": "",
         "Owner": "xiafeng@huawei.com",
-        "Upstream URL": "https://github.com/jbuckmccready/CavalierContours/archive/refs/heads/master.zip",
+        "Upstream URL": "https://github.com/jbuckmccready/CavalierContours.git",
         "Description": "A 2D multi-fold line library for offset, cross-merging, and other combinations"
     }
 ]
