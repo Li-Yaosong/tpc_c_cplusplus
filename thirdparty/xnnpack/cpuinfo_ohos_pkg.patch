@@ -117,3 +117,33 @@ diff -Naur old/CMakeLists.txt new/CMakeLists.txt
      ADD_EXECUTABLE(get-current-test test/get-current.cc)
      CPUINFO_TARGET_ENABLE_CXX11(get-current-test)
      CPUINFO_TARGET_RUNTIME_LIBRARY(get-current-test)
+diff -Naur old/src/arm/linux/aarch64-isa.c new/src/arm/linux/aarch64-isa.c
+--- old/src/arm/linux/aarch64-isa.c	2024-04-18 16:23:14.450072400 +0800
++++ new/src/arm/linux/aarch64-isa.c	2024-04-18 16:31:55.291651700 +0800
+@@ -108,6 +108,7 @@
+ 		case UINT32_C(0x51008050): /* Kryo 485 Silver (Cortex-A55) */
+ 		case UINT32_C(0x53000030): /* Exynos-M4 */
+ 		case UINT32_C(0x53000040): /* Exynos-M5 */
++		case UINT32_C(0x4800D020): /* some kernels */ 
+ 			isa->dot = true;
+ 			break;
+ 		case UINT32_C(0x4100D050): /* Cortex A55: revision 1 or later only */
+diff -Naur old/src/arm/linux/cpuinfo.c new/src/arm/linux/cpuinfo.c
+--- old/src/arm/linux/cpuinfo.c	2024-04-18 16:23:14.454068800 +0800
++++ new/src/arm/linux/cpuinfo.c	2024-04-18 16:29:47.945880100 +0800
+@@ -332,6 +332,15 @@
+ 		}
+ 	}
+    
++	/* The CPU architecture of some kernels is 0xf，adapted separately */
++	if (cpu_architecture_length == 3) {
++		if (memcmp(cpu_architecture_start, "0xf", cpu_architecture_length) == 0) {
++			processor->midr = midr_set_architecture(processor->midr, UINT32_C(0xF));
++			processor->architecture_version = 8;
++			processor->flags |= CPUINFO_ARM_LINUX_VALID_ARCHITECTURE | CPUINFO_ARM_LINUX_VALID_PROCESSOR;
++			return;
++		}
++	}
+ 
+ 	uint32_t architecture = 0;
+ 	const char* cpu_architecture_ptr = cpu_architecture_start;
