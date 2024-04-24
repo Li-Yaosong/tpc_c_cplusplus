@@ -46,7 +46,7 @@ buildgnutool() {
     toolname=$1
     toolver=$2
     toolpath=$toolname-$toolver
-    prefixpath=`pwd`/$toolpath/install
+    prefixpath=`pwd`/$toolpath/install_dir
     down=0
     rm -rf $toolpath
     if [ ! -f  $toolname-$toolver.tar.xz ];then
