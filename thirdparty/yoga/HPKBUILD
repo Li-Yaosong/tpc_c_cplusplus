@@ -38,7 +38,7 @@ prepare() {
 
 build() {
     cd $builddir
-    # 使用系统cmake，需要下载至少3.26版本以上。测试时鸿蒙设备上的cmake版本与系统cmake版本保持一致
+    # 使用系统cmake，需要下载至少3.26版本以上。
     cmake "$@" -DCMAKE_C_FLAGS="-Wno-error=unused-command-line-argument" \
     -DCMAKE_CXX_FLAGS="-Wno-error=unused-command-line-argument" \
     -DCMAKE_GTEST_DISCOVER_TESTS_DISCOVERY_MODE="PRE_TEST" -B$ARCH-build -S./ > $buildlog 2>&1
@@ -56,8 +56,8 @@ package() {
 
 check() {
     cd $builddir/$ARCH-build/tests/
-    # 删除系统默认路径中的local，匹配鸿蒙设备上cmake路径
-    sed -i 's/r\/local/r/g' yogatests[1]_include.cmake
+    # 删除系统cmake默认路径，匹配oh设备上cmake路径
+    sed -i 's/usr\/local\/share\/cmake-3.26/usr\/share\/cmake-3.27/g' yogatests[1]_include.cmake
     echo "The test must be on an OpenHarmony device!"
     cd $OLDPWD
     # 测试方式
