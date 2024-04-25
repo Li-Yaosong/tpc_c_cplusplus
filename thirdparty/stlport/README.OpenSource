@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "stlport",
+        "License": "Apache License",
+        "License File": "LICENSE",
+        "Version Number": "5.2.1",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/frida/stlport",
+        "Description": "stlport is a full ANSI C++ Standard library."
+    }
+]
