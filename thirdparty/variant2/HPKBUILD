@@ -101,6 +101,8 @@ package() {
 # 在OpenHarmony开发板中执行测试用例
 check() {
     echo "The test must be on an OpenHarmony device!"
+    #cd $builddir-$ARCH-build/test/
+    #sh variant2_test.sh
 }
 
 # 清理环境
