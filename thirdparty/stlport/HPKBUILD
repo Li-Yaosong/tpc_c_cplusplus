@@ -1,0 +1,60 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License
+
+# Contributor: zhengxiaoqing <zhaoxiaoqing17@h-partners.com>
+# Maintainer: zhengxiaoqing <zhaoxiaoqing17@h-partners.com>
+
+pkgname=STLport
+pkgver=5.2.1
+pkgrel=0
+pkgdesc="STLport is a full ANSI C++ Standard library."
+url="https://github.com/frida/stlport" 
+archs=("armeabi-v7a" "arm64-v8a")
+license=()
+depends=() 
+makedepends=()
+source="https://sourceforge.net/projects/stlport/files/STLport/STLport-5.2.1/STLport-5.2.1.tar.gz"
+
+downloadpackage=true
+autounpack=true 
+buildtools="configure"  
+
+builddir=$pkgname-$pkgver
+packagename=$builddir.tar.gz
+cloneflag=true
+
+# 此三方库原库编译需要依赖gcc-5.4.6版本过低，但OH工具链提供的版本较高，无法编译，故此脚本不进行编译，只需要下载需要移植的源码即可。
+prepare() {
+    cd $builddir
+    cd $OLDPWD
+}
+
+build() {
+    cd $builddir
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+}
+
+cleanbuild(){
+    rm -rf ${PWD}/$builddir #${PWD}/$packageName
+}
