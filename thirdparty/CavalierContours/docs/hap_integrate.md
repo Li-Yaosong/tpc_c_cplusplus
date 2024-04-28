@@ -22,7 +22,6 @@
   ├── docs                              #三方库相关文档的文件夹
   ├── HPKBUILD                          #构建脚本
   ├── HPKCHECK                          #测试脚本
-  ├── SHA512SUM                         #三方库校验文件
   ├── OAT.xml                           #OAT开源审查文本文件
   ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
   ├── README_zh.md                      #三方库简介
