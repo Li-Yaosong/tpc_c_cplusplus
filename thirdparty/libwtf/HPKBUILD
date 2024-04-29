@@ -39,7 +39,7 @@ prepare() {
         # 添加系统识别
         patch -p1 < `pwd`/../JavaScriptCore_oh_pkg.patch
         # 修改因平台差异导致char类型符号位差异，而引起相关测试用例报错
-        patch -p1 < `pwd`/../MathExtras_oh_pkg.patch
+        patch -p1 < `pwd`/../JavaScriptCore_oh_test.patch
 
         # patch只需要打一次,关闭打patch
         patchflag=false

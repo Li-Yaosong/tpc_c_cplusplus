@@ -82,9 +82,9 @@ cd lycium
 ```
 **注1:由于OpenHarmony环境下，char类型视为无符号类型，会导致char类型和有符号类型之间边界值测试失败，当前UnitTest_MathExtras.patch会对相关测试用例进行修复**
 
-**注2：当前openharmony环境下，时区设置如果不是GMT-07:00，会有WF_DateMath.calculateLocalTimeOffset报错（可忽略)**
+**注2：原册俄式用例,时区设置如果不是GMT-07:00，会有WF_DateMath.calculateLocalTimeOffset报错，当前UnitTest_MathExtras.patch会对相关测试用例进行屏蔽****
 
-**注3: StackTraceTest堆栈打印错误日志和ubuntu一样（可忽略)**
+**注3: StackTraceTest堆栈打印错误日志和ubuntu一样,当前UnitTest_MathExtras.patch会对相关测试用例进行屏蔽**
 
 
 
