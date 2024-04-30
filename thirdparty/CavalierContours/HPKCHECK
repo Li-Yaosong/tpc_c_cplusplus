@@ -17,6 +17,11 @@
 source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
+checkprepare() {
+    # 添加lib子目录CavalierContours下的库路径到环境变量
+    export LD_LIBRARY_PATH=${LYCIUM_ROOT}/usr/${pkgname}/${ARCH}/lib/:$LD_LIBRARY_PATH
+}
+
 # 在OH环境执行测试的接口
 openharmonycheck() {
     res=0                  
