@@ -17,10 +17,18 @@
 source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
+checkprepare() {
+    # 添加lib子目录variant2下的库路径到环境变量
+    cd $LYCIUM_THIRDPARTY_ROOT/$pkgname/$ARCH-build
+    find . -type f -name "*.so*" -exec cp {} ./ \;
+    export LD_LIBRARY_PATH=$LYCIUM_THIRDPARTY_ROOT/$pkgname/$pkgname-$ARCH-build/:$LD_LIBRARY_PATH
+    cd $OLDPWD
+}
+
 # 在OH环境执行测试的接口
 openharmonycheck() {
     res=0                  
-    cd $builddir-$ARCH-build/test/
+    cd $LYCIUM_THIRDPARTY_ROOT/$pkgname/$builddir-$ARCH-build/test/
     sh variant2_test.sh > ${logfile} 2>&1
     res=$?      
     cd $OLDPWD                         
