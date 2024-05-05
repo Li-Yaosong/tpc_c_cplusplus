@@ -44,7 +44,7 @@ buildgnutool() {
     toolname=$1
     toolver=$2
     toolpath=$toolname-$toolver
-    prefixpath=`pwd`/$toolpath/install
+    prefixpath=`pwd`/$toolpath/install_dir
     down=0
     rm -rf $toolpath
     if [ ! -f  $toolname-$toolver.tar.xz ];then
@@ -131,9 +131,9 @@ check() {
     cd $builddir-$ARCH-build/test/lsb
     $MAKE config midi_event >> $buildlog 2>&1
     # 注释掉一些依赖，让测试在板端跳过编译
-    sed -i '/\($(srcdir)\/Makefile.in:\)/,/\($(am__aclocal_m4_deps):\)/{s/^/#/}' Makefile
-    sed -i 's/\([a-zA-Z_]\.log:\)/\1 #/' Makefile
-    sed -i 's/\(check-TESTS:\)/\1 #/' Makefile
+    sed -i.bak '/\($(srcdir)\/Makefile.in:\)/,/\($(am__aclocal_m4_deps):\)/{s/^/#/}' Makefile
+    sed -i.bak 's/\([a-zA-Z_]\.log:\)/\1 #/' Makefile
+    sed -i.bak 's/\(check-TESTS:\)/\1 #/' Makefile
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
     # make check-TESTS
@@ -157,3 +157,4 @@ recoverpkgbuildenv(){
 cleanbuild(){
     rm -rf ${PWD}/$builddir ${PWD}/$builddir-armeabi-v7a-build ${PWD}/$builddir-arm64-v8a-build #${PWD}/$packagename
 }
+
