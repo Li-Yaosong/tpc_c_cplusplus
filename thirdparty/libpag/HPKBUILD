@@ -1,0 +1,170 @@
+pkgname=libpag
+pkgver=v4.3.51
+pkgrel=0
+pkgdesc="The official rendering library for PAG (Portable Animated Graphics) files."
+url="https://pag.art/"
+archs=("arm64-v8a")
+license=()
+depends=()
+makedepends=()
+
+source="https://github.com/Tencent/libpag.git"
+
+autounpack=false
+downloadpackage=false
+
+builddir=$pkgname-${pkgver:1}
+packagename=$builddir.tar.gz
+
+patchflag=true
+cloneFlag=true
+
+prepare() { 
+
+    # apt install git-lfs ccrypt libx11-dev libegl-dev libglfw3-dev libgles2-mesa-dev libgles2 libgles2-mesa-dev pkg-config autoconf
+    # cd {OHOS_SDK}/native/sysroot/usr/lib/aarch64-linux-ohos/
+    # ln -s libGLESv3.so libGLESv2.so
+
+    if $cloneFlag
+    then
+        git clone $source $builddir
+
+        if [ $? -ne 0 ]
+        then
+            echo "$pkgname git clone $source error."
+            return -1
+        fi
+        cloneFlag=false
+    fi
+
+    cd $builddir
+    ./sync_deps.sh
+    sed -i 's/-Werror /-Wno-error /g'  CMakeLists.txt
+    cd third_party/tgfx
+    sed -i 's/-Werror /-Wno-error /g'  CMakeLists.txt
+    cp -r /usr/include/X11 include/ 
+    cd ../..
+    echo "prepare `pwd`"
+    mkdir -p build && cd build
+
+	${OHOS_SDK}/native/build-tools/cmake/bin/cmake -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DPAG_USE_OPENGL=OFF -DPAG_USE_SWIFTSHADER=ON \
+    -DPAG_USE_FREETYPE=ON -DPAG_USE_PNG_DECODE=OFF -DPAG_USE_PNG_ENCODE=OFF -DPAG_USE_JPEG_DECODE=OFF \
+    -DPAG_USE_JPEG_ENCODE=OFF -DPAG_USE_WEBP_DECODE=OFF -DPAG_USE_WEBP_ENCODE=OFF -DUSE_NATIVE_PLATFORM=ON \
+    -DPAG_BUILD_TESTS=OFF -DPAG_BUILD_SHARED=ON .. -L
+
+    make
+
+    cd ..
+
+    return 0
+}
+
+build() {
+    echo "build `pwd`"
+    cd third_party/tgfx
+    # if exist then delete
+    rm -rf third_party/freetype/build
+    rm -rf third_party/libpng/build
+    rm -rf third_party/pathkit/build
+    rm -rf third_party/skcms/build
+    rm -rf third_party/zlib/build
+
+    # delete x86 .a file
+    rm -rf third_party/out/freetype/linux/arm64/*
+    rm -rf third_party/out/libpng/linux/arm64/*
+    rm -rf third_party/out/pathkit/linux/arm64/*
+    rm -rf third_party/out/skcms/linux/arm64/*
+    rm -rf third_party/out/zlib/linux/arm64/*
+
+    mkdir -p third_party/freetype/build
+    mkdir -p third_party/libpng/build
+    mkdir -p third_party/pathkit/build
+    mkdir -p third_party/skcms/build
+    mkdir -p third_party/zlib/build
+
+    cd third_party/freetype/build
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake  .. -L
+    make
+    cd ../../..
+
+    cd third_party/libpng/build
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake -DPNG_SHARED=OFF -DPNG_TESTS=OFF -Dld-version-script=OFF -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake  .. -L
+    cp -r ${OHOS_SDK}/native/sysroot/usr/include/aarch64-linux-ohos/bits ./
+    make
+    cd ../../..
+
+    cd third_party/pathkit/build
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake  .. -L
+    make
+    cd ../../..
+
+    cd third_party/skcms/build
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake  .. -L
+    make
+    cd ../../..
+
+    cd third_party/zlib/build
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake  .. -L
+    make
+    cd ../../..
+
+    mkdir -p third_party/out/freetype/linux/arm64
+    mkdir -p third_party/out/libpng/linux/arm64
+    mkdir -p third_party/out/pathkit/linux/arm64
+    mkdir -p third_party/out/skcms/linux/arm64
+    mkdir -p third_party/out/zlib/linux/arm64
+
+    # copy aarch64 file
+    cp third_party/freetype/build/libfreetype.a third_party/out/freetype/linux/arm64
+    cp third_party/libpng/build/libpng16.a third_party/out/libpng/linux/arm64
+    cp third_party/pathkit/build/libpathkit.a third_party/out/pathkit/linux/arm64
+    cp third_party/skcms/build/libskcms.a third_party/out/skcms/linux/arm64
+    cp third_party/zlib/build/libz.a third_party/out/zlib/linux/arm64
+
+    #return to libpag
+    cd ../..
+    echo "start libpag ppp `pwd`"
+    rm -rf third_party/libavc/build
+
+    # delete x86 .a file
+    rm -rf third_party/out/libavc/linux/arm64/*
+
+    mkdir -p third_party/libavc/build
+
+    cd third_party/libavc/build
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake  .. -L
+    make
+    cd ../../..
+
+    # copy aarch64 file
+    mkdir -p third_party/out/libavc/linux/arm64
+    cp third_party/libavc/build/libavcdec.a third_party/out/libavc/linux/arm64
+
+    cd build
+    rm -rf CMakeFiles
+    rm -rf CMakeCache.txt
+    rm -rf tgfx/tgfx.a
+    rm -rf tgfx/CMakeFiles
+    rm -rf tgfx/CMakeCache.txt
+
+	${OHOS_SDK}/native/build-tools/cmake/bin/cmake -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DPAG_USE_OPENGL=OFF -DPAG_USE_SWIFTSHADER=ON \
+    -DPAG_USE_FREETYPE=ON -DPAG_USE_PNG_DECODE=OFF -DPAG_USE_PNG_ENCODE=OFF -DPAG_USE_JPEG_DECODE=OFF \
+    -DPAG_USE_JPEG_ENCODE=OFF -DPAG_USE_WEBP_DECODE=OFF -DPAG_USE_WEBP_ENCODE=OFF -DUSE_NATIVE_PLATFORM=ON \
+    -DPAG_BUILD_TESTS=OFF -DPAG_BUILD_SHARED=ON .. -L
+
+    make
+
+    return 0
+}
+
+package() {
+    return $ret
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+}
+
+cleanbuild() {
+    return $ret
+}
