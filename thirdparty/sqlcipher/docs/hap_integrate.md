@@ -38,10 +38,12 @@
 
 - 三方库头文件及生成的库
 
-  在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库和头文件
+  在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库和头文件及其依赖库
 
   ```shell
-  sqlcipher/arm64-v8a   sqlcipher/armeabi-v7a
+  sqlcipher/arm64-v8a   sqlcipher/armeabi-v7a  
+  openssl/arm64-v8a     openssl/armeabi-v7a 
+  tcl/arm64-v8a         tcl/armeabi-v7a 
   ```
 - [测试三方库](#测试三方库)
 
@@ -49,6 +51,7 @@
 
 - 拷贝动态库到`\\entry\libs\${OHOS_ARCH}\`目录：
   动态库需要在`\\entry\libs\${OHOS_ARCH}\`目录，才能集成到hap包中，所以需要将对应的so文件拷贝到对应CPU架构的目录
+  
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
 
   &nbsp;![thirdparty_install_dir](pic/sqlcipher_install_dir.png)
@@ -56,11 +59,10 @@
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
   ```shell
   #将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libsqlcipher.so.0
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libtcl8.6.so
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libcrypto.a
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libssl.a
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libsqlcipher.a
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libtcl8.6.a
+                                      ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libcrypto.a
+                                      ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libssl.a
+                                      ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libsqlcipher.a
                                    )
   #将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/sqlcipher/${OHOS_ARCH}/include
