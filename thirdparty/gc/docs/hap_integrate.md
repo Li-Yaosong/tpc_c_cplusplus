@@ -80,5 +80,5 @@
 
 *   [OpenHarmony三方库地址](https://gitee.com/openharmony-tpc)
 *   [OpenHarmony知识体系](https://gitee.com/openharmony-sig/knowledge)
-*   [libfuse三方库地址](https://github.com/libfuse/libfuse)
+*   [gc三方库地址](https://github.com/mkirchner/gc)
 
