@@ -24,7 +24,7 @@ license=("MIT License")
 depends=()
 makedepends=()
 
-source="https://github.com/mkirchner/gc/archive/$pkgver.zip"
+source="https://github.com/mkirchner/$pkgname/archive/$pkgver.zip"
 
 builddir=${pkgname}-${pkgver}
 packagename=${builddir}.zip
