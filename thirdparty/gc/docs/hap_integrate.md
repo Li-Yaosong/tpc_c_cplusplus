@@ -70,8 +70,8 @@
 
 - 进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录），执行结果如图所示
 ```
-  cd /data/tpc_c_cplusplus/lycium
-  ./test.sh gc
+  cd /data/tpc_c_cplusplus/thirdparty/gc/gc-7f6f17c8b3425df6cd27d6f9385265b23034a793-armeabi-v7a-build/build/test
+  ./test_gc
 ```
 
 &nbsp;![libgc_test](pic/test-cmd-ret.png)
