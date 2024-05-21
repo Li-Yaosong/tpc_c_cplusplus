@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "cppjieba",
+        "License": "MIT License",
+        "License File": "LICENSE",
+        "Version Number": "v5.1.0",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://codeload.github.com/yanyiwu/cppjieba/zip/refs/tags/v5.1.0",
+        "Description": "The Jieba Chinese Word Segmentation Implemented By C++ ."
+    }
+]
