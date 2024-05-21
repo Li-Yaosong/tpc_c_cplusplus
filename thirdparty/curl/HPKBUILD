@@ -13,26 +13,24 @@
 
 # Contributor: Jeff Han <hanjinfei@foxmail.com>
 # Maintainer: Jeff Han <hanjinfei@foxmail.com>
-
 pkgname=curl
 pkgver=curl-8_0_1
 pkgrel=0
-pkgdesc="A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS. libcurl offers a myriad of powerful features"
-url="https://curl.se/"
+pkgdesc=""
+url=""
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD/ISC/curl")
 depends=("openssl" "zstd" "nghttp2") # QUICHE/WEBSOCKETS
 makedepends=()
 
-# 官方下载地址: https://github.com/curl/$pkgname/archive/refs/tags/$pkgver.tar.gz，因网络原因采用gitee mirrors
-source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
+source="https://github.com/curl/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
 autounpack=true
 downloadpackage=true
 patchflag=true
 
 builddir=$pkgname-${pkgver}
-packagename=$builddir.zip
+packagename=$builddir.tar.gz
 
 prepare() {
     if $patchflag
@@ -49,8 +47,8 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DCURL_ZSTD=ON -DENABLE_WEBSOCKETS=ON -DUSE_NGHTTP2=ON -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DCURL_CA_BUNDLE="/etc/ssl/certs/cacert.pem" -DCURL_CA_PATH="/etc/ssl/certs/" -DCURL_ZSTD=ON -DENABLE_WEBSOCKETS=ON -DUSE_NGHTTP2=ON -B$ARCH-build -S./ > $buildlog 2>&1
+    $MAKE -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -58,20 +56,22 @@ build() {
 
 package() {
     cd "$builddir"
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    $MAKE -C $ARCH-build install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
 check() {
     cd "$builddir"
-    make -C $ARCH-build testdeps >> `pwd`/$ARCH-build/build.log 2>&1
+    $MAKE -C $ARCH-build testdeps >> $buildlog 2>&1
+    cp `pwd`/../curl_test.sh $ARCH-build
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
     # real test CMD
-    # TODO test 
+    # 进入编译目录
+    # bash curl_test.sh
 }
 
 # 清理环境
-cleanbuild(){
+cleanbuild() {
     rm -rf ${PWD}/$builddir #${PWD}/$packagename
 }
