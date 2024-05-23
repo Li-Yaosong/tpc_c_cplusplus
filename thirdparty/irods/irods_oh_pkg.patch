@@ -1,0 +1,199 @@
+diff -Naur irods-4.3.2.old/CMakeLists.txt irods-4.3.2/CMakeLists.txt
+--- irods-4.3.2.old/CMakeLists.txt	2024-06-27 16:38:20.898913300 +0800
++++ irods-4.3.2/CMakeLists.txt	2024-06-27 16:38:29.582123900 +0800
+@@ -110,7 +110,7 @@
+ include(CheckCXXCompilerFlag)
+ 
+ if (CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
+-  set(IRODS_BUILD_WITH_WERROR_DEFAULT ON)
++  set(IRODS_BUILD_WITH_WERROR_DEFAULT OFF)
+ else()
+   set(IRODS_BUILD_WITH_WERROR_DEFAULT OFF)
+ endif()
+diff -Naur irods-4.3.2.old/lib/core/src/packStruct.cpp irods-4.3.2/lib/core/src/packStruct.cpp
+--- irods-4.3.2.old/lib/core/src/packStruct.cpp	2024-06-27 16:38:20.845653500 +0800
++++ irods-4.3.2/lib/core/src/packStruct.cpp	2024-06-27 16:38:40.612897400 +0800
+@@ -1777,6 +1777,9 @@
+                         const char* packInstructInp,
+                         const std::optional<irods::version>& peer_version)
+     {
++#if defined(solaris_platform)
++        int doubleInStruct = 0;
++#endif
+         if ( numElement == 0 ) {
+             return 0;
+         }
+@@ -2734,9 +2737,9 @@
+             /* seems that solaris align to 64 bit boundary if there is any
+              * double in struct */
+             if ( doubleInStruct > 0 ) {
+-                extendPackedOutput( unpackedOutput, sizeof( rodsLong_t ), &outPtr1 );
++                extendPackedOutput( unpackedOutput, sizeof( rodsLong_t ), outPtr1 );
+                 outPtr2 = alignDouble( outPtr1 );
+-                unpackedOutput.bBuf.len += ( ( int ) outPtr2 - ( int ) outPtr1 );
++                unpackedOutput.bBuf.len += ( ( ptrdiff_t ) outPtr2 - ( ptrdiff_t ) outPtr1 );
+             }
+ #endif
+             if ( irodsProt == XML_PROT ) {
+diff -Naur irods-4.3.2.old/lib/core/src/rcMisc.cpp irods-4.3.2/lib/core/src/rcMisc.cpp
+--- irods-4.3.2.old/lib/core/src/rcMisc.cpp	2024-06-27 16:38:20.847653600 +0800
++++ irods-4.3.2/lib/core/src/rcMisc.cpp	2024-06-27 16:38:29.601738800 +0800
+@@ -281,7 +281,8 @@
+     dirent->d_ino = fileDirent->d_ino;
+     dirent->d_offset = 0;
+     dirent->d_reclen = fileDirent->d_reclen;
+-    dirent->d_namlen = _D_EXACT_NAMLEN( fileDirent );
++    //dirent->d_namlen = _D_EXACT_NAMLEN( fileDirent );
++    dirent->d_namlen = 0;
+ #elif defined(solaris_platform)
+     dirent->d_ino = fileDirent->d_ino;
+     dirent->d_offset = fileDirent->d_off;
+@@ -321,7 +322,8 @@
+     dirent->d_ino = fileDirent->d_ino;
+     dirent->d_offset = 0;
+     dirent->d_reclen = fileDirent->d_reclen;
+-    dirent->d_namlen = _D_EXACT_NAMLEN( fileDirent );
++    //dirent->d_namlen = _D_EXACT_NAMLEN( fileDirent );
++    dirent->d_namlen = 0;
+ #endif
+     return 0;
+ }
+diff -Naur irods-4.3.2.old/server/re/src/reIn2p3SysRule.cpp irods-4.3.2/server/re/src/reIn2p3SysRule.cpp
+--- irods-4.3.2.old/server/re/src/reIn2p3SysRule.cpp	2024-06-27 16:38:21.276684400 +0800
++++ irods-4.3.2/server/re/src/reIn2p3SysRule.cpp	2024-06-27 16:38:29.611723100 +0800
+@@ -14,6 +14,7 @@
+ #include "irods/rsGeneralRowPurge.hpp"
+ 
+ #ifndef windows_platform
++#ifndef __OHOS__
+ #include <sys/socket.h>
+ #include <pthread.h>
+ #include <netinet/in.h>
+@@ -21,6 +22,7 @@
+ #include "irods/irods_stacktrace.hpp"
+ static pthread_mutex_t my_mutex;
+ #endif
++#endif
+ 
+ #include "irods/irods_get_full_path_for_config_file.hpp"
+ #include "irods/irods_configuration_parser.hpp"
+@@ -120,8 +122,10 @@
+         addInxVal( &genQueryInp.sqlCondInp, COL_R_RESC_NAME, condstr );
+         genQueryInp.maxRows = MAX_SQL_ROWS;
+ #ifndef windows_platform
++#ifndef __OHOS__
+         pthread_mutex_lock( &my_mutex );
+ #endif
++#endif
+         /* append to the output log file */
+         const auto log_fname = irods::get_irods_home_directory() / "log" / fname;
+         FILE *foutput = fopen(log_fname.c_str(), "a");
+@@ -143,8 +147,10 @@
+             rodsLog( LOG_ERROR, "msiServerMonPerf: unable to retrieve the status metadata for the resource %s", resc_tokens[index].c_str() );
+         }
+ #ifndef windows_platform
++#ifndef __OHOS__
+         pthread_mutex_unlock( &my_mutex );
+ #endif
++#endif
+         if ( foutput != NULL ) {
+             if ( rc1 != 0 ) {
+                 fprintf( foutput, "time=%ji : unable to insert the entries for server %s into the iCAT\n",
+@@ -260,9 +266,11 @@
+ 
+     thrInp_t *tinput = ( thrInp_t* )arg;
+ #ifndef windows_platform
++#ifndef __OHOS__
+     pthread_setcancelstate( PTHREAD_CANCEL_ENABLE, NULL );
+     pthread_setcanceltype( PTHREAD_CANCEL_ASYNCHRONOUS, NULL );
+ #endif
++#endif
+     fillStrInMsParam( &msp1, tinput->cmd );
+     fillStrInMsParam( &msp2, tinput->cmdArgv );
+     fillStrInMsParam( &msp3, tinput->execAddr );
+@@ -280,8 +288,10 @@
+         threadIsAlive[thrid] = 1;
+         retval = -1;
+ #ifndef windows_platform
++#ifndef __OHOS__
+         pthread_exit( ( void * )&retval );
+ #endif
++#endif
+     }
+ 
+     /* if (&msout != NULL) { */
+@@ -297,8 +307,10 @@
+         threadIsAlive[thrid] = 1;
+         retval = -1;
+ #ifndef windows_platform
++#ifndef __OHOS__
+         pthread_exit( ( void * )&retval );
+ #endif
++#endif
+     }
+     /*}
+       else {
+@@ -317,8 +329,10 @@
+ 
+     retval = 0;
+ #ifndef windows_platform
++#ifndef __OHOS__
+     pthread_exit( ( void * )&retval );
+ #endif
++#endif
+ }
+ 
+ int checkHostAccessControl(const std::string& _user_name,
+@@ -605,9 +619,11 @@
+ 
+     strcpy( cmd, MON_PERF_SCRIPT );
+ #ifndef windows_platform
++#ifndef __OHOS__
+     pthread_t *threads = ( pthread_t* )malloc( sizeof( pthread_t ) * nresc );
+     pthread_mutex_init( &my_mutex, NULL );
+ #endif
++#endif
+     thrInput = ( thrInp_t* )malloc( sizeof( thrInp_t ) * nresc );
+     thrCount = 0;
+ 
+@@ -653,11 +669,13 @@
+ 
+     for ( i = 0; i < thrCount; i++ ) {
+ #ifndef windows_platform
++#ifndef __OHOS__
+         if ( pthread_create( &threads[i], NULL, *startMonScript, ( void * ) &thrInput[i] ) < 0 ) {
+             rodsLog( LOG_ERROR, "msiServerMonPerf: pthread_create error\n" );
+             exit( 1 );
+         }
+ #endif
++#endif
+     }
+ 
+     maxtime = atoi( measTime ) + TIMEOUT;
+@@ -669,6 +687,7 @@
+             for ( i = 0; i < thrCount; i++ ) {
+                 if ( !threadIsAlive[i] ) {
+ #ifndef windows_platform
++#ifndef __OHOS__
+                     int rc = pthread_cancel( threads[i] );
+                     if ( rc == 0 ) {
+                         char noanswer[MAXSTR] = MON_OUTPUT_NO_ANSWER;
+@@ -679,6 +698,7 @@
+                                         &( thrInput[i].rei ) );
+                     }
+ #endif
++#endif
+                 }
+             }
+         }
+@@ -694,8 +714,10 @@
+     }
+ 
+ #ifndef windows_platform
++#ifndef __OHOS__
+     free( threads );
+ #endif
++#endif
+     free( thrInput );
+ 
+     return rei->status;
