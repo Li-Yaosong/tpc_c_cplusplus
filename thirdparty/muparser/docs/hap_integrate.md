@@ -22,12 +22,19 @@
 - 三方库目录结构
 
   ```
-  tpc_c_cplusplus/thirdparty/muparser		    #三方库libmqtt的目录结构如下
-  ├── docs                                #三方库相关文档的文件夹
-  ├── HPKBUILD                            #构建脚本
-  ├── SHA512SUM                           #三方库校验文件
-  ├── README.OpenSource                   #说明三方库源码的下载地址，版本，license等信息
-  ├── README_zh.md   
+    tpc_c_cplusplus/thirdparty/muparser		    #三方库libmuparser的目录结构如下
+    ├── muparser                                #三方库libmuparser的目录
+    │   ├── HPKBUILD						#构建脚本		
+    │   ├── HPKCHECK						#测试脚本
+    │   ├── OAT.xml							#OAT文件
+    │   ├── README.OpenSource				#说明三方库源码的下载地址，版本，license等信息
+    │   ├── README_zh.md					# MUPARSER 三方库说明
+    │   ├── SHA512SUM						#三方库校验文件
+    │   └── docs                            #三方库相关文档的文件夹
+    │       ├── dic
+    │       │   ├── muparser-dev.png
+    │       │   └── test-cmd-ret.png
+    │       └── hap_integrate.md 
   ```
   
 - 在lycium目录下编译三方库
@@ -53,7 +60,7 @@
 
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的文件都拷贝到该目录下，如下图所示：
 
-  &nbsp;![thirdparty_install_dir](pic/libmuparser_install_dir.png)
+  &nbsp;![thirdparty_install_dir](pic/muparser-dev.png)
 
   将编译生成的三方动态库（动态库名字带版本号和不带版本号的都需要）拷贝到工程的libs目录下:
 
@@ -74,7 +81,7 @@
 
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
-进入到构建目录执行.test.sh muparser运行测试用例（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
+进入到构建目录cd ${builddir}/${ARCH}-build，执行./t_ParserTest运行测试用例（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
 
 ## 参考资料
 
