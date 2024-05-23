@@ -1,0 +1,54 @@
+diff -Naur old/gsoap/src/Makefile.in new/gsoap/src/Makefile.in
+--- old/gsoap/src/Makefile.in	2024-04-23 02:54:11.000000000 +0800
++++ new/gsoap/src/Makefile.in	2024-05-21 19:11:53.352626300 +0800
+@@ -413,6 +413,8 @@
+ soapcpp2$(EXEEXT): $(soapcpp2_OBJECTS) $(soapcpp2_DEPENDENCIES) $(EXTRA_soapcpp2_DEPENDENCIES) 
+ 	@rm -f soapcpp2$(EXEEXT)
+ 	$(AM_V_CCLD)$(soapcpp2_LINK) $(soapcpp2_OBJECTS) $(soapcpp2_LDADD) $(LIBS)
++	mv soapcpp2 soapcpp2.bak
++	cp -f ../../temp/soapcpp2 ./
+ 
+ mostlyclean-compile:
+ 	-rm -f *.$(OBJEXT)
+diff -Naur old/gsoap/stdsoap2.cpp new/gsoap/stdsoap2.cpp
+--- old/gsoap/stdsoap2.cpp	2024-05-18 14:14:59.398464333 +0800
++++ new/gsoap/stdsoap2.cpp	2024-05-19 15:16:38.691319700 +0800
+@@ -5457,7 +5457,7 @@
+ {
+ #if (defined(_AIX43) || defined(TRU64) || defined(HP_UX)) && defined(HAVE_GETHOSTBYNAME_R)
+   struct hostent_data ht_data;
+-#elif (!defined(_GNU_SOURCE) || (!(~_GNU_SOURCE+1) && !defined(_POSIX_C_SOURCE) && !defined(_XOPEN_SOURCE)) || _POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600 || defined(__ANDROID__) || defined(FREEBSD) || defined(__FreeBSD__)) && !defined(SUN_OS) && !defined(__QNX__) && !defined(QNX) && defined(HAVE_GETHOSTBYNAME_R)
++#elif (!defined(_GNU_SOURCE) || (!(~_GNU_SOURCE+1) && !defined(_POSIX_C_SOURCE) && !defined(_XOPEN_SOURCE)) || _POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600 || defined(__ANDROID__) || defined(__OHOS__) || defined(FREEBSD) || defined(__FreeBSD__)) && !defined(SUN_OS) && !defined(__QNX__) && !defined(QNX) && defined(HAVE_GETHOSTBYNAME_R)
+   int r;
+   char *tmpbuf = soap->tmpbuf;
+   size_t tmplen = sizeof(soap->tmpbuf);
+@@ -5490,7 +5490,7 @@
+     hostent = NULL;
+     soap->errnum = h_errno;
+   }
+-#elif (!defined(_GNU_SOURCE) || (!(~_GNU_SOURCE+1) && !defined(_POSIX_C_SOURCE) && !defined(_XOPEN_SOURCE)) || _POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600 || defined(__ANDROID__) || defined(FREEBSD) || defined(__FreeBSD__)) && !defined(SUN_OS) && !defined(__QNX__) && !defined(QNX) && defined(HAVE_GETHOSTBYNAME_R)
++#elif (!defined(_GNU_SOURCE) || (!(~_GNU_SOURCE+1) && !defined(_POSIX_C_SOURCE) && !defined(_XOPEN_SOURCE)) || _POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600 || defined(__ANDROID__) || defined(__OHOS__) || defined(FREEBSD) || defined(__FreeBSD__)) && !defined(SUN_OS) && !defined(__QNX__) && !defined(QNX) && defined(HAVE_GETHOSTBYNAME_R)
+   while ((r = gethostbyname_r(addr, hostent, tmpbuf, tmplen, &hostent, &soap->errnum)) < 0)
+   {
+     if (tmpbuf != soap->tmpbuf)
+@@ -23197,7 +23197,7 @@
+     if (err != 0)
+       soap_strcpy(soap->msgbuf, sizeof(soap->msgbuf), "unknown error");
+ #  else
+-    return strerror_r(err, soap->msgbuf, sizeof(soap->msgbuf)); /* GNU-specific */
++    return (const char*)strerror_r(err, soap->msgbuf, sizeof(soap->msgbuf)); /* GNU-specific */
+ #  endif
+ # else
+     return strerror(err);
+diff -Naur old/gsoap/wsdl/Makefile.in new/gsoap/wsdl/Makefile.in
+--- old/gsoap/wsdl/Makefile.in	2024-04-23 02:54:11.000000000 +0800
++++ new/gsoap/wsdl/Makefile.in	2024-05-21 19:12:05.600126200 +0800
+@@ -454,6 +454,8 @@
+ wsdl2h$(EXEEXT): $(wsdl2h_OBJECTS) $(wsdl2h_DEPENDENCIES) $(EXTRA_wsdl2h_DEPENDENCIES) 
+ 	@rm -f wsdl2h$(EXEEXT)
+ 	$(AM_V_CXXLD)$(wsdl2h_LINK) $(wsdl2h_OBJECTS) $(wsdl2h_LDADD) $(LIBS)
++	mv wsdl2h wsdl2h.bak
++	cp -f ../../temp/wsdl2h ./
+ 
+ mostlyclean-compile:
+ 	-rm -f *.$(OBJEXT)
