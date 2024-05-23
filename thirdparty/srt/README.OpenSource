@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "srt",
+        "License": "MPL-2.0 license",
+        "License File": "LICENSE",
+        "Version Number": "1.5.3",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/Haivision/srt/archive/refs/tags/v1.5.3.tar.gz",
+        "Description": "Secure Reliable Transport (SRT) is a transport protocol for ultra low (sub-second) latency live video and audio streaming, as well as for generic bulk data transfer"
+    }
+]
