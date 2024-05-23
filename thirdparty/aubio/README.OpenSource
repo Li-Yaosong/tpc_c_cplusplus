@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "aubio",
+        "License": "GNU GENERAL PUBLIC LICENSE",
+        "License File": "LICENSE",
+        "Version Number": "aubio-152d6819b360c2e7b379ee3f373d444ab3df0895",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/aubio/aubio",
+        "Description": "aubio is a library to label music and sounds. It listens to audio signals and attempts to detect events. For instance, when a drum is hit, at which frequency is a note, or at what tempo is a rhythmic melody."
+    }
+]
