@@ -24,7 +24,6 @@
   ├── OAT.xml                           #OAT开源审查文本文件
   ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
   ├── README_zh.md                      #三方库简介
-  ├── live555_oh_pkg.patch              #运行127.0.0.1作为推流ip
   ├── test.mp3                          #测试用mp3文件
   ```
 
