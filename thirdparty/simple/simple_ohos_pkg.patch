@@ -1,0 +1,10 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index bb6430e..5c36bd9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.19)
++cmake_minimum_required(VERSION 3.15)
+ 
+ set(CMAKE_CXX_STANDARD 14)
+ set(CXX_STANDARD_REQUIRED)
