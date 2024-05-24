@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <oatconfig>
+        <filefilterlist>
+            <filefilter name="copyrightPolicyFilter" desc="Filters for compatibility，license header policies">
+                <filteritem type="filename" name="HPKCHECK" desc="HPKCHECK文件，不添加版权头"/>
+                <filteritem type="filename" name="HPKBUILD" desc="HPKBUILD文件，不添加版权头"/>
+                <filteritem type="filename" name="SHA512SUM" desc="SHA512SUM文件，不添加版权头"/>
+				<filteritem type="filename" name="2296bf65da1db9d8651fd37059bf6e3b_rawml.md5" desc="测试需要的md5文件"/>
+				<filteritem type="filename" name="2296bf65da1db9d8651fd37059bf6e3b_markup.md5" desc="测试需要的md5文件"/>
+            </filefilter>
+            <filefilter name="defaultPolicyFilter" desc="Filters for compatibility，license header policies">
+                <filteritem type="filename" name="HPKCHECK" desc="HPKCHECK文件，不添加版权头"/>
+                <filteritem type="filename" name="HPKBUILD" desc="HPKBUILD文件，不添加版权头"/>
+                <filteritem type="filename" name="SHA512SUM" desc="SHA512SUM文件，不添加版权头"/>
+				<filteritem type="filename" name="2296bf65da1db9d8651fd37059bf6e3b_rawml.md5" desc="测试需要的md5文件"/>
+				<filteritem type="filename" name="2296bf65da1db9d8651fd37059bf6e3b_markup.md5" desc="测试需要的md5文件"/>
+            </filefilter>
+            <filefilter name="binaryFileTypePolicyFilter" desc="Filters for resources files policies">
+                <filteritem type="filename" name="*.png" desc="指导文档需要的png图片"/>
+				<filteritem type="filename" name="2296bf65da1db9d8651fd37059bf6e3b_rawml.md5" desc="测试需要的md5文件"/>
+				<filteritem type="filename" name="2296bf65da1db9d8651fd37059bf6e3b_markup.md5" desc="测试需要的md5文件"/>
+				<filteritem type="filename" name="sample-cp1252.pdb" desc="测试需要的pdb文件"/>
+            </filefilter>
+        </filefilterlist>
+    </oatconfig>
+</configuration>

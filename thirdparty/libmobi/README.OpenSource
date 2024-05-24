@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libmobi",
+        "License": "LGPL-3.0 licence",
+        "License File": "LICENSE",
+        "Version Number": "v0.11",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/bfabiszewski/libmobi",
+        "Description": "C library for handling Mobipocket/Kindle (MOBI) ebook format documents"
+    }
+]
