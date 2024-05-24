@@ -34,6 +34,7 @@
   cd lycium
   ./build.sh libssh2
   ```
+- ![thirdparty_install_dir](pic/build_libssh2.png)
 
 - 三方库头文件及生成的库
 
@@ -75,10 +76,11 @@ target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/
   cd /data/tpc_c_cplusplus/thirdparty/libssh2/libssh2-libssh2-1.11.0/$ARCH-build/tests
   ./test_auth_keyboard_info_request
   ./test_simple
+```
 
-&nbsp;![thirdparty_install_dir](pic/test_auth_keyboard_info_request.png)
-
-&nbsp;![thirdparty_install_dir](pic/test_simple.png)
+- 测试结果如图所示：
+- ![thirdparty_install_dir](pic/test_auth_keyboard_info_request.png)
+- ![thirdparty_install_dir](pic/test_simple.png)
 
 ## 参考资料
 
