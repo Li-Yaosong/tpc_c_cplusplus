@@ -8,13 +8,13 @@ CI环境搭建首先我们要明确需要的工具，然后再下载工具源码
 
 三方库测试主要是make test，ctest等测试命令，因此需要集成make、cmake等工具，如下列表即是工具源码编译指导文档，按照文档操作可以成功编译出二进制文件，当然我们也提供了已经编译好的二进制文件，请点击[下载链接](https://gitee.com/han_jin_fei/lycium-citools) 。有了二进制文件后，我们来进行环境搭建
 
-| 工具名称  | 32位编译指导文档路径                                         | 64位编译指导文档路径                                         |
-| :-------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| cmake     | [cmake_armeabi_v7a](./cmake/cmake_armeabi_v7a_compilation_instructions.md) | [cmake_arm64_v8a](./cmake/cmake_arm64_v8a_compilation_instructions.md) |
-| make      | [make_armeabi_v7a](./make/make_armeabi-v7a_Compilation_instructions.md) | [make_arm64_v8a](./make/make_arm64_v8a_Compilation_instructions.md) |
-| busybox   | [busybox_armeabi_v7a](./busybox/busybox_armeabi-v7a_Compilation_instructions.md) | [busybox_arm64_v8a](./busybox/busybox_arm64_v8a_Compilation_instructions.md) |
-| perl      | [perl_armeabi_v7a](./perl/perl_armeabi-v7a_Compilation_instructions.md) | [perl_arm64_v8a](./perl/perl_arm64_v8a_Compilation_instructions.md) |
-| shell_cmd | [shell_cmd_armeabi_v7a](./shell_cmd/shell_cmd_armeabi_v7a_Compilation_instructions.md) | [shell_cmd_arm64_v8a](./shell_cmd/shell_cmd_arm64_v8a_Compilation_instructions.md) |
+| 工具名称  | 32位编译指导文档路径                                         | 64位编译指导文档路径                                         | X86编译指导文档路径                                              |
+| :-------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| cmake     | [cmake_armeabi_v7a](./cmake/cmake_armeabi_v7a_compilation_instructions.md) | [cmake_arm64_v8a](./cmake/cmake_arm64_v8a_compilation_instructions.md) | [cmake_x86_64](./cmake/cmake_x86_64_compilation_instructions.md) |
+| make      | [make_armeabi_v7a](./make/make_armeabi-v7a_Compilation_instructions.md) | [make_arm64_v8a](./make/make_arm64_v8a_Compilation_instructions.md) | [make_x86_64](./make/make_x86_64_compilation_instructions.md) |
+| busybox   | [busybox_armeabi_v7a](./busybox/busybox_armeabi-v7a_Compilation_instructions.md) | [busybox_arm64_v8a](./busybox/busybox_arm64_v8a_Compilation_instructions.md) | [busybox_x86_64](./busybox/busybox_x86_64_compilation_instructions.md) |
+| perl      | [perl_armeabi_v7a](./perl/perl_armeabi-v7a_Compilation_instructions.md) | [perl_arm64_v8a](./perl/perl_arm64_v8a_Compilation_instructions.md) | [perl_x86_64](./perl/perl_x86_64_compilation_instructions.md) |
+| shell_cmd | [shell_cmd_armeabi_v7a](./shell_cmd/shell_cmd_armeabi_v7a_Compilation_instructions.md) | [shell_cmd_arm64_v8a](./shell_cmd/shell_cmd_arm64_v8a_Compilation_instructions.md) | [shell_cmd_x86_64](./shell_cmd/shell_cmd_x86_64_compilation_instructions.md) |
 
 ### 手动搭建环境
 
