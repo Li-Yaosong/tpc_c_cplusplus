@@ -1,8 +1,8 @@
 [
     {
         "Name": "nmealib",
-        "License": "LGPLv2.1",
-        "License File": "LICENSE",
+        "License": "GNU Lesser General Public License v2.1",
+        "License File": "LICENSE.TXT",
         "Version Number": "v0.6.5",
         "Owner": "huangminzhong2@huawei.com",
         "Upstream URL": "https://github.com/Paulxia/nmealib",
