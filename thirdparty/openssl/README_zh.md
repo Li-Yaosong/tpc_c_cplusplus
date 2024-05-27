@@ -4,7 +4,7 @@ OpenSSL是一个强大的、商业级的、功能齐全的用于传输层安全�
 ## 使用约束
 - IDE版本：DevEco Studio 3.1 Release
 - SDK版本：ohos_sdk_public 4.0.8.1 (API Version 10 Release)
-- 三方库版本：OpenSSL_1_1_1t
+- 三方库版本：OpenSSL_1_1_1w
 - 当前适配的功能：支持openssl加密传输功能
 
 #### Legalities
@@ -12,3 +12,8 @@ OpenSSL是一个强大的、商业级的、功能齐全的用于传输层安全�
 
 ## 集成方式
 + [应用hap包集成](docs/hap_integrate.md)
+
+## 更换版本
+
++ 版本更换为OpenSSL_1_1_1w
++ 修复了OpenSSL_1_1_1u中存在的安全漏洞

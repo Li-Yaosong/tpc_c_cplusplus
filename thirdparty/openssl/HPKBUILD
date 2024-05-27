@@ -15,7 +15,7 @@
 # Maintainer: Jeff Han <hanjinfei@foxmail.com>
 
 pkgname=openssl
-pkgver=OpenSSL_1_1_1u
+pkgver=OpenSSL_1_1_1w
 pkgrel=0
 pkgdesc="TLS/SSL and crypto library"
 url="https://www.openssl.org/"
