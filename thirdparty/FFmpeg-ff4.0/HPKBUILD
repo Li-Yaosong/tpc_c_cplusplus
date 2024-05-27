@@ -17,6 +17,7 @@ buildtools="configure"
 
 builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
+patchflag=true
 source envset.sh
 arch=
 ldflags=
@@ -25,6 +26,15 @@ prepare() {
     mkdir $pkgname-$ARCH-build
     tar -zxf $packagename -C $pkgname-$ARCH-build
 
+    if $patchflag
+    then
+        cd $pkgname-$ARCH-build/$builddir
+        # fix bug
+        patch -p1 < `pwd`/../../oh_ffmpeg-bug-fixed.patch
+        patchflag=false
+        cd $OLDPWD
+    fi
+    
     if [ $ARCH == "armeabi-v7a" ]
     then
         setarm32ENV
