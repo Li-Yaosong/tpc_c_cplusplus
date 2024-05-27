@@ -1,8 +1,8 @@
 [
     {
         "Name": "aubio",
-        "License": "GNU GENERAL PUBLIC LICENSE",
-        "License File": "LICENSE",
+        "License": "GNU GENERAL PUBLIC LICENSE V3.0",
+        "License File": "COPYING",
         "Version Number": "aubio-152d6819b360c2e7b379ee3f373d444ab3df0895",
         "Owner": "huangminzhong2@huawei.com",
         "Upstream URL": "https://github.com/aubio/aubio",
