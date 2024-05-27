@@ -58,11 +58,17 @@
 ## 测试三方库
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
-测试方法  ： ../tools/mobitool -o "tmp" -s  "./samples/sample-cp1252.mobi" （以实际路径为准）
+进入到构建目录进行测试，32位目录为 armeabi-v7a-build，64位为 arm64-v8a-build
+
+```
+cd tpc_c_cplusplus/thirdparty/libmobi/libmobi-0.11/armeabi-v7a-build
+mkidr tmp
+./tools/mobitool -o "tmp" -d  "../tests/samples/sample-unicode-uncompressed.mobi"
+```
 
 
 
-![开发板跑通截图](.\pic\OpenHarmony-pass.png)
+![OpenHarmony-pass](./pic/OpenHarmony-pass.png)
 
 ## 参考资料
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
