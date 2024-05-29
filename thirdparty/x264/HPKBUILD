@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="x264 is a free software library for encoding H.264/MPEG-4 AVC video streams. It is one of the most popular video compression libraries in the world and is used worldwide for applications such as web video, TV broadcasting and Blu-ray authoring."
 url="https://code.videolan.org/videolan/x264"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("GNU GPLv2")
+license=("GNU GENERAL PUBLIC LICENSE V2.0")
 depends=()
 makedepends=()
 

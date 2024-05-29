@@ -1,8 +1,8 @@
 [
     {
         "Name": "x264",
-        "License": "GNU GPLv2 License",
-        "License File": "LICENSE",
+        "License": "GNU GENERAL PUBLIC LICENSE V2.0",
+        "License File": "COPYING",
         "Version Number": "x264-stable",
         "Owner": "huangminzhong2@huawei.com",
         "Upstream URL": "https://code.videolan.org/videolan/x264",
