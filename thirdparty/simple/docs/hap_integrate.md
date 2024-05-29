@@ -70,8 +70,8 @@
 - 进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录），执行结果如图所示
 - 在执行测试用例之前需要把这个simple库依赖的cppjieba库依赖的dict字典文件拷贝在和测试用例同个目录中
 ```shell
-  cp -r ${builddir}/$ARCH-build/test/dict  ${builddir}/$ARCH-build/test/src
-  cp -r ${builddir}/$ARCH-build/test/dict  ${builddir}/$ARCH-build/test/examples/cpp
+  cp -r ${builddir}/$ARCH-build/test/dict  ${builddir}/$ARCH-build/src
+  cp -r ${builddir}/$ARCH-build/test/dict  ${builddir}/$ARCH-build/examples/cpp
 ```
 
 - 测试用例
