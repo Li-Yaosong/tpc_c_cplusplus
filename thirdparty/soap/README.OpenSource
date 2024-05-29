@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "gsoap",
+        "License": "GPLv2",
+        "License File": "GPLv2_license",
+        "Version Number": "gsoap_2.8.134",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://sourceforge.net/projects/gsoap2/files/",
+        "Description": "The gSOAP toolkit is an extensive suite of portable C and C++ software to develop XML Web services with powerful type-safe XML data bindings."
+    }
+]
