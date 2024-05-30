@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "postgresql",
+        "License": "PostgreSQL License",
+        "License File": "COPYRIGHT",
+        "Version Number": "postgresql-16.3",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://ftp.postgresql.org/pub/source/v16.3/postgresql-16.3.tar.gz",
+        "Description": "PostgreSQL is a powerful open source object relational database system."
+    }
+]
