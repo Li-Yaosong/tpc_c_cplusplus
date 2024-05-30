@@ -31,7 +31,7 @@ builddir=$pkgname
 packagename=
 host=
 cloneFlag=true
-patchFlag=true
+patchFlag=false
 source envset.sh
 
 prepare() {
@@ -44,18 +44,6 @@ prepare() {
 	fi
 	cd $builddir
 	cloneFlag=false
-        cd $OLDPWD
-    fi
-    if $patchflag
-    then
-        cd $builddir
-        patch -p1 < `pwd`/../simple_ohos_pkg.patch
-	ret=$?
-	if [ $ret -ne 0 ]; then
-	    return $ret
-	fi
-        # patch只需要打一次,关闭打patch
-        patchflag=false
         cd $OLDPWD
     fi
     if [ $ARCH == "armeabi-v7a" ]
