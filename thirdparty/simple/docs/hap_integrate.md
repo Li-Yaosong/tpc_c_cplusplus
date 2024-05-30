@@ -71,23 +71,20 @@
 - 在执行测试用例之前需要把这个simple库依赖的cppjieba库依赖的dict字典文件拷贝在和测试用例同个目录中
 ```shell
   cp -r ${builddir}/$ARCH-build/test/dict  ${builddir}/$ARCH-build/src
-  cp -r ${builddir}/$ARCH-build/test/dict  ${builddir}/$ARCH-build/examples/cpp
 ```
 
-- 测试用例
+- 执行测试用例的单元测试
 
 ```shell
    cd ${builddir}/${ARCH}-build/src       
    ./simple_tests
-   cd ../examples/cpp
-   ./simple_cpp_example
 ```
 
 &nbsp;![libgc_test](pic/test-cmd-ret1.png)
 
 &nbsp;![libgc_test](pic/test-cmd-ret2.png)
 
-&nbsp;![libgc_test](pic/test-cmd-ret3.png)
+
 
 ## 参考资料
 
