@@ -45,7 +45,7 @@ prepare() {
     if [ $patchflag == true ]
     then
         cd $builddir
-        patch -p1 < `pwd`/../nmealib_ohos_pkg.patch > $publicbuildlog 2>&1
+        patch -p1 < `pwd`/../nmealib_oh_pkg.patch > $publicbuildlog 2>&1
         patchflag=false
         cd $OLDPWD
     fi
