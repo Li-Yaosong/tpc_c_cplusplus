@@ -63,18 +63,19 @@
 ## 测试三方库
 
 - 编译出可执行的文件进行测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
+- 将libc++_shared.so拷贝到开发板系统data目录。执行export LD_LIBRARY_PATH="/data/"
+- 将源码的dict字典文件夹拷贝到和单元测试的同个目录下
 
-- 进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录），执行结果如图所示
 ```shell
-  cd /data/tpc_c_cplusplus/thirdparty/cppjieba/cppjieba/$ARCH-build
-  ./demo
-  ./laod_test
-  ./test/test.run
+  cp -r /data/tpc_c_cplusplus/thirdparty/cppjieba/cppjieba/dict /data/tpc_c_cplusplus/thirdparty/cppjieba/cppjieba/$ARCH-build/test/
 ```
 
-&nbsp;![libgc_test](pic/test-cmd-ret1.png)
+- 进入到构建目录运行单元测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录），执行结果如图所示
 
-&nbsp;![libgc_test](pic/test-cmd-ret2.png)
+```shell
+  cd /data/tpc_c_cplusplus/thirdparty/cppjieba/cppjieba/$ARCH-build/test
+  ./test.run
+```
 
 &nbsp;![libgc_test](pic/test-cmd-ret3.png)
 
