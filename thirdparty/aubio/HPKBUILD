@@ -12,7 +12,7 @@
 # limitations under the License.
 
 # Contributor: Jeff Han <hanjinfei@foxmail.com>,li-santian <2372581223@qq.com>
-# Maintainer: Jeff Han <hanjinfei@foxmail.com>,li-santian <2372581223@qq.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
 
 pkgname=aubio
 pkgver=master
@@ -58,7 +58,7 @@ prepare() {
     if $patchflag
     then
         cd $builddir
-        patch -p1 < `pwd`/../aubio_ohos_pkg.patch >> $publicbuildlog 2>&1
+        patch -p1 < `pwd`/../aubio_oh_pkg.patch >> $publicbuildlog 2>&1
         # patch只需要打一次,关闭打patch
         patchflag=false
         cd $OLDPWD
@@ -85,7 +85,7 @@ build() {
 
 package() {
     cd $builddir-${ARCH}-build
-    make install >> $buildlog 2>&1
+    $MAKE install >> $buildlog 2>&1
     ret=$?
     
     install_dir=${LYCIUM_ROOT}/usr/${pkgname}/${ARCH}
