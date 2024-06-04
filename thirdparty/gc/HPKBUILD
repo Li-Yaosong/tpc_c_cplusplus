@@ -11,7 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Contributor: Jeff Han <hanjinfei@foxmail.com>
+# Contributor: Jeff Han <hanjinfei@foxmail.com>,litie <2372581223@qq.com>
 # Maintainer: Jeff Han <hanjinfei@foxmail.com>
 
 pkgname=gc
@@ -42,7 +42,7 @@ prepare() {
 	if $patchflag
     then
         cd $builddir
-        patch -p1 < `pwd`/../gc_ohos_pkg.patch
+        patch -p1 < `pwd`/../gc_oh_pkg.patch
         # patch只需要打一次,关闭打patch
         patchflag=false
         cd $OLDPWD
@@ -62,7 +62,7 @@ prepare() {
 
 build() {
     cd $builddir-${ARCH}-build/src
-    make LIB="$ar cr" CC="$cc" -j4 > build.log 2>&1
+    $MAKE LIB="$ar cr" CC="$cc" -j4 > build.log 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -83,7 +83,7 @@ package() {
 check() {
     echo "The test must be on an OpenHarmony device!"
 	cd $builddir-${ARCH}-build/test
-	make LIB="$ar cr" CC="$cc" -j4 > build.log 2>&1
+	$MAKE LIB="$ar cr" CC="$cc" -j4 > build.log 2>&1
 	ret=$?
 	cd $OLDPWD
 	unset ar
