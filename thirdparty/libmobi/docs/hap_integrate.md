@@ -18,11 +18,8 @@
   ├── HPKCHECK						                    #测试脚本
   ├── SHA512SUM                                           #三方库校验文件
   ├── README.OpenSource                                   #说明三方库源码的下载地址，版本，license等信息
-  ├── README_zh.md   
-  ├── OAT.xml
-  ├── 2296bf65da1db9d8651fd37059bf6e3b_markup.md5          #测试所需文件
-  ├── 2296bf65da1db9d8651fd37059bf6e3b_rawml.md5
-  ├── sample-cp1252.pdb
+  ├── README_zh.md   										#三方库简介
+  ├── OAT.xml												#扫描结果文件
   ```
   
 - 在lycium目录下编译三方库
@@ -42,10 +39,11 @@
 - [测试三方库](#测试三方库)
 
 ## 应用中使用三方库
-- 拷贝动态库到`\\entry\libs\${OHOS_ARCH}\`目录：
-  动态库需要在`\\entry\libs\${OHOS_ARCH}\`目录，才能集成到hap包中，所以需要将对应的so文件拷贝到对应CPU架构的目录
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
-- ![image-20240517170048649](./pic/libmobi_install_dir.PNG)
+- 拷贝库文件到`\\entry\libs\${OHOS_ARCH}\`目录：
+  库文件需要在`\\entry\libs\${OHOS_ARCH}\`目录，才能集成到hap包中，所以需要将对应的库文件拷贝到对应CPU架构的目录
+  
+  ![image-20240517170048649](./pic/libmobi_install_dir.PNG)
+  
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
   ```makefile
   
@@ -58,7 +56,7 @@
 ## 测试三方库
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
-进入到构建目录进行测试，32位目录为 armeabi-v7a-build，64位为 arm64-v8a-build
+进入到构建目录准备测试，32位目录为 armeabi-v7a-build，64位为 arm64-v8a-build，测试用例
 
 ```
 cd tpc_c_cplusplus/thirdparty/libmobi/libmobi-0.11/armeabi-v7a-build

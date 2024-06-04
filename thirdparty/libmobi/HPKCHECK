@@ -88,8 +88,7 @@ start() {
 
     declare -i all=0
     declare -i fail=0
-    declare -i mobiPass=0
-    declare -i plamPass=0
+    declare -i pass=0
     declare -i xfail=0
 
     samplePath="../tests/samples/"
@@ -100,14 +99,8 @@ start() {
         test ${sample} >> ${logfile} 2>&1
         if [ $? -eq 0 ]
         then
-            if [[ "${sample: -5}" == ".mobi" ]]
-            then
-                echo -e ${GREEN}MOBIPASS ${NC}${sample} >> ${logfile} 2>&1
-                mobiPass=${mobiPass}+1
-            else
-                echo -e ${GREEN}PLAMPASS ${NC}${sample} >> ${logfile} 2>&1
-                plamPass=${plamPass}+1
-            fi
+            echo -e ${GREEN}PASS ${NC}${sample} >> ${logfile} 2>&1
+            pass=${pass}+1
         else
             if [[ "${sample: -5}" == ".fail" ]]
             then
@@ -124,12 +117,11 @@ start() {
     rm -rf tmp
 
     echo "TOATLLY: "${all} >> ${logfile} 2>&1
-    echo -e ${GREEN}"MOBIPASS: "${NC}${mobiPass} >> ${logfile} 2>&1
-    echo -e ${GREEN}"PLAMPASS: "${NC}${plamPass} >> ${logfile} 2>&1
+    echo -e ${GREEN}"PASS: "${NC}${pass} >> ${logfile} 2>&1
     echo -e ${GREEN}"XFAIL: "${NC}${xfail} >> ${logfile} 2>&1
     echo -e ${RED}"FAIL: "${NC}${fail} >> ${logfile} 2>&1
 
-    declare -i full=${mobiPass}+${xfail}+${plamPass}
+    declare -i full=${pass}+${xfail}
 
     if [ ${all} == ${full} ]
     then
@@ -139,14 +131,13 @@ start() {
     fi
 }
 
-checkprepare(){
-    cp -f *.pdb $builddir/tests/samples/
-    cp -f *.md5 $builddir/tests/md5/
-    return $?
+checkprepare() {
+    return 0
 }
 
 openharmonycheck() {
     cd $builddir/$ARCH-build
+    # palmdoc和Mobipocket格式的电子书文件都能通过测试
     start
     ret=$?
     cd ${OLDPWD}

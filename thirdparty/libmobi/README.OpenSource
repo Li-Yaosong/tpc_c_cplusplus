@@ -1,8 +1,8 @@
 [
     {
         "Name": "libmobi",
-        "License": "LGPL-3.0 licence",
-        "License File": "LICENSE",
+        "License": "GNU Lesser General Public License v3.0",
+        "License File": "COPYING",
         "Version Number": "v0.11",
         "Owner": "huangminzhong2@huawei.com",
         "Upstream URL": "https://github.com/bfabiszewski/libmobi",
