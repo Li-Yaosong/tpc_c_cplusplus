@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "epeg",
+        "License": "BSD 3-Clause License",
+        "License File": "COPYING",
+        "Version Number": "v0.9.3",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/mattes/epeg/archive/refs/tags/v0.9.3.tar.gz",
+        "Description": "It's a convenience library API to using libjpeg to load JPEG images destined to be turned into thumbnails of the original, saving information with these thumbnails, retreiving it and managing to load the image ready for scaling with the minimum of fuss and CPU overhead."
+    }
+]
