@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "threadpool",
+        "License": "Copyright (c) 2012 Jakob Progsch, Václav Zeman",
+        "License File": "COPYING",
+        "Version Number": "master",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/progschj/threadpool",
+        "Description": "Threadpool is A simple C++11 Thread Pool implementation."
+    }
+]

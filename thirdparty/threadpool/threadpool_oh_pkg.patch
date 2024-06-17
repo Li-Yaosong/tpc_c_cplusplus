@@ -1,0 +1,28 @@
+diff -Naur threadpool-master/Makefile threadpool-master-new/Makefile
+--- threadpool-master/Makefile	1970-01-01 08:00:00.000000000 +0800
++++ threadpool-master-new/Makefile	2024-06-07 17:53:08.453349200 +0800
+@@ -0,0 +1,19 @@
++# Makefile
++
++CXX = g++
++CFLAGS = -g -Wall
++
++EXAMPLE = example
++SRCS:=$(wildcard *.cpp)
++OBJS:=$(patsubst %.cpp,%.o, $(SRCS))
++
++$(EXAMPLE): $(OBJS)
++	@echo "[CXX] $@"
++	@$(CXX) $(OBJS) -o $(EXAMPLE)
++
++%.o: %.cpp
++	@echo "[CXX] $< $@"
++	@$(CXX) $(CFLAGS) -c $< -o $@
++
++clean:
++	rm -f $(OBJS) $(EXAMPLE)
+diff -Naur threadpool-master/last_error threadpool-master-new/last_error
+--- threadpool-master/last_error	1970-01-01 08:00:00.000000000 +0800
++++ threadpool-master-new/last_error	2024-06-07 18:52:58.280582300 +0800
+@@ -0,0 +1 @@
++ERROR during : check: 2
