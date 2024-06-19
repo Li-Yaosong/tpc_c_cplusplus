@@ -313,7 +313,20 @@ buildhpk() {
     done
 }
 
+copytools() {
+    if [ -e $OHOS_SDK/native/llvm/bin/aarch64-linux-ohos-clang ]
+    then
+        return 0
+    else
+        tar xvf Buildtools/toolchain.tar.gz
+        cp -rfa toolchain/* $OHOS_SDK/native/llvm/bin
+        rm -rf toolchain
+    fi
+}
+
 main() {
+    copytools
+
     checkbuildenv
 
     readdonelibs "$LYCIUM_ROOT/usr/hpk_build.csv"
