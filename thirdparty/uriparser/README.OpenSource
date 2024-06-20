@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "uriparser",
+        "License": "BSD 3-Clause License",
+        "License File": "COPYING",
+        "Version Number": "uriparser-uriparser-0.9.8",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/uriparser/uriparser",
+        "Description": "uriparser is a strictly RFC 3986 compliant URI parsing and handling library written in C89."
+    }
+]
