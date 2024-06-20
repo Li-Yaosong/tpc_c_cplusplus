@@ -1,0 +1,83 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: Jeff Han <hanjinfei@foxmail.com>, wen fan <wenfan001@chinasoftinc.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
+
+pkgname=AES
+pkgver=44407f634f11992404596129ec31545e3f268ad3
+pkgrel=
+pkgdesc="AES algorithm implementation using C."
+url=https://github.com/dhuertas/${pkgname}.git
+archs=(armeabi-v7a arm64-v8a)
+license=("MIT License")
+depends=()
+makedepends=()
+
+source=
+autounpack=false
+downloadpackage=false
+buildtools=make
+clonesrcflag=true
+
+builddir=${pkgname}-${pkgver}
+packagename=
+
+prepare() {
+    if ${clonesrcflag}
+    then
+        git clone ${url} ${builddir} > ${publicbuildlog} 2>&1 || return -1
+        cd ${builddir}
+        git reset --hard ${pkgver} >> ${publicbuildlog} 2>&1 || return -1
+        cd ${OLDPWD}
+        clonesrcflag=false
+    fi
+
+    mkdir -p ${builddir}/${ARCH}-build
+    cd ${builddir}/${ARCH}-build
+    patch -p1 < ../../${pkgname}_ohos_pkg.patch || return -1
+    echo "patching success"
+    cd ${OLDPWD}
+    return 0
+}
+
+build() {
+    cd ${builddir}/${ARCH}-build
+    ${MAKE} arch=${ARCH} > ${buildlog} 2>&1 || return -1
+    cd ${OLDPWD}
+    return 0
+}
+
+package() {
+    cd ${builddir}
+    ${MAKE} arch=${ARCH} -C ${ARCH}-build install >> ${buildlog} 2>&1 || return -1
+
+    install_dir=${LYCIUM_ROOT}/usr/${pkgname}/${ARCH}
+    mkdir -p ${install_dir}/lib
+    cp -f ${ARCH}-build/*.so ${install_dir}/lib/
+	mkdir -p ${install_dir}/include
+    cp -f *.h ${install_dir}/include/
+    
+    cd ${OLDPWD}
+    return 0
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    return 0 
+}
+
+cleanbuild() {
+    rm -rf ${PWD}/${builddir}
+    return 0 
+}
