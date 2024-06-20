@@ -1,10 +1,10 @@
 [
     {
         "Name": "jpeg",
-        "License": "LGPL-2.1 license",
-        "License File": "README",
+        "License": "Independent JPEG Group License",
+        "License File": "https://www.ijg.org/files/README",
         "Version Number": "v9e",
-        "Owner": "hanjinfei@foxmail.com",
+        "Owner": "xiafeng@huawei.com",
         "Upstream URL": "http://www.ijg.org/files/jpegsrc.v9e.tar.gz",
         "Description": "IJG is an informal group that writes and distributes a widely used free library for JPEG image compression"
     }
