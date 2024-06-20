@@ -28,7 +28,7 @@ openharmonycheck() {
     res=$?
     if [ $res -ne 0 ]
     then
-        echo "1/13 test-version.......................... failed" >> ${logfile} 2>&1
+        echo "1/13 test-version .......................... failed" >> ${logfile} 2>&1
     else
         echo "1/13 test-version .......................... passed" >> ${logfile} 2>&1
         passed_tests=`expr $passed_tests + 1`
@@ -38,9 +38,9 @@ openharmonycheck() {
     res=$?
     if [ $res -ne 0 ]
     then
-        echo "1/13 test-reader.......................... failed" >> ${logfile} 2>&1
+        echo "2/13 test-reader .......................... failed" >> ${logfile} 2>&1
     else
-        echo "1/13 test-reader .......................... passed" >> ${logfile} 2>&1
+        echo "2/13 test-reader .......................... passed" >> ${logfile} 2>&1
         passed_tests=`expr $passed_tests + 1`
     fi
 
