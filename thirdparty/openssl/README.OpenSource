@@ -2,10 +2,10 @@
     {
         "Name": "openssl",
         "License": "Apache License 2.0",
-        "License File": "notes.txt",
-        "Version Number": "OpenSSL_1_1_1t",
-        "Owner": "llh_01129@163.com",
-        "Upstream URL": "https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1t.zip",
+        "License File": "https://www.openssl.org/source/license.html",
+        "Version Number": "openssl-1.1.1u",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://gitee.com/mirrors/openssl/repository/archive/OpenSSL_1_1_1u.zip",
         "Description": "OpenSSL is a robust, commercial-grade, full-featured Open Source Toolkit for the Transport Layer Security (TLS) protocol formerly known as the Secure Sockets Layer (SSL) protocol."
     }
 ]

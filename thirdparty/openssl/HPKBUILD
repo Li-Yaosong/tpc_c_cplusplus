@@ -17,7 +17,7 @@
 pkgname=openssl
 pkgver=OpenSSL_1_1_1u
 pkgrel=0
-pkgdesc="TLS/SSL and crypto library"
+pkgdesc="OpenSSL is a robust, commercial-grade, full-featured Open Source Toolkit for the Transport Layer Security (TLS) protocol formerly known as the Secure Sockets Layer (SSL) protocol."
 url="https://www.openssl.org/"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("Apache License 2.0")
