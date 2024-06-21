@@ -2,10 +2,37 @@
     {
         "Name": "postgresql",
         "License": "PostgreSQL License",
-        "License File": "COPYRIGHT",
+        "License File": "https://ftp.postgresql.org/pub/README",
         "Version Number": "postgresql-16.3",
-        "Owner": "huangminzhong2@huawei.com",
+        "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://ftp.postgresql.org/pub/source/v16.3/postgresql-16.3.tar.gz",
         "Description": "PostgreSQL is a powerful open source object relational database system."
+    },
+    {
+        "Name": "zlib",
+        "License": "LGPL-2.1 license",
+        "License File": "https://github.com/madler/zlib/blob/master/LICENSE",
+        "Version Number": "v1.2.13",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/madler/zlib/releases/download/v1.2.13/zlib-1.2.13.tar.gz",
+        "Description": "A massively spiffy yet delicately unobtrusive compression library."
+    },
+    {
+        "Name": "icu",  
+        "License": "BSD License",
+        "License File": "https://github.com/unicode-org/icu/blob/main/LICENSE",
+        "Version Number": "release-73-2",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/unicode-org/icu/archive/refs/tags/release-73-2.tar.gz",
+        "Description": "icu is short for International Components for Unicode."
+    },
+    {
+        "Name": "tzdb",
+        "License": "BSD 3-clause",
+        "License File": "https://data.iana.org/time-zones/tzdb-2024a/LICENSE",
+        "Version Number": "2024a",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://data.iana.org/time-zones/releases/tzdb-2024a.tar.lz",
+        "Description": "tzdb(Time-Zone-Database) for accurate global date-time processing in software, updated regularly, universally adopted."
     }
 ]
