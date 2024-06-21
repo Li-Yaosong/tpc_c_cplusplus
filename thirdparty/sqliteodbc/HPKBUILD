@@ -3,7 +3,7 @@
 pkgname=sqliteodbc
 pkgver=0.9998
 pkgrel=0
-pkgdesc="SQLite ODBC driver"
+pkgdesc="SQLite Database Engine provides a lightweight C library to access database files"
 url="http://www.ch-werner.de/sqliteodbc"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD")
