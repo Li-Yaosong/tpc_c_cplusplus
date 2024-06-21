@@ -44,6 +44,8 @@ openharmonycheck() {
         return -1
     fi
 
+    mkdir -p $CHECK_RESULT_PATH/manual_confirm/${pkgname}
+    cp ../../test/thumb.jpg $CHECK_RESULT_PATH/manual_confirm/${pkgname}
     echo "test pass" >> $logfile
     cd $OLDPWD
     return $res
