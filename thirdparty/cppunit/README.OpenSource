@@ -1,8 +1,8 @@
 [
     {
         "Name": "cppunit",
-        "License": "LGPL-2.0",
-        "License File": "https://sourceforge.net/projects/cppunit/",
+        "License": "LGPL-2.1",
+        "License File": "https://sourceforge.net/p/cppunit/code/HEAD/tree/trunk/cppunit/COPYING",
         "Version Number": "1.14.0",
         "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://dev-www.libreoffice.org/src/cppunit-1.14.0.tar.gz",
