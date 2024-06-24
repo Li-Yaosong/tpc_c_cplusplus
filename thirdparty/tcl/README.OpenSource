@@ -1,7 +1,7 @@
 [
     {
         "Name": "tcl",
-        "License": "BSD",
+        "License": "TCL/TK License",
         "License File": "https://www.tcl.tk/software/tcltk/license.html",
         "Version Number": "8.6.13",
         "Owner": "xiafeng@huawei.com",
