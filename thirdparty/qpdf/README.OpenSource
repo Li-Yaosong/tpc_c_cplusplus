@@ -2,7 +2,7 @@
     {
         "Name": "qpdf",
         "License": "Apache License 2.0",
-        "License File": "https://github.com/qpdf/qpdf?tab=Apache-2.0-1-ov-file",
+        "License File": "https://github.com/qpdf/qpdf/blob/main/LICENSE.txt",
         "Version Number": "v11.6.3",
         "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://github.com/qpdf/qpdf/archive/refs/tags/v11.6.3.tar.gz",
@@ -10,11 +10,11 @@
     },
     {
         "Name": "openssl",
-        "License": "Apache License 2.0",
-        "License File": "https://www.openssl.org/source/license.html",
-        "Version Number": "openssl-1.1.1u",
+        "License": "OpenSSL License and Original SSLeay License",
+        "License File": "https://www.openssl.org/source/license-openssl-ssleay.txt",
+        "Version Number": "1.1.1u",
         "Owner": "xiafeng@huawei.com",
-        "Upstream URL": "https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1t.zip",
+        "Upstream URL": "https://gitee.com/mirrors/openssl/repository/archive/OpenSSL_1_1_1u.zip",
         "Description": "OpenSSL is a robust, commercial-grade, full-featured Open Source Toolkit for the Transport Layer Security (TLS) protocol formerly known as the Secure Sockets Layer (SSL) protocol."
     },
     {
