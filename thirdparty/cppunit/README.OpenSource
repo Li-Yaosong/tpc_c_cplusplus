@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "cppunit",
+        "License": "LGPL-2.0",
+        "License File": "https://sourceforge.net/projects/cppunit/",
+        "Version Number": "1.14.0",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://dev-www.libreoffice.org/src/cppunit-1.14.0.tar.gz",
+        "Description": "CppUnit is the C++ port of the famous JUnit framework for unit testing"
+    }
+]
