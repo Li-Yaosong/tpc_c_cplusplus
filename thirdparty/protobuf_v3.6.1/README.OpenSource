@@ -1,7 +1,7 @@
 [
     {
-        "Name": "protobuf_v3.6.1",
-        "License": "Copyright 2008 Google Inc",
+        "Name": "protobuf",
+        "License": "Protobuf License",
         "License File": "https://github.com/protocolbuffers/protobuf/blob/main/LICENSE",
         "Version Number": "v3.6.1",
         "Owner": "xiafeng@huawei.com",
@@ -19,7 +19,7 @@
     },
     {
         "Name": "zlib",
-        "License": "LGPL-2.1 license",
+        "License": "zlib License",
         "License File": "https://github.com/madler/zlib/blob/master/LICENSE",
         "Version Number": "v1.2.13",
         "Owner": "xiafeng@huawei.com",
