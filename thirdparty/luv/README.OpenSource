@@ -4,8 +4,17 @@
         "License": "Apache License 2.0",
         "License File": "https://www.apache.org/licenses/LICENSE-2.0.txt",
         "Version Number": "1.45.0-0",
-        "Owner": "1393302983@qq.com",
+        "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://github.com/luvit/luv/archive/refs/tags/1.45.0-0.tar.gz",
         "Description": "Bare libuv bindings for lua."
+    },
+    {
+        "Name": "LuaJIT",
+        "License": "MIT license",
+        "License File": "https://github.com/LuaJIT/LuaJIT/blob/v2.1/COPYRIGHT",
+        "Version Number": "2.1.0-beta3",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://luajit.org/download/$pkgname-$pkgver.tar.gz",
+        "Description": "A module that maps between Lua and XML without much ado."
     }
 ]
