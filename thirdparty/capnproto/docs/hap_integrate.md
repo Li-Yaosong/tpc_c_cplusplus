@@ -63,13 +63,11 @@
 进入到构建目录准备测试，32位目录为 armeabi-v7a-build，64位为 arm64-v8a-build，执行ctest进行测试
 
 ```
-cd tpc_c_cplusplus/thirdparty/libmobi/libmobi-0.11/armeabi-v7a-build
+cd tpc_c_cplusplus/thirdparty/capnproto/capnproto-1.0.2/armeabi-v7a-build
 ctest
 ```
 
 ![test-pass](./pic/test-pass.png)
-
-
 
 ## 参考资料
 - [润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)
