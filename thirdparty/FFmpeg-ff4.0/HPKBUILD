@@ -5,9 +5,9 @@ pkgver=ijk0.8.8-20210426-001
 pkgrel=0
 pkgdesc="FFmpeg is a collection of libraries and tools to process multimedia content such as audio, video, subtitles and related metadata."
 url="https://github.com/bilibili/FFmpeg/"
-archs=("armeabi-v7a" "arm64-v8a")
+archs=("armeabi-v7a" "arm64-v8a" "x86_64")
 license=("GPL2 or later" "LGPL2.1 or later" "MIT" "X11" "BSD-styl")
-depends=("openssl")
+depends=("openssl_1_1_1w")
 makedepends=()
 source="https://github.com/bilibili/FFmpeg/archive/refs/tags/ff4.0--ijk0.8.8--20210426--001.tar.gz"
 
@@ -45,6 +45,11 @@ prepare() {
         setarm64ENV
         arch=aarch64
         ldflags="-L${OHOS_SDK}/native/sysroot/usr/lib/aarch64-linux-ohos"
+    elif [ $ARCH == "x86_64" ]
+    then
+        setx86_64ENV
+        arch=x86_64
+        ldflags="-L${OHOS_SDK}/native/sysroot/usr/lib/x86_64-linux-ohos"
     else
         echo "${ARCH} not support"
         return -1
@@ -85,6 +90,9 @@ recoverpkgbuildenv() {
     elif [ $ARCH == "arm64-v8a" ]
     then
         unsetarm64ENV
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        unsetx86_64ENV
     else
         echo "${ARCH} not support"
         return -1
