@@ -10,7 +10,7 @@
     },
     {
         "Name": "protobuf",
-        "License": "BSD 3-Clause",
+        "License": "BSD 3-Clause license",
         "License File": "https://github.com/protocolbuffers/protobuf/blob/main/LICENSE",
         "Version Number": "v3.6.1",
         "Owner": "xiafeng@huawei.com",
@@ -19,20 +19,20 @@
     },
     {
         "Name": "glog",
-        "License": "BSD-3-Clause",
+        "License": "BSD-3-Clause license",
         "License File": "https://github.com/google/glog/blob/master/LICENSE.md",
         "Version Number": "v0.6.0",
         "Owner": "xiafeng@huawei.com",
-        "Upstream URL": "https://github.com/google/$pkgname/archive/refs/tags/$pkgver.tar.gz",
+        "Upstream URL": "https://github.com/google/glog/archive/refs/tags/v0.6.0.tar.gz",
         "Description": "Google Logging (glog) is a C++14 library that implements application-level logging. The library provides logging APIs based on C++-style streams and various helper macros."
     },
     {
         "Name": "gflags",
-        "License": "BSD 3-Clause New or Revised License",
-        "License File": "https://github.com/gflags/gflags?tab=BSD-3-Clause-1-ov-file",
+        "License": "BSD 3-Clause license",
+        "License File": "https://github.com/gflags/gflags/blob/master/COPYING.txt",
         "Version Number": "v2.2.2",
         "Owner": "xiafeng@huawei.com",
-        "Upstream URL": "https://github.com/gflags/$pkgname/archive/refs/tags/$pkgver.tar.gz",
+        "Upstream URL": "https://github.com/gflags/gflags/archive/refs/tags/v2.2.2.tar.gz",
         "Description": "The gflags package contains a C++ library that implements commandline flags processing."
     }
 ]
