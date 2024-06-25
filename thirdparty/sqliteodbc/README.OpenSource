@@ -19,7 +19,7 @@
     },
     {
         "Name": "unixODBC",
-        "License": "GNU Lesser General Public License v2.1",
+        "License": "LGPL-2.1",
         "License File": "https://github.com/lurcher/unixODBC/blob/master/LICENSE",
         "Version Number": "2.3.11",
         "Owner": "xiafeng@huawei.com",
@@ -28,8 +28,8 @@
     },
     {
         "Name": "libxml2",
-        "License": " MIT license",
-        "License File": "https://github.com/GNOME/libxml2?tab=License-1-ov-file",
+        "License": " MIT",
+        "License File": "https://github.com/GNOME/libxml2/blob/master/Copyright",
         "Version Number": "v2.11.3",
         "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://github.com/GNOME/libxml2/archive/refs/tags/v2.11.3.tar.gz",
