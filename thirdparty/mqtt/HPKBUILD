@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="Eclipse Paho C Client Library for the MQTT Protocol"
 url="https://github.com/eclipse/paho.mqtt.c"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("Eclipse Public License 2.0 & Eclipse Distribution License 1.0")
+license=("EPL-2.0 & EDL-1.0")
 depends=("openssl")
 makedepends=()
 
