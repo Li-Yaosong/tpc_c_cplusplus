@@ -14,7 +14,7 @@
 # Contributor: Jeff Han <hanjinfei@foxmail.com>, DongZhengDong <dzhengdong10@gmail.com>
 # Maintainer: Jeff Han <hanjinfei@foxmail.com>
 
-pkgname=openssl
+pkgname=openssl_1_1_1w
 pkgver=OpenSSL_1_1_1w
 pkgrel=0
 pkgdesc="OpenSSL is a robust, commercial-grade, full-featured Open Source Toolkit for the Transport Layer Security (TLS) protocol formerly known as the Secure Sockets Layer (SSL) protocol."
@@ -25,13 +25,13 @@ depends=()
 makedepends=()
 
 # 官方下载地址https://github.com/openssl/$pkgname/archive/refs/tags/$pkgver.zip受网络影响可能存在下载失败的情况，现使用gitee镜像可以与官方仓库保持同步
-source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
+source="https://gitee.com/mirrors/${pkgname:0:7}/repository/archive/$pkgver.zip"
 
 autounpack=true
 downloadpackage=true
 buildtools="configure"
 
-builddir=$pkgname-${pkgver}
+builddir=${pkgname:0:7}-${pkgver}
 packagename=$builddir.zip
 
 source envset.sh
