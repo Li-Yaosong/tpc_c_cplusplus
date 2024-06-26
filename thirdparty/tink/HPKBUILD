@@ -6,7 +6,7 @@ pkgrel=0
 pkgdesc="Tink is a multi-language, cross-platform, open source library that provides cryptographic APIs that are secure, easy to use correctly, and hard(er) to misuse."
 url="https://github.com/google/tink"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("Apache License 2.0")
+license=("Apache-2.0")
 depends=("googletest" "openssl")
 makedepends=("go") #依赖golang编译器
 
