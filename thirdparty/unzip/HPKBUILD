@@ -3,8 +3,8 @@
 pkgname=unzip
 pkgver=60
 pkgrel=0
-pkgdesc=""
-url=""
+pkgdesc="UnZip is an extraction utility for archives compressed in .zip format."
+url="https://infozip.sourceforge.net/UnZip.html#Downloads"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("Info-ZIP license")
 depends=("bzip2")
