@@ -6,7 +6,7 @@ pkgrel=0
 pkgdesc=""
 url=""
 archs=("armeabi-v7a" "arm64-v8a")
-license=("LGPL")
+license=("BSD-3-Clause")
 depends=("hunspell")
 makedepends=()
 
