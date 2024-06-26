@@ -6,7 +6,8 @@ pkgrel=0
 pkgdesc="XML-RPC is a quick-and-easy way to make procedure calls over the Internet. It converts the procedure call into an XML document, sends it to a remote server using HTTP, and gets back the response as XML."
 url="https://xmlrpc-c.sourceforge.net/"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("BSD")
+# mainly base on BSD-style license
+license=("XML-RPC For C/C++ License" "MIT" "ABYSS Web Server License" "Python 1.5.2 License")
 depends=("openssl" "curl")
 makedepends=()
 
