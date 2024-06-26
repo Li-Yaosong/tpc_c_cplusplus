@@ -90,7 +90,7 @@ recoverpkgbuildenv() {
     elif [ $ARCH == "arm64-v8a" ]
     then
         unsetarm64ENV
-    elif [ $ARCH == "arm64-v8a" ]
+    elif [ $ARCH == "x86_64" ]
     then
         unsetx86_64ENV
     else
