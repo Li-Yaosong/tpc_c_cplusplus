@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="Proj.4 is the most famous map projection library of open source GIS, which provides the function of coordinate conversion between multiple coordinate systems"
 url="https://github.com/OrdnanceSurvey/proj.4"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("MIT")
+license=("MIT License")
 depends=()
 
 source="https://github.com/OrdnanceSurvey/$pkgname/archive/refs/tags/$pkgver.tar.gz"

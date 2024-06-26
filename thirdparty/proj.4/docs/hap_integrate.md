@@ -52,14 +52,14 @@
 
 - ![thirdparty_install_dir](pic/proj4_so_ide.PNG)
 
-- 在IDE的cpp目录下新增thirdparty目录，将生成的二进制文件以及头文件拷贝到该目录下，如下图所示
+- 在IDE的cpp目录下新增thirdparty目录，将生成的头文件拷贝到该目录下，如下图所示
   
 - ![thirdparty_install_dir](pic/proj4_include_ide.PNG)
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
 
 #将三方库的头文件和库文件加入工程中
-target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/proj4/${OHOS_ARCH}/lib/libproj.so.10.0.1)
+target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/proj4/${OHOS_ARCH}/lib/libproj.so.9)
 target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/proj4/${OHOS_ARCH}/include)
 
 ## 测试三方库

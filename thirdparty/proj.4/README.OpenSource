@@ -1,8 +1,8 @@
 [
     {
         "Name": "proj.4",
-        "License": "GPLv2",
-        "License File": "COPYING.GPLv2",
+        "License": "MIT License",
+        "License File": "https://github.com/OrdnanceSurvey/proj.4/blob/master/COPYING",
         "Version Number": "4.9.2",
         "Owner": "huangminzhong2@huawei.com",
         "Upstream URL": "https://github.com/OrdnanceSurvey/proj.4",
