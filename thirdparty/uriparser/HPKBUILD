@@ -58,6 +58,9 @@ package() {
 
 check() {
     echo "The test must be on an OpenHarmony device!"
+    cd $builddir/$ARCH-build/
+    sed -i.bak 's|/home/litie/sdk/HarmonyOS-NEXT-DB1/base/native/build-tools/cmake/bin/|/usr/bin/|g' Makefile
+    cd $OLDPWD
 }
 
 # 清理环境

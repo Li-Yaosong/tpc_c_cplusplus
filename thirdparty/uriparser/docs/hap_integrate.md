@@ -57,7 +57,7 @@
 
   ```cmake
     #将三方库加入工程中
-	target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/liburiparser.so.1)
+	  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/uriparser/${OHOS_ARCH}/lib/liburiparser.so.1)
     #将三方库的头文件加入工程中
     target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/uriparser/${OHOS_ARCH}/include/uriparser)
   ```
@@ -70,7 +70,7 @@
 - 进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录），执行结果如图所示
 ```
   cd /data/tpc_c_cplusplus/	thirdparty/uriparser/uriparser-uriparser-0.9.8/armeabi-v7a-build
-  ./testrunner
+  make test
 ```
 
 &nbsp;![liburiparser_test](pic/test-cmd-ret.png)
