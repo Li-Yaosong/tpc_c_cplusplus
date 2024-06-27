@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="The PCRE2 library is a set of C functions that implement regular expression pattern matching using the same syntax and semantics as Perl 5."
 url="https://github.com/PCRE2Project/pcre2"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("BSD license")
+license=("PCRE2 LICENCE" "BSD-3-Clause")
 depends=()
 makedepends=()
 # 原仓位置: https://github.com/PCRE2Project/$pkgname/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用镜像
