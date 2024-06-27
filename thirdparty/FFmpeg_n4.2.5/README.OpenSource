@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "FFmpge",
+        "License": "GPL-2.0" "GPL-3.0" "LGPL-3.0" "LGPL-2.1",
+        "License File": "https://github.com/FFmpeg/FFmpeg/blob/master/LICENSE.md",
+        "Version Number": "n4.2.5",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n4.2.5.tar.gz",
+        "Description": "FFmpeg is a collection of libraries and tools to process multimedia content such as audio, video, subtitles and related metadata."
+    }
+]

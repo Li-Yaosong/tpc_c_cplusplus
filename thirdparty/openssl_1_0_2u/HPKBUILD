@@ -5,7 +5,7 @@ pkgver=OpenSSL_1_0_2u
 pkgrel=0
 pkgdesc="TLS/SSL and crypto library"
 url="https://www.openssl.org/"
-archs=("armeabi-v7a" "arm64-v8a")
+archs=("armeabi-v7a" "arm64-v8a" "x86_64")
 license=("Apache License 2.0")
 depends=()
 makedepends=()
@@ -32,6 +32,10 @@ prepare() {
     then
         setarm64ENV
         host=linux-aarch64
+    elif [ $ARCH == "x86_64" ]
+    then
+        setx86_64ENV
+        host=linux-x86_64
     else
         echo "${ARCH} not support"
         return -1
@@ -62,6 +66,9 @@ check() {
     elif [ $ARCH == "arm64-v8a" ]
     then
         unsetarm64ENV
+	elif [ $ARCH == "x86_64" ]
+    then
+        unsetx86_64ENV
     else
         echo "${ARCH} not support"
         return -1

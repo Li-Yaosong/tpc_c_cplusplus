@@ -5,7 +5,7 @@ pkgver=2.3
 pkgrel=0
 pkgdesc="rtmpdump is a toolkit for RTMP streams. All forms of RTMP are supported, including rtmp://, rtmpt://, rtmpe://, rtmpte://, and rtmps://."
 url="http://rtmpdump.mplayerhq.hu/"
-archs=("armeabi-v7a" "arm64-v8a")
+archs=("armeabi-v7a" "arm64-v8a" "x86_64")
 license=("LGPL")
 depends=("openssl_1_0_2u")
 makedepends=()
@@ -33,6 +33,9 @@ prepare() {
     elif [ $ARCH == "arm64-v8a" ]
     then
         cc=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang
+    elif [ $ARCH == "x86_64" ]
+    then
+        cc=${OHOS_SDK}/native/llvm/bin/x86_64-linux-ohos-clang
     else
         echo "${ARCH} not support"
         return -1
