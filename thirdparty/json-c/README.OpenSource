@@ -1,10 +1,10 @@
 [
     {
         "Name": "json-c",
-        "License": "MIT license",
-        "License File": "COPYING",
+        "License": "MIT",
+        "License File": "https://github.com/json-c/json-c/blob/master/COPYING",
         "Version Number": "0.16-20220414",
-        "Owner": "hanjinfei@foxmail.com",
+        "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://github.com/json-c/json-c/archive/refs/tags/json-c-0.16-20220414.tar.gz",
         "Description": "JSON-C implements a reference counting object model that allows you to easily construct JSON objects in C"
     }

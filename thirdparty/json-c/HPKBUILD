@@ -6,7 +6,7 @@ pkgrel=0
 pkgdesc="JSON-C implements a reference counting object model that allows you to easily construct JSON objects in C."
 url="https://github.com/json-c/json-c"
 archs=("armeabi-v7a" "arm64-v8a")
-license=()
+license=("MIT")
 depends=()
 makedepends=()
 
