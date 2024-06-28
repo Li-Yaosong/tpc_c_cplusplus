@@ -21,7 +21,7 @@
   ├── README.OpenSource                                   #说明三方库源码的下载地址，版本，license等信息
   ├── README_zh.md   										#三方库简介
   ├── OAT.xml												#扫描结果文件
-  ├── AES_ohos_pkg.patch									#patch文件
+  ├── AES_oh_pkg.patch									#patch文件
   ```
   
 - 在lycium目录下编译三方库，编译环境的搭建参考[准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
