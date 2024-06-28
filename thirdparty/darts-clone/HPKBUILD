@@ -110,6 +110,16 @@ check() {
     else
         echo "${ARCH} not support"
     fi
+    #复制test-driver脚本
+    cd $pkgname-$ARCH-build   
+    cp -p "$(readlink test-driver)" ../
+    rm test-driver
+    cp -p ../test-driver .
+    rm ../test-driver
+    #注释掉make check的编译阶段
+    sed -i.bak '/^all: all-am$/,/^\t@:$/s/^/#/' test/Makefile
+    sed -i.bak '/^all: all-am$/,/^\tdone$/s/^/#/' src/Makefile
+    cd $OLDPWD
 }
 
 cleanbuild() {

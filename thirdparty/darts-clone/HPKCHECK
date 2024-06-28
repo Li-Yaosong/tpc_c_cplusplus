@@ -24,20 +24,8 @@ checkprepare() {
 
 openharmonycheck() {
     res=0
-    cd $pkgname-$ARCH-build/test
-    ./test-darts > ${logfile} 2>&1
-    if [ $? -ne 0 ]; then
-       cd $OLDPWD
-       return $res
-    fi
-    echo "test-darts: pass" >> ${logfile}
-    ./test-tools.sh >> ${logfile} 2>&1
-    if [ $? -ne 0 ]; then
-       cd $OLDPWD
-       return $res
-    fi 
-    echo "test-tools: pass" >> ${logfile}
-    echo "Total test: 2  pass: 2" >> ${logfile}
+    cd $pkgname-$ARCH-build
+    make check > ${logfile} 2>&1
     res=$?
     cd $OLDPWD
     # 恢复环境变量
