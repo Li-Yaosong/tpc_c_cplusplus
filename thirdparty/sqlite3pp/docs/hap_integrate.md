@@ -74,7 +74,7 @@ target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/
 
 进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录），可以查看HPKCHECK里面单独执行每条用例的方法，也可以执行run-all-tests.sh，结果如图所示
 ```
-  cd /data/tpc_c_cplusplus/thirdparty/sqlite3pp/sqlite3pp-1.0.9/$ARCH-build
+  cd /data/tpc_c_cplusplus/thirdparty/sqlite3pp/sqlite3pp-1.0.9/armeabi-v7a-build(或者cd /data/tpc_c_cplusplus/thirdparty/sqlite3pp/sqlite3pp-1.0.9/arm64-v8a-build)
   ./run-all-tests.sh armeabi-v7a (或者./run-all-tests.sh arm64-v8a)
 ```
 - ![thirdparty_install_dir](pic/run_all_test.PNG)
