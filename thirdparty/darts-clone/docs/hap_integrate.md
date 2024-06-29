@@ -75,10 +75,10 @@
 ```shell
 cd /data/tpc_c_cplusplus/thirdparty/darts-clone/darts-clone-armeabi-v7a-build/test         #进入到构建目录下的test目录 
 
-./test-darts       
+make check       
 ```
 
-进入到构建目录下的test目录,执行命令./test-darts（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
+进入到构建目录下的test目录,执行命令make check（arm64-v8a-build为构建64位的目录，armeabi-v7a-build为构建32位的目录）
 
 ![darts-clone_test1](pic/darts-clone_test1.png)
 
