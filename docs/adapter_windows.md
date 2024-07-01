@@ -13,11 +13,11 @@ OpenHarmony SDK提供了windwos下的cmake以及ninja工具，故我们可以在
 
 1. 官方渠道获取SDK方法：
 
-   &nbsp;[get windows sdk](media/windwos_SDK.png)
+   [get windows sdk](media/windwos_SDK.png)
 
 2. IDE获取SDK方法:
 
-  &nbsp;[ide sdk](media/ide_sdk.png)
+  [ide sdk](media/ide_sdk.png)
 
 本文将采取IDE下的SDK为例来说明使用方法
 
@@ -25,7 +25,7 @@ OpenHarmony SDK提供了windwos下的cmake以及ninja工具，故我们可以在
 
 适配三方库如果没有指定版本，我们一般取三方库最新版本，不建议使用master的代码，这里我们下载cJSON v1.7.17 版本的源码：
 
-&nbsp;[download cjson](media/download_cjson.png)
+[download cjson](media/download_cjson.png)
 
 ## 编译&安装
 
@@ -33,7 +33,7 @@ OpenHarmony SDK提供了windwos下的cmake以及ninja工具，故我们可以在
   
   通过IDE的Terminal终端进入到cJSON目录
 
-  &nbsp;[cjson dir](media/command_line.png)
+  [cjson dir](media/command_line.png)
 
   执行以下命令：
 
@@ -41,9 +41,9 @@ OpenHarmony SDK提供了windwos下的cmake以及ninja工具，故我们可以在
   D:\OpenHarmony\SDK\10\native\build-tools\cmake\bin\cmake -G Ninja -B out -DCMAKE_TOOLCHAIN_FILE=D:\OpenHarmony\SDK\10\native\build\cmake\ohos.toolchain.cmake -DCMAKE_MAKE_PROGRAM=D:\OpenHarmony\SDK\10\native\build-tools\cmake\bin\ninja.exe -DCMAKE_BUILD_WITH_INSTALL_RPATH=true
   ```
   
-  &nbsp;[prebuild cjson](media/pre_cmake.png)
+  [prebuild cjson](media/pre_cmake.png)
 
-  - `D:\OpenHarmony\SDK\10\`为SDK路径，用户需要根据自己SDK目录进行配置；
+  - `D:\OpenHarmony\SDK\10\`为SDK路径，用户需要根据自己SDK目录进行配置(**注意：此处路径必须是绝对路径！**)；
   - `-G Ninja` 配置cmake使用ninja编译；
   - `-B out` 在源码目录用 -B 直接创建 out 目录并生成 out/Makefile；
   - `-DCMAKE_TOOLCHAIN_FILE` 配置交叉编译的toolchain文件；
