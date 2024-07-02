@@ -11,37 +11,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Contributor: huangminzhong2 <huangminzhong2@huawei.com>
-# Maintainer: huangminzhong2 <huangminzhong2@huawei.com>
+# Contributor: Jeff Han <hanjinfei@foxmail.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
 
 source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
 openharmonycheck() {
     cd $builddir/$ARCH-build
-    echo "total test 4"  > $logfile 2>&1
+    echo "total test 61"  > $logfile 2>&1
     if [ $ARCH == "armeabi-v7a" ]
     then
-        export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/tpc_c_cplusplus/lycium/usr/proj.4/armeabi-v7a/lib/
+        export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/tpc_c_cplusplus/thirdparty/PROJ/PROJ-9.4.1/armeabi-v7a-build/lib/
+        export PATH=${PATH}:/data/tpc_c_cplusplus/lycium/usr/sqlite/armeabi-v7a/bin/
     elif [ $ARCH == "arm64-v8a" ]
     then
-        export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/tpc_c_cplusplus/lycium/usr/proj.4/arm64-v8a/lib/
+        export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/tpc_c_cplusplus/thirdparty/PROJ/PROJ-9.4.1/arm64-v8a-build/lib/
+        export PATH=${PATH}:/data/tpc_c_cplusplus/lycium/usr/sqlite/arm64-v8a/bin/
     else
         echo "$ARCH not support!" >> $logfile 2>&1
         cd $OLDPWD
         return -1
     fi
-    
     ctest >> ${logfile} 2>&1
-    res=$?
-    if [ $res -ne 0 ]
-    then
-        echo "test failed" >> $logfile 2>&1
-        cd $OLDPWD
-        return $res
-    else
-        echo "test passed" >> $logfile 2>&1
-    fi 
+    if [ $res -ne 0 ];then
+        mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
+        cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/     
+    fi
 
     cd $OLDPWD
     return $res
