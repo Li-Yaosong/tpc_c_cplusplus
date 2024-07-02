@@ -7,7 +7,7 @@ pkgrel=0
 pkgdesc="MiniDLNA is a simple media server software, with the aim of being fully compliant with DLNA/UPnP-AV clients."
 url="https://sourceforge.net/projects/minidlna"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("GPLv2")
+license=("GPL-2.0")
 depends=("FFmpeg" "jpeg" "sqlite" "libexif" "libid3tag" "libogg" "libvorbis" "flac")
 makedepends=()
 

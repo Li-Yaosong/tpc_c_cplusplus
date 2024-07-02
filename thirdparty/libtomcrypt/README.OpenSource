@@ -1,0 +1,20 @@
+[
+    {
+        "Name": "libtomcrypt",
+        "License": "DUAL licensing terms",
+        "License File": "LICENSE",
+        "Version Number": "v1.18.2",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://github.com/libtom/libtomcrypt",
+        "Description": "libtomcrypt is a modular, portable, free and open source cryptographic library that provides implementations of various cryptographic algorithms, including symmetric cryptographic algorithms (e.g. AES, DES), public key cryptographic algorithms (e.g. RSA, ECC), hash algorithms (e.g. SHA-256, MD5), etc."
+    },
+    {
+        "Name": "libtommath",
+        "License": "public domain",
+        "License File": "LICENSE",
+        "Version Number": "1.2.0",
+        "Owner": "wupingyuan@huawei.com",
+        "Upstream URL": "https://github.com/libtom/libtommath/archive/refs/tags/v1.2.0.tar.gz",
+        "Description": "This is the git repository for LibTomMath, a free open source portable number theoretic multiple-precision integer (MPI) library written entirely in C."
+    }
+]

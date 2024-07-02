@@ -5,7 +5,7 @@
         "License File": "LICENSE",
         "Version Number": "v0.4.0",
         "Owner": "huangminzhong2@huawei.com",
-        "Upstream URL": "https://codeload.github.com/wangfenjin/simple/zip/refs/tags/v0.4.0",
+        "Upstream URL": "https://codeload.github.com/wangfenjin/simple",
         "Description": "Simple is a SQLITE3 fts5 extension that supports Chinese and pinyin."
     }
 ]

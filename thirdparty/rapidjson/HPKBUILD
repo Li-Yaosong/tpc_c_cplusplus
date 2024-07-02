@@ -16,10 +16,10 @@
 pkgname=rapidjson 
 pkgver=master # Releases版本过久，使用master版本
 pkgrel=0 
-pkgdesc="A fast JSON parser" 
+pkgdesc="A fast JSON parser/generator for C++ with both SAX/DOM style API" 
 url="https://rapidjson.org/" 
 archs=("armeabi-v7a" "arm64-v8a") 
-license=()
+license=("MIT license" "JSON License")
 depends=("googletest_1.11.0") 
 makedepends=() 
 source="https://github.com/Tencent/$pkgname.git"

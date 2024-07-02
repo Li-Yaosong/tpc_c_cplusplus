@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="Protocol Buffers (a.k.a., protobuf) are Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data."
 url="https://github.com/protocolbuffers/protobuf"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("Copyright 2008 Google Inc")
+license=("Protobuf License")
 depends=("abseil-cpp" "zlib" "googletest")
 makedepends=()
 # 官网地址：https://github.com/protocolbuffers/${pkgname:0:8}/archive/refs/tags/$pkgver.tar.gz，因网络原因采用gitee mirrors

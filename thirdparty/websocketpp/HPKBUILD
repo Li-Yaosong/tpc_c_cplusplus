@@ -6,7 +6,7 @@ pkgrel=0
 pkgdesc="C++ websocket client/server library"
 url="https://github.com/zaphoyd/websocketpp"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("Peter Thorson. All rights reserved")
+license=("BSD-3-Clause" "zlib License" "MIT")
 depends=("openssl" "boost")
 makedepends=()
 

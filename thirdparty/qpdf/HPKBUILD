@@ -38,7 +38,7 @@ prepare() {
 
 build() {
     cd $builddir
-    PKG_CONFIG_LIBDIR="${pkgconfigpath}" cmake "$@" -B$ARCH-build -S./ > $buildlog 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" cmake "$@" -DBUILD_SHARED_LIBS=OFF -B$ARCH-build -S./ > $buildlog 2>&1
     $MAKE -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD

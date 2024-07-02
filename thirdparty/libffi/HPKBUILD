@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="The libffi library provides a portable, high level programming interface to various calling conventions."
 url="https://github.com/libffi/libffi"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("MIT")
+license=("MIT" "GPL-2.0-only")
 depends=()
 makedepends=("automake" "makeinfo") # makeinfo需要安装的是texinfo
 # 官方下载地址https://github.com/libffi/$pkgname/archive/refs/tags/$pkgver.tar.gz受网络影响可能存在下载失败的情况，现使用gitee镜像可以与官方仓库保持同步

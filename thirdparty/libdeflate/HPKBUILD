@@ -17,8 +17,8 @@
 pkgname=libdeflate
 pkgver=v1.17
 pkgrel=0
-pkgdesc=""
-url=""
+pkgdesc="libdeflate is a library for fast, whole-buffer DEFLATE-based compression and decompression."
+url="https://github.com/ebiggers/libdeflate"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("MIT")
 depends=()
