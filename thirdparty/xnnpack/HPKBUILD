@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="a highly optimized solution for neural network inference"
 url="https://github.com/google/XNNPACK"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("BSD License")
+license=("BSD-3-Clause")
 depends=()
 
 source="https://github.com/google/$pkgname.git"
