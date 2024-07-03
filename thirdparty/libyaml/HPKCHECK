@@ -31,7 +31,7 @@ openharmonycheck() {
         echo "1/13 test-version .......................... failed" >> ${logfile} 2>&1
     else
         echo "1/13 test-version .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
     ./test-reader >> ${logfile} 2>&1
@@ -41,7 +41,7 @@ openharmonycheck() {
         echo "2/13 test-reader .......................... failed" >> ${logfile} 2>&1
     else
         echo "2/13 test-reader .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
     cat ../examples/anchors.yaml | ./example-deconstructor >> ${logfile} 2>&1
@@ -51,7 +51,7 @@ openharmonycheck() {
         echo "3/13 example-deconstructor .......................... failed" >> ${logfile} 2>&1
     else
         echo "3/13 example-deconstructor .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
     cat ../examples/anchors.yaml | ./example-deconstructor-alt >> ${logfile} 2>&1
@@ -61,7 +61,7 @@ openharmonycheck() {
         echo "4/13 example-deconstructor-alt .......................... failed" >> ${logfile} 2>&1
     else
         echo "4/13 example-deconstructor-alt .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
     cat ../examples/anchors.yaml | ./example-reformatter >> ${logfile} 2>&1
@@ -71,7 +71,7 @@ openharmonycheck() {
         echo "5/13 example-reformatter .......................... failed" >> ${logfile} 2>&1
     else
         echo "5/13 example-reformatter .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
     cat ../examples/anchors.yaml | ./example-reformatter-alt >> ${logfile} 2>&1
@@ -81,7 +81,7 @@ openharmonycheck() {
         echo "6/13 example-reformatter-alt .......................... failed" >> ${logfile} 2>&1
     else
         echo "6/13 example-reformatter-alt .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
     ./run-dumper ../examples/global-tag.yaml >> ${logfile} 2>&1
@@ -91,7 +91,7 @@ openharmonycheck() {
         echo "7/13 run-dumper .......................... failed" >> ${logfile} 2>&1
     else
         echo "7/13 run-dumper .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
     ./run-emitter ../examples/global-tag.yaml >> ${logfile} 2>&1 
@@ -101,7 +101,7 @@ openharmonycheck() {
         echo "8/13 run-emitter .......................... failed" >> ${logfile} 2>&1
     else
         echo "8/13 run-emitter .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
     ./run-parser-test-suite ../examples/anchors.yaml | ./run-emitter-test-suite >> ${logfile} 2>&1
@@ -111,7 +111,7 @@ openharmonycheck() {
         echo "9/13 run-emitter-test-suite .......................... failed" >> ${logfile} 2>&1
     else
         echo "9/13 run-emitter-test-suite .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
     ./run-loader ../examples/global-tag.yaml >> ${logfile} 2>&1 
@@ -121,7 +121,7 @@ openharmonycheck() {
         echo "10/13 run-loader .......................... failed" >> ${logfile} 2>&1
     else
         echo "10/13 run-loader .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
     ./run-parser ../examples/global-tag.yaml >> ${logfile} 2>&1 
@@ -131,7 +131,7 @@ openharmonycheck() {
         echo "11/13 run-parser .......................... failed" >> ${logfile} 2>&1
     else
         echo "11/13 run-parser .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
     ./run-parser-test-suite ../examples/anchors.yaml >> ${logfile} 2>&1 
@@ -141,7 +141,7 @@ openharmonycheck() {
         echo "12/13 run-parser-test-suite .......................... failed" >> ${logfile} 2>&1
     else
         echo "12/13 run-parser-test-suite .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
     ./run-scanner ../examples/global-tag.yaml >> ${logfile} 2>&1
@@ -151,10 +151,10 @@ openharmonycheck() {
         echo "13/13 run-scanner .......................... failed" >> ${logfile} 2>&1
     else
         echo "13/13 run-scanner .......................... passed" >> ${logfile} 2>&1
-        passed_tests=`expr $passed_tests + 1`
+        ((passed_tests++))
     fi
 
-    test_fail=$((total_tests - passed_tests)) 
+    test_fail=$((total_tests - passed_tests))
     if [ $passed_tests -ne 13 ]
     then
         echo "$passed_tests tests passed, $test_fail tests failed" >> ${logfile} 2>&1
