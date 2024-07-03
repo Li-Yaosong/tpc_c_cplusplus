@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS. libcurl offers a myriad of powerful features"
 url="https://curl.se/"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("BSD/ISC/curl")
+license=("curl")
 depends=("openssl" "zstd" "nghttp2") # QUICHE/WEBSOCKETS
 makedepends=()
 
