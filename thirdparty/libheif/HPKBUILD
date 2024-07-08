@@ -6,7 +6,7 @@ pkgrel=0
 pkgdesc="libheif is an HEIF and AVIF file format decoder and encoder."
 url="https://github.com/strukturag/libheif"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("GPL-3.0-only")
+license=("LGPL-3.0-only and MIT")
 depends=("jpeg" "libpng" "libde265")
 makedepends=()
 
