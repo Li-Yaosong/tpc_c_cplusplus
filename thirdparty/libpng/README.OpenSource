@@ -1,10 +1,10 @@
 [
     {
         "Name": "libpng",
-        "License": "zlib/libpng License",
-        "License File": "LICENSE",
+        "License": "libpng-2.0",
+        "License File": "https://sourceforge.net/p/libpng/code/ci/master/tree/LICENSE",
         "Version Number": "1.6.39",
-        "Owner": "wupingyuan@huawei.com",
+        "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://sourceforge.net/projects/libpng/files/libpng16/1.6.39/libpng-1.6.39.tar.xz",
         "Description": "LIBPNG: Portable Network Graphics support, official libpng repository"
     }
