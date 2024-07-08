@@ -17,7 +17,7 @@
 pkgname=tzdb
 pkgver=2024a
 pkgrel=0
-pkgdesc=""
+pkgdesc="tzdb(Time-Zone-Database) for accurate global date-time processing in software, updated regularly, universally adopted."
 url=""
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD 3-clause")
