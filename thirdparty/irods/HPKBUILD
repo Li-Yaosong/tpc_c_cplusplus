@@ -21,7 +21,8 @@ pkgdesc="iRODS is an open source data management system designed to provide high
 url="https://github.com/irods/irods"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD Licensed")
-depends=("avrocpp" "boost" "libzmq" "Catch2" "cppzmq" "fmt-8.1.1" "json" "spdlog" "libarchive" "openssl" "curl" "nanodbc" "unixODBC" "linux-pam")
+depends=("avrocpp" "boost" "libzmq" "Catch2" "cppzmq" "fmt-8.1.1" "json" "spdlog" "libarchive" "openssl_1_1_1w" "curl_8_9_0" "nanodbc" "unixODBC" "linux-pam")
+
 makedepends=()
 install=
 source="https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz"
@@ -34,48 +35,40 @@ builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
 
 prepare() {
-    rm -rf /opt/irods-externals
-    mkdir -p $builddir/$ARCH-build
-    mkdir -p /opt/irods-externals/avro1.11.0-3/lib /opt/irods-externals/avro1.11.0-3/include /opt/irods-externals/avro1.11.0-3/bin \
-        /opt/irods-externals/boost1.81.0-1 /opt/irods-externals/catch22.13.8-0 \
-        /opt/irods-externals/cppzmq4.8.1-1 /opt/irods-externals/fmt8.1.1-1 /opt/irods-externals/json3.10.4-0 \
-        /opt/irods-externals/zeromq4-14.1.8-1  /opt/irods-externals/spdlog1.9.2-2 /opt/irods-externals/nanodbc2.13.0-2 \
-        /opt/irods-externals/libarchive3.5.2-0 /opt/irods-externals/flex/include/gssapi/ \
-        /opt/irods-externals/impl/impl/json/ /opt/irods-externals/impl/api/ /opt/irods-externals/clang13.0.1-0
-        
-    ln -s /data/tpc_c_cplusplus/lycium/usr/avrocpp/${ARCH}/include/* /opt/irods-externals/avro1.11.0-3/include
-    ln -s /data/tpc_c_cplusplus/lycium/usr/avrocpp/${ARCH}/lib/* /opt/irods-externals/avro1.11.0-3/lib
-    ln -s /data/tpc_c_cplusplus/thirdparty/avrocpp/avro-release-1.11.1/host-build/avrogencpp /opt/irods-externals/avro1.11.0-3/bin/avrogencpp
-    ln -s /data/tpc_c_cplusplus/lycium/usr/boost/${ARCH}/* /opt/irods-externals/boost1.81.0-1
-    ln -s /data/tpc_c_cplusplus/lycium/usr/Catch2/${ARCH}/* /opt/irods-externals/catch22.13.8-0
-    ln -s /data/tpc_c_cplusplus/lycium/usr/cppzmq/${ARCH}/* /opt/irods-externals/cppzmq4.8.1-1
-    ln -s /data/tpc_c_cplusplus/lycium/usr/fmt-8.1.1/${ARCH}/* /opt/irods-externals/fmt8.1.1-1
-    ln -s /data/tpc_c_cplusplus/lycium/usr/json/${ARCH}/* /opt/irods-externals/json3.10.4-0
-    ln -s /data/tpc_c_cplusplus/lycium/usr/libzmq/${ARCH}/* /opt/irods-externals/zeromq4-14.1.8-1
-    ln -s /data/tpc_c_cplusplus/lycium/usr/spdlog/${ARCH}/* /opt/irods-externals/spdlog1.9.2-2
-    ln -s /data/tpc_c_cplusplus/lycium/usr/nanodbc/${ARCH}/* /opt/irods-externals/nanodbc2.13.0-2
-    ln -s /data/tpc_c_cplusplus/lycium/usr/libarchive/${ARCH}/* /opt/irods-externals/libarchive3.5.2-0
-    
-    ln -s /usr/include/FlexLexer.h /opt/irods-externals/flex/include/FlexLexer.h
-    ln -s /usr/include/gssapi.h /opt/irods-externals/flex/include/gssapi.h
-    ln -s /usr/include/gssapi/* /opt/irods-externals/flex/include/gssapi/
-    ln -s /data/tpc_c_cplusplus/thirdparty/avrocpp/avro-release-1.11.1/lang/c++/impl/json/*  /opt/irods-externals/impl/impl/json/
-    ln -s /data/tpc_c_cplusplus/thirdparty/avrocpp/avro-release-1.11.1/lang/c++/api/*  /opt/irods-externals/impl/api/
+    mkdir -p $builddir/$ARCH-build/irods-externals
+    mkdir -p $builddir/$ARCH-build/irods-externals/avro1.11.0-3/lib \
+        $builddir/$ARCH-build/irods-externals/avro1.11.0-3/include $builddir/$ARCH-build/irods-externals/avro1.11.0-3/bin \
+        $builddir/$ARCH-build/irods-externals/boost1.81.0-1 $builddir/$ARCH-build/irods-externals/catch22.13.8-0 \
+        $builddir/$ARCH-build/irods-externals/cppzmq4.8.1-1 $builddir/$ARCH-build/irods-externals/fmt8.1.1-1 $builddir/$ARCH-build/irods-externals/json3.10.4-0 \
+        $builddir/$ARCH-build/irods-externals/zeromq4-14.1.8-1  $builddir/$ARCH-build/irods-externals/spdlog1.9.2-2 $builddir/$ARCH-build/irods-externals/nanodbc2.13.0-2 \
+        $builddir/$ARCH-build/irods-externals/libarchive3.5.2-0 $builddir/$ARCH-build/irods-externals/impl/impl/json/ \
+        $builddir/$ARCH-build/irods-externals/impl/api/ $builddir/$ARCH-build/irods-externals/clang13.0.1-0
+
+    ln -s ${LYCIUM_ROOT}/usr/avrocpp/${ARCH}/include/* $builddir/$ARCH-build/irods-externals/avro1.11.0-3/include
+    ln -s ${LYCIUM_ROOT}/usr/avrocpp/${ARCH}/lib/* $builddir/$ARCH-build/irods-externals/avro1.11.0-3/lib
+    ln -s ${LYCIUM_ROOT}/../thirdparty/avrocpp/avro-release-1.11.1/host-build/avrogencpp $builddir/$ARCH-build/irods-externals/avro1.11.0-3/bin/avrogencpp
+    ln -s ${LYCIUM_ROOT}/usr/boost/${ARCH}/* $builddir/$ARCH-build/irods-externals/boost1.81.0-1
+    ln -s ${LYCIUM_ROOT}/usr/Catch2/${ARCH}/* $builddir/$ARCH-build/irods-externals/catch22.13.8-0
+    ln -s ${LYCIUM_ROOT}/usr/cppzmq/${ARCH}/* $builddir/$ARCH-build/irods-externals/cppzmq4.8.1-1
+    ln -s ${LYCIUM_ROOT}/usr/fmt-8.1.1/${ARCH}/* $builddir/$ARCH-build/irods-externals/fmt8.1.1-1
+    ln -s ${LYCIUM_ROOT}/usr/json/${ARCH}/* $builddir/$ARCH-build/irods-externals/json3.10.4-0
+    ln -s ${LYCIUM_ROOT}/usr/libzmq/${ARCH}/* $builddir/$ARCH-build/irods-externals/zeromq4-14.1.8-1
+    ln -s ${LYCIUM_ROOT}/usr/spdlog/${ARCH}/* $builddir/$ARCH-build/irods-externals/spdlog1.9.2-2
+    ln -s ${LYCIUM_ROOT}/usr/nanodbc/${ARCH}/* $builddir/$ARCH-build/irods-externals/nanodbc2.13.0-2
+    ln -s ${LYCIUM_ROOT}/usr/libarchive/${ARCH}/* $builddir/$ARCH-build/irods-externals/libarchive3.5.2-0
+    ln -s ${LYCIUM_ROOT}/../thirdparty/avrocpp/avro-release-1.11.1/lang/c++/impl/json/*  $builddir/$ARCH-build/irods-externals/impl/impl/json/
+    ln -s ${LYCIUM_ROOT}/../thirdparty/avrocpp/avro-release-1.11.1/lang/c++/api/*  $builddir/$ARCH-build/irods-externals/impl/api/
 
     if $onceflag
     then
         cd $builddir
-        # 打patch处理交叉编译问题
+        # 打patch处理交叉编译问题、版本号IDE不支持问题
         patch -p1 < `pwd`/../irods_oh_pkg.patch >> $publicbuildlog 2>&1
         # 修改依赖boost库为.a依赖
         grep -rl "/lib/libboost" ./ | xargs -I {}  sed -i 's|\(/lib/libboost_[^.]*\)\.so$|\1.a|g' {}
         grep -rl "/lib/libboost" ./ | xargs -I {}  sed -i 's|\(/lib/libboost_[^.]*\)\.so"$|\1.a"|g' {}
         grep -rl "/lib/libboost" ./ | xargs -I {}  sed -i 's|\(/lib/libboost_[^.]*\)\.so)$|\1.a)|g' {}
-        
-        # IDE不支持修订版本号
-        sed -i 's/set(IRODS_VERSION "${IRODS_VERSION_MAJOR}.${IRODS_VERSION_MINOR}.${IRODS_VERSION_PATCH}")/set(IRODS_VERSION "${IRODS_VERSION_MAJOR}")/' ./CMakeLists.txt
-        sed -i 's/set(PACKAGE_VERSION "${IRODS_VERSION_1}.${IRODS_VERSION_2}.${IRODS_VERSION_3}")/set(PACKAGE_VERSION "${IRODS_VERSION_1}")/' ./cmake/IRODSConfigVersion.cmake.in
-        
+
         onceflag=false
         cd $OLDPWD
     fi
@@ -84,19 +77,19 @@ prepare() {
 build() {
     cd $builddir
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+        -DIRODS_EXTERNALS_PACKAGE_ROOT=`pwd`/$ARCH-build/irods-externals \
         -DOHOS_ARCH=$ARCH -DIRODS_BUILD_AGAINST_LIBCXX=OFF \
         -DIRODS_DISABLE_COMPILER_OPTIMIZATIONS=ON -DIRODS_UNIT_TESTS_BUILD=ON \
-        -Dfmt_DIR=/data/tpc_c_cplusplus/lycium/usr/linux-pam/$ARCH/include \
-        -DCMAKE_CXX_FLAGS="-I/data/tpc_c_cplusplus/lycium/usr/linux-pam/$ARCH/include \
-        -I/data/tpc_c_cplusplus/lycium/usr/openssl/$ARCH/include \
-        -I/data/tpc_c_cplusplus/lycium/usr/curl/$ARCH/include \
-        -I/data/tpc_c_cplusplus/lycium/usr/unixODBC/$ARCH/include \
-        -I/opt/irods-externals/flex/include \
-        -I/opt/irods-externals/impl/impl \
-        -I/opt/irods-externals/impl/api/ \
+        -Dfmt_DIR=${LYCIUM_ROOT}/usr/linux-pam/$ARCH/include \
+        -DCMAKE_CXX_FLAGS="-I${LYCIUM_ROOT}/../thirdparty/linux-pam/linux-pam-8562cb1b951e7bd807af6b43d85c71cedd7b10d7-${ARCH}-build/libpam/include \
+        -I${LYCIUM_ROOT}/usr/openssl_1_1_1w/$ARCH/include \
+        -I${LYCIUM_ROOT}/usr/curl_8_9_0/$ARCH/include \
+        -I${LYCIUM_ROOT}/usr/unixODBC/$ARCH/include \
+        -I`pwd`/flex/ -I`pwd`/gssapi/ \
+        -I`pwd`/$ARCH-build/irods-externals/impl/impl \
+        -I`pwd`/$ARCH-build/irods-externals/impl/api/ \
         -UIRODS_ENABLE_SYSLOG \
         -DIRODS_BUILD_WITH_WERROR=OFF \
-        -Dsolaris_platform \
         -Wno-c++11-narrowing \
         -Wunused-command-line-argument \
         -Wno-error=unused-command-line-argument" -B$ARCH-build -S./ -L >  $buildlog 2>&1
@@ -166,5 +159,5 @@ check() {
 }
 
 cleanbuild() {
-    rm -rf ${PWD}/$builddir /opt/irods-externals
+    rm -rf ${PWD}/$builddir
 }

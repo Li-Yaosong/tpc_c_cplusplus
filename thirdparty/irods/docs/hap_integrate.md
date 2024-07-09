@@ -26,7 +26,7 @@
     ├── README_zh.md                    #三方库简介
     ├── SHA512SUM                       #三方库校验文件
     ├── irods_oh_pkg.patch              #用于irods库编译的补丁
-    └── server_config.json              #用于irods库执行测试用例的测试文件
+    └── test_source                     #用于irods库执行测试用例的测试文件
   ```
   
 - 在lycium目录下编译三方库
