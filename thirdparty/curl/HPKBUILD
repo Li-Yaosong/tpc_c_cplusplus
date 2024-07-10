@@ -21,7 +21,7 @@ pkgdesc="A command line tool and library for transferring data with URL syntax, 
 url="https://curl.se/"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("curl")
-depends=("openssl" "zstd" "nghttp2") # QUICHE/WEBSOCKETS
+depends=("openssl" "zstd_1_5_6" "nghttp2") # QUICHE/WEBSOCKETS
 makedepends=()
 
 # 官方下载地址: https://github.com/curl/$pkgname/archive/refs/tags/$pkgver.tar.gz，因网络原因采用gitee mirrors
