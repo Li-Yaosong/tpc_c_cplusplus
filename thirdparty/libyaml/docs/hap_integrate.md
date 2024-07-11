@@ -62,17 +62,17 @@ target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/
 
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
-进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录），可以查看HPKCHECK里面单独执行每条用例的方法，也可以执行run-all-tests.sh，结果如图所示
+进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录），可以查看HPKCHECK里面单独执行每条用例的方法，这里执行一条用例test-version，结果如图所示
 ```shell
-  cd /data/tpc_c_cplusplus/thirdparty/libyaml/libyaml-0.2.5/$ARCH-build
-  ./run-all-tests.sh
+  cd /data/tpc_c_cplusplus/thirdparty/libyaml/libyaml-0.2.5/armeabi-v7a-build(或者cd /data/tpc_c_cplusplus/thirdparty/libyaml/libyaml-0.2.5/arm64-v8a-build)
+  ./test-version
 ```
 
 测试结果如图所示：
-  - ![thirdparty_install_dir](pic/run_all_test.PNG)
+  - ![thirdparty_install_dir](pic/test-version.PNG)
 
 ## 参考资料
 
 - [OpenHarmony三方库地址](https://gitee.com/openharmony-tpc)
 - [OpenHarmony知识体系](https://gitee.com/openharmony-sig/knowledge)
-- [通过DevEco Studio开发一个NAPI工程](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi_study/docs/hello_napi.md)
+- [libyaml三方库地址](https://github.com/yaml/libyaml)
