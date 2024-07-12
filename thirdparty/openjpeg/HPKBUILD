@@ -14,6 +14,7 @@
 # Contributor: liulihong <llh_01129@163.com>    modify : lpzhong <278527840@qq.com>
 # Maintainer: liulihong <llh_01129@163.com>
 
+# 测试依赖tiff的库上库门禁能不能通过
 pkgname=openjpeg
 pkgver=v2.5.0
 pkgrel=0
