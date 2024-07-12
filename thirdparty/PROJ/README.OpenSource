@@ -1,0 +1,38 @@
+[
+    {
+        "Name": "PROJ",
+        "License": "MIT License",
+        "License File": "https://github.com/OSGeo/PROJ/blob/master/COPYING",
+        "Version Number": "9.4.1",
+        "Owner": "hanjinfei@foxmail.com",
+        "Upstream URL": "https://github.com/OSGeo/PROJ",
+        "Description": "PROJ is the most famous map projection library of open source GIS, which provides the function of coordinate conversion between multiple coordinate systems. "
+    },
+    {
+        "Name": "sqlite",
+        "License": "Public Domain",
+        "License File": "https://www.sqlite.org/copyright.html",
+        "Version Number": "version-3.42.0",
+        "Owner": "wupingyuan@huawei.com",
+        "Upstream URL": "https://github.com/sqlite/sqlite/archive/refs/tags/.tar.gz",
+        "Description": "This repository contains the complete source code for the SQLite database engine. Some test scripts are also included. However, many other test scripts and most of the documentation are managed separately."
+    },
+    {
+        "Name": "tiff",
+        "License": "LibTIFF license",
+        "License File": "https://gitlab.com/libtiff/libtiff/-/blob/master/LICENSE.md?ref_type=heads",
+        "Version Number": "4.5.0",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "http://download.osgeo.org/libtiff/tiff-4.5.0.tar.xz",
+        "Description": "a small collection of tools for doingsimple manipulations of TIFF images, and documentation on the library and tools."
+    },
+    {
+        "Name": "curl",
+        "License": "BSD/ISC/curl",
+        "License File": "https://github.com/curl/curl/blob/master/COPYING",
+        "Version Number": "curl-8_0_1",
+        "Owner": "hanjinfei@foxmail.com",
+        "Upstream URL": "https://github.com/curl/curl/archive/refs/tags/curl-8_0_1.tar.gz",
+        "Description": "Curl is a command-line tool for transferring data specified with URL syntax. Find out how to use curl by reading the curl.1 man page or the MANUAL document. Find out how to install Curl by reading the INSTALL document."
+    }
+]
