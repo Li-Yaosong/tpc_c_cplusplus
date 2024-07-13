@@ -25,7 +25,6 @@
   ├── README.OpenSource                	#说明三方库源码的下载地址，版本、license等信息
   ├── README_zh.md
   ├── sqlite3pp_oh_pkg.patch            #CMakeLists.txt编译文件的patch
-  ├── run-all-tests.sh                  #测试用例脚本
   ```
   
 - 在lycium目录下编译三方库
@@ -72,15 +71,34 @@ target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/
 
 三方库的测试使用原库自带的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 
-进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录），可以查看HPKCHECK里面单独执行每条用例的方法，也可以执行run-all-tests.sh，结果如图所示
+进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录），可以查看HPKCHECK里面单独执行每条用例的方法，这里执行一条测试用例testcallback作为示范，在手动执行前先做准备工作如下
 ```
+  # 进入到构建目录
   cd /data/tpc_c_cplusplus/thirdparty/sqlite3pp/sqlite3pp-1.0.9/armeabi-v7a-build(或者cd /data/tpc_c_cplusplus/thirdparty/sqlite3pp/sqlite3pp-1.0.9/arm64-v8a-build)
-  ./run-all-tests.sh armeabi-v7a (或者./run-all-tests.sh arm64-v8a)
+
+  # 连接到临时数据库foods.db，在临时数据库foods.db中创建episodes和foods表
+  # 注意将${ARCH}替换为arm64-v8a或者armeabi-v7a
+  /data/tpc_c_cplusplus/lycium/usr/sqlite/${ARCH}/bin/sqlite3 foods.db (不要退出sqlite3执行)
+
+  CREATE TABLE foods (id INT PRIMARY KEY,name TEXT NOT NULL,type_id INTEGER NOT NULL);
+  CREATE TABLE episodes (id INTEGER PRIMARY KEY,contact_id INTEGER,title TEXT,description TEXT,FOREIGN KEY (contact_id) REFERENCES contacts(id));
+
+  # 向foods表插入一条测试数据
+  INSERT INTO foods (id, name, type_id) VALUES (1, 'AAAA', 1234); (插入完数据退出sqlite3执行)
+
+  # 连接到临时数据库test.db，在临时数据库test.db中创建contacts表
+  /data/tpc_c_cplusplus/lycium/usr/sqlite/${ARCH}/bin/sqlite3 test.db (不要退出sqlite3执行)
+  CREATE TABLE contacts (id INTEGER PRIMARY KEY,name TEXT NOT NULL,phone TEXT NOT NULL,address TEXT,UNIQUE(name, phone)); (创建完contacts表退出sqlite3执行)
 ```
-- ![thirdparty_install_dir](pic/run_all_test.PNG)
+
+执行./testcallback, 结果如图所示
+```
+  ./testcallback
+```
+- ![thirdparty_install_dir](pic/testcallback.PNG)
 
 ## 参考资料
 
 - [OpenHarmony三方库地址](https://gitee.com/openharmony-tpc)
 - [OpenHarmony知识体系](https://gitee.com/openharmony-sig/knowledge)
-- [通过DevEco Studio开发一个NAPI工程](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi_study/docs/hello_napi.md)
+- [sqlite3pp三方库地址](https://github.com/iwongu/sqlite3pp)
