@@ -2,10 +2,10 @@
     {
         "Name": "earcut.hpp",
         "License": "ISC",
-        "License File": "LICENSE",
-        "Version Number": "earcut.hpp-a299ad92b93b03aeab5d95195bb34bfc8f0b3263",
-        "Owner": "zhangxin546@h-partners.com",
-        "Upstream URL": "https://github.com/mapbox/earcut.hpp",
+        "License File": "https://github.com/mapbox/earcut.hpp/blob/master/LICENSE",
+        "Version Number": "master",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/mapbox/earcut.hpp.git",
         "Description": "A C++ port of earcut.js, a fast, header-only polygon triangulation library."
     }
 ]
