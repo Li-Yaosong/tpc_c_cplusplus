@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="DragonBones is a set of skeletal animation toolsets, first developed using Flash and ActionScript 3.0 languages, mainly used in Flash games, and is now widely used in web and mobile game projects"
 url="http://www.dragonbones.com//"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("BSD")
+license=("MIT")
 depends=()
 makedepends=()
 # 官方下载地址 https://github.com/DragonBones/${pkgname}.git 受网络影响可能存在下载失败的情况，现使用gitee镜像可以与官方仓库保持同步

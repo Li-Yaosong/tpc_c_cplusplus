@@ -1,10 +1,10 @@
 [
     {
         "Name": "DragonBonesCPP",
-        "License": "BSD",
+        "License": "MIT",
         "License File": "https://github.com/DragonBones/DragonBonesCPP/blob/master/LICENSE",
-        "Version Number": "56b6847252c0f610a1b07f30b137b1ec49b36226",
-        "Owner": "1596268623@qq.com",
+        "Version Number": "5.0",
+        "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://github.com/DragonBones/DragonBonesCPP.git",
         "Description": "DragonBones is a set of skeletal animation toolsets, first developed using Flash and ActionScript 3.0 languages, mainly used in Flash games, and is now widely used in web and mobile game projects"
     }
