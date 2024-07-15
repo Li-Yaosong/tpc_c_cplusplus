@@ -1,0 +1,98 @@
+diff -Naur dcmtk-DCMTK-3.6.8/CMake/dcmtkMacros.cmake dcmtk-DCMTK-3.6.8_new/CMake/dcmtkMacros.cmake
+--- dcmtk-DCMTK-3.6.8/CMake/dcmtkMacros.cmake	2023-12-19 18:12:57.000000000 +0800
++++ dcmtk-DCMTK-3.6.8_new/CMake/dcmtkMacros.cmake	2024-07-05 18:24:04.980643235 +0800
+@@ -13,6 +13,8 @@
+                 string(REPLACE "\\" "\\\\" TEST_COMMAND "${TEST_COMMAND}")
+             elseif(ANDROID)
+                 set(TEST_COMMAND "${ANDROID_TEMPORARY_FILES_LOCATION}/${MODULE}_tests")
++            elseif(__OHOS__)
++                set(TEST_COMMAND "${TEST_EXECUTABLE}")
+             else()
+                 # not reachable, handled by not defining DCMTK_RUN_CTEST_SCRIPT
+             endif()
+diff -Naur dcmtk-DCMTK-3.6.8/CMakeLists.txt dcmtk-DCMTK-3.6.8_new/CMakeLists.txt
+--- dcmtk-DCMTK-3.6.8/CMakeLists.txt	2023-12-19 18:12:57.000000000 +0800
++++ dcmtk-DCMTK-3.6.8_new/CMakeLists.txt	2024-07-05 18:20:08.545612501 +0800
+@@ -60,6 +60,8 @@
+     set(DCMTK_RUN_CTEST_SCRIPT "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/dcmtkCTestRunWine.cmake" CACHE INTERNAL "path to the CMake script for launching a unit test as a detached Wine process in the prepared wineprefix")
+   elseif(ANDROID)
+     set(DCMTK_RUN_CTEST_SCRIPT "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/dcmtkCTestRunAndroid.cmake" CACHE INTERNAL "path to the CMake script for launching a unit test via the android emulator")
++  elseif(__OHOS__)
++    set(DCMTK_RUN_CTEST_SCRIPT "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/dcmtkCTestRun.cmake" CACHE INTERNAL "path to the CMake script for launching a unit test")
+   else()
+     message(WARNING "Emulation for your target platform is not available, CTest will not be able to execute the unit tests!")
+   endif()
+@@ -141,6 +143,11 @@
+     configure_file("${DCMTK_SOURCE_DIR}/CMake/CTest/dcmtkCTestRunAndroid.cmake.in"
+       "${DCMTK_RUN_CTEST_SCRIPT}" ESCAPE_QUOTES @ONLY
+     )
++  elseif(__OHOS__)
++	string(REPLACE ";" "${ENVIRONMENT_PATH_SEPARATOR}" DCMDICTPATH "${DCMTK_DICOM_DICTIONARIES}")
++    configure_file("${DCMTK_SOURCE_DIR}/CMake/CTest/dcmtkCTestRun.cmake.in"
++      "${DCMTK_RUN_CTEST_SCRIPT}" ESCAPE_QUOTES @ONLY
++    )
+   else()
+     # Nothing to do
+   endif()
+diff -Naur dcmtk-DCMTK-3.6.8/config/include/dcmtk/config/arith.h dcmtk-DCMTK-3.6.8_new/config/include/dcmtk/config/arith.h
+--- dcmtk-DCMTK-3.6.8/config/include/dcmtk/config/arith.h	1970-01-01 08:00:00.000000000 +0800
++++ dcmtk-DCMTK-3.6.8_new/config/include/dcmtk/config/arith.h	2024-07-05 18:14:41.892790822 +0800
+@@ -0,0 +1,58 @@
++#ifndef CONFIG_ARITH_H
++#define CONFIG_ARITH_H
++
++#define DCMTK_SIGNED_CHAR_DIGITS10 2
++#define DCMTK_UNSIGNED_CHAR_DIGITS10 2
++#define DCMTK_SIGNED_SHORT_DIGITS10 4
++#define DCMTK_UNSIGNED_SHORT_DIGITS10 4
++#define DCMTK_SIGNED_INT_DIGITS10 9
++#define DCMTK_UNSIGNED_INT_DIGITS10 9
++#define DCMTK_SIGNED_LONG_DIGITS10 18
++#define DCMTK_UNSIGNED_LONG_DIGITS10 19
++#define DCMTK_FLOAT_MAX_DIGITS10 9
++#define DCMTK_DOUBLE_MAX_DIGITS10 17
++#define DCMTK_CHAR_TRAPS OFFalse
++#define DCMTK_CHAR_MODULO OFTrue
++#define DCMTK_SIGNED_CHAR_TRAPS OFFalse
++#define DCMTK_SIGNED_CHAR_MODULO OFTrue
++#define DCMTK_UNSIGNED_CHAR_TRAPS OFFalse
++#define DCMTK_UNSIGNED_CHAR_MODULO OFTrue
++#define DCMTK_SIGNED_SHORT_TRAPS OFFalse
++#define DCMTK_SIGNED_SHORT_MODULO OFTrue
++#define DCMTK_UNSIGNED_SHORT_TRAPS OFFalse
++#define DCMTK_UNSIGNED_SHORT_MODULO OFTrue
++#define DCMTK_SIGNED_INT_TRAPS OFFalse
++#define DCMTK_SIGNED_INT_MODULO OFTrue
++#define DCMTK_UNSIGNED_INT_TRAPS OFFalse
++#define DCMTK_UNSIGNED_INT_MODULO OFTrue
++#define DCMTK_SIGNED_LONG_TRAPS OFFalse
++#define DCMTK_SIGNED_LONG_MODULO OFTrue
++#define DCMTK_UNSIGNED_LONG_TRAPS OFFalse
++#define DCMTK_UNSIGNED_LONG_MODULO OFTrue
++#define DCMTK_FLOAT_TRAPS OFFalse
++#define DCMTK_DOUBLE_TRAPS OFFalse
++#define DCMTK_FLOAT_HAS_INFINITY OFTrue
++#define DCMTK_FLOAT_INFINITY *OFreinterpret_cast( const float*, "\000\000\200\177" )
++#define DCMTK_DOUBLE_HAS_INFINITY OFTrue
++#define DCMTK_DOUBLE_INFINITY *OFreinterpret_cast( const double*, "\000\000\000\000\000\000\360\177" )
++#define DCMTK_FLOAT_HAS_QUIET_NAN OFTrue
++#define DCMTK_FLOAT_QUIET_NAN *OFreinterpret_cast( const float*, "\000\000\300\177" )
++#define DCMTK_DOUBLE_HAS_QUIET_NAN OFTrue
++#define DCMTK_DOUBLE_QUIET_NAN *OFreinterpret_cast( const double*, "\000\000\000\000\000\000\370\177" )
++#define DCMTK_FLOAT_HAS_SIGNALING_NAN OFFalse
++#define DCMTK_FLOAT_SIGNALING_NAN *OFreinterpret_cast( const float*, "\001\000\200\177" )
++#define DCMTK_DOUBLE_HAS_SIGNALING_NAN OFFalse
++#define DCMTK_DOUBLE_SIGNALING_NAN *OFreinterpret_cast( const double*, "\001\000\000\000\000\000\360\177" )
++#define DCMTK_FLOAT_IS_IEC559 OFFalse
++#define DCMTK_DOUBLE_IS_IEC559 OFFalse
++#define DCMTK_FLOAT_HAS_DENORM OFdenorm_present
++#define DCMTK_FLOAT_DENORM_MIN *OFreinterpret_cast( const float*, "\001\000\000\000" )
++#define DCMTK_DOUBLE_HAS_DENORM OFdenorm_present
++#define DCMTK_DOUBLE_DENORM_MIN *OFreinterpret_cast( const double*, "\001\000\000\000\000\000\000\000" )
++#define DCMTK_FLOAT_TINYNESS_BEFORE OFTrue
++#define DCMTK_DOUBLE_TINYNESS_BEFORE OFTrue
++#define DCMTK_FLOAT_HAS_DENORM_LOSS OFTrue
++#define DCMTK_DOUBLE_HAS_DENORM_LOSS OFTrue
++#define DCMTK_ROUND_STYLE 1
++
++#endif // CONFIG_ARITH_H
