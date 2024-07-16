@@ -1,0 +1,138 @@
+diff -Nuar LucenePlusPlus-rel_3.0.9/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/CMakeLists.txt
+--- LucenePlusPlus-rel_3.0.9/CMakeLists.txt	2024-02-19 02:18:26.000000000 +0800
++++ LucenePlusPlus-rel_3.0.9-new/CMakeLists.txt	2024-07-09 15:14:15.796767754 +0800
+@@ -33,7 +33,6 @@
+ include(options.cmake)
+ 
+ # pre-compiled headers support
+-include(cotire)
+ 
+ # if setup using the Toolchain-llvm.cmake file, then use llvm...
+ if(ENABLE_LLVM)
+diff -Nuar LucenePlusPlus-rel_3.0.9/src/contrib/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/src/contrib/CMakeLists.txt
+--- LucenePlusPlus-rel_3.0.9/src/contrib/CMakeLists.txt	2024-02-19 02:18:26.000000000 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/contrib/CMakeLists.txt	2024-07-09 15:14:15.306767894 +0800
+@@ -90,7 +90,6 @@
+     VERSION ${lucene++_VERSION}
+     SOVERSION ${lucene++_SOVERSION})
+     
+-cotire(lucene++-contrib)
+ 
+ install(TARGETS lucene++-contrib
+   DESTINATION ${CMAKE_INSTALL_LIBDIR}
+diff -Nuar LucenePlusPlus-rel_3.0.9/src/core/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/src/core/CMakeLists.txt
+--- LucenePlusPlus-rel_3.0.9/src/core/CMakeLists.txt	2024-02-19 02:18:26.000000000 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/core/CMakeLists.txt	2024-07-09 15:14:14.766768048 +0800
+@@ -79,7 +79,6 @@
+     VERSION ${lucene++_VERSION}
+     SOVERSION ${lucene++_SOVERSION})
+ 
+-cotire(lucene++)
+ 
+ 
+ install(TARGETS lucene++
+diff -Nuar LucenePlusPlus-rel_3.0.9/src/core/search/DefaultSimilarity.cpp LucenePlusPlus-rel_3.0.9-new/src/core/search/DefaultSimilarity.cpp
+--- LucenePlusPlus-rel_3.0.9/src/core/search/DefaultSimilarity.cpp	2024-02-19 02:18:26.000000000 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/core/search/DefaultSimilarity.cpp	2024-07-09 16:23:35.675586456 +0800
+@@ -27,27 +27,27 @@
+     return (state->getBoost() * lengthNorm(fieldName, numTerms));
+ }
+ 
+-inline double DefaultSimilarity::lengthNorm(const String& fieldName, int32_t numTokens) {
++double DefaultSimilarity::lengthNorm(const String& fieldName, int32_t numTokens) {
+     return (double)(1.0 / std::sqrt((double)numTokens));
+ }
+ 
+-inline double DefaultSimilarity::queryNorm(double sumOfSquaredWeights) {
++double DefaultSimilarity::queryNorm(double sumOfSquaredWeights) {
+     return (double)(1.0 / std::sqrt(sumOfSquaredWeights));
+ }
+ 
+-inline double DefaultSimilarity::tf(double freq) {
++double DefaultSimilarity::tf(double freq) {
+     return (double)std::sqrt(freq);
+ }
+ 
+-inline double DefaultSimilarity::sloppyFreq(int32_t distance) {
++double DefaultSimilarity::sloppyFreq(int32_t distance) {
+     return (1.0 / (double)(distance + 1));
+ }
+ 
+-inline double DefaultSimilarity::idf(int32_t docFreq, int32_t numDocs) {
++double DefaultSimilarity::idf(int32_t docFreq, int32_t numDocs) {
+     return (double)(std::log((double)numDocs / (double)(docFreq + 1)) + 1.0);
+ }
+ 
+-inline double DefaultSimilarity::coord(int32_t overlap, int32_t maxOverlap) {
++double DefaultSimilarity::coord(int32_t overlap, int32_t maxOverlap) {
+     return (double)overlap / (double)maxOverlap;
+ }
+ 
+diff -Nuar LucenePlusPlus-rel_3.0.9/src/test/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/src/test/CMakeLists.txt
+--- LucenePlusPlus-rel_3.0.9/src/test/CMakeLists.txt	2024-02-19 02:18:26.000000000 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/test/CMakeLists.txt	2024-07-09 15:14:14.156768221 +0800
+@@ -74,4 +74,3 @@
+ ####################################
+ target_compile_options(lucene++-tester PRIVATE -DLPP_EXPOSE_INTERNAL)
+ 
+-cotire(lucene++-tester)
+diff -Nuar LucenePlusPlus-rel_3.0.9/src/test/gtest/googlemock/include/gmock/gmock-actions.h LucenePlusPlus-rel_3.0.9-new/src/test/gtest/googlemock/include/gmock/gmock-actions.h
+--- LucenePlusPlus-rel_3.0.9/src/test/gtest/googlemock/include/gmock/gmock-actions.h	2024-02-19 02:18:26.000000000 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/test/gtest/googlemock/include/gmock/gmock-actions.h	2024-07-09 15:29:19.346511928 +0800
+@@ -452,7 +452,7 @@
+ 
+   Impl impl_;
+ 
+-  GTEST_DISALLOW_ASSIGN_(PolymorphicAction);
++
+ };
+ 
+ // Creates an Action from its implementation and returns it.  The
+diff -Nuar LucenePlusPlus-rel_3.0.9/src/test/gtest/googlemock/include/gmock/gmock-matchers.h LucenePlusPlus-rel_3.0.9-new/src/test/gtest/googlemock/include/gmock/gmock-matchers.h
+--- LucenePlusPlus-rel_3.0.9/src/test/gtest/googlemock/include/gmock/gmock-matchers.h	2024-02-19 02:18:26.000000000 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/test/gtest/googlemock/include/gmock/gmock-matchers.h	2024-07-09 15:40:47.856316834 +0800
+@@ -718,7 +718,7 @@
+   const bool expect_eq_;
+   const bool case_sensitive_;
+ 
+-  GTEST_DISALLOW_ASSIGN_(StrEqualityMatcher);
++
+ };
+ 
+ // Implements the polymorphic HasSubstr(substring) matcher, which
+@@ -775,7 +775,7 @@
+  private:
+   const StringType substring_;
+ 
+-  GTEST_DISALLOW_ASSIGN_(HasSubstrMatcher);
++
+ };
+ 
+ // Implements the polymorphic StartsWith(substring) matcher, which
+@@ -832,7 +832,7 @@
+  private:
+   const StringType prefix_;
+ 
+-  GTEST_DISALLOW_ASSIGN_(StartsWithMatcher);
++
+ };
+ 
+ // Implements the polymorphic EndsWith(substring) matcher, which
+@@ -888,7 +888,7 @@
+  private:
+   const StringType suffix_;
+ 
+-  GTEST_DISALLOW_ASSIGN_(EndsWithMatcher);
++
+ };
+ 
+ // Implements a matcher that compares the two fields of a 2-tuple
+@@ -1503,7 +1503,7 @@
+   // max_abs_error will be used for value comparison when >= 0.
+   const FloatType max_abs_error_;
+ 
+-  GTEST_DISALLOW_ASSIGN_(FloatingEqMatcher);
++
+ };
+ 
+ // A 2-tuple ("binary") wrapper around FloatingEqMatcher:
