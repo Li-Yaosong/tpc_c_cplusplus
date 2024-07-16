@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="The Free Implementation of the Unicode Bidirectional Algorithm."
 url="https://github.com/fribidi/fribidi"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("LGPL-2.1 license")
+license=("LGPL-2.1-only")
 depends=()
 makedepends=("unzip")
 # 原仓地址: https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用镜像
