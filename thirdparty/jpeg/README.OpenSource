@@ -1,7 +1,7 @@
 [
     {
         "Name": "jpeg",
-        "License": "Independent JPEG Group License",
+        "License": "IJG",
         "License File": "https://www.ijg.org/files/README",
         "Version Number": "v9e",
         "Owner": "xiafeng@huawei.com",
