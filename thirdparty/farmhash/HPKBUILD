@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="FarmHash, a family of hash functions"
 url="https://github.com/google/$pkgname"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("Apache-2.0 license")
+license=("MIT")
 depends=()
 makedepends=()
 
