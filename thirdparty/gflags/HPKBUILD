@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="The gflags package contains a C++ library that implements commandline flags processing."
 url="https://github.com/gflags/gflags"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("BSD 3-Clause New or Revised License")
+license=("BSD-3-Clause")
 depends=()
 makedepends=()
 # 官网地址：https://github.com/gflags/$pkgname/archive/refs/tags/$pkgver.tar.gz，因网络原因采用gitee mirrors
