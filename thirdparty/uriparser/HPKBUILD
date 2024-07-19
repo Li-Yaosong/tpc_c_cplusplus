@@ -59,10 +59,12 @@ package() {
 check() {
     echo "The test must be on an OpenHarmony device!"
     cd $builddir/$ARCH-build/
-    if [[ "${OHOS_SDK: -1}" == "/" ]]; then
-        sed -i.bak "s|${OHOS_SDK}native/build-tools/cmake/bin/|/usr/bin/|g" Makefile
-    else
-        sed -i.bak "s|${OHOS_SDK}/native/build-tools/cmake/bin/|/usr/bin/|g" Makefile
+    if [[ "${OHOS_SDK: -1}" == "/" ]]; then  
+        sed -i.bak "s|${OHOS_SDK}native/build-tools/cmake/bin/cmake|cmake|g" Makefile
+        sed -i.bak "s|${OHOS_SDK}native/build-tools/cmake/bin/ctest|ctest|g" Makefile
+    else  
+        sed -i.bak "s|${OHOS_SDK}/native/build-tools/cmake/bin/cmake|cmake|g" Makefile
+        sed -i.bak "s|${OHOS_SDK}/native/build-tools/cmake/bin/ctest|ctest|g" Makefile
     fi
     cd $OLDPWD
 }
