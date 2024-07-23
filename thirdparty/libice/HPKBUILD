@@ -43,7 +43,7 @@ host=
 prepare() {
     if $patchflag
     then
-        patch -p1 < `pwd`/libice_ohos_pkg.patch > $publicbuildlog 2>&1
+        patch -p1 < `pwd`/libice_oh_pkg.patch > $publicbuildlog 2>&1
         if [ $? -ne 0 ]
         then
             echo "patch failed"
@@ -51,7 +51,7 @@ prepare() {
         fi
         
         cd $builddir
-        patch -p1 < `pwd`/../libice_ohos_test.patch >> $publicbuildlog 2>&1
+        patch -p1 < `pwd`/../libice_oh_test.patch >> $publicbuildlog 2>&1
         cd $OLDPWD
         
         # patch只需要打一次,关闭打patch

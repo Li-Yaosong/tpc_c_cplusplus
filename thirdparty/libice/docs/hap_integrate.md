@@ -25,8 +25,8 @@
     ├── SHA512SUM                         #三方库校验文件
     ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
     ├── README_zh.md                      #三方库简介
-    ├── libice_ohos_pkg.patch             #用于libice库编译的补丁
-    ├── libice_ohos_test.patch            #用于编译libice库的测试用例的补丁
+    ├── libice_oh_pkg.patch             #用于libice库编译的补丁
+    ├── libice_oh_test.patch            #用于编译libice库的测试用例的补丁
     ```
 
 *   在lycium目录下编译三方库
@@ -43,23 +43,23 @@
     在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
 
     ```shell
-    libice/arm64-v8a-build   libice/armeabi-v7a-build
+    libice/arm64-v8a   libice/armeabi-v7a
     ```
 
 *   [测试三方库](#测试三方库)
 
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件拷贝到该目录下，将编译生成的三方库拷贝到工程的libs目录下，如下图所示：
+- 将生成动态库的soname文件拷贝到entry/libs目录下，在IDE的cpp目录下新增thirdparty目录将三方库的头文件拷贝到该目录下，如下图所示：
 
 &nbsp;![thirdparty_install_dir](pic/libice-dev.png)
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
 
   ```cmake
-    #将三方库加入工程中
-    target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libICE.so)
-    #将三方库的头文件加入工程中
+    #将三方动态库加入工程中
+    target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libice/${OHOS_ARCH}/lib/libICE.so)
+    #将三方库头文件加入工程中
     target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libice/${OHOS_ARCH}/include)
   ```
   
