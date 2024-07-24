@@ -50,6 +50,10 @@ package() {
     cd $builddir
     $MAKE -C $ARCH-build install >> $buildlog 2>&1
     cd $OLDPWD
+    if [ "$ARCH" == "arm64-v8a" ]
+    then
+        mv "${LYCIUM_ROOT}/usr/libmng/$ARCH/lib64" "${LYCIUM_ROOT}/usr/libmng/$ARCH/lib"
+    fi
 }
 
 check() {
@@ -78,7 +82,7 @@ check() {
         --target=aarch64-linux-ohos \
         --sysroot=${OHOS_SDK}/native/sysroot \
         -lm -lmng -lz -ljpeg -llcms2 \
-        -L $LYCIUM_ROOT/usr/libmng/$ARCH/lib64 \
+        -L $LYCIUM_ROOT/usr/libmng/$ARCH/lib \
         -L $LYCIUM_ROOT/usr/jpeg/$ARCH/lib \
         -L $LYCIUM_ROOT/usr/lcms2/$ARCH/lib \
         -L $LYCIUM_ROOT/usr/zlib/$ARCH/lib \

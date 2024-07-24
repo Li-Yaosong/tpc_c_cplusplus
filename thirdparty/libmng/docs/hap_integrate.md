@@ -48,17 +48,18 @@
 
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件拷贝到该目录下，将编译生成的三方库拷贝到工程的libs目录下，由于mng库还依赖于jpeg等库，将对应库也一同拷贝到libs，如下图所示：
+- 将libmng及其依赖库生成的动态库soname文件拷贝到entry/libs目录下，在IDE的cpp目录下新增thirdparty目录将libmng库及其依赖库的头文件拷贝到该目录下，如下图所示：
 
 &nbsp;![thirdparty_install_dir](pic/libmng-dev.png)
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
 
   ```cmake
-  #将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/libmng.so.2)
-  #将三方库的头文件加入工程中
+  #将三方静态库加入工程中
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libmng/${OHOS_ARCH}/lib/libmng.so)
+  #将三方库头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libmng/${OHOS_ARCH}/include)
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/jpeg/${OHOS_ARCH}/include)
   ```
   
 
