@@ -1,11 +1,11 @@
 [
     {
         "Name": "libextractor",
-        "License": "GPL-3.0",
-        "License File": "https://github.com/ndurner/libextractor/blob/v1.6/COPYING",
-        "Version Number": "v1.6",
+        "License": "GPL-3.0-only",
+        "License File": "https://git.gnunet.org/libextractor.git/tree/COPYING",
+        "Version Number": "v1.11",
         "Owner": "huangminzhong2@huawei.com",
-        "Upstream URL": "https://github.com/ndurner/libextractor",
+        "Upstream URL": "https://www.gnu.org/software/libextractor/",
         "Description": "libextractor is a library used to extract meta data from files of arbitrary type."
     },
     {
