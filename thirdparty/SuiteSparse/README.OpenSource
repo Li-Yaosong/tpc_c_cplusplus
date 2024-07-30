@@ -1,8 +1,8 @@
 [
     {
         "Name": "SuiteSparse",
-        "License": "all linceses",
-        "License File": "https://github.com/DrTimothyAldenDavis/SuiteSparse/License.txt",
+        "License": "LGPL-2.1-or-later",
+        "License File": "https://github.com/DrTimothyAldenDavis/SuiteSparse/blob/dev/LICENSE.txt",
         "Version Number": "v7.7.0",
         "Owner": "hanjinfei@foxmail.com",
         "Upstream URL": "https://github.com/DrTimothyAldenDavis/SuiteSparse",
