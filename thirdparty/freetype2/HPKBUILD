@@ -21,7 +21,7 @@ pkgdesc="FreeType is a freely available software library to render fonts."
 url="https://freetype.org"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("GPL FTL")
-depends=("zlib" "bzip2" "brotli" "libpng")
+depends=("zlib_1_3_1" "bzip2_1_0_8" "brotli" "libpng")
 makedepends=()
 # 官方下载地址https://sourceforge.net/projects/freetype/files/$pkgname/$pkgver/freetype-$pkgver.tar.xz受网络影响可能存在下载失败的情况，现使用gitee镜像可以与官方仓库保持同步
 source="https://gitee.com/lycium_pkg_mirror/${pkgname:0:8}/repository/archive/$pkgver.zip"
@@ -69,9 +69,9 @@ check() {
 	
     target_link_libraries(freetype-cmake-test PUBLIC $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib/libfreetype.a)\n
     target_link_libraries(freetype-cmake-test PUBLIC $LYCIUM_ROOT/usr/brotli/$ARCH/lib/libbrotlidec.so)\n
-    target_link_libraries(freetype-cmake-test PUBLIC $LYCIUM_ROOT/usr/bzip2/$ARCH/lib/libbz2.a)\n
+    target_link_libraries(freetype-cmake-test PUBLIC $LYCIUM_ROOT/usr/bzip2_1_0_8/$ARCH/lib/libbz2.a)\n
     target_link_libraries(freetype-cmake-test PUBLIC $LYCIUM_ROOT/usr/libpng/$ARCH/lib/libpng.a)\n
-    target_link_libraries(freetype-cmake-test PUBLIC $LYCIUM_ROOT/usr/zlib/$ARCH/lib/libz.a)\n
+    target_link_libraries(freetype-cmake-test PUBLIC $LYCIUM_ROOT/usr/zlib_1_3_1/$ARCH/lib/libz.a)\n
 
     enable_testing()\n
     add_test(freetype-cmake-test freetype-cmake-test)" > $testdir/CMakeLists.txt
