@@ -22,6 +22,11 @@ openharmonycheck() {
     cd $builddir-$ARCH-build/test-data
     ./test.sh > ${logfile} 2>&1
     res=$?
+    if [ $res -ne 0 ]
+    then
+        mkdir -p ${LYCIUM_FAULT_PATH}/${pkgname}
+        cp ${logfile} ${LYCIUM_FAULT_PATH}/${pkgname}/
+    fi
     rm -rf data
     cd $OLDPWD
     return $res
