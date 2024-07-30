@@ -15,10 +15,10 @@
 # Maintainer: wangyang497@h-partners.com
 
 pkgname=libwbxml
-pkgver=79461f8bd49861287c0f1689adb75e7753630e5a
+pkgver=2cbf7d2ba98fe895361f1f93e7e5055d803c285c
 pkgrel=
 pkgdesc="AES algorithm implementation using C."
-url=https://gitee.com/dddddddr/libwbxml
+url=https://github.com/libwbxml/libwbxml
 archs=("armeabi-v7a" "arm64-v8a")
 license=(MIT)
 depends=(libexpat)
