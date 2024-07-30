@@ -10,7 +10,7 @@
     }，
     {
         "Name": "freetype2",
-        "License": "GPL FTL",
+        "License": "BSD-3-Clause",
         "License File": "https://github.com/freetype/freetype/blob/master/LICENSE.TXT",
         "Version Number": "2.13.0",
         "Owner": "tianyong13@huawei.com",
