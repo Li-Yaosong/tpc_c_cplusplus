@@ -49,9 +49,18 @@ gclient runhooks
 随后将我们的patch打入源码中,
 
 ```
+# 在 src 目录下执行
 git apply --check cronet_TAG_107.0.5304.150_oh_pkg.patch # 检查patch是否可用
 # 如果可用打入patch，如果不可用确认下chromium分支是否切换ok
 git apply cronet_TAG_107.0.5304.150_oh_pkg.patch
+
+# 在 third_party/angle 目录下执行
+git apply --check angle_COMMIT_bbf57e6db_oh_pkg.patch  # 检查patch是否可用
+git apply angle_COMMIT_bbf57e6db_oh_pkg.patch
+
+# 在 third_party/dawn 目录下执行
+git apply --check dawn_COMMIT_6ab02659de_oh_pkg.patch  # 检查patch是否可用
+git apply dawn_COMMIT_6ab02659de_oh_pkg.patch
 ```
 
 配置 OHOS_SDK
