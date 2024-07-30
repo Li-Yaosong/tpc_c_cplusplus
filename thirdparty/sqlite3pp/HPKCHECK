@@ -27,14 +27,14 @@ openharmonycheck() {
     # 在临时数据库test.db创建contacts表，因此在执行以下测试程序前，先创建需要的表
     
     # 连接到foods.db数据库并执行创建foods表，并插入一条数据的命令 
-    echo "CREATE TABLE foods (id INT PRIMARY KEY,name TEXT NOT NULL,type_id INTEGER NOT NULL);" | /data/tpc_c_cplusplus/lycium/usr/sqlite/${ARCH}/bin/sqlite3 foods.db
+    echo "CREATE TABLE foods (id INT PRIMARY KEY,name TEXT NOT NULL,type_id INTEGER NOT NULL);" | /data/tpc_c_cplusplus/lycium/usr/sqlite_3_46_0/${ARCH}/bin/sqlite3 foods.db
     if [ $? -eq 0 ]; then  
         echo "foods create success" >> ${logfile} 2>&1
     else  
         echo "foods create fail" >> ${logfile} 2>&1  
     fi
 
-    echo "INSERT INTO foods (id, name, type_id) VALUES (1, 'AAAA', 1234);" | /data/tpc_c_cplusplus/lycium/usr/sqlite/${ARCH}/bin/sqlite3 foods.db
+    echo "INSERT INTO foods (id, name, type_id) VALUES (1, 'AAAA', 1234);" | /data/tpc_c_cplusplus/lycium/usr/sqlite_3_46_0/${ARCH}/bin/sqlite3 foods.db
     if [ $? -eq 0 ]; then
         echo "insert into foods success" >> ${logfile} 2>&1  
     else  
@@ -42,7 +42,7 @@ openharmonycheck() {
     fi
 
     # 连接到foods.db数据库并执行创建episodes表的命令  
-    echo "CREATE TABLE episodes (id INTEGER PRIMARY KEY,contact_id INTEGER,title TEXT,description TEXT,FOREIGN KEY (contact_id) REFERENCES contacts(id));" | /data/tpc_c_cplusplus/lycium/usr/sqlite/${ARCH}/bin/sqlite3 foods.db  
+    echo "CREATE TABLE episodes (id INTEGER PRIMARY KEY,contact_id INTEGER,title TEXT,description TEXT,FOREIGN KEY (contact_id) REFERENCES contacts(id));" | /data/tpc_c_cplusplus/lycium/usr/sqlite_3_46_0/${ARCH}/bin/sqlite3 foods.db  
     
     if [ $? -eq 0 ]; then
         echo "episodes create success" >> ${logfile} 2>&1  
@@ -51,7 +51,7 @@ openharmonycheck() {
     fi
     
     # 连接到test.db数据库并执行创建contacts表的命令  
-    echo "CREATE TABLE contacts (id INTEGER PRIMARY KEY,name TEXT NOT NULL,phone TEXT NOT NULL,address TEXT,UNIQUE(name, phone));" | /data/tpc_c_cplusplus/lycium/usr/sqlite/${ARCH}/bin/sqlite3 test.db
+    echo "CREATE TABLE contacts (id INTEGER PRIMARY KEY,name TEXT NOT NULL,phone TEXT NOT NULL,address TEXT,UNIQUE(name, phone));" | /data/tpc_c_cplusplus/lycium/usr/sqlite_3_46_0/${ARCH}/bin/sqlite3 test.db
     
     if [ $? -eq 0 ]; then  
         echo "contacts create success" >> ${logfile} 2>&1  
