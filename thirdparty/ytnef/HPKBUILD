@@ -24,7 +24,7 @@ license=("GPL-2.0 license")
 depends=()
 makedepends=()
 
-source="https://github.com/Yeraze/ytnef/archive/refs/tags/v2.1.2.tar.gz"
+source="https://mirror.ghproxy.com/https://github.com/Yeraze/ytnef/archive/refs/tags/v2.1.2.tar.gz"
 
 autounpack=true
 downloadpackage=true
