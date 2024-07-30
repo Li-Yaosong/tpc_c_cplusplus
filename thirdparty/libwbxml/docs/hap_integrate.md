@@ -14,7 +14,7 @@
   
 - 三方库目录结构
   ```
-  tpc_c_cplusplus/thirdparty/AES            		        #三方库的目录结构如下
+  tpc_c_cplusplus/thirdparty/libwbxml          		        #三方库的目录结构如下
   ├── docs                                                #三方库相关文档的文件夹
   ├── HPKBUILD                                            #构建脚本
   ├── HPKCHECK						                    #测试脚本
