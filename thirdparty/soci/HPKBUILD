@@ -21,7 +21,7 @@ pkgdesc="SOCI is a database access library for C++ that provides a unified inter
 url="https://github.com/soci/soci"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSL-1.0 license")
-depends=("sqlite")
+depends=("sqlite_3_46_0")
 makedepends=()
 
 commitid=884808c294e4809064650f3e5aed9102d8a68d56
