@@ -1,0 +1,183 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: lpzhong <278527840@qq.com>
+# Maintainer: lpzhong <278527840@qq.com>
+
+source HPKBUILD > /dev/null 2>&1
+logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
+
+openharmonycheck() {
+    res=0
+    # 进入bio目录下进行 手动 测试，该目录涉及服务端与客户端交互，具体测试如下：
+    # cd $builddir-$ARCH-build/demos/bio # 进入测试目录
+    # ./server-arg      # 服务器
+    # ./server-cmod     # 服务器
+    # ./server-conf     # 服务器参数配置
+    # ./saccept         # 启动服务
+    # ./sconnect        # 建立链接，ctrl+z挂起
+    # ./client-arg      # 客户端
+    # ./client-conf     # 客户端参数设置
+    # cd $OLDPWD
+
+    # 进入certs目录下进行 手动 测试，该目录涉及服务端与客户端交互，具体测试如下：
+    # chmod +x mkcerts.sh
+    # chmod +x ocspquery.sh
+    # chmod +x ocsprun.sh
+    # cd $builddir-$ARCH-build/demos/certs
+    # ./mkcerts.sh      #
+    # ./ocsprun.sh      # OCSP服务器正在正常运行并等待客户端的连接，该响应者将在端口 8888 上监听来自客户端的 OCSP 请求
+    # 打开新窗口执行以下命令：
+    # ./ocspquery.sh
+
+    cd $builddir-$ARCH-build/demos/cms
+    ./cms_comp >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "cms/cms_comp ...................... failed"
+    else
+        echo "cms/cms_comp ...................... passed"
+    fi
+    ./cms_denc >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "cms/cms_denc ...................... failed"
+    else
+        echo "cms/cms_denc ...................... passed"
+    fi
+    ./cms_enc >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "cms/cms_enc ....................... failed"
+    else
+        echo "cms/cms_enc ....................... passed"
+    fi
+    ./cms_ddec >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "cms/cms_ddec ...................... failed"
+    else
+        echo "cms/cms_ddec ...................... passed"
+    fi
+    ./cms_dec >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "cms/cms_dec ....................... failed"
+    else
+        echo "cms/cms_dec ....................... passed"
+    fi
+    ./cms_sign >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "cms/cms_sign ...................... failed"
+    else
+        echo "cms/cms_sign ...................... passed"
+    fi
+    ./cms_sign2 >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "cms/cms_sign2 ..................... failed"
+    else
+        echo "cms/cms_sign2 ..................... passed"
+    fi
+    #该用例在解压缩原库提供的测试用例源码用例数据传输失败 与linux一致 
+    # ./cms_uncomp >> ${logfile} 2>&1
+    # res=$?
+    # if [ $res -ne 0 ]; then
+    #     echo "cms/cms_uncomp .................... failed"
+    # else
+    #     echo "cms/cms_uncomp .................... passed"
+    # fi
+    ./cms_ver >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "cms/cms_ver ....................... failed"
+    else
+        echo "cms/cms_ver ....................... passed"
+    fi
+    cd $OLDPWD
+
+    cd $builddir-$ARCH-build/demos/evp
+    ./aesccm >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "evp/aesccm ........................ failed"
+    else
+        echo "evp/aesccm ........................ passed"
+    fi
+    ./aesgcm  >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "evp/aesgcm  ....................... failed"
+    else
+        echo "evp/aesgcm  ....................... passed"
+    fi
+    cd $OLDPWD
+
+    cd $builddir-$ARCH-build/demos/pkcs12
+    ./pkread >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "pkcs12/pkread ..................... failed"
+    else
+        echo "pkcs12/pkread ..................... passed"
+    fi
+    ./pkwrite  >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "pkcs12/pkwrite  ................... failed"
+    else
+        echo "pkcs12/pkwrite  ................... passed"
+    fi
+    cd $OLDPWD
+
+    cd $builddir-$ARCH-build/demos/smime
+    ./smenc  >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "smime/smenc  ...................... failed"
+    else
+        echo "smime/smenc  ...................... passed"
+    fi
+    ./smdec  >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "smime/smdec  ...................... failed"
+    else
+        echo "smime/smdec  ...................... passed"
+    fi
+    ./smsign >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "smime/smsign ...................... failed"
+    else
+        echo "smime/smsign ...................... passed"
+    fi
+    ./smsign2  >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "smime/smsign2  .................... failed"
+    else
+        echo "smime/smsign2  .................... passed"
+    fi
+    ./smver >> ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]; then
+        echo "smime/smver ....................... failed"
+    else
+        echo "smime/smver ....................... passed"
+    fi
+    cd $OLDPWD
+
+    return $res
+}
