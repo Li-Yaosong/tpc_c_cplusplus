@@ -18,11 +18,6 @@ source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
 checkprepare() {
-    cd ${builddir}
-    mkdir build/src
-    cp -f ${ARCH}-build/src/mysofa2json build/src/
-    cp -f ${LYCIUM_ROOT}/usr/bzip2/${ARCH}/bin/bunzip2 /usr/bin/
-    cd ${OLDPWD}
     return 0
 }
 
