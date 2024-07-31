@@ -21,7 +21,7 @@ pkgdesc="This is a simple set of C functions to read AES SOFA files."
 url=https://github.com/hoene/libmysofa
 archs=(armeabi-v7a arm64-v8a)
 license=(BSD-3-Clause)
-depends=(CUnit zlib bzip2)
+depends=(CUnit zlib_1_3_1 bzip2_1_0_8)
 makedepends=()
 
 builddir=${pkgname}-${pkgver:1}
