@@ -21,7 +21,7 @@ pkgdesc="Lucene++ is a C++ port of the popular Java Lucene library, a high-perfo
 url="https://github.com/luceneplusplus/LucenePlusPlus"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("Apache 2.0")
-depends=("boost" "zlib")
+depends=("boost" "zlib_1_3_1")
 makedepends=()
 
 source="https://github.com/luceneplusplus/${pkgname}/archive/refs/tags/${pkgver}.tar.gz"
