@@ -36,8 +36,6 @@ packagename=$builddir.tar.gz
 prepare() {
     mkdir -p $builddir/$ARCH-build
     # 修改SONAME版本号为主版本号.2，IDE不支持使用.2.13.0版本号
-    echo 2 > $builddir/VERSION
-    # 注释处理版本问题
     if $patchflag
     then
         cd $builddir
@@ -53,7 +51,7 @@ build() {
     -DCMAKE_CXX_FLAGS="-Wunused-command-line-argument -Wno-error=unused-command-line-argument \
     -I${LYCIUM_ROOT}/usr/unixODBC/${ARCH}/include" \
     -DNANODBC_DISABLE_TESTS=OFF \
-    -DNANODBC_DISABLE_EXAMPLES=ON \
+    -DNANODBC_DISABLE_EXAMPLES=OFF \
     -DODBC_LINK_FLAGS="-L${LYCIUM_ROOT}/usr/unixODBC/${ARCH}/lib" \
     -DOHOS_ARCH=$ARCH \
     -B$ARCH-build -S./ > $buildlog 2>&1
@@ -71,7 +69,7 @@ package() {
 
 check() {
     cd $builddir/$ARCH-build
-    sed -i '9s/^/#/' ./test/CTestTestfile.cmake
+    sed -i.bak '9s/^/#/' ./test/CTestTestfile.cmake
     sed -i '10s/^/#/' ./test/CTestTestfile.cmake
     sed -i '11s/^/#/' ./test/CTestTestfile.cmake
     sed -i '12s/^/#/' ./test/CTestTestfile.cmake

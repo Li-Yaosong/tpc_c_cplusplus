@@ -10,7 +10,7 @@ diff -Nuar nanodbc-2.13.0/CMakeLists.txt nanodbc-2.13.0-new/CMakeLists.txt
 -string(REGEX REPLACE "^[0-9]+\\.([0-9])+\\.[0-9]+" "\\1" NANODBC_VERSION_MINOR "${NANODBC_VERSION}")
 -string(REGEX REPLACE "^[0-9]+\\.[0-9]+\\.([0-9]+)" "\\1" NANODBC_VERSION_PATCH "${NANODBC_VERSION}")
 +#file(STRINGS VERSION NANODBC_VERSION REGEX "[0-9]+\\.[0-9]+\\.[0-9]+")
-+file(STRINGS VERSION NANODBC_VERSION)
++set(NANODBC_VERSION "2")
 +#string(REGEX REPLACE "^([0-9]+)\\.[0-9]+\\.[0-9]+" "\\1" NANODBC_VERSION_MAJOR "${NANODBC_VERSION}")
 +#string(REGEX REPLACE "^[0-9]+\\.([0-9])+\\.[0-9]+" "\\1" NANODBC_VERSION_MINOR "${NANODBC_VERSION}")
 +#string(REGEX REPLACE "^[0-9]+\\.[0-9]+\\.([0-9]+)" "\\1" NANODBC_VERSION_PATCH "${NANODBC_VERSION}")
