@@ -1,0 +1,168 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: Jeff Han <hanjinfei@foxmail.com>  ,Tao Han <hantao_ya@163.com> 
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
+
+pkgname=tassl
+pkgver=1.1.1
+pkgrel=0
+pkgdesc="TASSL is an SSL/TLS protocol implementation that supports national secret algorithms"
+url="https://github.com/jntass/TASSL-1.1.1"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("OpenSSL")
+depends=(openssl_1_1_1w zlib_1_3_1)
+makedepends=()
+
+commitId="a30d107669fdf7d6909b10f1e179de4aaff38ff5"
+source="https://github.com/jntass/$pkgname-$pkgver/archive/$commitId.zip"
+
+autounpack=true
+downloadpackage=true
+buildtools="configure"
+
+builddir=TASSL-${pkgver}-$commitId
+packagename=$builddir.zip
+
+source envset.sh
+patchflag=true
+CC=
+prepare() {
+    if $patchflag
+    then
+        cd $builddir
+        #此patch是解决测试用例报错
+        patch -p1 < `pwd`/../tassl_oh_pkg.patch >> $publicbuildlog 2>&1
+        # patch只需要打一次,关闭打patch
+        patchflag=false
+        cd $OLDPWD
+    fi
+    cp $builddir ${builddir}-${ARCH}-build -rf
+	if [ $ARCH == "armeabi-v7a" ]
+    then
+        CC=${OHOS_SDK}/native/llvm/bin/arm-linux-ohos-clang
+        setarm32ENV
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        CC=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang
+        setarm64ENV
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
+}
+
+build() {
+    cd $builddir-$ARCH-build
+    PKG_CONFIG_LIBDIR=”${pkgconfigpath} ./config "$@" no-asm zlib > $buildlog 2>&1
+    $MAKE >> $buildlog 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir-$ARCH-build
+	mkdir -p ${LYCIUM_ROOT}/usr/${pkgname}/${ARCH}/
+    $MAKE install >> $buildlog 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        cd $builddir-$ARCH-build/demos/bio
+        $MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
+        cd $OLDPWD
+        
+        cd $builddir-$ARCH-build/demos/cms
+        #$MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1?
+        $CC -I../../include -L../.. -lssl -lcrypto cms_comp.c -o cms_comp
+        $CC -I../../include -L../.. -lssl -lcrypto cms_denc.c -o cms_denc
+        $CC -I../../include -L../.. -lssl -lcrypto cms_enc.c -o cms_enc
+        $CC -I../../include -L../.. -lssl -lcrypto cms_ddec.c -o cms_ddec
+        $CC -I../../include -L../.. -lssl -lcrypto cms_dec.c -o cms_dec
+        $CC -I../../include -L../.. -lssl -lcrypto cms_sign.c -o cms_sign
+        $CC -I../../include -L../.. -lssl -lcrypto cms_sign2.c -o cms_sign2
+        $CC -I../../include -L../.. -lssl -lcrypto cms_uncomp.c -o cms_uncomp
+        $CC -I../../include -L../.. -lssl -lcrypto cms_ver.c -o cms_ver
+        cd $OLDPWD
+        
+        cd $builddir-$ARCH-build/demos/evp
+        $MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
+        cd $OLDPWD
+        
+        cd $builddir-$ARCH-build/demos/pkcs12
+        #$MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
+        $CC -I../../include -L../.. -lssl -lcrypto pkread.c -o pkread
+        $CC -I../../include -L../.. -lssl -lcrypto pkwrite.c -o pkwrite 
+        cd $OLDPWD
+        
+        cd $builddir-$ARCH-build/demos/smime
+        #$MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
+        $CC -I../../include -L../.. -lssl -lcrypto smenc.c -o smenc
+        $CC -I../../include -L../.. -lssl -lcrypto smdec.c -o smdec
+        $CC -I../../include -L../.. -lssl -lcrypto smsign.c -o smsign
+        $CC -I../../include -L../.. -lssl -lcrypto smsign2.c -o smsign2
+        $CC -I../../include -L../.. -lssl -lcrypto smver.c -o smver
+        cd $OLDPWD
+		unsetarm32ENV
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        cd $builddir-$ARCH-build/demos/bio
+        $MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
+        cd $OLDPWD
+        
+        cd $builddir-$ARCH-build/demos/cms
+        #$MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
+        $CC -I../../include -L../.. -lssl -lcrypto cms_comp.c -o cms_comp
+        $CC -I../../include -L../.. -lssl -lcrypto cms_denc.c -o cms_denc
+        $CC -I../../include -L../.. -lssl -lcrypto cms_enc.c -o cms_enc
+        $CC -I../../include -L../.. -lssl -lcrypto cms_ddec.c -o cms_ddec
+        $CC -I../../include -L../.. -lssl -lcrypto cms_dec.c -o cms_dec
+        $CC -I../../include -L../.. -lssl -lcrypto cms_sign.c -o cms_sign
+        $CC -I../../include -L../.. -lssl -lcrypto cms_sign2.c -o cms_sign2
+        $CC -I../../include -L../.. -lssl -lcrypto cms_uncomp.c -o cms_uncomp
+        $CC -I../../include -L../.. -lssl -lcrypto cms_ver.c -o cms_ver
+        cd $OLDPWD
+        
+        cd $builddir-$ARCH-build/demos/evp
+        $MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
+        cd $OLDPWD
+        
+        cd $builddir-$ARCH-build/demos/pkcs12
+        #$MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
+        $CC -I../../include -L../.. -lssl -lcrypto pkread.c -o pkread
+        $CC -I../../include -L../.. -lssl -lcrypto pkwrite.c -o pkwrite
+        cd $OLDPWD
+        
+        cd $builddir-$ARCH-build/demos/smime
+        #$MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
+        $CC -I../../include -L../.. -lssl -lcrypto smenc.c -o smenc
+        $CC -I../../include -L../.. -lssl -lcrypto smdec.c -o smdec
+        $CC -I../../include -L../.. -lssl -lcrypto smsign.c -o smsign
+        $CC -I../../include -L../.. -lssl -lcrypto smsign2.c -o smsign2
+        $CC -I../../include -L../.. -lssl -lcrypto smver.c -o smver
+        cd $OLDPWD
+        unsetarm64ENV
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
+    echo "The test must be on an OpenHarmony device!"
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf  $builddir-$ARCH-build $packagename $builddir
+}
