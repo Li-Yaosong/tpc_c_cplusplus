@@ -21,7 +21,7 @@ pkgdesc="GraphicsMagick is the swiss army knife of image processing."
 url=http://www.graphicsmagick.org
 archs=(armeabi-v7a arm64-v8a)
 license=(MIT)
-depends=(libpng jpeg lcms2 jasper libwebp libxml2 jbigkit freetype2)
+depends=(libpng jpeg lcms2 jasper libwebp libxml2 jbigkit freetype2 zlib_1_3_1 ImageMagick)
 makedepends=()
 
 builddir=GraphicsMagick-${pkgver}
@@ -63,6 +63,7 @@ build() {
         -L${LYCIUM_ROOT}/usr/lcms2/${ARCH}/lib \
         -L${LYCIUM_ROOT}/usr/libxml2/${ARCH}/lib \
         -L${LYCIUM_ROOT}/usr/xz/${ARCH}/lib \
+        -L${LYCIUM_ROOT}/usr/zlib_1_3_1/${ARCH}/lib \
         -L${LYCIUM_ROOT}/usr/freetype2/${ARCH}/lib \
         -L${LYCIUM_ROOT}/usr/libjpeg-turbo/${ARCH}/lib \
         -L${LYCIUM_ROOT}/usr/libpng/${ARCH}/lib" \
@@ -70,6 +71,7 @@ build() {
         -I${LYCIUM_ROOT}/usr/libwebp/${ARCH}/include \
         -I${LYCIUM_ROOT}/usr/jbigkit/${ARCH}/include \
         -I${LYCIUM_ROOT}/usr/jasper/${ARCH}/include \
+        -I${LYCIUM_ROOT}/usr/zlib_1_3_1/${ARCH}/include \
         -I${LYCIUM_ROOT}/usr/libxml2/${ARCH}/include \
         -I${LYCIUM_ROOT}/usr/libjpeg-turbo/${ARCH}/include \
         -I${LYCIUM_ROOT}/usr/jpeg/${ARCH}/include" \
