@@ -54,7 +54,7 @@
 ## 测试三方库
 
 - 编译出可执行的文件进行测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
-- 将libc++_shared.so拷贝到开发板系统data目录。执行export LD_LIBRARY_PATH="/data/:/data/tpc_c_cplusplus/lycium/usr/openssl/armeabi-v7a/lib/:/data/tpc_c_cplusplus/lycium/usr/xxHash/armeabi-v7a/lib/:/data/tpc_c_cplusplus/lycium/usr/zstd/armeabi-v7a/lib/"
+- 将libc++_shared.so拷贝到开发板系统data目录。执行export LD_LIBRARY_PATH="/data/:/data/tpc_c_cplusplus/lycium/usr/openssl_1_1_1w/armeabi-v7a/lib/:/data/tpc_c_cplusplus/lycium/usr/xxHash/armeabi-v7a/lib/:/data/tpc_c_cplusplus/lycium/usr/zstd/armeabi-v7a/lib/"
 
 
 - 进入到构建目录运行单元测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录），执行结果如图所示
