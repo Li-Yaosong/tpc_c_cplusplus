@@ -22,12 +22,14 @@
 - 三方库目录结构
 
   ```shell
-  tpc_c_cplusplus/thirdparty/json-c_0_17_20230812   #三方库json-c_0_17_20230812的目录结构如下
-  ├── docs                                          #三方库相关文档的文件夹
-  ├── HPKBUILD                                      #构建脚本
-  ├── SHA512SUM                                     #三方库校验文件
-  ├── README.OpenSource                             #说明三方库源码的下载地址，版本，license等信息
-  ├── README_zh.md   
+  tpc_c_cplusplus/thirdparty/json-c_0_17_20230812         #三方库的目录结构如下
+  ├── docs                                                #三方库相关文档的文件夹
+  ├── HPKBUILD                                            #构建脚本
+  ├── HPKCHECK                                            #测试脚本
+  ├── SHA512SUM                                           #三方库校验文件
+  ├── README.OpenSource                                   #说明三方库源码的下载地址，版本，license等信息
+  ├── README_zh.md                                        #三方库简介
+  ├── OAT.xml                                             #扫描结果文件
   ```
 
 - 在lycium目录下编译三方库
@@ -63,6 +65,18 @@
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/json-c/${OHOS_ARCH}/include)
   ```
 
+## 测试三方库
+
+三方库的测试使用原库提供的测试用例来做测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
+
+进入到构建目录准备测试，例如目录为arm64-v8a-build，执行ctest进行测试
+
+```shell
+cd tpc_c_cplusplus/thirdparty/json-c_0_17_20230812/json-c-json-c-0.17-20230812/arm64-v8a-build
+ctest
+```
+
+![test-pass](./pic/singletest.png)
 
 ## 参考资料
 
