@@ -21,7 +21,7 @@ pkgdesc="libwmf is a library designed to parse and process Windows Media Format 
 url="https://github.com/caolanm/libwmf"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("GPL-2.0 license")
-depends=("freetype2" "libpng" "bzip2" "brotli" "harfbuzz" "libxml2")
+depends=("freetype2" "libpng" "bzip2_1_0_8" "brotli" "harfbuzz" "libxml2")
 
 source="https://github.com/caolanm/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
@@ -53,7 +53,7 @@ prepare() {
 
 build() {
     cd $ARCH-build
-    PKG_CONFIG_LIBDIR=$pkgconfigpath CFLAGS="-I$LYCIUM_ROOT/usr/freetype2/$ARCH/include/freetype2 -I$LYCIUM_ROOT/usr/libpng/$ARCH/include -I$LYCIUM_ROOT/usr/libxml2/$ARCH/include/libxml2" LDFLAGS="-L$LYCIUM_ROOT/usr/freetype2/$ARCH/lib -L$LYCIUM_ROOT/usr/libpng/$ARCH/lib -L$LYCIUM_ROOT/usr/bzip2/$ARCH/lib -L$LYCIUM_ROOT/usr/brotli/$ARCH/lib -L$LYCIUM_ROOT/usr/harfbuzz/$ARCH/lib -L$LYCIUM_ROOT/usr/libxml2/$ARCH/lib -lpng -lfreetype -lbz2 -lbrotlidec -lharfbuzz -lxml2" ./configure "$@" --host=$host --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH > $buildlog 2>&1
+    PKG_CONFIG_LIBDIR=$pkgconfigpath CFLAGS="-I$LYCIUM_ROOT/usr/freetype2/$ARCH/include/freetype2 -I$LYCIUM_ROOT/usr/libpng/$ARCH/include -I$LYCIUM_ROOT/usr/libxml2/$ARCH/include/libxml2" LDFLAGS="-L$LYCIUM_ROOT/usr/freetype2/$ARCH/lib -L$LYCIUM_ROOT/usr/libpng/$ARCH/lib -L$LYCIUM_ROOT/usr/bzip2_1_0_8/$ARCH/lib -L$LYCIUM_ROOT/usr/brotli/$ARCH/lib -L$LYCIUM_ROOT/usr/harfbuzz/$ARCH/lib -L$LYCIUM_ROOT/usr/libxml2/$ARCH/lib -lpng -lfreetype -lbz2 -lbrotlidec -lharfbuzz -lxml2" ./configure "$@" --host=$host --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH > $buildlog 2>&1
 
     $MAKE >> $buildlog 2>&1
     ret=$?

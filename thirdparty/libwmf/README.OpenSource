@@ -7,16 +7,16 @@
         "Owner": "hanjinfei@foxmail.com",
         "Upstream URL": "https://github.com/caolanm/libwmf",
         "Description": "libwmf is a library designed to parse and process Windows Media Format (WMF) files. "
-    }，
+    },
     {
         "Name": "freetype2",
-        "License": "GPL FTL",
+        "License": "BSD-3-Clause",
         "License File": "https://github.com/freetype/freetype/blob/master/LICENSE.TXT",
         "Version Number": "2.13.0",
         "Owner": "tianyong13@huawei.com",
         "Upstream URL": "https://sourceforge.net/projects/freetype/files/freetype2/2.13.0/freetype-2.13.0.tar.xz",
         "Description": "FreeType is written in C. It is designed to be small, efficient, and highly customizable while capable of producing high-quality output (glyph images) of most vector and bitmap font formats for digital typography. FreeType is a freely available and portable software library to render fonts."
-    }，
+    },
     {
         "Name": "libpng",
         "License": "zlib/libpng License",
@@ -25,16 +25,16 @@
         "Owner": "wupingyuan@huawei.com",
         "Upstream URL": "https://sourceforge.net/projects/libpng/files/libpng16/1.6.39/libpng-1.6.39.tar.xz",
         "Description": "LIBPNG: Portable Network Graphics support, official libpng repository"
-    }，
+    },
     {
-        "Name": "Bzip2",
-        "License": "Bzip2 License",
-        "License File": "https://sourceforge.net/p/bzip2/bzip2/ci/master/tree/LICENSE",
-        "Version Number": "1.0.6",
-        "Owner": "qinjianqi@huawei.com",
-        "Upstream URL": "https://sourceforge.net/projects/bzip2/files/bzip2-1.0.6.tar.gz",
+        "Name": "bzip2_1_0_8",
+        "License": "bzip2-1.0.6",
+        "License File": "https://sourceforge.net/p/bzip2/bzip2/ci/bzip2-1_0_6/tree/LICENSE",
+        "Version Number": "1.0.8",
+        "Owner": "huangminzhong2@huawei.com",
+        "Upstream URL": "https://sourceware.org/git/bzip2",
         "Description": "bzip2 is a freely available, patent free (see below), high-quality data compressor. It typically compresses files to within 10% to 15% of the best available techniques (the PPM family of statistical compressors), whilst being around twice as fast at compression and six times faster at decompression."
-    }，
+        },
     {
         "Name": "brotli",
         "License": "MIT License",
@@ -43,7 +43,7 @@
         "Owner": "hanjinfei@foxmail.com",
         "Upstream URL": "https://github.com/google/brotli/archive/refs/tags/v1.0.9.tar.gz",
         "Description": "Brotli is a generic-purpose lossless compression algorithm that compresses data using a combination of a modern variant of the LZ77 algorithm, Huffman coding and 2nd order context modeling, with a compression ratio comparable to the best currently available general-purpose compression methods. It is similar in speed with deflate but offers more dense compression"
-    }，
+    },
     {
         "Name": "harfbuzz",
         "License": "Old MIT",
@@ -52,7 +52,7 @@
         "Owner": "chenbaodi@huawei.com",
         "Upstream URL": "https://github.com/harfbuzz/harfbuzz/archive/refs/tags/7.3.0.tar.gz",
         "Description": "HarfBuzz text shaping engine"
-    }，
+    },
     {
         "Name": "libxml2",
         "License": " MIT license",

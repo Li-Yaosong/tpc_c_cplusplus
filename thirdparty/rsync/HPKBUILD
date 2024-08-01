@@ -21,7 +21,7 @@ pkgdesc="Rsync is an open-source, fast, and multi-functional tool that is used t
 url="https://github.com/RsyncProject/rsync"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("GPL 3.0")
-depends=(openssl xxHash zstd)
+depends=("openssl_1_1_1w" "xxHash" "zstd" "zlib_1_3_1")
 makedepends=()
 source="https://codeload.github.com/RsyncProject/$pkgname/zip/refs/tags/$pkgver"
 
@@ -61,8 +61,8 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    CPPFLAGS="-I${LYCIUM_ROOT}/usr/openssl/$ARCH/include -I${LYCIUM_ROOT}/usr/xxHash/$ARCH/include -I${LYCIUM_ROOT}/usr/zstd/$ARCH/include" \
-    LDFLAGS="-L${LYCIUM_ROOT}/usr/openssl/$ARCH/lib -L${LYCIUM_ROOT}/usr/xxHash/$ARCH/lib -L${LYCIUM_ROOT}/usr/zstd/$ARCH/lib" \
+    CPPFLAGS="-I${LYCIUM_ROOT}/usr/openssl_1_1_1w/$ARCH/include -I${LYCIUM_ROOT}/usr/xxHash/$ARCH/include -I${LYCIUM_ROOT}/usr/zstd/$ARCH/include" \
+    LDFLAGS="-L${LYCIUM_ROOT}/usr/openssl_1_1_1w/$ARCH/lib -L${LYCIUM_ROOT}/usr/xxHash/$ARCH/lib -L${LYCIUM_ROOT}/usr/zstd/$ARCH/lib" \
     ./configure "$@" --host=$host --disable-md2man  --disable-lz4 > $buildlog 2>&1
     $MAKE V=1 >> $buildlog 2>&1
     ret=$?

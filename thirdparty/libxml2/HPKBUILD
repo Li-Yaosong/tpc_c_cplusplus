@@ -7,7 +7,7 @@ pkgdesc="libxml2 is an XML toolkit implemented in C, originally developed for th
 url="https://github.com/GNOME/libxml2"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("MIT")
-depends=("xz" "zlib")
+depends=("xz" "zlib_1_3_1")
 makedepends=()
 
 # 官方下载地址source="https://github.com/GNOME/$pkgname/archive/refs/tags/$pkgver.tar.gz"受网络影响可能存在下载失败的情况，现使用gitee镜像可以与官方仓库保持同步
@@ -28,7 +28,7 @@ build() {
     # cmake 需要高版本(同zstd),cmake版本不一致导致lzma无法被自动find 关闭python
     cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L -DCMAKE_C_FLAGS="-munaligned-access" \
     -DLIBLZMA_LIBRARY=${LYCIUM_ROOT}/usr/xz/$ARCH/lib/liblzma.so \
-    -DLIBLZMA_INCLUDE_DIR=${LYCIUM_ROOT}/usr/xz/$ARCH/include -DZLIB_INCLUDE_DIR=${LYCIUM_ROOT}/usr/zlib/$ARCH/include \
+    -DLIBLZMA_INCLUDE_DIR=${LYCIUM_ROOT}/usr/xz/$ARCH/include -DZLIB_INCLUDE_DIR=${LYCIUM_ROOT}/usr/zlib_1_3_1/$ARCH/include \
     -DLIBXML2_WITH_ICONV=OFF -DLIBXML2_WITH_PYTHON=OFF > `pwd`/$ARCH-build/build.log 2>&1
     make VERBOSE=1 -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
     ret=$?

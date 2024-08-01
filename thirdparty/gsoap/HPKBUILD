@@ -21,7 +21,7 @@ pkgdesc="The gSOAP toolkit is an extensive suite of portable C and C++ software 
 url="https://sourceforge.net/projects/gsoap2/files/"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("GPLv2 License")
-depends=("openssl" "zlib")
+depends=("openssl_1_1_1w" "zlib_1_3_1")
 makedepends=()
 
 autounpack=true
@@ -35,8 +35,8 @@ packagedir="$pkgname"-"${pkgver:0:3}"
 builddir="$pkgname"-$pkgver
 
 linuxflag=true
-opensslpackagename=openssl-OpenSSL_1_1_1u
-zlibpackagename=zlib-v1.2.13
+opensslpackagename=openssl-OpenSSL_1_1_1w
+zlibpackagename=zlib-v1.3.1
 
 source envset.sh
 host=
@@ -45,7 +45,7 @@ prepare() {
     then
         #编译openssl
         mkdir -p linux/openssl
-        cp -rf ${LYCIUM_ROOT}/../thirdparty/openssl/$opensslpackagename.zip .
+        cp -rf ${LYCIUM_ROOT}/../thirdparty/openssl_1_1_1w/$opensslpackagename.zip .
         unzip $opensslpackagename.zip > /dev/null 2>&1
         cd $opensslpackagename
         mkdir build && cd build
@@ -60,7 +60,7 @@ prepare() {
 
         #编译zlib
         mkdir -p linux/zlib
-        cp -rf ${LYCIUM_ROOT}/../thirdparty/zlib/$zlibpackagename.zip .
+        cp -rf ${LYCIUM_ROOT}/../thirdparty/zlib_1_3_1/$zlibpackagename.zip .
         unzip $zlibpackagename.zip > /dev/null 2>&1
         cd $zlibpackagename
         mkdir build && cd build
@@ -111,12 +111,12 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    PKG_CONFIG_LIBDIR="${pkgconfigpath}" LDFLAGS="-L${LYCIUM_ROOT}/usr/openssl/${ARCH}/lib -lssl -lcrypto -lz -lpthread" \
-        CFLAGS="$CFLAGS -I${LYCIUM_ROOT}/usr/openssl/${ARCH}/include" \
-        CXXFLAGS="$CXXFLAGS -I${LYCIUM_ROOT}/usr/openssl/${ARCH}/include" \
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" LDFLAGS="-L${LYCIUM_ROOT}/usr/openssl_1_1_1w/${ARCH}/lib -lssl -lcrypto -lz -lpthread" \
+        CFLAGS="$CFLAGS -I${LYCIUM_ROOT}/usr/openssl_1_1_1w/${ARCH}/include" \
+        CXXFLAGS="$CXXFLAGS -I${LYCIUM_ROOT}/usr/openssl_1_1_1w/${ARCH}/include" \
         ./configure "$@" --host=$host --disable-c-locale --enable-samples \
-                    --with-openssl="${LYCIUM_ROOT}/usr/openssl/${ARCH}" \
-                    --with-zlib="${LYCIUM_ROOT}/usr/zlib/${ARCH}" > $buildlog 2>&1
+                    --with-openssl="${LYCIUM_ROOT}/usr/openssl_1_1_1w/${ARCH}" \
+                    --with-zlib="${LYCIUM_ROOT}/usr/zlib_1_3_1/${ARCH}" > $buildlog 2>&1
 
     make MAKE=make VERBOSE=1 >> $buildlog 2>&1
     if [ $? -eq 0 ]

@@ -22,7 +22,7 @@ MNG is the animation extension to the popular PNG image-format."
 url="https://sourceforge.net/projects/libmng/"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("The libmng Source License")
-depends=("zlib" "jpeg" "lcms2")
+depends=("zlib_1_3_1" "jpeg" "lcms2")
 makedepends=()
 
 source="https://cfhcable.dl.sourceforge.net/project/$pkgname/$pkgname-devel/$pkgver/$pkgname-$pkgver.tar.gz"
@@ -70,11 +70,11 @@ check() {
         -L $LYCIUM_ROOT/usr/libmng/$ARCH/lib \
         -L $LYCIUM_ROOT/usr/jpeg/$ARCH/lib \
         -L $LYCIUM_ROOT/usr/lcms2/$ARCH/lib \
-        -L $LYCIUM_ROOT/usr/zlib/$ARCH/lib \
+        -L $LYCIUM_ROOT/usr/zlib_1_3_1/$ARCH/lib \
         -I $LYCIUM_ROOT/usr/libmng/$ARCH/include \
         -I $LYCIUM_ROOT/usr/jpeg/$ARCH/include \
         -I $LYCIUM_ROOT/usr/lcms2/$ARCH/include \
-        -I $LYCIUM_ROOT/usr/zlib/$ARCH/include \
+        -I $LYCIUM_ROOT/usr/zlib_1_3_1/$ARCH/include \
         contrib/gcc/mngtree/mngtree.c \
         -o ./$ARCH-build/bin/mngtree >> $buildlog 2>&1
     else
@@ -85,11 +85,11 @@ check() {
         -L $LYCIUM_ROOT/usr/libmng/$ARCH/lib \
         -L $LYCIUM_ROOT/usr/jpeg/$ARCH/lib \
         -L $LYCIUM_ROOT/usr/lcms2/$ARCH/lib \
-        -L $LYCIUM_ROOT/usr/zlib/$ARCH/lib \
+        -L $LYCIUM_ROOT/usr/zlib_1_3_1/$ARCH/lib \
         -I $LYCIUM_ROOT/usr/libmng/$ARCH/include \
         -I $LYCIUM_ROOT/usr/jpeg/$ARCH/include \
         -I $LYCIUM_ROOT/usr/lcms2/$ARCH/include \
-        -I $LYCIUM_ROOT/usr/zlib/$ARCH/include \
+        -I $LYCIUM_ROOT/usr/zlib_1_3_1/$ARCH/include \
         contrib/gcc/mngtree/mngtree.c \
         -o ./$ARCH-build/bin/mngtree >> $buildlog 2>&1
     fi

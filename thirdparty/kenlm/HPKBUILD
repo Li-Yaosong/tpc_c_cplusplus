@@ -21,7 +21,7 @@ pkgdesc="Language model inference code by Kenneth Heafield (kenlm at kheafield.c
 url="https://github.com/kpu/kenlm"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("LGPL-2.1 license")
-depends=("boost" "zlib")
+depends=("boost" "zlib_1_3_1")
 makedepends=()
 
 commitid=e504a4d61c413873e7d5f13d8ac4890bd4dae36c
