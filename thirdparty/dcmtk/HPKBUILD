@@ -21,7 +21,7 @@ pkgdesc="DCMTK It provides the ability to process and manipulate DICOM format da
 url="https://github.com/dcmtk/dcmtk"
 archs=( "armeabi-v7a" "arm64-v8a")
 license=("Apache-2.0 or BSD-3-Clause")
-depends=()
+depends=("jpeg")
 makedepends=(cmake)
 
 source="https://github.com/DCMTK/${pkgname}/archive/refs/tags/DCMTK-${pkgver}.tar.gz"

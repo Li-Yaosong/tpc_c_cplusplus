@@ -1,23 +1,23 @@
 diff -Naur dcmtk-DCMTK-3.6.8/CMake/dcmtkMacros.cmake dcmtk-DCMTK-3.6.8_new/CMake/dcmtkMacros.cmake
 --- dcmtk-DCMTK-3.6.8/CMake/dcmtkMacros.cmake	2023-12-19 18:12:57.000000000 +0800
-+++ dcmtk-DCMTK-3.6.8_new/CMake/dcmtkMacros.cmake	2024-07-05 18:24:04.980643235 +0800
++++ dcmtk-DCMTK-3.6.8_new/CMake/dcmtkMacros.cmake	2024-07-31 18:05:31.953232346 +0800
 @@ -13,6 +13,8 @@
                  string(REPLACE "\\" "\\\\" TEST_COMMAND "${TEST_COMMAND}")
              elseif(ANDROID)
                  set(TEST_COMMAND "${ANDROID_TEMPORARY_FILES_LOCATION}/${MODULE}_tests")
-+            elseif(__OHOS__)
++            elseif(OHOS)
 +                set(TEST_COMMAND "${TEST_EXECUTABLE}")
              else()
                  # not reachable, handled by not defining DCMTK_RUN_CTEST_SCRIPT
              endif()
 diff -Naur dcmtk-DCMTK-3.6.8/CMakeLists.txt dcmtk-DCMTK-3.6.8_new/CMakeLists.txt
 --- dcmtk-DCMTK-3.6.8/CMakeLists.txt	2023-12-19 18:12:57.000000000 +0800
-+++ dcmtk-DCMTK-3.6.8_new/CMakeLists.txt	2024-07-05 18:20:08.545612501 +0800
++++ dcmtk-DCMTK-3.6.8_new/CMakeLists.txt	2024-07-31 18:07:13.123228859 +0800
 @@ -60,6 +60,8 @@
      set(DCMTK_RUN_CTEST_SCRIPT "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/dcmtkCTestRunWine.cmake" CACHE INTERNAL "path to the CMake script for launching a unit test as a detached Wine process in the prepared wineprefix")
    elseif(ANDROID)
      set(DCMTK_RUN_CTEST_SCRIPT "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/dcmtkCTestRunAndroid.cmake" CACHE INTERNAL "path to the CMake script for launching a unit test via the android emulator")
-+  elseif(__OHOS__)
++  elseif(OHOS)
 +    set(DCMTK_RUN_CTEST_SCRIPT "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/dcmtkCTestRun.cmake" CACHE INTERNAL "path to the CMake script for launching a unit test")
    else()
      message(WARNING "Emulation for your target platform is not available, CTest will not be able to execute the unit tests!")
@@ -26,17 +26,17 @@ diff -Naur dcmtk-DCMTK-3.6.8/CMakeLists.txt dcmtk-DCMTK-3.6.8_new/CMakeLists.txt
      configure_file("${DCMTK_SOURCE_DIR}/CMake/CTest/dcmtkCTestRunAndroid.cmake.in"
        "${DCMTK_RUN_CTEST_SCRIPT}" ESCAPE_QUOTES @ONLY
      )
-+  elseif(__OHOS__)
-+	string(REPLACE ";" "${ENVIRONMENT_PATH_SEPARATOR}" DCMDICTPATH "${DCMTK_DICOM_DICTIONARIES}")
++  elseif(OHOS)
++    string(REPLACE ";" "${ENVIRONMENT_PATH_SEPARATOR}" DCMDICTPATH "${DCMTK_DICOM_DICTIONARIES}")
 +    configure_file("${DCMTK_SOURCE_DIR}/CMake/CTest/dcmtkCTestRun.cmake.in"
-+      "${DCMTK_RUN_CTEST_SCRIPT}" ESCAPE_QUOTES @ONLY
++    "${DCMTK_RUN_CTEST_SCRIPT}" ESCAPE_QUOTES @ONLY
 +    )
    else()
      # Nothing to do
    endif()
 diff -Naur dcmtk-DCMTK-3.6.8/config/include/dcmtk/config/arith.h dcmtk-DCMTK-3.6.8_new/config/include/dcmtk/config/arith.h
 --- dcmtk-DCMTK-3.6.8/config/include/dcmtk/config/arith.h	1970-01-01 08:00:00.000000000 +0800
-+++ dcmtk-DCMTK-3.6.8_new/config/include/dcmtk/config/arith.h	2024-07-05 18:14:41.892790822 +0800
++++ dcmtk-DCMTK-3.6.8_new/config/include/dcmtk/config/arith.h	2024-07-31 18:08:06.683242598 +0800
 @@ -0,0 +1,58 @@
 +#ifndef CONFIG_ARITH_H
 +#define CONFIG_ARITH_H
