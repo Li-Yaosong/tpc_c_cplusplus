@@ -24,7 +24,7 @@ license=("ImageMagick license")
 depends=("libzip" "zlib_1_3_1" "zstd" "djvulibre" "fontconfig" "freetype2" "libheif" "lcms2" "openjpeg" "libpng" "tiff" "libwebp" "libxml2" "icu" "xz" "jbigkit" "bzip2_1_0_8" "jpeg")
 makedepends=()
 
-source="https://archive.nuaa.cf/ImageMagick/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+source=https://github.com/${pkgname}/${pkgname}/archive/refs/tags/${pkgver}.tar.gz
 
 autounpack=true
 downloadpackage=true
