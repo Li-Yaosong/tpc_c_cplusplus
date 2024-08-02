@@ -1,7 +1,7 @@
 [
     {
         "Name": "lucenePlusPlus",
-        "License": "LGPL-2.1-or-later",
+        "License": "LGPL-3.0-or-later",
         "License File": "https://github.com/luceneplusplus/LucenePlusPlus/blob/master/COPYING",
         "Version Number": "rel_3.0.9",
         "Owner": "huangminzhong2@huawei.com",
