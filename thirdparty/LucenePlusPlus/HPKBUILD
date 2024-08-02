@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="Lucene++ is a C++ port of the popular Java Lucene library, a high-performance, full-featured text search engine."
 url="https://github.com/luceneplusplus/LucenePlusPlus"
 archs=("armeabi-v7a" "arm64-v8a")
-license=("Apache 2.0")
+license=("LGPL-3.0-or-later")
 depends=("boost" "zlib_1_3_1")
 makedepends=()
 
