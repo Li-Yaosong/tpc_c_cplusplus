@@ -21,7 +21,7 @@ pkgdesc=""
 url="https://github.com/wangfenjin/simple"
 archs=("arm64-v8a" "armeabi-v7a")
 license=("MIT License")
-depends=()
+depends=("sqlite_3_46_0")
 makedepends=()
 install=
 source="https://codeload.github.com/wangfenjin/simple/zip/refs/tags/v0.4.0"
@@ -78,6 +78,7 @@ package() {
 }
 
 check() {
+    cp ${LYCIUM_ROOT}/usr/simple/$ARCH/bin/libsimple.so ${LYCIUM_ROOT}/usr/simple/$ARCH/lib/
     if [ $ARCH == "armeabi-v7a" ]
     then
         unsetarm32ENV
