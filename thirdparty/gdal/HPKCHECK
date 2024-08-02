@@ -19,7 +19,6 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 
 openharmonycheck() {
     cd $builddir/$ARCH-build
-    mount -o remount,rw /
     ctest > $logfile 2>&1
     res=$?
     if [ $res -ne 0 ]
