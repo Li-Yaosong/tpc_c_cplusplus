@@ -21,10 +21,16 @@ checkprepare() {
     return 0
 }
 
-openharmonycheck() {
+openharmonycheck() {  
+    res=0
     cd ${builddir}/${ARCH}-build/test/tools
-    ctest > ${logfile} 2>&1 || return -1
-    cp ${logfile} ${LYCIUM_FAULT_PATH}/${pkgname}/
-    cd ${OLDPWD}
-    return 0
+    ctest > ${logfile} 2>&1
+    res=$?
+    if [ $res -ne 0 ]
+    then
+        mkdir -p ${LYCIUM_FAULT_PATH}/${pkgname}
+        cp ${logfile} ${LYCIUM_FAULT_PATH}/${pkgname}/
+    fi
+    cd $OLDPWD
+    return $res
 }
