@@ -33,6 +33,17 @@ builddir=${pkgname}-${pkgver:1}
 packagename=$builddir.tar.gz 
 
 prepare() {
+    if $patchflag
+    then
+        cd $builddir
+        # libzmq_oh_pkg.patch文件的作用如下
+        # 1. test_many_sockets用例测试时会不停的创建文件描述符，直到达到系统上限，当系统资源不足时，源代码未判断errno == ENOMEM这个条件，在鸿蒙系统有的版本会直接报out of memory的错误并结束测试程序
+        # 2. test_pair_ipc和test_reqrep_ipc测试用例需修改/tmp目录为/data/local/tmp目录
+        #3. test_spec_req和test_req_relaxed测试用例在鸿蒙系统，需给70ms以上的时间来完成zmq_socket的创建和连接，以保证请求的正确循环
+        patch -p1 < `pwd`/../libzmq_oh_pkg.patch
+        patchflag=false
+        cd $OLDPWD
+    fi
     mkdir -p $builddir/$ARCH-build
 }
 
