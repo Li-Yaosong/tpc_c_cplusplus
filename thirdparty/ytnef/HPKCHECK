@@ -20,6 +20,11 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     cd $builddir-$ARCH-build/test-data
+    if [ ! -e '/usr/bin/sed' ]
+    then
+        sed -i 's/\/usr\/bin\/sed/\/bin\/sed/g' ../ytnef/ytnef # 新版rom没有/usr/目录，需要调整sed命令的调用路径
+        sed -i 's/\/usr\/bin\/sed/\/bin\/sed/g' ../ytnefprint/ytnefprint
+    fi
     ./test.sh > ${logfile} 2>&1
     res=$?
     if [ $res -ne 0 ]
