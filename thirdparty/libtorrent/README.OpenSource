@@ -2,7 +2,7 @@
     {
         "Name": "libtorrent",
         "License": "BSD-3-Clause",
-        "License File": "https://github.com/arvidn/libtorrent/blob/RC_2_0/COPYING",
+        "License File": "https://github.com/arvidn/libtorrent/blob/RC_2_0/LICENSE",
         "Version Number": "v2.0.10",
         "Owner": "huangminzhong2@huawei.com",
         "Upstream URL": "https://github.com/arvidn/libtorrent/archive/refs/tags/v2.0.10.tar.gz",
