@@ -32,19 +32,17 @@ buildtools=cmake
 builddir=$pkgname-${pkgver}
 packagename=$builddir.zip
 
-# 为编译设置环境，如设置环境变量，创建编译目录等
 prepare() {
     mkdir -p $builddir/$ARCH-build
 }
 
 build() {
-    cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DCMAKE_C_FLAGS="-Wno-unused-command-line-argument" \
-        -DCMAKE_CXX_FLAGS="-Wno-unused-command-line-argument" -B$ARCH-build -S./ > $buildlog 2>&1
-    $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
-    ret=$?
-    cd $OLDPWD
-    return $ret
+  cd $builddir/$ARCH-build
+  ../configure $*>> `pwd`/build.log 2>&1
+  make -j4 >> `pwd`/build.log 2>&1
+  ret=$?
+  cd $OLDPWD
+  return $ret
 }
 
 package() {
