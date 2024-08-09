@@ -92,9 +92,6 @@ check() {
 
     # 生成测试用的 Makefile
     ../bin/thraxmakedep example.grm >> ${buildlog} 2>&1 || return -1
-
-    # 修改测试可执行文件的路径
-    sed -i.bak "s#thraxcompiler#..\/..\/${ARCH}-build\/src\/bin\/thraxcompiler#g" Makefile >> ${buildlog} 2>&1 || return -1
     cd ${OLDPWD}
     return 0
 }

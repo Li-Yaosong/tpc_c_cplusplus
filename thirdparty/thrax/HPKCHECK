@@ -18,6 +18,7 @@ source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
 checkprepare() {
+    export PATH=${PATH}:${LYCIUM_ROOT}/usr/${pkgname}/${ARCH}/bin
     cd ${builddir}/src/grammars
 
     # 生成测试文件
@@ -50,7 +51,7 @@ openharmonycheck() {
     while IFS= read -r line
     do
         echo "test${testnum}  start: ${line}" >> ${logfile} 2>&1
-        result=$(echo "${line}" | ../../${ARCH}-build/src/bin/thraxrewrite-tester --far=example.far --rules=TOKENIZER)
+        result=$(echo "${line}" | thraxrewrite-tester --far=example.far --rules=TOKENIZER)
         result=$(echo "${result:29}" | head -n 1)
         echo "test${testnum} result: ${result}" >> ${logfile} 2>&1
         if [[ ${result} == ${result1} || ${result} == ${result2} || ${result} == ${result3} || ${result} == ${result4} ]]
