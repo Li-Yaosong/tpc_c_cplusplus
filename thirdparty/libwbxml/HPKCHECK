@@ -21,15 +21,22 @@ checkprepare() {
     return 0
 }
 
-openharmonycheck() {  
+openharmonycheck() {
     res=0
     cd ${builddir}/${ARCH}-build/test/tools
+	if [ ! -e '/usr/bin/perl' ]
+    then
+        sed -i 's/\/usr\/bin\/perl/\/bin\/perl/g' ./launchTests.sh #新版rom没有/usr/目录，需要调整sed命令的调用路径
+        sed -i 's/\/usr\/bin\/diff/\/bin\/diff/g' ./launchTests.sh 
+		sed -i 's/LibWBXMLTestSuite\.XXX/LibWBXMLTestSuite\.XXXXXX/g' ./launchTests.sh
+        patch -p0 < ../../../../normalize_xml.pl.patch
+    fi
     ctest > ${logfile} 2>&1
     res=$?
-    if [ $res -ne 0 ]
-    then
-        mkdir -p ${LYCIUM_FAULT_PATH}/${pkgname}
-        cp ${logfile} ${LYCIUM_FAULT_PATH}/${pkgname}/
+    if [ $res -ne 0 ];then
+       mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
+       cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/ 
+	   
     fi
     cd $OLDPWD
     return $res
