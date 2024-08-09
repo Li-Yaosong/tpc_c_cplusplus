@@ -52,68 +52,31 @@
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
   ```
-  #将三方库加入工程中
-  if(${OHOS_ARCH} STREQUAL "arm64-v8a")
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opus/${OHOS_ARCH}/lib/libopus.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libg7221codec-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libgsmcodec-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libilbccodec-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpj-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjlib-util-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjmedia-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjmedia-audiodev-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjmedia-codec-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjmedia-videodev-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjnath-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjsip-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjsip-simple-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjsip-ua-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjsua-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjsua2-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libresample-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libspeex-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libsrtp-aarch64-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libyuv-aarch64-unknown-linux-gnu.a)
-  else()
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opus/${OHOS_ARCH}/lib/libopus.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libg7221codec-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libgsmcodec-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libilbccodec-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpj-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjlib-util-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjmedia-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjmedia-audiodev-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjmedia-codec-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjmedia-videodev-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjnath-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjsip-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjsip-simple-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjsip-ua-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjsua-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libpjsua2-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libresample-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libspeex-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libsrtp-arm-unknown-linux-gnu.a
-                              ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib/libyuv-arm-unknown-linux-gnu.a)
-  endif()
+  # 将三方库的头文件加入工程中
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/)
 
-  #将三方库的头文件加入工程中
-  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opus/${OHOS_ARCH}/include/opus/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pj/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pj/compat/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pj++/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pjlib-util/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pjmedia/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pjmedia-audiodev/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pjmedia-codec/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pjmedia-videodev/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pjnath/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pjsip/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pjsip-simple/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pjsip-ua/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pjsua2/
-                                  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/include/pjsua-lib/)
+  # 设置对应的配置项
+  target_compile_definitions(entry PUBLIC -DPJ_AUTOCONF=1  -DPJ_IS_BIG_ENDIAN=0 -DPJ_IS_LITTLE_ENDIAN=1)
+  
+  # 将三方库加入工程中
+  target_link_directories(entry PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pjsip/${OHOS_ARCH}/lib ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/opus/${OHOS_ARCH}/lib)
+  if(${OHOS_ARCH} STREQUAL "arm64-v8a")
+    target_link_libraries(entry PUBLIC pjsua2-aarch64-unknown-linux-gnu pjsua-aarch64-unknown-linux-gnu pjsip-ua-aarch64-unknown-linux-gnu
+          pjsip-simple-aarch64-unknown-linux-gnu pjsip-aarch64-unknown-linux-gnu pjmedia-codec-aarch64-unknown-linux-gnu pjmedia-aarch64-unknown-linux-gnu
+          pjmedia-videodev-aarch64-unknown-linux-gnu pjmedia-audiodev-aarch64-unknown-linux-gnu pjmedia-aarch64-unknown-linux-gnu pjnath-aarch64-unknown-linux-gnu
+          pjlib-util-aarch64-unknown-linux-gnu pj-aarch64-unknown-linux-gnu srtp-aarch64-unknown-linux-gnu resample-aarch64-unknown-linux-gnu
+          gsmcodec-aarch64-unknown-linux-gnu speex-aarch64-unknown-linux-gnu ilbccodec-aarch64-unknown-linux-gnu g7221codec-aarch64-unknown-linux-gnu
+          yuv-aarch64-unknown-linux-gnu  opus)
+  elseif(${OHOS_ARCH} STREQUAL "armeabi-v7a")
+    target_link_libraries(entry PUBLIC pjsua2-arm-unknown-linux-gnu pjsua-arm-unknown-linux-gnu pjsip-ua-arm-unknown-linux-gnu
+          pjsip-simple-arm-unknown-linux-gnu pjsip-arm-unknown-linux-gnu pjmedia-codec-arm-unknown-linux-gnu pjmedia-arm-unknown-linux-gnu
+          pjmedia-videodev-arm-unknown-linux-gnu pjmedia-audiodev-arm-unknown-linux-gnu pjmedia-arm-unknown-linux-gnu pjnath-arm-unknown-linux-gnu
+          pjlib-util-arm-unknown-linux-gnu pj-arm-unknown-linux-gnu srtp-arm-unknown-linux-gnu resample-arm-unknown-linux-gnu
+          gsmcodec-arm-unknown-linux-gnu speex-arm-unknown-linux-gnu ilbccodec-arm-unknown-linux-gnu g7221codec-arm-unknown-linux-gnu
+          yuv-arm-unknown-linux-gnu  opus)
+  else()
+    message("not support Architecture")
+  endif()
   ```
 
 ## 测试三方库
