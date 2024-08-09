@@ -80,6 +80,14 @@ check() {
     fi
     unset host
     echo "The test must be on an OpenHarmony device!"
+
+    cd $ARCH-build/src/convert
+    files=("wmf2eps" "wmf2fig" "wmf2gd" "wmf2svg")
+    for file in "${files[@]}"; do
+        # 使用sed命令将文件中的所有/usr/bin/sed更改为/bin/sed
+        sed -i.bak 's|/usr/bin/sed|/bin/sed|g' "$file"
+    done
+    cd $OLDPWD
 }
 
 # 清理环境
