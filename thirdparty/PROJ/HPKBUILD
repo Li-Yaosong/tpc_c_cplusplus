@@ -21,7 +21,7 @@ pkgdesc="PROJ is a general purpose coordinate conversion software that can conve
 url="https://github.com/OSGeo/PROJ"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("MIT License")
-depends=("sqlite" "tiff" "curl" "openssl")
+depends=("sqlite_3_46_0" "libtiff" "curl_8_9_0" "openssl_1_1_1w")
 
 source="https://github.com/OSGeo/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
@@ -94,9 +94,9 @@ build() {
     cd $builddir
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
     -DEXE_SQLITE3=$LYCIUM_ROOT/../thirdparty/PROJ/$sqlitebuilddir/sqlite3 \
-    -DOPENSSL_INCLUDE_DIR=$LYCIUM_ROOT/usr/openssl/${ARCH}/include \
-    -DOPENSSL_SSL_LIBRARY=$LYCIUM_ROOT/usr/openssl/${ARCH}/lib \
-    -DCMAKE_PREFIX_PATH=${LYCIUM_ROOT}/usr/tiff/${ARCH} \
+    -DOPENSSL_INCLUDE_DIR=$LYCIUM_ROOT/usr/openssl_1_1_1w/${ARCH}/include \
+    -DOPENSSL_SSL_LIBRARY=$LYCIUM_ROOT/usr/openssl_1_1_1w/${ARCH}/lib \
+    -DCMAKE_PREFIX_PATH=${LYCIUM_ROOT}/usr/libtiff/${ARCH} \
     -B$ARCH-build -S./ -L >> $buildlog 2>&1
     ret=$?
     if [ $ret -ne 0 ]; then
