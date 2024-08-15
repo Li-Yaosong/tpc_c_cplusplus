@@ -83,3 +83,14 @@
  endif(BUILD_TESTS)
  
  add_subdirectory(src)
+--- libmysofa-1.3.2/src/tests/easy.c	2023-10-15 18:30:14.000000000 +0800
++++ libmysofa-1.3.2/src/tests/easy2.c	2024-08-08 14:31:38.904707800 +0800
+@@ -154,7 +154,7 @@
+   easy->hrtf->SourcePosition.values = coordinates;
+   easy->hrtf->M = filters;
+ 
+-  file = fopen("/tmp/easy.tmp.json", "w");
++  file = fopen("/data/local/tmp/easy.tmp.json", "w");
+   CU_ASSERT(file != NULL);
+   printJson(file, easy->hrtf, 0);
+   fclose(file);

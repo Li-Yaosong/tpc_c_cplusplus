@@ -35,8 +35,8 @@
 - 三方库头文件及生成的库，在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
   
   ```
-  libmysofa/libmysofa-1.3.2/armeabi-v7a-build
-  libmysofa/libmysofa-1.3.2/arm64-v8a-build
+  libmysofa/armeabi-v7a
+  libmysofa/arm64-v8a
   ```
   
 - [测试三方库](#测试三方库)

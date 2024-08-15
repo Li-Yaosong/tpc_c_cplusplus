@@ -40,7 +40,7 @@ prepare() {
     then
         cd ${builddir}
 
-        # 注释pthread_cancel函数，并屏蔽16个测试改为手动测试
+        # 注释pthread_cancel函数，屏蔽16个测试改为手动测试，将/tmp 目录改为/data/local/tmp
         patch -p1 < ../${pkgname}_oh_pkg.patch || return -1
         echo "patching success"
         patchflag=false
