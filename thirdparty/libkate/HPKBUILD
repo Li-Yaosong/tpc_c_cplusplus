@@ -89,17 +89,17 @@ check() {
     #替换测试文件中sed的路径
     cd $pkgname-$ARCH-build/tests
     for file in check_sizes language metadata overflow text; do
-        sed -i.bak 's|/usr/bin/sed|/bin/sed|g' "$file"
+        sed -i.bak 's|/usr/bin/sed|/data/CIusr/bin/sed|g' "$file"
     done
     #注释掉测试的编译阶段
     sed -i.bak '/^all: all-am$/,/^\t@:$/s/^/#/' Makefile
     cd $OLDPWD
     #修改libtool中SED的路径
     cd $pkgname-$ARCH-build
-    sed -i.bak 's|/usr/bin/sed|/bin/sed|g' libtool
-    sed -i.bak 's|/usr/bin/grep|/bin/grep|g' libtool
-    sed -i.bak 's|/usr/bin/grep -E|bin/grep -E|g' libtool
-    sed -i.bak 's|/usr/bin/grep -F|bin/grep -F|g' libtool
+    sed -i.bak 's|/usr/bin/sed|/data/CIusr/bin/sed|g' libtool
+    sed -i.bak 's|/usr/bin/grep|/data/CIusr/bin/grep|g' libtool
+    sed -i.bak 's|/usr/bin/grep -E|/data/CIusr/bin/grep -E|g' libtool
+    sed -i.bak 's|/usr/bin/grep -F|/data/CIusr/bin/grep -F|g' libtool
     cd $OLDPWD
     #复制test-driver工具
     cd $pkgname-$ARCH-build/misc/autotools   
