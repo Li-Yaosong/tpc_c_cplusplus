@@ -54,6 +54,10 @@ package() {
 
 check() {
     echo "The test must be on an OpenHarmony device!"
+    cd $builddir
+    #修改python解释器路径与鸿蒙环境一致
+    sed -i.bak "s|\/usr\/bin\/python3.10|\/bin\/python3.10|g" $ARCH-build/Mongoose/CTestTestfile.cmake
+    cd $OLDPWD
 }
 
 cleanbuild() {
