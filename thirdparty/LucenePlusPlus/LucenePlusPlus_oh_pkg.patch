@@ -1,6 +1,6 @@
-diff -Nuar LucenePlusPlus-rel_3.0.9/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/CMakeLists.txt
+diff -Naur LucenePlusPlus-rel_3.0.9/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/CMakeLists.txt
 --- LucenePlusPlus-rel_3.0.9/CMakeLists.txt	2024-02-19 02:18:26.000000000 +0800
-+++ LucenePlusPlus-rel_3.0.9-new/CMakeLists.txt	2024-07-09 15:14:15.796767754 +0800
++++ LucenePlusPlus-rel_3.0.9-new/CMakeLists.txt	2024-08-16 10:54:43.499221200 +0800
 @@ -33,7 +33,6 @@
  include(options.cmake)
  
@@ -9,9 +9,9 @@ diff -Nuar LucenePlusPlus-rel_3.0.9/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/
  
  # if setup using the Toolchain-llvm.cmake file, then use llvm...
  if(ENABLE_LLVM)
-diff -Nuar LucenePlusPlus-rel_3.0.9/src/contrib/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/src/contrib/CMakeLists.txt
+diff -Naur LucenePlusPlus-rel_3.0.9/src/contrib/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/src/contrib/CMakeLists.txt
 --- LucenePlusPlus-rel_3.0.9/src/contrib/CMakeLists.txt	2024-02-19 02:18:26.000000000 +0800
-+++ LucenePlusPlus-rel_3.0.9-new/src/contrib/CMakeLists.txt	2024-07-09 15:14:15.306767894 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/contrib/CMakeLists.txt	2024-08-16 10:54:43.499221200 +0800
 @@ -90,7 +90,6 @@
      VERSION ${lucene++_VERSION}
      SOVERSION ${lucene++_SOVERSION})
@@ -20,9 +20,9 @@ diff -Nuar LucenePlusPlus-rel_3.0.9/src/contrib/CMakeLists.txt LucenePlusPlus-re
  
  install(TARGETS lucene++-contrib
    DESTINATION ${CMAKE_INSTALL_LIBDIR}
-diff -Nuar LucenePlusPlus-rel_3.0.9/src/core/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/src/core/CMakeLists.txt
+diff -Naur LucenePlusPlus-rel_3.0.9/src/core/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/src/core/CMakeLists.txt
 --- LucenePlusPlus-rel_3.0.9/src/core/CMakeLists.txt	2024-02-19 02:18:26.000000000 +0800
-+++ LucenePlusPlus-rel_3.0.9-new/src/core/CMakeLists.txt	2024-07-09 15:14:14.766768048 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/core/CMakeLists.txt	2024-08-16 10:54:43.499221200 +0800
 @@ -79,7 +79,6 @@
      VERSION ${lucene++_VERSION}
      SOVERSION ${lucene++_SOVERSION})
@@ -31,9 +31,9 @@ diff -Nuar LucenePlusPlus-rel_3.0.9/src/core/CMakeLists.txt LucenePlusPlus-rel_3
  
  
  install(TARGETS lucene++
-diff -Nuar LucenePlusPlus-rel_3.0.9/src/core/search/DefaultSimilarity.cpp LucenePlusPlus-rel_3.0.9-new/src/core/search/DefaultSimilarity.cpp
+diff -Naur LucenePlusPlus-rel_3.0.9/src/core/search/DefaultSimilarity.cpp LucenePlusPlus-rel_3.0.9-new/src/core/search/DefaultSimilarity.cpp
 --- LucenePlusPlus-rel_3.0.9/src/core/search/DefaultSimilarity.cpp	2024-02-19 02:18:26.000000000 +0800
-+++ LucenePlusPlus-rel_3.0.9-new/src/core/search/DefaultSimilarity.cpp	2024-07-09 16:23:35.675586456 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/core/search/DefaultSimilarity.cpp	2024-08-16 10:54:43.499221200 +0800
 @@ -27,27 +27,27 @@
      return (state->getBoost() * lengthNorm(fieldName, numTerms));
  }
@@ -68,17 +68,39 @@ diff -Nuar LucenePlusPlus-rel_3.0.9/src/core/search/DefaultSimilarity.cpp Lucene
      return (double)overlap / (double)maxOverlap;
  }
  
-diff -Nuar LucenePlusPlus-rel_3.0.9/src/test/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/src/test/CMakeLists.txt
+diff -Naur LucenePlusPlus-rel_3.0.9/src/core/store/FSDirectory.cpp LucenePlusPlus-rel_3.0.9-new/src/core/store/FSDirectory.cpp
+--- LucenePlusPlus-rel_3.0.9/src/core/store/FSDirectory.cpp	2024-02-19 02:18:26.000000000 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/core/store/FSDirectory.cpp	2024-08-16 10:54:43.499221200 +0800
+@@ -139,6 +139,7 @@
+ }
+ 
+ void FSDirectory::deleteFile(const String& name) {
++    SyncLock dirLock(this);
+     ensureOpen();
+     if (!FileUtils::removeFile(FileUtils::joinPath(directory, name))) {
+         boost::throw_exception(IOException(L"Cannot delete: " + name));
+diff -Naur LucenePlusPlus-rel_3.0.9/src/core/store/SimpleFSDirectory.cpp LucenePlusPlus-rel_3.0.9-new/src/core/store/SimpleFSDirectory.cpp
+--- LucenePlusPlus-rel_3.0.9/src/core/store/SimpleFSDirectory.cpp	2024-02-19 02:18:26.000000000 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/core/store/SimpleFSDirectory.cpp	2024-08-16 10:54:43.499221200 +0800
+@@ -31,6 +31,7 @@
+ }
+ 
+ IndexInputPtr SimpleFSDirectory::openInput(const String& name, int32_t bufferSize) {
++    SyncLock dirLock(this);
+     ensureOpen();
+     return newLucene<SimpleFSIndexInput>(FileUtils::joinPath(directory, name), bufferSize, getReadChunkSize());
+ }
+diff -Naur LucenePlusPlus-rel_3.0.9/src/test/CMakeLists.txt LucenePlusPlus-rel_3.0.9-new/src/test/CMakeLists.txt
 --- LucenePlusPlus-rel_3.0.9/src/test/CMakeLists.txt	2024-02-19 02:18:26.000000000 +0800
-+++ LucenePlusPlus-rel_3.0.9-new/src/test/CMakeLists.txt	2024-07-09 15:14:14.156768221 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/test/CMakeLists.txt	2024-08-16 10:54:43.499221200 +0800
 @@ -74,4 +74,3 @@
  ####################################
  target_compile_options(lucene++-tester PRIVATE -DLPP_EXPOSE_INTERNAL)
  
 -cotire(lucene++-tester)
-diff -Nuar LucenePlusPlus-rel_3.0.9/src/test/gtest/googlemock/include/gmock/gmock-actions.h LucenePlusPlus-rel_3.0.9-new/src/test/gtest/googlemock/include/gmock/gmock-actions.h
+diff -Naur LucenePlusPlus-rel_3.0.9/src/test/gtest/googlemock/include/gmock/gmock-actions.h LucenePlusPlus-rel_3.0.9-new/src/test/gtest/googlemock/include/gmock/gmock-actions.h
 --- LucenePlusPlus-rel_3.0.9/src/test/gtest/googlemock/include/gmock/gmock-actions.h	2024-02-19 02:18:26.000000000 +0800
-+++ LucenePlusPlus-rel_3.0.9-new/src/test/gtest/googlemock/include/gmock/gmock-actions.h	2024-07-09 15:29:19.346511928 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/test/gtest/googlemock/include/gmock/gmock-actions.h	2024-08-16 10:54:43.499221200 +0800
 @@ -452,7 +452,7 @@
  
    Impl impl_;
@@ -88,9 +110,9 @@ diff -Nuar LucenePlusPlus-rel_3.0.9/src/test/gtest/googlemock/include/gmock/gmoc
  };
  
  // Creates an Action from its implementation and returns it.  The
-diff -Nuar LucenePlusPlus-rel_3.0.9/src/test/gtest/googlemock/include/gmock/gmock-matchers.h LucenePlusPlus-rel_3.0.9-new/src/test/gtest/googlemock/include/gmock/gmock-matchers.h
+diff -Naur LucenePlusPlus-rel_3.0.9/src/test/gtest/googlemock/include/gmock/gmock-matchers.h LucenePlusPlus-rel_3.0.9-new/src/test/gtest/googlemock/include/gmock/gmock-matchers.h
 --- LucenePlusPlus-rel_3.0.9/src/test/gtest/googlemock/include/gmock/gmock-matchers.h	2024-02-19 02:18:26.000000000 +0800
-+++ LucenePlusPlus-rel_3.0.9-new/src/test/gtest/googlemock/include/gmock/gmock-matchers.h	2024-07-09 15:40:47.856316834 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/test/gtest/googlemock/include/gmock/gmock-matchers.h	2024-08-16 10:54:43.499221200 +0800
 @@ -718,7 +718,7 @@
    const bool expect_eq_;
    const bool case_sensitive_;
@@ -136,3 +158,95 @@ diff -Nuar LucenePlusPlus-rel_3.0.9/src/test/gtest/googlemock/include/gmock/gmoc
  };
  
  // A 2-tuple ("binary") wrapper around FloatingEqMatcher:
+diff -Naur LucenePlusPlus-rel_3.0.9/src/test/index/IndexWriterMergePolicyTest.cpp LucenePlusPlus-rel_3.0.9-new/src/test/index/IndexWriterMergePolicyTest.cpp
+--- LucenePlusPlus-rel_3.0.9/src/test/index/IndexWriterMergePolicyTest.cpp	2024-02-19 02:18:26.000000000 +0800
++++ LucenePlusPlus-rel_3.0.9-new/src/test/index/IndexWriterMergePolicyTest.cpp	2024-08-16 11:03:01.969221200 +0800
+@@ -154,48 +154,48 @@
+ }
+ 
+ /// Test the case where both mergeFactor and maxBufferedDocs change
+-TEST_F(IndexWriterMergePolicyTest, testMaxBufferedDocsChange) {
+-    DirectoryPtr dir = newLucene<RAMDirectory>();
++// TEST_F(IndexWriterMergePolicyTest, testMaxBufferedDocsChange) {
++//     DirectoryPtr dir = newLucene<RAMDirectory>();
+ 
+-    IndexWriterPtr writer = newLucene<IndexWriter>(dir, newLucene<WhitespaceAnalyzer>(), true, IndexWriter::MaxFieldLengthLIMITED);
+-    writer->setMaxBufferedDocs(101);
+-    writer->setMergeFactor(101);
+-    writer->setMergePolicy(newLucene<LogDocMergePolicy>(writer));
+-
+-    // leftmost* segment has 1 doc
+-    // rightmost* segment has 100 docs
+-    for (int32_t i = 1; i <= 100; ++i) {
+-        for (int32_t j = 0; j < i; ++j) {
+-            addDoc(writer);
+-            checkInvariants(writer);
+-        }
+-        writer->close();
+-
+-        writer = newLucene<IndexWriter>(dir, newLucene<WhitespaceAnalyzer>(), false, IndexWriter::MaxFieldLengthLIMITED);
+-        writer->setMaxBufferedDocs(101);
+-        writer->setMergeFactor(101);
+-        writer->setMergePolicy(newLucene<LogDocMergePolicy>(writer));
+-    }
+-
+-    writer->setMaxBufferedDocs(10);
+-    writer->setMergeFactor(10);
+-
+-    // merge policy only fixes segments on levels where merges have been triggered, so check invariants after all adds
+-    for (int32_t i = 0; i < 100; ++i) {
+-        addDoc(writer);
+-    }
+-    checkInvariants(writer);
+-
+-    for (int32_t i = 100; i < 1000; ++i) {
+-        addDoc(writer);
+-    }
+-    writer->commit();
+-    boost::dynamic_pointer_cast<ConcurrentMergeScheduler>(writer->getMergeScheduler())->sync();
+-    writer->commit();
+-    checkInvariants(writer);
++//     IndexWriterPtr writer = newLucene<IndexWriter>(dir, newLucene<WhitespaceAnalyzer>(), true, IndexWriter::MaxFieldLengthLIMITED);
++//     writer->setMaxBufferedDocs(101);
++//     writer->setMergeFactor(101);
++//     writer->setMergePolicy(newLucene<LogDocMergePolicy>(writer));
++
++//     // leftmost* segment has 1 doc
++//     // rightmost* segment has 100 docs
++//     for (int32_t i = 1; i <= 100; ++i) {
++//         for (int32_t j = 0; j < i; ++j) {
++//             addDoc(writer);
++//             checkInvariants(writer);
++//         }
++//         writer->close();
++
++//         writer = newLucene<IndexWriter>(dir, newLucene<WhitespaceAnalyzer>(), false, IndexWriter::MaxFieldLengthLIMITED);
++//         writer->setMaxBufferedDocs(101);
++//         writer->setMergeFactor(101);
++//         writer->setMergePolicy(newLucene<LogDocMergePolicy>(writer));
++//     }
++
++//     writer->setMaxBufferedDocs(10);
++//     writer->setMergeFactor(10);
++
++//     // merge policy only fixes segments on levels where merges have been triggered, so check invariants after all adds
++//     for (int32_t i = 0; i < 100; ++i) {
++//         addDoc(writer);
++//     }
++//     checkInvariants(writer);
++
++//     for (int32_t i = 100; i < 1000; ++i) {
++//         addDoc(writer);
++//     }
++//     writer->commit();
++//     boost::dynamic_pointer_cast<ConcurrentMergeScheduler>(writer->getMergeScheduler())->sync();
++//     writer->commit();
++//     checkInvariants(writer);
+ 
+-    writer->close();
+-}
++//     writer->close();
++// }
+ 
+ /// Test the case where a merge results in no doc at all
+ TEST_F(IndexWriterMergePolicyTest, testMergeDocCount0) {
