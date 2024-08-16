@@ -32,7 +32,7 @@
         "License File": "https://github.com/curl/curl/tree/curl-8_9_0/LICENSES",
         "Version Number": "curl-8_9_0",
         "Owner": "hanjinfei@foxmail.com",
-        "Upstream URL": "https://github.com/curl/curl/archive/refs/tags/curl-8_9_0.tar.gz",
+        "Upstream URL": "https://github.com/curl/curl/archive/refs/tags/curl-8_9_1.tar.gz",
         "Description": "Curl is a command-line tool for transferring data specified with URL syntax. Find out how to use curl by reading the curl.1 man page or the MANUAL document. Find out how to install Curl by reading the INSTALL document."
     },
     {
