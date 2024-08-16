@@ -84,8 +84,8 @@ check() {
     cd $ARCH-build/src/convert
     files=("wmf2eps" "wmf2fig" "wmf2gd" "wmf2svg")
     for file in "${files[@]}"; do
-        # 使用sed命令将文件中的所有/usr/bin/sed更改为/bin/sed
-        sed -i.bak 's|/usr/bin/sed|/bin/sed|g' "$file"
+        # 使用sed命令将文件中的所有/usr/bin/sed更改为/data/CIusr/bin/sed
+        sed -i.bak 's|/usr/bin/sed|/data/CIusr/bin/sed|g' "$file"
     done
     cd $OLDPWD
 }
