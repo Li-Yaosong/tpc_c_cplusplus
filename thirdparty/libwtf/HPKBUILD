@@ -40,7 +40,8 @@ prepare() {
         patch -p1 < `pwd`/../JavaScriptCore_oh_pkg.patch
         # 修改因平台差异导致char类型符号位差异，而引起相关测试用例报错
         patch -p1 < `pwd`/../JavaScriptCore_oh_test.patch
-
+        # 不能访问的/tmp 修改为 /data/local/tmp
+        patch -p1 < ../libwtf_ohos_test.patch
         # patch只需要打一次,关闭打patch
         patchflag=false
         cd $OLDPWD
