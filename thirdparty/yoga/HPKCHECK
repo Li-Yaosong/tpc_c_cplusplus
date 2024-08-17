@@ -21,6 +21,11 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     cd ${builddir}/${ARCH}-build/tests 
+    
+    # 将编译后来自HPKBUILD的cmake路径占位字符串CMAKE_SHARE_REPLACE
+    # 用测试设备实际的cmake版本路径替换，避免填写具体的cmake版本
+    cmake_name=`ls /data/CIusr/share/ | grep cmake`
+    sed -i "s#CMAKE_SHARE_REPLACE#/data/CIusr/share/$cmake_name#g" yogatests[1]_include.cmake
     ctest > ${logfile} 2>&1
     res=$?
     if [ $res -ne 0 ]

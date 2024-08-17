@@ -38,8 +38,8 @@ prepare() {
 
 build() {
     cd $builddir
-    # 使用系统cmake，需要下载至少3.26版本以上。
-    cmake "$@" -DCMAKE_C_FLAGS="-Wno-error=unused-command-line-argument" \
+    # SDK中cmake 已更新至少3.26版本以上。
+    $OHOS_SDK/native/build-tools/cmake/bin/cmake "$@" -DCMAKE_C_FLAGS="-Wno-error=unused-command-line-argument" \
     -DCMAKE_CXX_FLAGS="-Wno-error=unused-command-line-argument" \
     -DCMAKE_GTEST_DISCOVER_TESTS_DISCOVERY_MODE="PRE_TEST" -B$ARCH-build -S./ > $buildlog 2>&1
     $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
@@ -56,8 +56,11 @@ package() {
 
 check() {
     cd $builddir/$ARCH-build/tests/
-    # 删除系统cmake默认路径，匹配oh设备上cmake路径
-    sed -i 's/usr\/local\/share\/cmake-3.26/usr\/share\/cmake-3.27/g' yogatests[1]_include.cmake
+    # 将cmkae路径修改为 占位字符串CMAKE_SHARE_REPLACE
+    # 具体测试HPKCHECK 脚本中，会用cmke具体版本号 替换掉CMAKE_SHARE_REPLACE
+    # 从而避免编译环境cmake的版本号与设备上cmake版本号不匹配导致的路径错误
+    cmake_name=`ls $OHOS_SDK/native/build-tools/cmake/share | grep cmake`
+    sed -i "s#${OHOS_SDK}native/build-tools/cmake/share/$cmake_name#CMAKE_SHARE_REPLACE#g" yogatests[1]_include.cmake
     echo "The test must be on an OpenHarmony device!"
     cd $OLDPWD
     # 测试方式
