@@ -15,9 +15,17 @@ downloadpackage=true
 buildtools="cmake"
 builddir=$pkgname-${pkgver:1}
 packagename=$builddir.tar.gz
-
+patchflag=true
 prepare() {
     mkdir -p $builddir/$ARCH-build
+    if $patchflag
+    then
+        cd $builddir
+        patch -p1 < ../assimp-5.2.5_ohos_test.patch  # patch 动作
+        # patch只需要打一次,关闭打patch
+        patchflag=false
+        cd $OLDPWD
+    fi
 }
 
 build() {

@@ -1,0 +1,12 @@
+diff -Nura assimp-5.2.5/test/unit/UnitTestFileGenerator.h assimp-5.2.5_ohos_test.path/test/unit/UnitTestFileGenerator.h
+--- assimp-5.2.5/test/unit/UnitTestFileGenerator.h	2022-09-08 11:13:43.000000000 -0700
++++ assimp-5.2.5_ohos_test.path/test/unit/UnitTestFileGenerator.h	2024-08-17 01:46:20.900080265 -0700
+@@ -46,7 +46,7 @@
+ 
+ #if defined(_MSC_VER)
+ #include <io.h>
+-#define TMP_PATH "./"
++#define TMP_PATH "/data/local/tmp"
+ inline FILE* MakeTmpFile(char* tmplate)
+ {
+     auto pathtemplate = _mktemp(tmplate);
