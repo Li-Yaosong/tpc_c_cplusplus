@@ -12,6 +12,8 @@ openharmonycheck() {
         echo "the network not ready, the test depends the network! make sure the network is OK!!"
         return 1
     fi
+    oldPath=$TEST_TMPDIR
+    TEST_TMPDIR=/data/local/tmp
     cd $builddir-$ARCH-build
     ctest >> ${logfile} 2>&1
     res=$?
@@ -21,6 +23,6 @@ openharmonycheck() {
         cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/
     fi
     cd $OLDPWD
-
+    TEST_TMPDIR=$oldPATH
     return $res
 }
