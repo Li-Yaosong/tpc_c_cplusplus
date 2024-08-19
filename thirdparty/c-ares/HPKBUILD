@@ -24,6 +24,9 @@ prepare() {
 build() {
     cd $builddir
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -DCARES_BUILD_TESTS=ON -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
+    find . -type f -exec sed -i 's/\/tmp/\/data\/local\/tmp/g' {} +
+    #将NULL换成/data/local/tmp目录
+    sed -i '824s/\<null\>/data\/local\/tmp/g; 824s/\<NULL\>/data\/local\/tmp/g' c-ares-cares-1_19_0/test/ares-test.cc 
     make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
