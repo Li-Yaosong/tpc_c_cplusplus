@@ -105,7 +105,7 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    ./configure "$@" --host=$host \
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" --host=$host \
         CPPFLAGS="-I${LYCIUM_ROOT}/usr/libtool/${ARCH}/include -I${LYCIUM_ROOT}/usr/jpeg/${ARCH}/include \
             -I${LYCIUM_ROOT}/usr/libxml2/${ARCH}/include" \
         LDFLAGS="-L${LYCIUM_ROOT}/usr/libtool/${ARCH}/lib -L${LYCIUM_ROOT}/usr/jpeg/${ARCH}/lib \
@@ -142,6 +142,11 @@ check() {
         return -1
     fi
     echo "The test must be on an OpenHarmony device!"
+    # 修改测试目录下的工具路径:/usr/bin/sed -> /data/CIusr/bin/sed ; /bin/bash -> /data/CIusr/bin/bash
+    cd $builddir-$ARCH-build/tests    
+    sed -i "s#/usr/bin/sed#/data/CIusr/bin/sed#g" `grep -rn "/usr/bin/sed" | awk -F ':' '{print $1}'  | sort -u`
+    sed -i "s#/bin/bash#/data/CIusr/bin/bash#g" `grep -rn "/bin/bash" | awk -F ':' '{print $1}' | sort -u`
+    cd $OLDPWD
     # real test CMD
     # make check-TESTS
 }
