@@ -18,7 +18,18 @@ buildtools="cmake"
 builddir=$pkgname-${pkgver:1}
 packagename=$builddir.zip
 
+patchflag=true
+
 prepare() {
+    if [ "$patchflag" == true ]
+    then
+        cd $builddir
+        # patch文件修改了由路径导致的在ohos上测试失败的问题
+        patch -p1 < ../taglib_oh_test.patch >> $publicbuildlog 2>&1
+        patchflag=false
+        cd ../
+    fi
+
     mkdir -p $builddir/$ARCH-build
 }
 
