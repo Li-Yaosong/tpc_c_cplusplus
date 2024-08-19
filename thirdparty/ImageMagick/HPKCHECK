@@ -24,8 +24,15 @@ openharmonycheck() {
     res=$?
     if [ $res -ne 0 ]
     then
-        mkdir -p ${LYCIUM_FAULT_PATH}/${pkgname}
-        cp test-suite.log ${LYCIUM_FAULT_PATH}/${pkgname}/
+        find . -type f -exec sed -i 's|/bin/bash|/data/CIusr/bin/bash|g' {} \;
+        find . -type f -exec sed -i 's|/usr/bin/sed|/data/CIusr/bin/sed|g' {} \;
+        make check-TESTS > ${logfile} 2>&1
+        res=$?                                                                      
+        if [ $res -ne 0 ]                                     
+        then                                                  
+            mkdir -p ${LYCIUM_FAULT_PATH}/${pkgname}          
+            cp test-suite.log ${LYCIUM_FAULT_PATH}/${pkgname}/
+        fi
     fi
     cd $OLDPWD
     return $res
