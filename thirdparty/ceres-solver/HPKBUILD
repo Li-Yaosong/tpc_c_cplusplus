@@ -20,8 +20,18 @@ builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
 
 cxxflag=""
-
+patchflag=true
 prepare() {
+    if $patchflag
+    then
+       cd $builddir
+       # patch 修改不能访问的/tmp 目录为/data/local/tmp
+       # 该改动只涉及测试文件
+       patch -p1 < ../ceres-solver_ohos_test.patch
+       patchflag=false
+       cd $OLDPWD
+    fi
+
     mkdir -p $builddir/$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]; then
         cxxflag="-mfloat-abi=softfp -D__ARM_PCS_VFP=1"
