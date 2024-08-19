@@ -12,6 +12,9 @@ checkprepare() {
 openharmonycheck() {
     res=0
     cd $builddir-$ARCH-build/cmake
+    # 设置环境变量，指定protobuf 的临时文件目录
+    # 注意最后不能以/结束(即/data/local/tmp/)，否则会导致部分用例失败
+    export TEST_TMPDIR=/data/local/tmp
     ./lite-arena-test > ${logfile} 2>&1
     res=$?
     if [ $res -eq 0 ]
@@ -27,6 +30,7 @@ openharmonycheck() {
 
     export LD_LIBRARY_PATH=$OLD_LD_LIBRARY_PATH
     unset OLD_LD_LIBRARY_PATH
+    unset TEST_TMPDIR
     cd $OLDPWD
     return $res
 }
