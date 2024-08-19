@@ -18,12 +18,8 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     cd ${builddir}/${ARCH}-build
-    # 拷贝自动化测试需要的so文件
-    mkdir -p /usr/local/lib/libwtf
-    cp ${LYCIUM_ROOT}/../lycium/usr/icu/arm64-v8a/lib/* /usr/local/lib/libwtf/
-    cp ./lib/libgtest.so /usr/local/lib/libwtf/
-	export LD_LIBRARY_PATH=/usr/local/lib/libwtf:$LD_LIBRARY_PATH
-    # 测试前注意时区改为GMT-07:00,否则会夏令时检测会不通过
+    # 测试所需的gtest.so 需要额外导出
+    export LD_LIBRARY_PATH=`pwd`/lib:$LD_LIBRARY_PATH
     ctest > ${logfile} 2>&1
     res=$?
     if [ $res -ne 0 ]
