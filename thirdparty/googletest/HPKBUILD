@@ -10,7 +10,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD-3-Clause license")
 source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip" # "https://github.com/google/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
-patchflag=false
+patchflag=true
 autounpack=true
 downloadpackage=true
 
@@ -18,6 +18,14 @@ builddir=$pkgname-$pkgver
 packagename=$builddir.zip
 
 prepare() {
+    if $patchflag
+    then
+       cd $builddir
+       # 该patch 修改不能访问的/tmp 目录为 /data/local/tmp
+       patch -p1 < ../googletest_ohos_test.patch
+       cd $OLDPWD
+       patchflag=false
+    fi
     mkdir -p $builddir/$ARCH-build
 }
 
