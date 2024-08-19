@@ -30,14 +30,25 @@ autounpack=true
 buildtools="cmake"
 builddir=$pkgname-${pkgver:1}
 packagename=$builddir.tar.gz
+patchflag=true
 
 prepare() {
     mkdir -p $builddir/$ARCH-build
+    if ${patchflag}
+    then
+        cd ${builddir}
+
+        # 更改写入测试目录 /tmp 为 /data/local/tmp
+        patch -p1 < ../${pkgname}_oh_test.patch
+        echo "patching success"
+        patchflag=false
+        cd ${OLDPWD}
+    fi
 }
 
 build() {
     # 需设置该环境变量，将路径写入测试用例CTestTestfile.cmake文件中
-    export LD_LIBRARY_PATH="`pwd`/$builddir/$ARCH-build/lib/:${LYCIUM_ROOT}/usr/gdal/$ARCH/lib/:${LYCIUM_ROOT}/usr/zlib_1_3_1/$ARCH/lib/:${LYCIUM_ROOT}/usr/PROJ/$ARCH/lib/:${LYCIUM_ROOT}/usr/sqlite_3_46_0/$ARCH/lib/:${LYCIUM_ROOT}/usr/libtiff/$ARCH/lib/:${LYCIUM_ROOT}/usr/curl_8_9_0/$ARCH/lib/:${LYCIUM_ROOT}/usr/libdeflate/$ARCH/lib/:${LYCIUM_ROOT}/usr/libjpeg-turbo/$ARCH/lib/:${LYCIUM_ROOT}/usr/xz/$ARCH/lib/:${LYCIUM_ROOT}/usr/zstd_1_5_6/$ARCH/lib/:${LYCIUM_ROOT}/usr/libwebp/$ARCH/lib/:${LYCIUM_ROOT}/usr/nghttp2/$ARCH/lib/"
+    export LD_LIBRARY_PATH="`pwd`/$builddir/$ARCH-build/lib/:${LYCIUM_ROOT}/usr/gdal/$ARCH/lib/:${LYCIUM_ROOT}/usr/zlib_1_3_1/$ARCH/lib/:${LYCIUM_ROOT}/usr/PROJ/$ARCH/lib/:${LYCIUM_ROOT}/usr/sqlite_3_46_0/$ARCH/lib/:${LYCIUM_ROOT}/usr/libtiff/$ARCH/lib/:${LYCIUM_ROOT}/usr/curl_8_9_0/$ARCH/lib/:${LYCIUM_ROOT}/usr/libdeflate/$ARCH/lib/:${LYCIUM_ROOT}/usr/libjpeg-turbo/$ARCH/lib/:${LYCIUM_ROOT}/usr/xz/$ARCH/lib/:${LYCIUM_ROOT}/usr/zstd_1_5_6/$ARCH/lib/:${LYCIUM_ROOT}/usr/libwebp/$ARCH/lib/:${LYCIUM_ROOT}/usr/nghttp2/$ARCH/lib/:${LYCIUM_ROOT}/usr/openssl_1_1_1w/$ARCH/lib"
     cd $builddir
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -B$ARCH-build -S./ > $buildlog 2>&1
     $MAKE -C $ARCH-build  >> $buildlog 2>&1
