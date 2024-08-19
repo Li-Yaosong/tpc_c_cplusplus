@@ -69,6 +69,9 @@ check() {
     sed -i '/.*test_jbig2dec.py.log: test_jbig2dec.py*/c\test_jbig2dec.py.log: #test_jbig2dec.py' Makefile
     sed -i '/.*test_huffman.log: test_huffman$(EXEEXT)*/c\test_huffman.log: #test_huffman$(EXEEXT)' Makefile
     sed -i '/.*test_arith.log: test_arith$(EXEEXT)*/c\test_arith.log: #test_arith$(EXEEXT)' Makefile
+    
+    # 将不能访问的/bin/bash 替换成/data/CIusr/bin/bash
+    sed -i "s#/bin/bash#/data/CIusr/bin/bash#g" Makefile config.status test_arith test_huffman
     ret=$?
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
