@@ -23,19 +23,19 @@ openharmonycheck() {
     cd ${LYCIUM_ROOT}/../lycium/usr/${pkgname}/${ARCH}/lib
 
     # 使用lua-5.4.6完成测试
-    mkdir -p /usr/local/lib/lua/5.4/cjson
-    cp ${LYCIUM_ROOT}/../lycium/usr/${pkgname}/${ARCH}/lib/lua/cjson/util.lua /usr/local/lib/lua/5.4/cjson/
-    cp ${LYCIUM_ROOT}/../lycium/usr/${pkgname}/${ARCH}/lib/*.so /usr/local/lib/lua/5.4/
+    mkdir -p /data/local/lib/lua/5.4/cjson
+    cp ${LYCIUM_ROOT}/../lycium/usr/${pkgname}/${ARCH}/lib/lua/cjson/util.lua /data/local/lib/lua/5.4/cjson/
+    cp ${LYCIUM_ROOT}/../lycium/usr/${pkgname}/${ARCH}/lib/*.so /data/local/lib/lua/5.4/
     cp ${LYCIUM_ROOT}/../lycium/usr/${pkgname}/${ARCH}/lib/tests/octets-escaped.dat .
 
     # Decode all UTF-16 escapes测试项需要utf8.dat，该文件是通过genutf8.pl脚本生成的，如果不支持Perl脚本则需要手动上传资源文件
     ${LYCIUM_ROOT}/../lycium/usr/lua-cjson/${ARCH}/ib/tests/genutf8.pl
     cp ${LYCIUM_ROOT}/../lycium/usr/${pkgname}/${ARCH}/lib/tests/utf8.dat .
-
+    export LUA_PATH="/data/local/lib/lua/5.4/?.lua;;"
+    export LUA_CPATH="/data/local/lib/lua/5.4/?.so;;"
     ${LYCIUM_ROOT}/../lycium/usr/lua/${ARCH}/bin/lua \
         ${LYCIUM_ROOT}/../lycium/usr/${pkgname}/${ARCH}/lib/tests/test.lua > ${logfile} 2>&1
     res=$?
-    rm -rf /usr/local/lib
     rm -rf octets-escaped.dat
     rm -rf utf8.dat
     cd $OLDPWD
