@@ -6,10 +6,12 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     ## checkNetWork
+    # 防止ctest 没有开始时，测试日志没有更新
+    echo "test start" > ${logfile}
     ping www.baidu.com -c3 >> /dev/null
     if [ $? -ne 0 ]
     then
-        echo "the network not ready, the test depends the network! make sure the network is OK!!"
+        echo "the network not ready, the test depends the network! make sure the network is OK!!" >> ${logfile}
         return 1
     fi
     cd ${builddir}/${ARCH}-build

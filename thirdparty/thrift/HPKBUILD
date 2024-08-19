@@ -30,6 +30,8 @@ prepare() {
         cd ${builddir}
         # 修复locale函数处理本地化(locale)相关的操作时遇到平台不支持导致测试失败的情况
         patch -p1 < ../thrift_oh_pkg.patch
+        #  /tmp目录不能访问，替换为 /data/local/tmp
+        patch -p1 < ../thrift_ohos_test.patch
         cd $OLDPWD
         # patch只需要打一次,关闭打patch
         patchflag=false
