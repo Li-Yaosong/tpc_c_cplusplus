@@ -20,15 +20,16 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     cd $builddir
-    mkdir /usr/local/lib -p
-    cp ${LYCIUM_ROOT}/../lycium/usr/${pkgname}/${ARCH}/lib/*.so* /usr/local/lib
-    cp ${LYCIUM_ROOT}/../lycium/usr/libuv/${ARCH}/lib/*.so* /usr/local/lib
-    cp ${LYCIUM_ROOT}/../lycium/usr/LuaJIT/${ARCH}/lib/*.so* /usr/local/lib
-    mkdir /usr/local/lib/lua/5.1/ -p
-    ln /usr/local/lib/libluv.so.1 /usr/local/lib/lua/5.1/luv.so
+    mkdir /data/local/lib -p
+    cp ${LYCIUM_ROOT}/../lycium/usr/${pkgname}/${ARCH}/lib/*.so* /data/local/lib
+    cp ${LYCIUM_ROOT}/../lycium/usr/libuv/${ARCH}/lib/*.so* /data/local/lib
+    cp ${LYCIUM_ROOT}/../lycium/usr/LuaJIT/${ARCH}/lib/*.so* /data/local/lib
+    mkdir /data/local/lib/lua/5.1/ -p
+    ln /data/local/lib/libluv.so.1 /data/local/lib/lua/5.1/luv.so
+    export LUA_CPATH="/data/local/lib/lua/5.1/?.so;;"
     ${LYCIUM_ROOT}/../lycium/usr/LuaJIT/${ARCH}/bin/luajit-2.1.0-beta3 tests/run.lua > ${logfile} 2>&1
     res=$?
-    rm -rf /usr/local/lib
+    #rm -rf /data/local/lib
     cd $OLDPWD
     return $res
 }
