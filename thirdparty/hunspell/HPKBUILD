@@ -43,7 +43,13 @@ prepare() {
 build() {
     cd $builddir-$ARCH-build
     ./configure "$@" --host=$host >> `pwd`/build.log 2>&1
+    # 修改/bin/bash和/usr/bin/sed
+    find . -name Makefile -exec sed -i 's#/bin/bash#bash#' {} +
+    find . -name Makefile -exec sed -i 's#/usr/bin/sed#/bin/sed#' {} +
+    find . -name Makefile -exec sed -i 's#mawk#awk#' {} +
     make -j4 >> `pwd`/build.log 2>&1
+    sed -i 's#/bin/bash#/bin/env bash#' libtool src/tools/hunspell src/tools/analyze tests/test.sh
+    sed -i 's#/usr/bin/sed#/bin/sed#' libtool src/tools/hunspell src/tools/analyze
     ret=$?
     cd $OLDPWD
     return $ret
