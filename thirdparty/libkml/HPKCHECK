@@ -19,6 +19,8 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 
 # 在OH环境执行测试的接口
 openharmonycheck() {
+    # 因测试需要，手动测试和执行自动化测试前需执行mkdir -p /data/storage/el2/base/temp创建测试目录
+    mkdir -p /data/storage/el2/base/temp
     res=0
     cd ${builddir}/${ARCH}-build
     ctest > ${logfile} 2>&1
@@ -27,6 +29,8 @@ openharmonycheck() {
         mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
         cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/
     fi
+    # 测试完成后，删除由mkdir -p创建出来的目录
+    rm -rf /data/storage/el2
     cd $OLDPWD
     return $res
 }

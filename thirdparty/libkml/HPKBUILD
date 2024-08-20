@@ -34,7 +34,18 @@ source="https://github.com/libkml/libkml/archive/${commitid}.zip"
 builddir=${pkgname}-${commitid}
 packagename=${builddir}.zip
 
+patchflag=true
+
 prepare() {
+    if $patchflag
+    then
+        cd $builddir
+        patch -p1 < `pwd`/../libkml_oh_pkg.patch >> $publicbuildlog 2>&1
+        # 解决用例操作/tmp路径没权限问题 更改写入测试目录 /tmp 为可访问的目录
+        # patch只需要打一次,关闭打patch
+        patchflag=false
+        cd $OLDPWD
+    fi
     mkdir -p $builddir/$ARCH-build
 }
 
