@@ -101,5 +101,5 @@ check() {
 }
 
 cleanbuild(){
-    rm -rf ${PWD}/$builddir $builddir-armeabi-v7a-build  $builddir-arm64-v8a-build #${PWD}/$packagename
+    rm -rf ${PWD}/$builddir $pkgname-armeabi-v7a-build  $pkgname-arm64-v8a-build #${PWD}/$packagename
 }
