@@ -31,6 +31,8 @@ buildtools="cmake"
 packagename=
 cloneflag=true
 
+patchflag=true
+
 prepare() {
     if [ $cloneflag == true ]
     then
@@ -50,6 +52,15 @@ prepare() {
         cloneflag=false
     fi
     mkdir -p $builddir/$ARCH-build
+
+    if [ "$patchflag" == true ]
+    then
+        cd $builddir
+        # 该patch将/tmp路径修改为/data/local/tmp路径，将L_tmpnam宏替换为固定的128,将test/unittest中的CMakeFile.txt的add_test(NAME valgrind_unittest ...)注释
+        patch -p1 < ../rapidjson_oh_test.patch
+        patchflag=false
+        cd $OLDPWD
+    fi
 }
 
 build() {
