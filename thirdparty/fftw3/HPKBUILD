@@ -65,6 +65,10 @@ package() {
 check() {
     cd $builddir/$ARCH-build
     sed -i '/.*check-local: bench$(EXEEXT)/c\check-local: #bench$(EXEEXT)' tests/Makefile
+
+    # 替换不能无法访问的/bin/bash 和/usr/bin目录
+    sed -i "s#/usr/bin/sed#sed#g" tests/bench
+    sed -i "s#/bin/bash#/data/CIusr/bin/bash#g" tests/Makefile tests/bench
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
     # real test
