@@ -48,7 +48,7 @@ prepare() {
 
 build() {
     # 需设置该环境变量，将路径写入测试用例CTestTestfile.cmake文件中
-    export LD_LIBRARY_PATH="`pwd`/$builddir/$ARCH-build/lib/:${LYCIUM_ROOT}/usr/gdal/$ARCH/lib/:${LYCIUM_ROOT}/usr/zlib_1_3_1/$ARCH/lib/:${LYCIUM_ROOT}/usr/PROJ/$ARCH/lib/:${LYCIUM_ROOT}/usr/sqlite_3_46_0/$ARCH/lib/:${LYCIUM_ROOT}/usr/libtiff/$ARCH/lib/:${LYCIUM_ROOT}/usr/curl_8_9_0/$ARCH/lib/:${LYCIUM_ROOT}/usr/libdeflate/$ARCH/lib/:${LYCIUM_ROOT}/usr/libjpeg-turbo/$ARCH/lib/:${LYCIUM_ROOT}/usr/xz/$ARCH/lib/:${LYCIUM_ROOT}/usr/zstd_1_5_6/$ARCH/lib/:${LYCIUM_ROOT}/usr/libwebp/$ARCH/lib/:${LYCIUM_ROOT}/usr/nghttp2/$ARCH/lib/:${LYCIUM_ROOT}/usr/openssl_1_1_1w/$ARCH/lib"
+    export LD_LIBRARY_PATH="`pwd`/$builddir/$ARCH-build/lib/:${LYCIUM_ROOT}/usr/gdal/$ARCH/lib/:${LYCIUM_ROOT}/usr/zlib_1_3_1/$ARCH/lib/:${LYCIUM_ROOT}/usr/PROJ/$ARCH/lib/:${LYCIUM_ROOT}/usr/sqlite_3_46_0/$ARCH/lib/:${LYCIUM_ROOT}/usr/libtiff/$ARCH/lib/:${LYCIUM_ROOT}/usr/curl_8_9_1/$ARCH/lib/:${LYCIUM_ROOT}/usr/libdeflate/$ARCH/lib/:${LYCIUM_ROOT}/usr/libjpeg-turbo/$ARCH/lib/:${LYCIUM_ROOT}/usr/xz/$ARCH/lib/:${LYCIUM_ROOT}/usr/zstd_1_5_6/$ARCH/lib/:${LYCIUM_ROOT}/usr/libwebp/$ARCH/lib/:${LYCIUM_ROOT}/usr/nghttp2/$ARCH/lib/:${LYCIUM_ROOT}/usr/openssl_1_1_1w/$ARCH/lib"
     cd $builddir
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -B$ARCH-build -S./ > $buildlog 2>&1
     $MAKE -C $ARCH-build  >> $buildlog 2>&1
