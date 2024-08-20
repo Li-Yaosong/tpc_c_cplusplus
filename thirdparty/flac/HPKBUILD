@@ -25,8 +25,8 @@ prepare() {
 
 build() {
     cd $builddir
-    # 使用系统的cmake，OHOS-SDK中的cmake编译会报错
-    cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
+    # OHOS-SDK中的cmake已更新至3.28
+    $OHOS_SDK/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
     make VERBOSE=1 -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
