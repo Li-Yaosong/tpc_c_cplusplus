@@ -41,6 +41,11 @@ prepare() {
 build() {
     cd $builddir/$ARCH-build
     ../configure "$@" --host=$host --enable-shared --enable-static > `pwd`/build.log 2>&1
+    # 修改导致测试失败的字符串
+    find . -name Makefile -exec sed -i 's#mawk#awk#' {} +
+    find . -name Makefile -exec sed -i 's#/bin/bash#bash#' {} +
+    find . -name Makefile -exec sed -i 's#/usr/bin/sed#/bin/sed#' {} +
+    find . -name Makefile -exec sed -i 's#/usr/bin/mkdir#mkdir#' {} +
     ret=-1
     if [ $LYCIUM_BUILD_OS == "CYGWI" ]
     then
@@ -76,6 +81,7 @@ package() {
 check() {
     cd $builddir/$ARCH-build
     make pngtest pngunknown pngstest pngvalid pngimage pngcp timepng >> `pwd`/build.log 2>&1
+    sed -i 's#/bin/bash#/bin/env bash#' pngtest pngunknown pngstest pngvalid pngimage pngcp timepng
     sed -i '/.*check-TESTS: $(check_PROGRAMS)/c\check-TESTS: #$(check_PROGRAMS)' Makefile
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
