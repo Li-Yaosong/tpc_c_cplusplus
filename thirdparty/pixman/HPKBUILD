@@ -7,7 +7,7 @@ pkgdesc="Pixman is a low-level software library for pixel manipulation, providin
 url="http://www.pixman.org/"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("MIT")
-depends=("libpng")
+depends=("zlib" "libpng")
 makedepends=()
 
 unpkgname=Pixman
