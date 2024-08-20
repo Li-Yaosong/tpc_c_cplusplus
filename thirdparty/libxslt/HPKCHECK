@@ -19,15 +19,18 @@ checkprepare(){
     export LIBXSLT_PLUGINS_PATH=`pwd`/$builddir-$ARCH-build/tests/.libs
 
     # 检查/usr/bin目录下是否存在sed软连接
-    if [ ! -f "/usr/bin/sed" ]; then
+    if [ ! -f "/data/CIusr/bin/sed" ]; then
         # 创建软连接
-        ln -s /usr/bin/busybox /usr/bin/sed
+        ln -s /data/CIusr/bin/busybox /data/CIusr/bin/sed
     else
         hassed = true
     fi        
 }
 openharmonycheck() {
     res=0
+    cd $builddir-$ARCH-build
+    #sed将/usr/bin/sed改成/data/CIusr/bin/sed
+    find . -type f -exec sed -i 's|/usr/bin/sed|/data/CIusr/bin/sed|g' {} +
     cd $builddir-$ARCH-build/tests
     /usr/bin/make check_test >> ${logfile} 2>&1
     res=$?
