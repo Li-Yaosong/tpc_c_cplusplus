@@ -20,6 +20,8 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     cd ${builddir}/${ARCH}-build
+    #用sed将facebook-zstd-v1.5.4/tests/playTests.sh的#!/bin/sh换成#!/data/CIusr/bin/bash
+    sed -i 's|^#!/bin/sh|#!/data/CIusr/bin/bash|' facebook-zstd-v1.5.4/tests/playTests.sh
     ctest > ${logfile} 2>&1
     res=$?
     if [ $res -ne 0 ]
