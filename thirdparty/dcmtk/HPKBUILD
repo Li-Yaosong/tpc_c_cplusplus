@@ -38,7 +38,7 @@ prepare() {
     then
         cd $builddir
         patch -p1 < `pwd`/../dcmtk_oh_pkg.patch >> $publicbuildlog 2>&1
-        # 官方文档说明交叉编译需要手动生成arith.h文件以patch形式加入进去 支持OHOS编译测试
+        # 官方文档说明交叉编译需要手动生成arith.h文件以patch形式加入进去 更改写入测试目录 /tmp 为 可访问的目录 支持OHOS编译测试 
 		# patch只需要打一次,关闭打patch
         patchflag=false
         cd $OLDPWD

@@ -96,3 +96,78 @@ diff -Naur dcmtk-DCMTK-3.6.8/config/include/dcmtk/config/arith.h dcmtk-DCMTK-3.6
 +#define DCMTK_ROUND_STYLE 1
 +
 +#endif // CONFIG_ARITH_H
+diff -Naur dcmtk-DCMTK-3.6.8/ofstd/libsrc/ofipc.cc dcmtk-DCMTK-3.6.8_new/ofstd/libsrc/ofipc.cc
+--- dcmtk-DCMTK-3.6.8/ofstd/libsrc/ofipc.cc	2023-12-19 18:12:57.000000000 +0800
++++ dcmtk-DCMTK-3.6.8_new/ofstd/libsrc/ofipc.cc	2024-08-07 14:29:24.712416208 +0800
+@@ -308,7 +308,7 @@
+   // construct name of unix domain socket
+   char port_str[12];
+   OFStandard::snprintf(port_str, sizeof(port_str), "%lu", OFstatic_cast(unsigned long, port));
+-  queue_name_ = "/tmp/";
++  queue_name_ = "/data/storage/el2/base/temp/";
+   queue_name_ += name;
+   queue_name_ += "_";
+   queue_name_ += port_str;
+@@ -799,7 +799,7 @@
+   // construct name of unix domain socket
+   char port_str[12];
+   OFStandard::snprintf(port_str, sizeof(port_str), "%lu", OFstatic_cast(unsigned long, port));
+-  OFString socketname = "/tmp/";
++  OFString socketname = "/data/storage/el2/base/temp/";
+   socketname += name;
+   socketname += "_";
+   socketname += port_str;
+diff -Naur dcmtk-DCMTK-3.6.8/dcmdata/tests/tparser.cc dcmtk-DCMTK-3.6.8_new/dcmdata/tests/tparser.cc
+--- dcmtk-DCMTK-3.6.8/dcmdata/tests/tparser.cc	2023-12-19 18:12:57.000000000 +0800
++++ dcmtk-DCMTK-3.6.8_new/dcmdata/tests/tparser.cc	2024-08-07 16:39:05.312403753 +0800
+@@ -259,7 +259,7 @@
+     OFCondition cond;
+     DcmElement *elem;
+     Uint8 buf[bytesToRead];
+-    OFTempFile temp;
++    OFTempFile temp(O_RDWR,"/data/local/tmp","",".tmp");
+ 
+     if (temp.getStatus().bad())
+     {
+diff -Naur dcmtk-DCMTK-3.6.8/dcmect/tests/t_roundtrip.cc dcmtk-DCMTK-3.6.8_new/dcmect/tests/t_roundtrip.cc
+--- dcmtk-DCMTK-3.6.8/dcmect/tests/t_roundtrip.cc	2023-12-19 18:12:57.000000000 +0800
++++ dcmtk-DCMTK-3.6.8_new/dcmect/tests/t_roundtrip.cc	2024-08-07 16:53:37.322418350 +0800
+@@ -110,7 +110,7 @@
+     checkCreatedObject(dset_dump);
+ 
+     // Save to disk, and re-load to test import
+-    OFTempFile tf;
++    OFTempFile tf(O_RDWR,"/data/local/tmp","",".tmp");
+     OFString temp_fn = tf.getFilename();
+     OFCHECK(!temp_fn.empty());
+     OFCHECK(ct->saveFile(temp_fn.c_str(), EXS_LittleEndianExplicit).good());
+@@ -453,7 +453,7 @@
+     {
+         OFStringStream s;
+         s << "concat_" << n << "_";
+-        OFTempFile tf(O_RDWR, "", s.str().c_str(), ".dcm");
++        OFTempFile tf(O_RDWR, "/data/local/tmp/", s.str().c_str(), ".dcm");
+         result = cc.writeNextInstance(tf.getFilename());
+         OFCHECK(result.good());
+         if (result.good())
+diff -Naur dcmtk-DCMTK-3.6.8/dcmseg/tests/troundtrip.cc dcmtk-DCMTK-3.6.8_new/dcmseg/tests/troundtrip.cc
+--- dcmtk-DCMTK-3.6.8/dcmseg/tests/troundtrip.cc	2024-08-08 10:14:20.162284203 +0800
++++ dcmtk-DCMTK-3.6.8_new/dcmseg/tests/troundtrip.cc	2024-08-08 10:10:44.012283660 +0800
+@@ -80,7 +80,7 @@
+     checkCreatedObject(dset_dump);
+ 
+     // Save to disk, and re-load to test import
+-    OFTempFile tf;
++    OFTempFile tf(O_RDWR,"/data/local/tmp","",".tmp");
+     OFString temp_fn = tf.getFilename();
+     OFCHECK(!temp_fn.empty());
+     OFCHECK(seg->saveFile(temp_fn.c_str(), EXS_LittleEndianExplicit).good());
+@@ -267,7 +267,7 @@
+     {
+         OFStringStream s;
+         s << "concat_" << n << "_";
+-        OFTempFile tf(O_RDWR, "", s.str().c_str(), ".dcm");
++        OFTempFile tf(O_RDWR, "/data/local/tmp", s.str().c_str(), ".dcm");
+         result = cc.writeNextInstance(tf.getFilename());
+         OFCHECK(result.good());
+         if (result.good())
