@@ -18,6 +18,8 @@ source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
 openharmonycheck() {
+    # 因测试需要，手动测试和执行自动化测试前需执行mkdir -p /data/storage/el2/base/temp创建测试目录
+    mkdir -p /data/storage/el2/base/temp
     cd $builddir/$ARCH-build
     echo "total test 61"  > $logfile 2>&1
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/tpc_c_cplusplus/thirdparty/PROJ/PROJ-9.4.1/${ARCH}-build/lib/
@@ -29,6 +31,8 @@ openharmonycheck() {
         cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/     
     fi
 
+    # 测试完成后，删除由mkdir -p创建出来的目录
+    rm -rf /data/storage/el2
     cd $OLDPWD
     return $res
 }

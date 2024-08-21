@@ -38,6 +38,7 @@ autounpack=true
 downloadpackage=true
 buildtools="cmake"
 buildlinux=true
+patchflag=true
 
 builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
@@ -73,6 +74,15 @@ buildsqlite() {
 }
 
 prepare() {
+    if $patchflag
+    then
+        cd $builddir
+        # PROJ_oh_pkg.patch文件的作用是修改/tmp目录无权限问题
+        patch -p1 < `pwd`/../PROJ_oh_pkg.patch
+        patchflag=false
+        cd $OLDPWD
+    fi
+
     if $buildlinux
     then
         downloadsqlite
