@@ -75,6 +75,7 @@ prepare() {
         if [ $? -ne 0 ];then
             return -1
         fi
+        sed -i "s#\"/tmp#\"/data/local/tmp#g" unittest/third_party/googletest/googletest/src/gtest-port.cc
         downloadsubmodules=false
         cd $OLDPWD
     fi
@@ -92,7 +93,6 @@ prepare() {
         genconfigure=false
         cd $OLDPWD
     fi
-
     # 设置编译环境
     if [ $ARCH == "arm64-v8a" ];then
         setarm64ENV
@@ -105,7 +105,6 @@ prepare() {
         return -1
     fi
     mkdir -p $builddir/$ARCH-build
-    
     # 设置环境变量,curl的头文件无法自动找到
     # TESSDATA_PREFIX 设置用于单元测试
     export libcurl_CFLAGS="-I$LYCIUM_ROOT/usr/curl/$ARCH/include"
@@ -153,6 +152,8 @@ check() {
     sed -i '/\($(srcdir)\/Makefile.in:\)/,/\($(am__aclocal_m4_deps):\)/{s/^/#/}' Makefile
     sed -i 's/\([a-zA-Z_]\.log:\)/\1 #/' Makefile
     sed -i 's/\(check-TESTS:\)/\1 #/' Makefile
+    sed -i 's/\/usr\/bin\/bash/\/data\/CIusr\/bin\/bash/g' Makefile
+    sed -i 's/\/usr\/bin\/sed/\/data\/CIusr\/bin\/sed/g' Makefile
     cd $OLDPWD
 
     # 下载测试资源
