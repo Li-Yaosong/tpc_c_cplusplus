@@ -22,8 +22,7 @@ openharmonycheck() {
         echo "error: not found ipv4 addr" > ${logfile} 2>&1
         mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
         cp ./objs/srs.log ${LYCIUM_FAULT_PATH}/${pkgname}/
-        # 这里返回会导致后面./objs路径不对，从而找不到相关文件，故注释
-        # cd $OLDPWD
+        cd $OLDPWD
         return -1;
     fi
     ipv4_addr=${ipv4_addr_result:5}
