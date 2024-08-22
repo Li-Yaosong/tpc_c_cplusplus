@@ -8,7 +8,7 @@ pkgdesc="Font configuration and customization library."
 url="https://gitlab.freedesktop.org/fontconfig/fontconfig"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("HPND" "Public Domain" "MIT-Modern-Variant" "MIT")
-depends=("freetype2" "libxml2" "libpng" "json-c")
+depends=("libzip" "freetype2" "libxml2" "libpng" "json-c")
 makedepends=("gperf" "gettextize" "autopoint" "libtool")
 source="https://www.freedesktop.org/software/${pkgname}/release/${pkgname}-${pkgver}.tar.gz"
 
