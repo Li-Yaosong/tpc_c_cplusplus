@@ -36,7 +36,6 @@ packagename=$builddir.zip
 
 source envset.sh
 patchflag=true
-CC=
 prepare() {
     if $patchflag
     then
@@ -50,12 +49,12 @@ prepare() {
     cp $builddir ${builddir}-${ARCH}-build -rf
 	if [ $ARCH == "armeabi-v7a" ]
     then
-        CC=${OHOS_SDK}/native/llvm/bin/arm-linux-ohos-clang
         setarm32ENV
+       
     elif [ $ARCH == "arm64-v8a" ]
     then
-        CC=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang
         setarm64ENV
+
     else
         echo "${ARCH} not support"
         return -1
@@ -64,7 +63,7 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    PKG_CONFIG_LIBDIR=”${pkgconfigpath} ./config "$@" no-asm zlib > $buildlog 2>&1
+    ./config "$@" no-asm  > $buildlog 2>&1
     $MAKE >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
@@ -81,78 +80,12 @@ package() {
 check() {
     if [ $ARCH == "armeabi-v7a" ]
     then
-        cd $builddir-$ARCH-build/demos/bio
-        $MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
-        cd $OLDPWD
-        
-        cd $builddir-$ARCH-build/demos/cms
-        #$MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1?
-        $CC -I../../include -L../.. -lssl -lcrypto cms_comp.c -o cms_comp
-        $CC -I../../include -L../.. -lssl -lcrypto cms_denc.c -o cms_denc
-        $CC -I../../include -L../.. -lssl -lcrypto cms_enc.c -o cms_enc
-        $CC -I../../include -L../.. -lssl -lcrypto cms_ddec.c -o cms_ddec
-        $CC -I../../include -L../.. -lssl -lcrypto cms_dec.c -o cms_dec
-        $CC -I../../include -L../.. -lssl -lcrypto cms_sign.c -o cms_sign
-        $CC -I../../include -L../.. -lssl -lcrypto cms_sign2.c -o cms_sign2
-        $CC -I../../include -L../.. -lssl -lcrypto cms_uncomp.c -o cms_uncomp
-        $CC -I../../include -L../.. -lssl -lcrypto cms_ver.c -o cms_ver
-        cd $OLDPWD
-        
-        cd $builddir-$ARCH-build/demos/evp
-        $MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
-        cd $OLDPWD
-        
-        cd $builddir-$ARCH-build/demos/pkcs12
-        #$MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
-        $CC -I../../include -L../.. -lssl -lcrypto pkread.c -o pkread
-        $CC -I../../include -L../.. -lssl -lcrypto pkwrite.c -o pkwrite 
-        cd $OLDPWD
-        
-        cd $builddir-$ARCH-build/demos/smime
-        #$MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
-        $CC -I../../include -L../.. -lssl -lcrypto smenc.c -o smenc
-        $CC -I../../include -L../.. -lssl -lcrypto smdec.c -o smdec
-        $CC -I../../include -L../.. -lssl -lcrypto smsign.c -o smsign
-        $CC -I../../include -L../.. -lssl -lcrypto smsign2.c -o smsign2
-        $CC -I../../include -L../.. -lssl -lcrypto smver.c -o smver
-        cd $OLDPWD
-		unsetarm32ENV
+        unsetarm32ENV
     elif [ $ARCH == "arm64-v8a" ]
     then
-        cd $builddir-$ARCH-build/demos/bio
-        $MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
-        cd $OLDPWD
-        
-        cd $builddir-$ARCH-build/demos/cms
-        #$MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
-        $CC -I../../include -L../.. -lssl -lcrypto cms_comp.c -o cms_comp
-        $CC -I../../include -L../.. -lssl -lcrypto cms_denc.c -o cms_denc
-        $CC -I../../include -L../.. -lssl -lcrypto cms_enc.c -o cms_enc
-        $CC -I../../include -L../.. -lssl -lcrypto cms_ddec.c -o cms_ddec
-        $CC -I../../include -L../.. -lssl -lcrypto cms_dec.c -o cms_dec
-        $CC -I../../include -L../.. -lssl -lcrypto cms_sign.c -o cms_sign
-        $CC -I../../include -L../.. -lssl -lcrypto cms_sign2.c -o cms_sign2
-        $CC -I../../include -L../.. -lssl -lcrypto cms_uncomp.c -o cms_uncomp
-        $CC -I../../include -L../.. -lssl -lcrypto cms_ver.c -o cms_ver
-        cd $OLDPWD
-        
-        cd $builddir-$ARCH-build/demos/evp
-        $MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
-        cd $OLDPWD
-        
-        cd $builddir-$ARCH-build/demos/pkcs12
-        #$MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
-        $CC -I../../include -L../.. -lssl -lcrypto pkread.c -o pkread
-        $CC -I../../include -L../.. -lssl -lcrypto pkwrite.c -o pkwrite
-        cd $OLDPWD
-        
-        cd $builddir-$ARCH-build/demos/smime
-        #$MAKE  OPENSSL_INCS_LOCATION=-I../../include OPENSSL_LIBS_LOCATION=-L../.. >> $buildlog 2>&1
-        $CC -I../../include -L../.. -lssl -lcrypto smenc.c -o smenc
-        $CC -I../../include -L../.. -lssl -lcrypto smdec.c -o smdec
-        $CC -I../../include -L../.. -lssl -lcrypto smsign.c -o smsign
-        $CC -I../../include -L../.. -lssl -lcrypto smsign2.c -o smsign2
-        $CC -I../../include -L../.. -lssl -lcrypto smver.c -o smver
+        cd $builddir-$ARCH-build
+        sed -i.bak "s|PERL=/usr/bin/perl|PERL=/data/CIusr/bin/perl|g" ./Makefile
+		make test >> $buildlog 2>&1
         cd $OLDPWD
         unsetarm64ENV
     else
