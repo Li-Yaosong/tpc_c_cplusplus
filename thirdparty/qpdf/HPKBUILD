@@ -32,7 +32,15 @@ downloadpackage=true
 builddir=$pkgname-${pkgver:1}
 packagename=$builddir.tar.gz
 
+patchflag=true
 prepare() {
+    if $patchflag
+    then
+       cd $builddir
+       patch -p1 < ../qpdf_ohos_test.patch
+       cd $OLDPWD
+       patchflag=false
+    fi
     mkdir -p $builddir/$ARCH-build
 }
 
