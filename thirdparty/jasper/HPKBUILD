@@ -40,6 +40,17 @@ package() {
 }
 
 check() {
+    sed -i 's/\/usr\/bin/\/bin/g' $builddir/test/bin/run_test_imginfo
+    sed -i 's/\/usr\/bin/\/bin/g' $builddir/test/bin/run_test_imgcmp
+    sed -i 's/\/usr\/bin/\/bin/g' $builddir/test/bin/run_test_1
+    sed -i 's/\/usr\/bin/\/bin/g' $builddir/test/bin/run_test_2
+    sed -i 's/\/usr\/bin/\/bin/g' $builddir/test/bin/run_test_3
+    sed -i 's/\/usr\/bin/\/bin/g' $builddir/test/bin/run_test_5
+    sed -i 's/\/usr\/bin/\/bin/g' $builddir/build/sysinfo
+    sed -i 's/\/usr\/bin/\/bin/g' $builddir/test/bin/run_codec_test
+    find . -type f -exec sed -i 's/\/usr\/bin/\/data\/CIusr\/bin/g' {} +
+    sed -i 's/tmp_dir=\$(make_tmp_dir)/tmp_dir=\/data\/local\/\$(make_tmp_dir)/g' $builddir/test/bin/run_test_2
+    sed -i 's/tmp_dir=\$(make_tmp_dir)/tmp_dir=\/data\/local\/\$(make_tmp_dir)/g' $builddir/test/bin/run_test_5
     echo "The test must be on an OpenHarmony device!"
 }
 
