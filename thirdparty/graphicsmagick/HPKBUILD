@@ -21,7 +21,7 @@ pkgdesc="GraphicsMagick is the swiss army knife of image processing."
 url=http://www.graphicsmagick.org
 archs=(armeabi-v7a arm64-v8a)
 license=(MIT)
-depends=(libpng jpeg lcms2 jasper libwebp libxml2 jbigkit freetype2 zlib_1_3_1 ImageMagick)
+depends=(libpng jpeg lcms2 jasper libwebp libxml2 jbigkit freetype2 zlib_1_3_1 ImageMagick_7_1_1_35)
 makedepends=()
 
 builddir=GraphicsMagick-${pkgver}

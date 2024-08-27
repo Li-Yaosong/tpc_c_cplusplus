@@ -34,8 +34,8 @@
 - 三方库头文件及生成的库，在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
   
   ```
-  graphicsmagick/armeabi-v7a-build
-  graphicsmagick/arm64-v8a-build
+  graphicsmagick/armeabi-v7a
+  graphicsmagick/arm64-v8a
   ```
   
 - [测试三方库](#测试三方库)
