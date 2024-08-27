@@ -86,8 +86,8 @@ build() {
     make -j4 >> `pwd`/build.log 2>&1
     ret=$?
     # 在构建目录下修改工具路径
-    sed -i "s#/bin/bash#/data/CIusr/bin/bash#g" `grep -rn "/bin/bash" | awk -F ':' '{print $1}'`
-    sed -i "s#/usr/bin/sed#/data/CIusr/bin/sed#g" `grep -rn "/usr/bin/sed" | awk -F ':' '{print $1}'`
+    sed -i "s#/bin/bash#/data/CIusr/bin/bash#g" `grep -rn "/bin/bash" | awk -F ':' '{print $1}' | sort -u`
+    sed -i "s#/usr/bin/sed#/data/CIusr/bin/sed#g" `grep -rn "/usr/bin/sed" | awk -F ':' '{print $1}' | sort -u`
     cd $OLDPWD
     return $ret
 }
