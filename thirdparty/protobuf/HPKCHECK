@@ -6,10 +6,12 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     ## checkNetWork
+    export TEST_TMPDIR=/data/local/tmp
+    echo "test start" > $logfile #断网情况下也会刷新日志
     ping www.baidu.com -c3  >> /dev/null
     if [ $? -ne 0 ]
     then
-        echo "the network not ready, the test depends the network! make sure the network is OK!!"
+        echo "the network not ready, the test depends the network! make sure the network is OK!!" >> $logfile
         return 1
     fi
     oldPath=$TEST_TMPDIR
