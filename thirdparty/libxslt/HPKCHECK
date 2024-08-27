@@ -19,27 +19,26 @@ checkprepare(){
     export LIBXSLT_PLUGINS_PATH=`pwd`/$builddir-$ARCH-build/tests/.libs
 
     # 检查/usr/bin目录下是否存在sed软连接
-    if [ ! -f "/data/CIusr/bin/sed" ]; then
+    if [ ! -f "/bin/sed" ]; then
         # 创建软连接
-        ln -s /data/CIusr/bin/busybox /data/CIusr/bin/sed
+        ln -s /bin/busybox /bin/sed
     else
         hassed = true
     fi        
+    
 }
 openharmonycheck() {
     res=0
-    cd $builddir-$ARCH-build
-    #sed将/usr/bin/sed改成/data/CIusr/bin/sed
-    find . -type f -exec sed -i 's|/usr/bin/sed|/data/CIusr/bin/sed|g' {} +
     cd $builddir-$ARCH-build/tests
-    /usr/bin/make check_test >> ${logfile} 2>&1
+    sed -i 's/check_test: \$(MAKE) \$(AM_MAKEFLAGS) check-local/check_test: check-local/' Makefile
+    /data/CIusr/bin/make check_test >> ${logfile} 2>&1
     res=$?
     
     unset LIBXSLT_PLUGINS_PATH
     cd $OLDPWD
 
     if [ $hassed == false ];then
-        rm -rf /usr/bin/sed
+        rm -rf /bin/sed
     fi    
     
     return $res

@@ -51,6 +51,9 @@ prepare() {
 build() {
     cd $builddir-$ARCH-build
     PKG_CONFIG_LIBDIR=$pkgconfigpath ./configure "$@" --enable-static --without-python --host=$host >> `pwd`/build.log 2>&1
+    find . -name Makefile -exec sed -i 's#/bin/bash#bash#' {} +
+    find . -name Makefile -exec sed -i 's#/usr/bin/sed#/bin/sed#' {} +    
+    sed -i 's#/usr/bin/sed#/bin/sed#' libtool
     make -j4 >> `pwd`/build.log 2>&1
 
     ret=$?
@@ -86,6 +89,8 @@ check() {
 
     # 编译测试程序
     make check >> `pwd`/build.log 2>&1
+    find . -type f -exec sed -i 's/\/usr\/bin\/sed/\/bin\/sed/g' {} +                                                           
+    sed -i 's/\/bin\/bash/\/data\/CIusr\/bin\/bash/g' tests/runtest
     cd $OLDPWD
     
     echo "The test must be on an OpenHarmony device!"
