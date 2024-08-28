@@ -32,6 +32,7 @@ downloadpackage=true
 builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
 buildtools="configure"
+originpath=
 
 source envset.sh
 host=
@@ -56,9 +57,12 @@ build() {
     cd $builddir-$ARCH-build
     export CPPFLAGS="-I${LYCIUM_ROOT}/usr/jpeg/${ARCH}/include -I${LYCIUM_ROOT}/usr/jbigkit/${ARCH}/include -I${LYCIUM_ROOT}/usr/bzip2_1_0_8/${ARCH}/include ${CPPFLAGS}"
     export LDFLAGS="-L${LYCIUM_ROOT}/usr/jbigkit/${ARCH}/lib -L${LYCIUM_ROOT}/usr/jpeg/${ARCH}/lib -L${LYCIUM_ROOT}/usr/bzip2_1_0_8/${ARCH}/lib ${LDFLAGS}"
+    originpath=$PATH
+    PATH="/data/CIusr/bin:$PATH"
     PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" --host=$host > $buildlog 2>&1
     $MAKE >> $buildlog 2>&1
     ret=$?
+    export PATH=$originpath
     cd $OLDPWD
     return $ret
 }
@@ -66,6 +70,7 @@ build() {
 package() {
     cd $builddir-$ARCH-build
     $MAKE install >> $buildlog 2>&1
+    unset originpath
     cd $OLDPWD
 }
 
@@ -75,6 +80,34 @@ check() {
     sed -i 's/check-TESTS: $(check_PROGRAMS)/check-TESTS: /g' Makefile # 删除check-TESTS的依赖，不检查编译生成测试文件过程
     $MAKE check >> $buildlog 2>&1
     ret=$?
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./tests/wandtest
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./tests/drawtest
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./tests/validate
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/colorHistogram
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/averageImages
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/color
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/coalesceImages
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/readWriteImages
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/montageImages
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/geometry
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/readWriteBlob
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/attributes
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/coderInfo
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/exceptions
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/appendImages
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/tests/morphImages
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/demo/gravity
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/demo/zoom
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/demo/demo
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/demo/analyze
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/demo/flip
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/demo/shapes
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/demo/button
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/demo/piddle
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Magick++/demo/detrans
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./libtool
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./Makefile
+    sed -i.bak  's|/bin/bash|/data/CIusr/bin/bash|g'  ./utilities/magick
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
     # real test CMD
