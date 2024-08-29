@@ -85,9 +85,6 @@ build() {
     --host=$host --enable-programs > `pwd`/build.log 2>&1
     make -j4 >> `pwd`/build.log 2>&1
     ret=$?
-    # 在构建目录下修改工具路径
-    sed -i "s#/bin/bash#/data/CIusr/bin/bash#g" `grep -rn "/bin/bash" | awk -F ':' '{print $1}' | sort -u`
-    sed -i "s#/usr/bin/sed#/data/CIusr/bin/sed#g" `grep -rn "/usr/bin/sed" | awk -F ':' '{print $1}' | sort -u`
     cd $OLDPWD
     return $ret
 }
@@ -249,6 +246,8 @@ check() {
     sed -i '/.*webpio_reg.log: webpio_reg$(EXEEXT)/c\webpio_reg.log: #webpio_reg$(EXEEXT)' prog/Makefile
     sed -i '/.*webpanimio_reg.log: webpanimio_reg$(EXEEXT)/c\webpanimio_reg.log: #webpanimio_reg$(EXEEXT)' prog/Makefile
     sed -i '/.*jp2kio_reg.log: jp2kio_reg$(EXEEXT)/c\jp2kio_reg.log: #jp2kio_reg$(EXEEXT)' prog/Makefile
+    sed -i "s#/bin/bash#/data/CIusr/bin/bash#g" `grep -rn "/bin/bash" | awk -F ':' '{print $1}' | sort -u`
+    sed -i "s#/usr/bin/sed#sed#g" `grep -rn "/usr/bin/sed" | awk -F ':' '{print $1}' | sort -u`
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
     then
