@@ -1,9 +1,7 @@
 # libmobi集成到应用hap
 本库是在RK3568开发板上基于OpenHarmony的镜像验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
 ## 开发环境
-- ubuntu22.04
-- [准备三方库构建环境](../../../lycium/README.md#1编译环境准备)
-- [准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
+- [开发环境准备](../../../docs/hap_integrate_environment.md)
 ## 编译三方库
 - 下载本仓库
   ```

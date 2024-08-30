@@ -4,12 +4,14 @@
 
 cronet是chromium,项目的网络子模块。承接了chromium网络通信相关的能力，Cronet 原生支持 HTTP、HTTP/2 和 HTTP/3 over QUIC 协议。该库支持您为请求设置优先级标签。服务器可以使用优先级标记来确定处理请求的顺序。Cronet 可以使用内存缓存或磁盘缓存来存储网络请求中检索到的资源。后续请求会自动从缓存中传送。默认情况下，使用 Cronet 库发出的网络请求是异步的。在等待请求返回时，您的工作器线程不会被阻塞。Cronet 支持使用 Brotli 压缩数据格式进行数据压缩。
 
-## 使用约束
+## 三方库版本
+- 107.0.5304.150
 
-- IDE版本：DevEco Studio 4.1.3.300
-- SDK版本：apiVersion: 11, version: 4.1.3.5
-- 三方库版本：107.0.5304.150
-- 当前适配的功能：支持cronet http/https 通信能力
+## 已适配功能
+- 支持cronet http/https 通信能力
+
+## 使用约束
+- [IDE和SDK版本](../../docs/constraint.md)
 
 ## 使用方式
 源码下载：

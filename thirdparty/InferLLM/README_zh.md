@@ -3,12 +3,11 @@
 ## 功能简介
 InferLLM 是一个简单高效的 LLM CPU 推理框架，可以实现在本地部署 LLM 中的量化模型
 
+## 三方库版本
+- 405d866e4c11b884a8072b4b30659c63555be41d
+
 ## 使用约束
-- IDE版本：DevEco Studio 4.0.0.400
-- SDK版本：ohos_sdk_public 3.2.13.5 (API Version 9 Release)
-- ROM版本：OpenHarmony 3.2 Release
-- 三方库版本：main
-- 当前适配的功能：本地部署 LLM 中的量化模型
+- [IDE和SDK版本](../../docs/constraint.md)
 
 ## 集成方式
 

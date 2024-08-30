@@ -4,12 +4,9 @@
 
 ​	FFmpeg-ff4.0是为适配[ohos_ijkplayer](https://gitee.com/openharmony-sig/ohos_ijkplayer)的指定版本，tags：ff4.0--ijk0.8.8--20210426--001。
 
-
-
 ## 构建准备
 
 [准备三方库构建环境](../../lycium/README.md#1编译环境准备)
-
 
 
 ## 构建方式
