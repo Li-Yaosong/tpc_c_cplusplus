@@ -4,10 +4,11 @@
 
 uriparser 是一个开源的 URI（统一资源标识符）解析库，用于解析和处理 URI。
 
-## 使用约束
+## 三方库版本
+- 0.9.8
 
-- SDK版本：ohos_sdk_linux 5.0.3.100
-- 三方库版本：uriparser-0.9.8
+## 使用约束
+- [IDE和SDK版本](../../docs/constraint.md)
 
 ## 集成方式
 

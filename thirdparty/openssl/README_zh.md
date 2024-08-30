@@ -10,5 +10,11 @@ OpenSSL是一个强大的、商业级的、功能齐全的用于传输层安全�
 #### Legalities
   A number of nations restrict the use or export of cryptography. If you are potentially subject to such restrictions, you should seek legal advice before attempting to develop or distribute cryptographic code.
 
+## 三方库版本
+- OpenSSL_1_1_1t
+
+## 使用约束
+- [IDE和SDK版本](../../docs/constraint.md)
+
 ## 集成方式
 + [应用hap包集成](docs/hap_integrate.md)

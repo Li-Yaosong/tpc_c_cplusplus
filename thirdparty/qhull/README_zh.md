@@ -4,10 +4,11 @@
 
 qhull 是一个用于计算凸包、Delaunay 三角剖分和 Voronoi 图等计算几何问题的开源库。
 
-## 使用约束
+## 三方库版本
+- v8.1-alpha3
 
-- SDK版本：ohos_sdk_linux 5.0.3.100
-- 三方库版本：qhull-v8.1-alpha3
+## 使用约束
+- [IDE和SDK版本](../../docs/constraint.md)
 
 ## 集成方式
 

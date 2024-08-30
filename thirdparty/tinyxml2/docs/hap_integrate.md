@@ -2,11 +2,8 @@
 ## 准备应用工程
 本库是基于DevEco Studio 3.1 Beta1版本，在RK3568开发板上验证的，如果是从未使用过RK3568，可以先查看[润和RK3568开发板标准系统快速上手](https://gitee.com/openharmony-sig/knowledge_demo_temp/tree/master/docs/rk3568_helloworld)。
 ### 准备应用开发环境
-- IDE版本：DevEco Studio 3.1 Beta1
-- SDK版本：OpenHarmony SDK
-- API版本：API Version 9
 
-应用环境准备具体可参照文档[通过IDE开发一个Napi工程](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/docs/napi_study/docs/hello_napi.md)
+- [开发环境准备](../../../docs/hap_integrate_environment.md)
 
 ### 增加构建脚本及配置文件
 
