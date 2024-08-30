@@ -62,7 +62,7 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    ./configure "$@" --host=$host >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" --host=$host >> `pwd`/build.log 2>&1
     make CFLAGS="-Wno-int-conversion -I$LYCIUM_ROOT/usr/libmnl/$ARCH/include -I`pwd`/include -I`pwd`/include/uapi -I`pwd`/rdma/include/uapi \
         -I`pwd`/vdpa/include/uapi -D_GNU_SOURCE -DHAVE_LIBMNL -DHAVE_SETNS -DHAVE_HANDLE_AT $CFLAGS" LDFLAGS="-L$LYCIUM_ROOT/usr/libelf/$ARCH/lib \
         -L$LYCIUM_ROOT/usr/libmnl/$ARCH/lib -lmnl ${LDFLAGS}" V=1 -j4 >> `pwd`/build.log 2>&1
