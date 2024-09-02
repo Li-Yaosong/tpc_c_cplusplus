@@ -38,7 +38,7 @@ prepare() {
 build() {
     cd $builddir
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DSPDLOG_BUILD_TESTS=ON\
-    -DSPDLOG_FMT_EXTERNAL_HO=ON -Dfmt_DIR=/data/tpc_c_cplusplus/lycium/usr/fmt/$ARCH/lib/cmake/fmt -B$ARCH-build -S./ > $buildlog 2>&1
+    -DSPDLOG_FMT_EXTERNAL_HO=ON -B$ARCH-build -S./ > $buildlog 2>&1
     $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
