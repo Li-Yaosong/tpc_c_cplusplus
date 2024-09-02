@@ -38,7 +38,8 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DNCNN_BUILD_TESTS=ON \
+    #debug模式下test_innerproduct,test_matmul,test_multiheadattention这三个测试能passed
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DNCNN_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug \
     -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > $buildlog 2>&1
     $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
@@ -58,6 +59,8 @@ check() {
     cmakepatch=$(echo $cmakepatch | sed 's/\//\\\//g')
     cd $builddir/$ARCH-build/tests/
     sed -i "s/$cmakepatch/\/usr/g" CTestTestfile.cmake
+    sed -i "s#$cmakepatch/bin/cmake#/data/CIusr/bin/cmake#g" CTestTestfile.cmake
+    sed -i 's/\/usr\/bin/\/data\/CIusr\/bin/g' CTestTestfile.cmake
     echo "The test must be on an OpenHarmony device!"
     cd $OLDPWD
     # 测试方式
@@ -68,3 +71,4 @@ check() {
 cleanbuild() {
     rm -rf ${PWD}/$builddir #${PWD}/$packagename
 }
+
