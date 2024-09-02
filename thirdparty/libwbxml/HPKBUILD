@@ -27,7 +27,6 @@ source=https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgname-$pkgver.t
 autounpack=true
 downloadpackage=true
 buildtools=
-
 builddir=$pkgname-$pkgname-$pkgver
 packagename=$pkgname-$pkgver.tar.gz
 
