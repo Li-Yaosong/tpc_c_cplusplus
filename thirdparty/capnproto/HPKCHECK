@@ -16,9 +16,9 @@
 
 source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
-
+OLDPATH=$LD_LIBRARY_PATH
 checkprepare(){
-    return 0
+    export LD_LIBRARY_PATH=${LYCIUM_ROOT}/usr/capnproto/${ARCH}/lib/:${LYCIUM_ROOT}/usr/zlib_1_3_1/${ARCH}/lib/:${LYCIUM_ROOT}/usr/openssl_1_1_1w/${ARCH}/lib/:$LD_LIBRARY_PATH
 }
 
 openharmonycheck() {
@@ -30,6 +30,9 @@ openharmonycheck() {
         mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
         cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/     
     fi                   
-    cd $OLDPWD                         
+    cd $OLDPWD
+    # 恢复环境变量
+    export LD_LIBRARY_PATH=$OLDPATH
+    unset OLDPATH
     return $res  
 }

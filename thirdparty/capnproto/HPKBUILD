@@ -21,7 +21,7 @@ pkgdesc="Cap'n Proto is an insanely fast data interchange format and capability-
 url="https://github.com/capnproto/capnproto"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("MIT License")
-depends=("zlib")
+depends=("zlib_1_3_1" "openssl_1_1_1w")
 makedepends=()
 
 source="https://github.com/${pkgname}/${pkgname}/archive/refs/tags/${pkgver}.tar.gz"
@@ -30,6 +30,7 @@ autounpack=true
 downloadpackage=true
 buildtools="cmake"
 cmaketestfalg=true
+patchflag=true
 
 builddir=$pkgname-${pkgver:1}
 packagename=$builddir.tar.gz
@@ -37,7 +38,7 @@ packagename=$builddir.tar.gz
 prepare() {
     mkdir -p $builddir/$ARCH-build
     # 先cmake一份linux环境下的
-    if ${maketestfalg}
+    if ${cmaketestfalg}
     then
         mkdir -p $builddir/build-test
         cd $builddir/build-test
@@ -45,6 +46,17 @@ prepare() {
         ${MAKE} >> $buildlog 2>&1
         cd $OLDPWD
         cmaketestfalg=false
+    fi
+    if $patchflag
+    then
+    cd $builddir
+    #使用OHOS宏控制部分源码解决测试用例失败的问题
+    patch -p1 < ../ohos_capnproto_pkg.patch
+    #三方库整改根目录权限patch
+    patch -p1 < ../ohos_capnproto_test.patch
+    #patch只需要打一次,关闭打patch
+    patchflag=false
+    cd $OLDPWD
     fi
 }
 
@@ -71,6 +83,16 @@ package() {
 
 check() {
     echo "The test must be on an OpenHarmony device!"
+    if [ $ARCH == "armeabi-v7a" ]; then
+        # 拷贝shared库到测试程序运行目录
+        cp $OHOS_SDK/native/llvm/lib/arm-linux-ohos/libc++_shared.so ${LYCIUM_ROOT}/usr/capnproto/$ARCH/lib
+    elif [ $ARCH == "arm64-v8a" ]; then
+        # 拷贝shared库到测试程序运行目录
+        cp $OHOS_SDK/native/llvm/lib/aarch64-linux-ohos/libc++_shared.so ${LYCIUM_ROOT}/usr/capnproto/$ARCH/lib
+    else
+        echo "Not support ${ARCH} yet"
+        return -1
+    fi
 }
 
 cleanbuild(){
