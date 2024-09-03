@@ -29,7 +29,7 @@ downloadpackage=true
 buildtools=
 
 builddir=$pkgname-$pkgname-$pkgver
-packagename=$pkgname-$pkgver.tar.gz
+packagename=$builddir.tar.gz
 
 prepare() {
     mkdir -p $builddir/$ARCH-build
