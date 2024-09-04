@@ -27,7 +27,7 @@ source="https://github.com/mm2/Little-CMS/archive/refs/tags/2.11.zip"
 
 downloadpackage=true
 autounpack=true
-buildtools=configure
+buildtools=cmake
 
 builddir=$pkgname-${pkgver}
 packagename=$builddir.zip
