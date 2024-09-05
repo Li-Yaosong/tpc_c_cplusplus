@@ -19,6 +19,7 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 
 openharmonycheck() {
     res=0
+    export OPENCV_TEMP_PATH=/data/local/tmp
     cd $builddir/${ARCH}-build/unix-install
     chmod +x opencv_run_all_tests.sh
     ./opencv_run_all_tests.sh > ${logfile} 2>&1
