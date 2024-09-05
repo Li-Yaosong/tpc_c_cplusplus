@@ -23,7 +23,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("MIT license")
 depends=()
 makedepends=()
-source="https://github.com/zsummer/log4z/blob/v3.4.0/COPYRIGHT"
+source="https://github.com/zsummer/log4z/archive/refs/tags/v3.4.0.zip"
 
 downloadpackage=true
 autounpack=true
