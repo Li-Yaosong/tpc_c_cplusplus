@@ -52,7 +52,6 @@ fix_test() {
 }
 
 prepare() {
-    cp -rf $builddir $builddir-$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]
     then
         setarm32ENV
@@ -63,27 +62,30 @@ prepare() {
         setarm64ENV
         host=aarch64-linux
     fi
-    cd $builddir-$ARCH-build
-    fix_test
-    ./autogen.sh -i > `pwd`/build.log 2>&1
-    cd $OLDPWD
 
     if [ "$patchflag" == true ]
     then
         cd $builddir
-        # 此patch将源码中的/tmp路径改为/data/local/tmp,以解决因路径问题导致的测试失败
+        # 屏蔽open_memstream接口,将源码中的/tmp路径改为/data/local/tmp,以解决因路径问题导致的测试失败
         patch -p1 < ../leptonica_oh_test.patch
         patchflag=false
         cd $OLDPWD
     fi
+    cp -rf $builddir $builddir-$ARCH-build
+
+    cd $builddir-$ARCH-build
+    fix_test
+    ./autogen.sh -i > `pwd`/build.log 2>&1
+    cd $OLDPWD
 }
 
 build() {
     cd $builddir-$ARCH-build
-    PKG_CONFIG_LIBDIR="${pkgconfigpath}" LIBTIFF_LIBS="-L$LYCIUM_ROOT/usr/tiff/$ARCH/lib -ltiff" \
-    LIBTIFF_CFLAGS="-I$LYCIUM_ROOT/usr/tiff/$ARCH/include" ./configure "$@" \
-    --host=$host --enable-programs > `pwd`/build.log 2>&1
-    make -j4 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+        LIBTIFF_LIBS="-L$LYCIUM_ROOT/usr/tiff/$ARCH/lib -ltiff" \
+        LIBTIFF_CFLAGS="-I$LYCIUM_ROOT/usr/tiff/$ARCH/include" \
+        ./configure "$@" --host=$host --enable-programs > $buildlog 2>&1
+    $MAKE CFLAGS="-pedantic -Og -Wpadded -Wall -g3" >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -91,7 +93,7 @@ build() {
 
 package() {
     cd $builddir-$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE install >> $buildlog 2>&1
     cd $OLDPWD
 }
 

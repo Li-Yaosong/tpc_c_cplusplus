@@ -1,6 +1,18 @@
-diff -Nura leptonica-1.83.1/prog/adaptmap_dark.c leptonica_patch/prog/adaptmap_dark.c
+diff -Nura leptonica-1.83.1/configure.ac leptonica-1.83.1-patch/configure.ac
+--- leptonica-1.83.1/configure.ac	2023-01-26 14:12:24.000000000 +0800
++++ leptonica-1.83.1-patch/configure.ac	2024-09-05 14:26:42.598983984 +0800
+@@ -252,7 +252,7 @@
+ )
+ 
+ # Checks for library functions.
+-AC_CHECK_FUNCS([fmemopen])
++#AC_CHECK_FUNCS([fmemopen])
+ AC_CHECK_FUNC([fstatat])
+ AC_CHECK_FUNC([dirfd])
+ 
+diff -Nura leptonica-1.83.1/prog/adaptmap_dark.c leptonica-1.83.1-patch/prog/adaptmap_dark.c
 --- leptonica-1.83.1/prog/adaptmap_dark.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/adaptmap_dark.c	2024-08-15 11:14:31.841859094 +0800
++++ leptonica-1.83.1-patch/prog/adaptmap_dark.c	2024-09-05 14:26:11.003618453 +0800
 @@ -84,14 +84,14 @@
      GenCleans("cavalerie.11.jpg", &index, 40, bmf);
  
@@ -93,9 +105,9 @@ diff -Nura leptonica-1.83.1/prog/adaptmap_dark.c leptonica_patch/prog/adaptmap_d
      pixWrite(buf, pix5, IFF_JFIF_JPEG);
      pixDestroy(&pix2);
      pixDestroy(&pix3);
-diff -Nura leptonica-1.83.1/prog/adaptmap_reg.c leptonica_patch/prog/adaptmap_reg.c
+diff -Nura leptonica-1.83.1/prog/adaptmap_reg.c leptonica-1.83.1-patch/prog/adaptmap_reg.c
 --- leptonica-1.83.1/prog/adaptmap_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/adaptmap_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/adaptmap_reg.c	2024-09-05 14:26:11.003618453 +0800
 @@ -161,7 +161,7 @@
  
          /* Display results */
@@ -105,9 +117,9 @@ diff -Nura leptonica-1.83.1/prog/adaptmap_reg.c leptonica_patch/prog/adaptmap_re
      pixDisplayWithTitle(pix1, 50, 0, NULL, rp->display);
      pixDestroy(&pix1);
      pixaDestroy(&pixa);
-diff -Nura leptonica-1.83.1/prog/alltests_reg.c leptonica_patch/prog/alltests_reg.c
+diff -Nura leptonica-1.83.1/prog/alltests_reg.c leptonica-1.83.1-patch/prog/alltests_reg.c
 --- leptonica-1.83.1/prog/alltests_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/alltests_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/alltests_reg.c	2024-09-05 14:26:11.003618453 +0800
 @@ -32,7 +32,7 @@
   *        alltests_reg command
   *
@@ -143,9 +155,9 @@ diff -Nura leptonica-1.83.1/prog/alltests_reg.c leptonica_patch/prog/alltests_re
                                buf, strlen(buf));
                  nfail++;
              }
-diff -Nura leptonica-1.83.1/prog/alphaops_reg.c leptonica_patch/prog/alphaops_reg.c
+diff -Nura leptonica-1.83.1/prog/alphaops_reg.c leptonica-1.83.1-patch/prog/alphaops_reg.c
 --- leptonica-1.83.1/prog/alphaops_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/alphaops_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/alphaops_reg.c	2024-09-05 14:26:11.003618453 +0800
 @@ -90,8 +90,8 @@
      pix3 = pixSetAlphaOverWhite(pix2);
      pixSetSpp(pix3, 3);
@@ -230,9 +242,9 @@ diff -Nura leptonica-1.83.1/prog/alphaops_reg.c leptonica_patch/prog/alphaops_re
      regTestComparePix(rp, pix5, pix6);  /* 28 */
      pixDestroy(&pix1);
      pixDestroy(&pix2);
-diff -Nura leptonica-1.83.1/prog/arabic_lines.c leptonica_patch/prog/arabic_lines.c
+diff -Nura leptonica-1.83.1/prog/arabic_lines.c leptonica-1.83.1-patch/prog/arabic_lines.c
 --- leptonica-1.83.1/prog/arabic_lines.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/arabic_lines.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/arabic_lines.c	2024-09-05 14:26:11.003618453 +0800
 @@ -28,7 +28,7 @@
   * arabic_lines.c
   *
@@ -274,9 +286,9 @@ diff -Nura leptonica-1.83.1/prog/arabic_lines.c leptonica_patch/prog/arabic_line
      pixaaDestroy(&pixaa);
      pixDestroy(&pix2);
  
-diff -Nura leptonica-1.83.1/prog/arithtest.c leptonica_patch/prog/arithtest.c
+diff -Nura leptonica-1.83.1/prog/arithtest.c leptonica-1.83.1-patch/prog/arithtest.c
 --- leptonica-1.83.1/prog/arithtest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/arithtest.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/arithtest.c	2024-09-05 14:26:11.007618374 +0800
 @@ -61,16 +61,16 @@
      pixMultConstAccumulate(pix1, 255., 0);
      pix2 = pixFinalAccumulate(pix1, 0, 16);
@@ -298,9 +310,9 @@ diff -Nura leptonica-1.83.1/prog/arithtest.c leptonica_patch/prog/arithtest.c
  
      pixDestroy(&pixs);
      pixDestroy(&pix1);
-diff -Nura leptonica-1.83.1/prog/autogentest1.c leptonica_patch/prog/autogentest1.c
+diff -Nura leptonica-1.83.1/prog/autogentest1.c leptonica-1.83.1-patch/prog/autogentest1.c
 --- leptonica-1.83.1/prog/autogentest1.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/autogentest1.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/autogentest1.c	2024-09-05 14:26:11.007618374 +0800
 @@ -27,7 +27,7 @@
  /*
   *  autogentest1.c
@@ -336,9 +348,9 @@ diff -Nura leptonica-1.83.1/prog/autogentest1.c leptonica_patch/prog/autogentest
      return 0;
  }
  
-diff -Nura leptonica-1.83.1/prog/autogentest2.c leptonica_patch/prog/autogentest2.c
+diff -Nura leptonica-1.83.1/prog/autogentest2.c leptonica-1.83.1-patch/prog/autogentest2.c
 --- leptonica-1.83.1/prog/autogentest2.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/autogentest2.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/autogentest2.c	2024-09-05 14:26:11.007618374 +0800
 @@ -55,8 +55,8 @@
  
      for (i = 0; i < 2; i++) {
@@ -350,9 +362,9 @@ diff -Nura leptonica-1.83.1/prog/autogentest2.c leptonica_patch/prog/autogentest
         if (same)
             lept_stderr("Files are the same for %s\n", files[i]);
         else
-diff -Nura leptonica-1.83.1/prog/barcodetest.c leptonica_patch/prog/barcodetest.c
+diff -Nura leptonica-1.83.1/prog/barcodetest.c leptonica-1.83.1-patch/prog/barcodetest.c
 --- leptonica-1.83.1/prog/barcodetest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/barcodetest.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/barcodetest.c	2024-09-05 14:26:11.007618374 +0800
 @@ -60,15 +60,15 @@
          return ERROR_INT("pixs not made", __func__, 1);
  
@@ -384,9 +396,9 @@ diff -Nura leptonica-1.83.1/prog/barcodetest.c leptonica_patch/prog/barcodetest.
      sarrayDestroy(&saw3);
      sarrayDestroy(&sad3);
  }
-diff -Nura leptonica-1.83.1/prog/baseline_reg.c leptonica_patch/prog/baseline_reg.c
+diff -Nura leptonica-1.83.1/prog/baseline_reg.c leptonica-1.83.1-patch/prog/baseline_reg.c
 --- leptonica-1.83.1/prog/baseline_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/baseline_reg.c	2024-08-15 11:14:31.841859094 +0800
++++ leptonica-1.83.1-patch/prog/baseline_reg.c	2024-09-05 14:26:11.007618374 +0800
 @@ -67,9 +67,9 @@
  
          /* Test function for finding local skew angles */
@@ -413,9 +425,9 @@ diff -Nura leptonica-1.83.1/prog/baseline_reg.c leptonica_patch/prog/baseline_re
      regTestWritePixAndCheck(rp, pix2, IFF_PNG);  /* 3 */
      regTestWritePixAndCheck(rp, pix3, IFF_PNG);  /* 4 */
      regTestWritePixAndCheck(rp, pix4, IFF_PNG);  /* 5 */
-diff -Nura leptonica-1.83.1/prog/binarizefiles.c leptonica_patch/prog/binarizefiles.c
+diff -Nura leptonica-1.83.1/prog/binarizefiles.c leptonica-1.83.1-patch/prog/binarizefiles.c
 --- leptonica-1.83.1/prog/binarizefiles.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/binarizefiles.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/binarizefiles.c	2024-09-05 14:26:11.007618374 +0800
 @@ -59,7 +59,7 @@
              "               in the directory\n"
              "      thresh: 0 for adaptive; > 0 for global thresh (e.g., 128)\n"
@@ -425,9 +437,9 @@ diff -Nura leptonica-1.83.1/prog/binarizefiles.c leptonica_patch/prog/binarizefi
          return 1;
      }
      dirin = argv[1];
-diff -Nura leptonica-1.83.1/prog/binarize_set.c leptonica_patch/prog/binarize_set.c
+diff -Nura leptonica-1.83.1/prog/binarize_set.c leptonica-1.83.1-patch/prog/binarize_set.c
 --- leptonica-1.83.1/prog/binarize_set.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/binarize_set.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/binarize_set.c	2024-09-05 14:26:11.007618374 +0800
 @@ -85,7 +85,7 @@
      pixg = pixConvertTo8(pixs, 0);
      pix1 = pixBackgroundNorm(pixg, NULL, NULL, 10, 15, 100, 50, 255, 2, 2);
@@ -479,9 +491,9 @@ diff -Nura leptonica-1.83.1/prog/binarize_set.c leptonica_patch/prog/binarize_se
      pixDisplay(pix1, 1000, 0);
      pixDestroy(&pix1);
      pixaDestroy(&pixa);
-diff -Nura leptonica-1.83.1/prog/binmorph2_reg.c leptonica_patch/prog/binmorph2_reg.c
+diff -Nura leptonica-1.83.1/prog/binmorph2_reg.c leptonica-1.83.1-patch/prog/binmorph2_reg.c
 --- leptonica-1.83.1/prog/binmorph2_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/binmorph2_reg.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/binmorph2_reg.c	2024-09-05 14:26:11.007618374 +0800
 @@ -219,7 +219,7 @@
  
      { SELA *sela;
@@ -491,9 +503,9 @@ diff -Nura leptonica-1.83.1/prog/binmorph2_reg.c leptonica_patch/prog/binmorph2_
      selaDestroy(&sela);
      }
  #endif
-diff -Nura leptonica-1.83.1/prog/blend2_reg.c leptonica_patch/prog/blend2_reg.c
+diff -Nura leptonica-1.83.1/prog/blend2_reg.c leptonica-1.83.1-patch/prog/blend2_reg.c
 --- leptonica-1.83.1/prog/blend2_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/blend2_reg.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/blend2_reg.c	2024-09-05 14:26:11.007618374 +0800
 @@ -38,8 +38,8 @@
  #include "allheaders.h"
  
@@ -505,9 +517,9 @@ diff -Nura leptonica-1.83.1/prog/blend2_reg.c leptonica_patch/prog/blend2_reg.c
  
  
  int main(int    argc,
-diff -Nura leptonica-1.83.1/prog/blend3_reg.c leptonica_patch/prog/blend3_reg.c
+diff -Nura leptonica-1.83.1/prog/blend3_reg.c leptonica-1.83.1-patch/prog/blend3_reg.c
 --- leptonica-1.83.1/prog/blend3_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/blend3_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/blend3_reg.c	2024-09-05 14:26:11.007618374 +0800
 @@ -82,7 +82,7 @@
      pixDisplayWithTitle(pixt, 0, 1000, NULL, rp->display);
  
@@ -517,9 +529,9 @@ diff -Nura leptonica-1.83.1/prog/blend3_reg.c leptonica_patch/prog/blend3_reg.c
      pixaDestroy(&pixa);
      pixDestroy(&pixd);
  
-diff -Nura leptonica-1.83.1/prog/blend4_reg.c leptonica_patch/prog/blend4_reg.c
+diff -Nura leptonica-1.83.1/prog/blend4_reg.c leptonica-1.83.1-patch/prog/blend4_reg.c
 --- leptonica-1.83.1/prog/blend4_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/blend4_reg.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/blend4_reg.c	2024-09-05 14:26:11.007618374 +0800
 @@ -91,8 +91,8 @@
      }
  
@@ -531,9 +543,9 @@ diff -Nura leptonica-1.83.1/prog/blend4_reg.c leptonica_patch/prog/blend4_reg.c
      pixDestroy(&pix0);
      pixDestroy(&pix1);
      pixaDestroy(&pixa);
-diff -Nura leptonica-1.83.1/prog/blendcmaptest.c leptonica_patch/prog/blendcmaptest.c
+diff -Nura leptonica-1.83.1/prog/blendcmaptest.c leptonica-1.83.1-patch/prog/blendcmaptest.c
 --- leptonica-1.83.1/prog/blendcmaptest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/blendcmaptest.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/blendcmaptest.c	2024-09-05 14:26:11.007618374 +0800
 @@ -98,9 +98,9 @@
      pixaAddPix(pixa, pix2, L_COPY);
      cmap = pixGetColormap(pix2);
@@ -546,9 +558,9 @@ diff -Nura leptonica-1.83.1/prog/blendcmaptest.c leptonica_patch/prog/blendcmapt
  
      pixDestroy(&pixs);
      pixDestroy(&pixb);
-diff -Nura leptonica-1.83.1/prog/boxa1_reg.c leptonica_patch/prog/boxa1_reg.c
+diff -Nura leptonica-1.83.1/prog/boxa1_reg.c leptonica-1.83.1-patch/prog/boxa1_reg.c
 --- leptonica-1.83.1/prog/boxa1_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/boxa1_reg.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/boxa1_reg.c	2024-09-05 14:26:11.011618296 +0800
 @@ -106,9 +106,9 @@
      boxa1 = boxaReadMem(data1, size1);
      boxaWriteMem(&data2, &size2, boxa1);
@@ -562,9 +574,9 @@ diff -Nura leptonica-1.83.1/prog/boxa1_reg.c leptonica_patch/prog/boxa1_reg.c
                        &same);
      regTestCompareValues(rp, 1, same, 0.0);  /* 8 */
      boxaDestroy(&boxa1);
-diff -Nura leptonica-1.83.1/prog/boxa4_reg.c leptonica_patch/prog/boxa4_reg.c
+diff -Nura leptonica-1.83.1/prog/boxa4_reg.c leptonica-1.83.1-patch/prog/boxa4_reg.c
 --- leptonica-1.83.1/prog/boxa4_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/boxa4_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/boxa4_reg.c	2024-09-05 14:26:11.011618296 +0800
 @@ -117,7 +117,7 @@
                                       L_ADJUST_TOP_AND_BOT, 50, 0, pixa1);
      boxaWriteMem(&data, &size, boxa2);
@@ -597,9 +609,9 @@ diff -Nura leptonica-1.83.1/prog/boxa4_reg.c leptonica_patch/prog/boxa4_reg.c
      pixDestroy(&pix1);
      pixaDestroy(&pixa1);
      pixaDestroy(&pixa2);
-diff -Nura leptonica-1.83.1/prog/buffertest.c leptonica_patch/prog/buffertest.c
+diff -Nura leptonica-1.83.1/prog/buffertest.c leptonica-1.83.1-patch/prog/buffertest.c
 --- leptonica-1.83.1/prog/buffertest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/buffertest.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/buffertest.c	2024-09-05 14:26:11.011618296 +0800
 @@ -64,9 +64,9 @@
      l_binaryWrite(fileout, "w", dataout, nout);
  
@@ -612,9 +624,9 @@ diff -Nura leptonica-1.83.1/prog/buffertest.c leptonica_patch/prog/buffertest.c
      if (same)
          lept_stderr("Correct: data is the same\n");
      else
-diff -Nura leptonica-1.83.1/prog/bytea_reg.c leptonica_patch/prog/bytea_reg.c
+diff -Nura leptonica-1.83.1/prog/bytea_reg.c leptonica-1.83.1-patch/prog/bytea_reg.c
 --- leptonica-1.83.1/prog/bytea_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/bytea_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/bytea_reg.c	2024-09-05 14:26:11.011618296 +0800
 @@ -68,8 +68,8 @@
      size1 = l_byteaGetSize(lba1);
      size2 = l_byteaGetSize(lba2);
@@ -653,9 +665,9 @@ diff -Nura leptonica-1.83.1/prog/bytea_reg.c leptonica_patch/prog/bytea_reg.c
      regTestCompareStrings(rp, lba1->data, size1, lba2->data,
                            lba2->size);  /* 7 */
      l_byteaDestroy(&lba1);
-diff -Nura leptonica-1.83.1/prog/ccbord_reg.c leptonica_patch/prog/ccbord_reg.c
+diff -Nura leptonica-1.83.1/prog/ccbord_reg.c leptonica-1.83.1-patch/prog/ccbord_reg.c
 --- leptonica-1.83.1/prog/ccbord_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/ccbord_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/ccbord_reg.c	2024-09-05 14:26:11.011618296 +0800
 @@ -127,7 +127,7 @@
                      lept_stderr("bad pixel at (%d, %d)\n", j, i);
              }
@@ -686,9 +698,9 @@ diff -Nura leptonica-1.83.1/prog/ccbord_reg.c leptonica_patch/prog/ccbord_reg.c
  #endif
      }
  
-diff -Nura leptonica-1.83.1/prog/ccbordtest.c leptonica_patch/prog/ccbordtest.c
+diff -Nura leptonica-1.83.1/prog/ccbordtest.c leptonica-1.83.1-patch/prog/ccbordtest.c
 --- leptonica-1.83.1/prog/ccbordtest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/ccbordtest.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/ccbordtest.c	2024-09-05 14:26:11.011618296 +0800
 @@ -70,7 +70,7 @@
      startTimer();
      pixd = ccbaDisplayBorder(ccba);
@@ -784,9 +796,9 @@ diff -Nura leptonica-1.83.1/prog/ccbordtest.c leptonica_patch/prog/ccbordtest.c
      lept_stderr("%6.3f sec\n", stopTimer());
  
      ccbaDestroy(&ccba2);
-diff -Nura leptonica-1.83.1/prog/ccthin1_reg.c leptonica_patch/prog/ccthin1_reg.c
+diff -Nura leptonica-1.83.1/prog/ccthin1_reg.c leptonica-1.83.1-patch/prog/ccthin1_reg.c
 --- leptonica-1.83.1/prog/ccthin1_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/ccthin1_reg.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/ccthin1_reg.c	2024-09-05 14:26:11.011618296 +0800
 @@ -155,9 +155,9 @@
          /* Optional display */
      if (rp->display) {
@@ -811,9 +823,9 @@ diff -Nura leptonica-1.83.1/prog/ccthin1_reg.c leptonica_patch/prog/ccthin1_reg.
      }
      pixaDestroy(&pixa);
  
-diff -Nura leptonica-1.83.1/prog/ccthin2_reg.c leptonica_patch/prog/ccthin2_reg.c
+diff -Nura leptonica-1.83.1/prog/ccthin2_reg.c leptonica-1.83.1-patch/prog/ccthin2_reg.c
 --- leptonica-1.83.1/prog/ccthin2_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/ccthin2_reg.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/ccthin2_reg.c	2024-09-05 14:26:11.011618296 +0800
 @@ -142,9 +142,9 @@
      if (rp->display) {
          lept_mkdir("lept/thin");
@@ -838,9 +850,9 @@ diff -Nura leptonica-1.83.1/prog/ccthin2_reg.c leptonica_patch/prog/ccthin2_reg.
      }
      pixaaDestroy(&paa);
      pixaDestroy(&pixa1);
-diff -Nura leptonica-1.83.1/prog/colorcontent_reg.c leptonica_patch/prog/colorcontent_reg.c
+diff -Nura leptonica-1.83.1/prog/colorcontent_reg.c leptonica-1.83.1-patch/prog/colorcontent_reg.c
 --- leptonica-1.83.1/prog/colorcontent_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/colorcontent_reg.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/colorcontent_reg.c	2024-09-05 14:26:11.011618296 +0800
 @@ -42,7 +42,7 @@
               char **argv)
  {
@@ -850,9 +862,9 @@ diff -Nura leptonica-1.83.1/prog/colorcontent_reg.c leptonica_patch/prog/colorco
  l_uint32     *colors;
  l_int32       ncolors, w, h;
  l_float32     fcolor;
-diff -Nura leptonica-1.83.1/prog/coloring_reg.c leptonica_patch/prog/coloring_reg.c
+diff -Nura leptonica-1.83.1/prog/coloring_reg.c leptonica-1.83.1-patch/prog/coloring_reg.c
 --- leptonica-1.83.1/prog/coloring_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/coloring_reg.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/coloring_reg.c	2024-09-05 14:26:11.011618296 +0800
 @@ -147,8 +147,8 @@
          /* If in testing mode, make a pdf */
      if (rp->display) {
@@ -864,9 +876,9 @@ diff -Nura leptonica-1.83.1/prog/coloring_reg.c leptonica_patch/prog/coloring_re
      }
  
      pixaDestroy(&pixa);
-diff -Nura leptonica-1.83.1/prog/colorize_reg.c leptonica_patch/prog/colorize_reg.c
+diff -Nura leptonica-1.83.1/prog/colorize_reg.c leptonica-1.83.1-patch/prog/colorize_reg.c
 --- leptonica-1.83.1/prog/colorize_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/colorize_reg.c	2024-08-15 11:14:31.841859094 +0800
++++ leptonica-1.83.1-patch/prog/colorize_reg.c	2024-09-05 14:26:11.011618296 +0800
 @@ -209,9 +209,9 @@
  
          /* Generate a pdf of the intermediate results */
@@ -891,9 +903,9 @@ diff -Nura leptonica-1.83.1/prog/colorize_reg.c leptonica_patch/prog/colorize_re
      pixaDestroy(&pixa);
      bmfDestroy(&bmf);
  
-diff -Nura leptonica-1.83.1/prog/colormask_reg.c leptonica_patch/prog/colormask_reg.c
+diff -Nura leptonica-1.83.1/prog/colormask_reg.c leptonica-1.83.1-patch/prog/colormask_reg.c
 --- leptonica-1.83.1/prog/colormask_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/colormask_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/colormask_reg.c	2024-09-05 14:26:11.011618296 +0800
 @@ -91,15 +91,15 @@
      pixaAddPix(pixa, pixhsv, L_INSERT);
      pixaAddPix(pixa, pixg, L_INSERT);
@@ -914,9 +926,9 @@ diff -Nura leptonica-1.83.1/prog/colormask_reg.c leptonica_patch/prog/colormask_
      regTestWritePixAndCheck(rp, pix3, IFF_PNG);  /* 2 */
      pixDisplayWithTitle(pix3, 100, 800, "Histo of saturation", rp->display);
      pixaAddPix(pixa, pix3, L_INSERT);
-diff -Nura leptonica-1.83.1/prog/colormorph_reg.c leptonica_patch/prog/colormorph_reg.c
+diff -Nura leptonica-1.83.1/prog/colormorph_reg.c leptonica-1.83.1-patch/prog/colormorph_reg.c
 --- leptonica-1.83.1/prog/colormorph_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/colormorph_reg.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/colormorph_reg.c	2024-09-05 14:26:11.015618218 +0800
 @@ -86,12 +86,12 @@
  
      if (rp->display) {
@@ -934,9 +946,9 @@ diff -Nura leptonica-1.83.1/prog/colormorph_reg.c leptonica_patch/prog/colormorp
          pixDisplay(pix1, 100, 100);
          pixDestroy(&pix1);
      }
-diff -Nura leptonica-1.83.1/prog/colorquant_reg.c leptonica_patch/prog/colorquant_reg.c
+diff -Nura leptonica-1.83.1/prog/colorquant_reg.c leptonica-1.83.1-patch/prog/colorquant_reg.c
 --- leptonica-1.83.1/prog/colorquant_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/colorquant_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/colorquant_reg.c	2024-09-05 14:26:11.015618218 +0800
 @@ -217,7 +217,7 @@
  
      pixd = pixaDisplayTiledInColumns(pixa, 4, 1.0, 25, 2);
@@ -946,9 +958,9 @@ diff -Nura leptonica-1.83.1/prog/colorquant_reg.c leptonica_patch/prog/colorquan
      pixWrite(buf, pixd, IFF_JFIF_JPEG);
  
      pixDestroy(&pixs);
-diff -Nura leptonica-1.83.1/prog/colorspace_reg.c leptonica_patch/prog/colorspace_reg.c
+diff -Nura leptonica-1.83.1/prog/colorspace_reg.c leptonica-1.83.1-patch/prog/colorspace_reg.c
 --- leptonica-1.83.1/prog/colorspace_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/colorspace_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/colorspace_reg.c	2024-09-05 14:26:11.015618218 +0800
 @@ -161,10 +161,10 @@
          }
          pixDestroy(&pix1);
@@ -986,9 +998,9 @@ diff -Nura leptonica-1.83.1/prog/colorspace_reg.c leptonica_patch/prog/colorspac
      }
      pixaDestroy(&pixa);
  
-diff -Nura leptonica-1.83.1/prog/comparepages.c leptonica_patch/prog/comparepages.c
+diff -Nura leptonica-1.83.1/prog/comparepages.c leptonica-1.83.1-patch/prog/comparepages.c
 --- leptonica-1.83.1/prog/comparepages.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/comparepages.c	2024-08-15 11:14:31.837858846 +0800
++++ leptonica-1.83.1-patch/prog/comparepages.c	2024-09-05 14:26:11.015618218 +0800
 @@ -55,9 +55,9 @@
      pixGetWordBoxesInTextlines(pixb1, 10, 10, 500, 50, &boxa1, &nai1);
      pixt = pixDrawBoxaRandom(pixs, boxa1, 2);
@@ -1001,9 +1013,9 @@ diff -Nura leptonica-1.83.1/prog/comparepages.c leptonica_patch/prog/comparepage
      n = numaaGetCount(naa1);
      lept_stderr("Number of textlines = %d\n", n);
      pixDisplay(pixb1, 300, 0);
-diff -Nura leptonica-1.83.1/prog/compare_reg.c leptonica_patch/prog/compare_reg.c
+diff -Nura leptonica-1.83.1/prog/compare_reg.c leptonica-1.83.1-patch/prog/compare_reg.c
 --- leptonica-1.83.1/prog/compare_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/compare_reg.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/compare_reg.c	2024-09-05 14:26:11.015618218 +0800
 @@ -86,8 +86,8 @@
      lept_stderr("delx = %d, dely = %d, score = %7.4f\n", delx, dely, score);
      regTestCompareValues(rp, 32, delx, 0);   /* 0 */
@@ -1030,9 +1042,9 @@ diff -Nura leptonica-1.83.1/prog/compare_reg.c leptonica_patch/prog/compare_reg.
  
      /* ------------ Test of pixGetPerceptualDiff() --------------- */
      pix0 = pixRead("greencover.jpg");
-diff -Nura leptonica-1.83.1/prog/comparetest.c leptonica_patch/prog/comparetest.c
+diff -Nura leptonica-1.83.1/prog/comparetest.c leptonica-1.83.1-patch/prog/comparetest.c
 --- leptonica-1.83.1/prog/comparetest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/comparetest.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/comparetest.c	2024-09-05 14:26:11.015618218 +0800
 @@ -138,13 +138,13 @@
                  lept_stderr("Nonzero diff range: first = %d, last = %d\n",
                               first, last);
@@ -1049,9 +1061,9 @@ diff -Nura leptonica-1.83.1/prog/comparetest.c leptonica_patch/prog/comparetest.
                  numaDestroy(&na1);
                  numaDestroy(&na2);
              }
-diff -Nura leptonica-1.83.1/prog/compfilter_reg.c leptonica_patch/prog/compfilter_reg.c
+diff -Nura leptonica-1.83.1/prog/compfilter_reg.c leptonica-1.83.1-patch/prog/compfilter_reg.c
 --- leptonica-1.83.1/prog/compfilter_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/compfilter_reg.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/compfilter_reg.c	2024-09-05 14:26:11.015618218 +0800
 @@ -285,7 +285,7 @@
      if (rp->display) {
          pix1 = pixaDisplayTiledInColumns(pixa3, 2, 0.25, 25, 2);
@@ -1061,9 +1073,9 @@ diff -Nura leptonica-1.83.1/prog/compfilter_reg.c leptonica_patch/prog/compfilte
          pixDestroy(&pix1);
      }
      pixaDestroy(&pixa3);
-diff -Nura leptonica-1.83.1/prog/conncomp_reg.c leptonica_patch/prog/conncomp_reg.c
+diff -Nura leptonica-1.83.1/prog/conncomp_reg.c leptonica-1.83.1-patch/prog/conncomp_reg.c
 --- leptonica-1.83.1/prog/conncomp_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/conncomp_reg.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/conncomp_reg.c	2024-09-05 14:26:11.015618218 +0800
 @@ -105,17 +105,17 @@
       * --------------------------------------------------------------- */
      lept_mkdir("lept/conn");
@@ -1087,9 +1099,9 @@ diff -Nura leptonica-1.83.1/prog/conncomp_reg.c leptonica_patch/prog/conncomp_re
      regTestCompareStrings(rp, array1, size1, array2, size2);  /* 10 */
      lept_free(array1);
      lept_free(array2);
-diff -Nura leptonica-1.83.1/prog/contrasttest.c leptonica_patch/prog/contrasttest.c
+diff -Nura leptonica-1.83.1/prog/contrasttest.c leptonica-1.83.1-patch/prog/contrasttest.c
 --- leptonica-1.83.1/prog/contrasttest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/contrasttest.c	2024-08-15 11:14:31.841859094 +0800
++++ leptonica-1.83.1-patch/prog/contrasttest.c	2024-09-05 14:26:11.015618218 +0800
 @@ -64,13 +64,13 @@
          return ERROR_INT("pixs not made", __func__, 1);
  
@@ -1116,9 +1128,9 @@ diff -Nura leptonica-1.83.1/prog/contrasttest.c leptonica_patch/prog/contrasttes
      numaDestroy(&nax);
  
          /* Apply the input contrast enhancement */
-diff -Nura leptonica-1.83.1/prog/convertsegfilestopdf.c leptonica_patch/prog/convertsegfilestopdf.c
+diff -Nura leptonica-1.83.1/prog/convertsegfilestopdf.c leptonica-1.83.1-patch/prog/convertsegfilestopdf.c
 --- leptonica-1.83.1/prog/convertsegfilestopdf.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/convertsegfilestopdf.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/convertsegfilestopdf.c	2024-09-05 14:26:11.015618218 +0800
 @@ -37,14 +37,14 @@
   *    for its substring.
   *
@@ -1145,9 +1157,9 @@ diff -Nura leptonica-1.83.1/prog/convertsegfilestopdf.c leptonica_patch/prog/con
   */
  
  #ifdef HAVE_CONFIG_H
-diff -Nura leptonica-1.83.1/prog/converttogray.c leptonica_patch/prog/converttogray.c
+diff -Nura leptonica-1.83.1/prog/converttogray.c leptonica-1.83.1-patch/prog/converttogray.c
 --- leptonica-1.83.1/prog/converttogray.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/converttogray.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/converttogray.c	2024-09-05 14:26:11.015618218 +0800
 @@ -72,8 +72,8 @@
              lept_stderr("images are the same\n");
          else
@@ -1192,9 +1204,9 @@ diff -Nura leptonica-1.83.1/prog/converttogray.c leptonica_patch/prog/converttog
          pixDestroy(&pix3);
          pixDestroy(&pix4);
      } else {
-diff -Nura leptonica-1.83.1/prog/cornertest.c leptonica_patch/prog/cornertest.c
+diff -Nura leptonica-1.83.1/prog/cornertest.c leptonica-1.83.1-patch/prog/cornertest.c
 --- leptonica-1.83.1/prog/cornertest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/cornertest.c	2024-08-15 11:14:31.841859094 +0800
++++ leptonica-1.83.1-patch/prog/cornertest.c	2024-09-05 14:26:11.019618139 +0800
 @@ -72,12 +72,12 @@
      ptaaAddPta(ptaa, pta, L_COPY);
      ptaaAddPta(ptaa, pta, L_COPY);
@@ -1214,9 +1226,9 @@ diff -Nura leptonica-1.83.1/prog/cornertest.c leptonica_patch/prog/cornertest.c
      ptaaDestroy(&ptaa);
      ptaaDestroy(&ptaa2);
      ptaaDestroy(&ptaa3);
-diff -Nura leptonica-1.83.1/prog/corrupttest.c leptonica_patch/prog/corrupttest.c
+diff -Nura leptonica-1.83.1/prog/corrupttest.c leptonica-1.83.1-patch/prog/corrupttest.c
 --- leptonica-1.83.1/prog/corrupttest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/corrupttest.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/corrupttest.c	2024-09-05 14:26:11.019618139 +0800
 @@ -60,7 +60,7 @@
  #include "string.h"
  #include "allheaders.h"
@@ -1226,9 +1238,9 @@ diff -Nura leptonica-1.83.1/prog/corrupttest.c leptonica_patch/prog/corrupttest.
  
  int main(int     argc,
           char  **argv)
-diff -Nura leptonica-1.83.1/prog/crop_reg.c leptonica_patch/prog/crop_reg.c
+diff -Nura leptonica-1.83.1/prog/crop_reg.c leptonica-1.83.1-patch/prog/crop_reg.c
 --- leptonica-1.83.1/prog/crop_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/crop_reg.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/crop_reg.c	2024-09-05 14:26:11.019618139 +0800
 @@ -125,9 +125,9 @@
          numaDestroy(&nait);
      }
@@ -1250,9 +1262,9 @@ diff -Nura leptonica-1.83.1/prog/crop_reg.c leptonica_patch/prog/crop_reg.c
      pixDisplayWithTitle(pixd, 0, 700, NULL, rp->display);
      pixDestroy(&pixs);
      pixDestroy(&pixd);
-diff -Nura leptonica-1.83.1/prog/dewarp_reg.c leptonica_patch/prog/dewarp_reg.c
+diff -Nura leptonica-1.83.1/prog/dewarp_reg.c leptonica-1.83.1-patch/prog/dewarp_reg.c
 --- leptonica-1.83.1/prog/dewarp_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/dewarp_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/dewarp_reg.c	2024-09-05 14:26:11.019618139 +0800
 @@ -130,11 +130,11 @@
  
          /* Write and read back minimized dewarp struct */
@@ -1305,9 +1317,9 @@ diff -Nura leptonica-1.83.1/prog/dewarp_reg.c leptonica_patch/prog/dewarp_reg.c
      regTestCompareFiles(rp, 16, 17);  /* 18 */
      dpix3 = dpixScaleByInteger(dpix2, 30);
      fpix3 = dpixConvertToFPix(dpix3);
-diff -Nura leptonica-1.83.1/prog/dewarprules.c leptonica_patch/prog/dewarprules.c
+diff -Nura leptonica-1.83.1/prog/dewarprules.c leptonica-1.83.1-patch/prog/dewarprules.c
 --- leptonica-1.83.1/prog/dewarprules.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/dewarprules.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/dewarprules.c	2024-09-05 14:26:11.019618139 +0800
 @@ -113,7 +113,7 @@
          dewarpaUseBothArrays(dewa, 1);
          dew = dewarpCreate(pix2, 0);
@@ -1335,9 +1347,9 @@ diff -Nura leptonica-1.83.1/prog/dewarprules.c leptonica_patch/prog/dewarprules.
          dewarpaApplyDisparity(dewa, 0, pix6, 255, 0, 0, &pix9, NULL);
          dewarpaApplyDisparity(dewa, 0, pix8, 255, 0, 0, &pix10, NULL);
          pixd = pixRotateOrth(pix9, 3);
-diff -Nura leptonica-1.83.1/prog/dewarptest1.c leptonica_patch/prog/dewarptest1.c
+diff -Nura leptonica-1.83.1/prog/dewarptest1.c leptonica-1.83.1-patch/prog/dewarptest1.c
 --- leptonica-1.83.1/prog/dewarptest1.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/dewarptest1.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/dewarptest1.c	2024-09-05 14:26:11.019618139 +0800
 @@ -75,50 +75,50 @@
      dewarpaUseBothArrays(dewa, 1);
      dew1 = dewarpCreate(pixb, 35);
@@ -1475,9 +1487,9 @@ diff -Nura leptonica-1.83.1/prog/dewarptest1.c leptonica_patch/prog/dewarptest1.
  
      pixDestroy(&pixs);
      pixDestroy(&pixn);
-diff -Nura leptonica-1.83.1/prog/dewarptest2.c leptonica_patch/prog/dewarptest2.c
+diff -Nura leptonica-1.83.1/prog/dewarptest2.c leptonica-1.83.1-patch/prog/dewarptest2.c
 --- leptonica-1.83.1/prog/dewarptest2.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/dewarptest2.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/dewarptest2.c	2024-09-05 14:26:11.019618139 +0800
 @@ -107,9 +107,9 @@
              /* Run the basic functions */
          dew1 = dewarpCreate(pixb, pageno);
@@ -1490,9 +1502,9 @@ diff -Nura leptonica-1.83.1/prog/dewarptest2.c leptonica_patch/prog/dewarptest2.
  
          dewarpaInfo(stderr, dewa);
          dewarpaDestroy(&dewa);
-diff -Nura leptonica-1.83.1/prog/dewarptest3.c leptonica_patch/prog/dewarptest3.c
+diff -Nura leptonica-1.83.1/prog/dewarptest3.c leptonica-1.83.1-patch/prog/dewarptest3.c
 --- leptonica-1.83.1/prog/dewarptest3.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/dewarptest3.c	2024-08-15 11:14:31.837858846 +0800
++++ leptonica-1.83.1-patch/prog/dewarptest3.c	2024-09-05 14:26:11.023618061 +0800
 @@ -72,7 +72,7 @@
      pixt1 = pixCreateTemplate(pixs);
      pixSetAll(pixt1);
@@ -1554,9 +1566,9 @@ diff -Nura leptonica-1.83.1/prog/dewarptest3.c leptonica_patch/prog/dewarptest3.
      pixaDestroy(&pixa);
      pixDestroy(&pixs);
      ptaaDestroy(&ptaa2);
-diff -Nura leptonica-1.83.1/prog/dewarptest4.c leptonica_patch/prog/dewarptest4.c
+diff -Nura leptonica-1.83.1/prog/dewarptest4.c leptonica-1.83.1-patch/prog/dewarptest4.c
 --- leptonica-1.83.1/prog/dewarptest4.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/dewarptest4.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/dewarptest4.c	2024-09-05 14:26:11.023618061 +0800
 @@ -62,10 +62,10 @@
          /* Run the basic functions */
      dew1 = dewarpCreate(pixb, 35);
@@ -1604,9 +1616,9 @@ diff -Nura leptonica-1.83.1/prog/dewarptest4.c leptonica_patch/prog/dewarptest4.
      pixDisplay(pixd, 0, 1000);
      pixDisplay(pixd2, 600, 1000);
      pixDisplay(pixd3, 1200, 1000);
-diff -Nura leptonica-1.83.1/prog/dewarptest5.c leptonica_patch/prog/dewarptest5.c
+diff -Nura leptonica-1.83.1/prog/dewarptest5.c leptonica-1.83.1-patch/prog/dewarptest5.c
 --- leptonica-1.83.1/prog/dewarptest5.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/dewarptest5.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/dewarptest5.c	2024-09-05 14:26:11.023618061 +0800
 @@ -68,7 +68,7 @@
      dew = dewarpCreate(pixb, pageno);
      dewarpaInsertDewarp(dewa, dew);
@@ -1643,9 +1655,9 @@ diff -Nura leptonica-1.83.1/prog/dewarptest5.c leptonica_patch/prog/dewarptest5.
          dewarpaApplyDisparityBoxa(dewa, pageno, pixb, boxa3, 1, 0, 0, &boxa4,
                                    buf);
      } else {
-diff -Nura leptonica-1.83.1/prog/digitprep1.c leptonica_patch/prog/digitprep1.c
+diff -Nura leptonica-1.83.1/prog/digitprep1.c leptonica-1.83.1-patch/prog/digitprep1.c
 --- leptonica-1.83.1/prog/digitprep1.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/digitprep1.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/digitprep1.c	2024-09-05 14:26:11.023618061 +0800
 @@ -86,7 +86,7 @@
  
          /* Save in a pixaa, with 1 pix in each pixa */
@@ -1655,9 +1667,9 @@ diff -Nura leptonica-1.83.1/prog/digitprep1.c leptonica_patch/prog/digitprep1.c
  
          /* Show result */
      pix1 = pixaaDisplayByPixa(paa, 50, 1.0, 20, 20, 0);
-diff -Nura leptonica-1.83.1/prog/displayboxes_on_pixa.c leptonica_patch/prog/displayboxes_on_pixa.c
+diff -Nura leptonica-1.83.1/prog/displayboxes_on_pixa.c leptonica-1.83.1-patch/prog/displayboxes_on_pixa.c
 --- leptonica-1.83.1/prog/displayboxes_on_pixa.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/displayboxes_on_pixa.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/displayboxes_on_pixa.c	2024-09-05 14:26:11.023618061 +0800
 @@ -48,7 +48,7 @@
   *   pix in the input pixa.  The number of boxes in each boxa is arbitrary.
   *
@@ -1667,9 +1679,9 @@ diff -Nura leptonica-1.83.1/prog/displayboxes_on_pixa.c leptonica_patch/prog/dis
   */
  
  #ifdef HAVE_CONFIG_H
-diff -Nura leptonica-1.83.1/prog/dna_reg.c leptonica_patch/prog/dna_reg.c
+diff -Nura leptonica-1.83.1/prog/dna_reg.c leptonica-1.83.1-patch/prog/dna_reg.c
 --- leptonica-1.83.1/prog/dna_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/dna_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/dna_reg.c	2024-09-05 14:26:11.023618061 +0800
 @@ -67,13 +67,13 @@
          /* Conversion to Numa; I/O for Dna */
      na = l_dnaConvertToNuma(da1);
@@ -1733,9 +1745,9 @@ diff -Nura leptonica-1.83.1/prog/dna_reg.c leptonica_patch/prog/dna_reg.c
      sum = 0;
      for (i = 0; i < 1000; i++) {
          l_dnaGetIValue(da5, i, &ival);
-diff -Nura leptonica-1.83.1/prog/dwamorph2_reg.c leptonica_patch/prog/dwamorph2_reg.c
+diff -Nura leptonica-1.83.1/prog/dwamorph2_reg.c leptonica-1.83.1-patch/prog/dwamorph2_reg.c
 --- leptonica-1.83.1/prog/dwamorph2_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/dwamorph2_reg.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/dwamorph2_reg.c	2024-09-05 14:26:11.023618061 +0800
 @@ -112,7 +112,7 @@
      nac2 = numaWindowedMean(na2, HALFWIDTH);
      nac3 = numaWindowedMean(na3, HALFWIDTH);
@@ -1794,9 +1806,9 @@ diff -Nura leptonica-1.83.1/prog/dwamorph2_reg.c leptonica_patch/prog/dwamorph2_
      pixDisplay(pixt, 100, 100);
      pixDestroy(&pixt);
      pixaDestroy(&pixa);
-diff -Nura leptonica-1.83.1/prog/encoding_reg.c leptonica_patch/prog/encoding_reg.c
+diff -Nura leptonica-1.83.1/prog/encoding_reg.c leptonica-1.83.1-patch/prog/encoding_reg.c
 --- leptonica-1.83.1/prog/encoding_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/encoding_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/encoding_reg.c	2024-09-05 14:26:11.023618061 +0800
 @@ -63,8 +63,8 @@
          lept_stderr("file bytes = %zu, a85 bytes = %zu, bina2 bytes = %zu\n",
                      fbytes, nbytes1, nbytes2);
@@ -1808,9 +1820,9 @@ diff -Nura leptonica-1.83.1/prog/encoding_reg.c leptonica_patch/prog/encoding_re
  
          /* Test the reconstructed image */
      pix1 = pixReadMem(bina2, nbytes2);
-diff -Nura leptonica-1.83.1/prog/enhance_reg.c leptonica_patch/prog/enhance_reg.c
+diff -Nura leptonica-1.83.1/prog/enhance_reg.c leptonica-1.83.1-patch/prog/enhance_reg.c
 --- leptonica-1.83.1/prog/enhance_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/enhance_reg.c	2024-08-15 11:14:31.865860578 +0800
++++ leptonica-1.83.1-patch/prog/enhance_reg.c	2024-09-05 14:26:11.023618061 +0800
 @@ -122,7 +122,7 @@
      }
      pix1 = pixaDisplayTiledAndScaled(pixa1, 32, w, 5, 0, 10, 2);
@@ -1840,9 +1852,9 @@ diff -Nura leptonica-1.83.1/prog/enhance_reg.c leptonica_patch/prog/enhance_reg.
      regTestWritePixAndCheck(rp, pix1, IFF_PNG);  /* 13 */
      pixaAddPix(pixa1, pix1, L_COPY);
      numaDestroy(&na1);
-diff -Nura leptonica-1.83.1/prog/equal_reg.c leptonica_patch/prog/equal_reg.c
+diff -Nura leptonica-1.83.1/prog/equal_reg.c leptonica-1.83.1-patch/prog/equal_reg.c
 --- leptonica-1.83.1/prog/equal_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/equal_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/equal_reg.c	2024-09-05 14:26:11.023618061 +0800
 @@ -60,8 +60,8 @@
      lept_mkdir("lept/equal");
  
@@ -1854,9 +1866,9 @@ diff -Nura leptonica-1.83.1/prog/equal_reg.c leptonica_patch/prog/equal_reg.c
      regTestComparePix(rp, pixs, pix1);  /* 0 */
      pixDestroy(&pixs);
      pixDestroy(&pix1);
-diff -Nura leptonica-1.83.1/prog/expand_reg.c leptonica_patch/prog/expand_reg.c
+diff -Nura leptonica-1.83.1/prog/expand_reg.c leptonica-1.83.1-patch/prog/expand_reg.c
 --- leptonica-1.83.1/prog/expand_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/expand_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/expand_reg.c	2024-09-05 14:26:11.023618061 +0800
 @@ -154,9 +154,9 @@
      pixDestroy(&pixs);
  
@@ -1869,9 +1881,9 @@ diff -Nura leptonica-1.83.1/prog/expand_reg.c leptonica_patch/prog/expand_reg.c
      }
      pixaDestroy(&pixa);
  
-diff -Nura leptonica-1.83.1/prog/extrema_reg.c leptonica_patch/prog/extrema_reg.c
+diff -Nura leptonica-1.83.1/prog/extrema_reg.c leptonica-1.83.1-patch/prog/extrema_reg.c
 --- leptonica-1.83.1/prog/extrema_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/extrema_reg.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/extrema_reg.c	2024-09-05 14:26:11.023618061 +0800
 @@ -67,7 +67,7 @@
          f += 63.4 * cos(0.21 * (l_float32)i);
          numaAddNumber(na1, f);
@@ -1893,9 +1905,9 @@ diff -Nura leptonica-1.83.1/prog/extrema_reg.c leptonica_patch/prog/extrema_reg.
          pixDisplay(pix1, 100, 100);
          pixDestroy(&pix1);
      }
-diff -Nura leptonica-1.83.1/prog/files_reg.c leptonica_patch/prog/files_reg.c
+diff -Nura leptonica-1.83.1/prog/files_reg.c leptonica-1.83.1-patch/prog/files_reg.c
 --- leptonica-1.83.1/prog/files_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/files_reg.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/files_reg.c	2024-09-05 14:26:11.027617983 +0800
 @@ -30,7 +30,7 @@
   *    Regression test for lept_*() and other path utilities in utils.h
   *
@@ -1965,9 +1977,9 @@ diff -Nura leptonica-1.83.1/prog/files_reg.c leptonica_patch/prog/files_reg.c
      }
  #endif  /* !_WIN32 */
  
-diff -Nura leptonica-1.83.1/prog/findbinding.c leptonica_patch/prog/findbinding.c
+diff -Nura leptonica-1.83.1/prog/findbinding.c leptonica-1.83.1-patch/prog/findbinding.c
 --- leptonica-1.83.1/prog/findbinding.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/findbinding.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/findbinding.c	2024-09-05 14:26:11.027617983 +0800
 @@ -133,8 +133,8 @@
          /* Plot the windowed variance as a function of the y-value
           * of the window location */
@@ -1991,9 +2003,9 @@ diff -Nura leptonica-1.83.1/prog/findbinding.c leptonica_patch/prog/findbinding.
  
      pixDestroy(&pix1);
      pixDestroy(&pix2);
-diff -Nura leptonica-1.83.1/prog/find_colorregions.c leptonica_patch/prog/find_colorregions.c
+diff -Nura leptonica-1.83.1/prog/find_colorregions.c leptonica-1.83.1-patch/prog/find_colorregions.c
 --- leptonica-1.83.1/prog/find_colorregions.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/find_colorregions.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/find_colorregions.c	2024-09-05 14:26:11.027617983 +0800
 @@ -77,7 +77,7 @@
  
      pix2 = pixaDisplayTiledInColumns(pixadb, 5, 0.3, 20, 2);
@@ -2023,9 +2035,9 @@ diff -Nura leptonica-1.83.1/prog/find_colorregions.c leptonica_patch/prog/find_c
          pix4 = pixExpandReplicate(pix3, 2);
          pixaAddPix(pixadb, pix4, L_INSERT);
          pixDestroy(&pix3);
-diff -Nura leptonica-1.83.1/prog/findcorners_reg.c leptonica_patch/prog/findcorners_reg.c
+diff -Nura leptonica-1.83.1/prog/findcorners_reg.c leptonica-1.83.1-patch/prog/findcorners_reg.c
 --- leptonica-1.83.1/prog/findcorners_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/findcorners_reg.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/findcorners_reg.c	2024-09-05 14:26:11.027617983 +0800
 @@ -42,9 +42,9 @@
   *   When this function is called with the display argument
   *        findcorners_reg display
@@ -2049,9 +2061,9 @@ diff -Nura leptonica-1.83.1/prog/findcorners_reg.c leptonica_patch/prog/findcorn
      }
      pixaDestroy(&pixa);
  
-diff -Nura leptonica-1.83.1/prog/findpattern1.c leptonica_patch/prog/findpattern1.c
+diff -Nura leptonica-1.83.1/prog/findpattern1.c leptonica-1.83.1-patch/prog/findpattern1.c
 --- leptonica-1.83.1/prog/findpattern1.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/findpattern1.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/findpattern1.c	2024-09-05 14:26:11.027617983 +0800
 @@ -34,7 +34,7 @@
   *    For example, use char.tif of a "c" bitmap, taken from the
   *    the page image feyn.tif:
@@ -2079,9 +2091,9 @@ diff -Nura leptonica-1.83.1/prog/findpattern1.c leptonica_patch/prog/findpattern
      boxaWriteStderr(boxa2);
  
      pixDestroy(&pixs);
-diff -Nura leptonica-1.83.1/prog/findpattern2.c leptonica_patch/prog/findpattern2.c
+diff -Nura leptonica-1.83.1/prog/findpattern2.c leptonica-1.83.1-patch/prog/findpattern2.c
 --- leptonica-1.83.1/prog/findpattern2.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/findpattern2.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/findpattern2.c	2024-09-05 14:26:11.027617983 +0800
 @@ -76,7 +76,7 @@
          /* Display the sel */
      pixsel = pixDisplayHitMissSel(pixp, selhm, 7, HitColor, MissColor);
@@ -2144,9 +2156,9 @@ diff -Nura leptonica-1.83.1/prog/findpattern2.c leptonica_patch/prog/findpattern
  
      selDestroy(&selhm);
      boxDestroy(&box);
-diff -Nura leptonica-1.83.1/prog/findpattern3.c leptonica_patch/prog/findpattern3.c
+diff -Nura leptonica-1.83.1/prog/findpattern3.c leptonica-1.83.1-patch/prog/findpattern3.c
 --- leptonica-1.83.1/prog/findpattern3.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/findpattern3.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/findpattern3.c	2024-09-05 14:26:11.027617983 +0800
 @@ -75,7 +75,7 @@
          /* Display the sel */
      pixsel = pixDisplayHitMissSel(pixp, selhm, 7, HitColor, MissColor);
@@ -2209,9 +2221,9 @@ diff -Nura leptonica-1.83.1/prog/findpattern3.c leptonica_patch/prog/findpattern
  
      selDestroy(&selhm);
      boxDestroy(&box);
-diff -Nura leptonica-1.83.1/prog/fpix1_reg.c leptonica_patch/prog/fpix1_reg.c
+diff -Nura leptonica-1.83.1/prog/fpix1_reg.c leptonica-1.83.1-patch/prog/fpix1_reg.c
 --- leptonica-1.83.1/prog/fpix1_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/fpix1_reg.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/fpix1_reg.c	2024-09-05 14:26:11.027617983 +0800
 @@ -161,7 +161,7 @@
      pixCompareGray(pix2, pix4, L_COMPARE_ABS_DIFF, GPLOT_PNG, NULL,
                     &diff, NULL, NULL);
@@ -2232,9 +2244,9 @@ diff -Nura leptonica-1.83.1/prog/fpix1_reg.c leptonica_patch/prog/fpix1_reg.c
      pix1 = fpixAutoRenderContours(fpix1, 40);
      regTestWritePixAndCheck(rp, pix1, IFF_PNG);  /* 28 */
      pixDisplayWithTitle(pix1, 0, 500, NULL, rp->display);
-diff -Nura leptonica-1.83.1/prog/fpixcontours.c leptonica_patch/prog/fpixcontours.c
+diff -Nura leptonica-1.83.1/prog/fpixcontours.c leptonica-1.83.1-patch/prog/fpixcontours.c
 --- leptonica-1.83.1/prog/fpixcontours.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/fpixcontours.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/fpixcontours.c	2024-09-05 14:26:11.027617983 +0800
 @@ -40,7 +40,7 @@
  #include <string.h>
  #include "allheaders.h"
@@ -2244,9 +2256,9 @@ diff -Nura leptonica-1.83.1/prog/fpixcontours.c leptonica_patch/prog/fpixcontour
  
  int main(int    argc,
           char **argv)
-diff -Nura leptonica-1.83.1/prog/fuzzing/colorquant_fuzzer.cc leptonica_patch/prog/fuzzing/colorquant_fuzzer.cc
+diff -Nura leptonica-1.83.1/prog/fuzzing/colorquant_fuzzer.cc leptonica-1.83.1-patch/prog/fuzzing/colorquant_fuzzer.cc
 --- leptonica-1.83.1/prog/fuzzing/colorquant_fuzzer.cc	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/fuzzing/colorquant_fuzzer.cc	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/fuzzing/colorquant_fuzzer.cc	2024-09-05 14:26:11.027617983 +0800
 @@ -35,7 +35,7 @@
      pix6 = pixFewColorsMedianCutQuantMixed(pix4, 30, 30, 100, 0, 0, 0);
  
@@ -2256,9 +2268,9 @@ diff -Nura leptonica-1.83.1/prog/fuzzing/colorquant_fuzzer.cc leptonica_patch/pr
  
      pix8 = pixOctreeQuantByPopulation(pixs, 0, 0);
      pix9 = pixFewColorsOctcubeQuantMixed(pix4, 3, 20, 244, 20, 0.05, 15);
-diff -Nura leptonica-1.83.1/prog/fuzzing/dewarp_fuzzer.cc leptonica_patch/prog/fuzzing/dewarp_fuzzer.cc
+diff -Nura leptonica-1.83.1/prog/fuzzing/dewarp_fuzzer.cc leptonica-1.83.1-patch/prog/fuzzing/dewarp_fuzzer.cc
 --- leptonica-1.83.1/prog/fuzzing/dewarp_fuzzer.cc	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/fuzzing/dewarp_fuzzer.cc	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/fuzzing/dewarp_fuzzer.cc	2024-09-05 14:26:11.027617983 +0800
 @@ -15,7 +15,7 @@
      pixs = pixReadMemSpix(data, size);
      if(pixs==NULL) return 0;
@@ -2268,9 +2280,9 @@ diff -Nura leptonica-1.83.1/prog/fuzzing/dewarp_fuzzer.cc leptonica_patch/prog/f
      dewarpSinglePage(pixs, 0, 1, 1, 0, &pixd, NULL, 0);
  	
      pixac = pixacompReadMem(data, size);
-diff -Nura leptonica-1.83.1/prog/fuzzing/pixa_recog_fuzzer.cc leptonica_patch/prog/fuzzing/pixa_recog_fuzzer.cc
+diff -Nura leptonica-1.83.1/prog/fuzzing/pixa_recog_fuzzer.cc leptonica-1.83.1-patch/prog/fuzzing/pixa_recog_fuzzer.cc
 --- leptonica-1.83.1/prog/fuzzing/pixa_recog_fuzzer.cc	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/fuzzing/pixa_recog_fuzzer.cc	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/fuzzing/pixa_recog_fuzzer.cc	2024-09-05 14:26:11.027617983 +0800
 @@ -11,7 +11,7 @@
          leptSetStdNullHandler();
  
@@ -2280,9 +2292,9 @@ diff -Nura leptonica-1.83.1/prog/fuzzing/pixa_recog_fuzzer.cc leptonica_patch/pr
          FILE *fp = fopen(filename, "wb");
          if (!fp) return 0;
          fwrite(data, size, 1, fp);
-diff -Nura leptonica-1.83.1/prog/fuzzing/recog_basic_fuzzer.cc leptonica_patch/prog/fuzzing/recog_basic_fuzzer.cc
+diff -Nura leptonica-1.83.1/prog/fuzzing/recog_basic_fuzzer.cc leptonica-1.83.1-patch/prog/fuzzing/recog_basic_fuzzer.cc
 --- leptonica-1.83.1/prog/fuzzing/recog_basic_fuzzer.cc	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/fuzzing/recog_basic_fuzzer.cc	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/fuzzing/recog_basic_fuzzer.cc	2024-09-05 14:26:11.027617983 +0800
 @@ -9,7 +9,7 @@
  
      L_RECOG  *recog;
@@ -2292,9 +2304,9 @@ diff -Nura leptonica-1.83.1/prog/fuzzing/recog_basic_fuzzer.cc leptonica_patch/p
  
      FILE *fp = fopen(filename, "wb");
      if (!fp)
-diff -Nura leptonica-1.83.1/prog/gammatest.c leptonica_patch/prog/gammatest.c
+diff -Nura leptonica-1.83.1/prog/gammatest.c leptonica-1.83.1-patch/prog/gammatest.c
 --- leptonica-1.83.1/prog/gammatest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/gammatest.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/gammatest.c	2024-09-05 14:26:11.031617904 +0800
 @@ -73,12 +73,12 @@
      pixDestroy(&pixs);
  
@@ -2320,9 +2332,9 @@ diff -Nura leptonica-1.83.1/prog/gammatest.c leptonica_patch/prog/gammatest.c
      numaDestroy(&nax);
      return 0;
  }
-diff -Nura leptonica-1.83.1/prog/genfonts_reg.c leptonica_patch/prog/genfonts_reg.c
+diff -Nura leptonica-1.83.1/prog/genfonts_reg.c leptonica-1.83.1-patch/prog/genfonts_reg.c
 --- leptonica-1.83.1/prog/genfonts_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/genfonts_reg.c	2024-08-15 11:14:31.841859094 +0800
++++ leptonica-1.83.1-patch/prog/genfonts_reg.c	2024-09-05 14:26:11.031617904 +0800
 @@ -80,8 +80,8 @@
      lept_rmdir("lept/filefonts");
      lept_mkdir("lept/filefonts");
@@ -2375,9 +2387,9 @@ diff -Nura leptonica-1.83.1/prog/genfonts_reg.c leptonica_patch/prog/genfonts_re
          l_binaryWrite(buf, "w", data2, rbytes);
          if (i == 8) {
              pix2 = pixReadMem(data2, rbytes);  /* encode/decode */
-diff -Nura leptonica-1.83.1/prog/gifio_reg.c leptonica_patch/prog/gifio_reg.c
+diff -Nura leptonica-1.83.1/prog/gifio_reg.c leptonica-1.83.1-patch/prog/gifio_reg.c
 --- leptonica-1.83.1/prog/gifio_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/gifio_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/gifio_reg.c	2024-09-05 14:26:11.031617904 +0800
 @@ -131,7 +131,7 @@
  
      if (rp->display) {
@@ -2400,9 +2412,9 @@ diff -Nura leptonica-1.83.1/prog/gifio_reg.c leptonica_patch/prog/gifio_reg.c
      pixWrite(buf, pix1, IFF_GIF);
      pix2 = pixRead(buf);
      regTestWritePixAndCheck(rp, pix2, IFF_GIF);
-diff -Nura leptonica-1.83.1/prog/grayquant_reg.c leptonica_patch/prog/grayquant_reg.c
+diff -Nura leptonica-1.83.1/prog/grayquant_reg.c leptonica-1.83.1-patch/prog/grayquant_reg.c
 --- leptonica-1.83.1/prog/grayquant_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/grayquant_reg.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/grayquant_reg.c	2024-09-05 14:26:11.031617904 +0800
 @@ -129,7 +129,7 @@
          lept_mkdir("lept/gquant");
          pix1 = pixaDisplayTiled(pixa, 2000, 0, 20);
@@ -2457,9 +2469,9 @@ diff -Nura leptonica-1.83.1/prog/grayquant_reg.c leptonica_patch/prog/grayquant_
          pixDisplay(pix1, 700, 500);
          pixDestroy(&pix1);
          pixDestroy(&pixs);
-diff -Nura leptonica-1.83.1/prog/histoduptest.c leptonica_patch/prog/histoduptest.c
+diff -Nura leptonica-1.83.1/prog/histoduptest.c leptonica-1.83.1-patch/prog/histoduptest.c
 --- leptonica-1.83.1/prog/histoduptest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/histoduptest.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/histoduptest.c	2024-09-05 14:26:11.031617904 +0800
 @@ -99,13 +99,13 @@
  
          /* Show the similarity classes. */
@@ -2515,9 +2527,9 @@ diff -Nura leptonica-1.83.1/prog/histoduptest.c leptonica_patch/prog/histoduptes
      pixaDestroy(&pixa1);
      pixaDestroy(&pixa2);
  #endif
-diff -Nura leptonica-1.83.1/prog/histotest.c leptonica_patch/prog/histotest.c
+diff -Nura leptonica-1.83.1/prog/histotest.c leptonica-1.83.1-patch/prog/histotest.c
 --- leptonica-1.83.1/prog/histotest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/histotest.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/histotest.c	2024-09-05 14:26:11.031617904 +0800
 @@ -78,26 +78,26 @@
          if ((na1 = pixOctcubeHistogram(pixs, sigbits, NULL)) == NULL)
              return ERROR_INT("na1 not made", __func__, 1);
@@ -2562,9 +2574,9 @@ diff -Nura leptonica-1.83.1/prog/histotest.c leptonica_patch/prog/histotest.c
      pixs = pixRead("lyra.005.jpg");
      box1 = boxCreate(0, 173, 350, 580);
      pix1 = pixClipRectangle(pixs, box1, 0);
-diff -Nura leptonica-1.83.1/prog/htmlviewer.c leptonica_patch/prog/htmlviewer.c
+diff -Nura leptonica-1.83.1/prog/htmlviewer.c leptonica-1.83.1-patch/prog/htmlviewer.c
 --- leptonica-1.83.1/prog/htmlviewer.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/htmlviewer.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/htmlviewer.c	2024-09-05 14:26:11.031617904 +0800
 @@ -37,13 +37,13 @@
   *            viewwidth: max width of view images, in pixels; use 0 for default
   *
@@ -2585,9 +2597,9 @@ diff -Nura leptonica-1.83.1/prog/htmlviewer.c leptonica_patch/prog/htmlviewer.c
   */
  
  #ifdef HAVE_CONFIG_H
-diff -Nura leptonica-1.83.1/prog/insert_reg.c leptonica_patch/prog/insert_reg.c
+diff -Nura leptonica-1.83.1/prog/insert_reg.c leptonica-1.83.1-patch/prog/insert_reg.c
 --- leptonica-1.83.1/prog/insert_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/insert_reg.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/insert_reg.c	2024-09-05 14:26:11.031617904 +0800
 @@ -57,12 +57,12 @@
      if (regTestSetup(argc, argv, &rp))
          return 1;
@@ -2694,9 +2706,9 @@ diff -Nura leptonica-1.83.1/prog/insert_reg.c leptonica_patch/prog/insert_reg.c
      regTestCompareFiles(rp, 9, 10);  /* 11 */
      pixaDestroy(&pixa1);
      pixaDestroy(&pixa2);
-diff -Nura leptonica-1.83.1/prog/ioformats_reg.c leptonica_patch/prog/ioformats_reg.c
+diff -Nura leptonica-1.83.1/prog/ioformats_reg.c leptonica-1.83.1-patch/prog/ioformats_reg.c
 --- leptonica-1.83.1/prog/ioformats_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/ioformats_reg.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/ioformats_reg.c	2024-09-05 14:26:11.031617904 +0800
 @@ -235,27 +235,27 @@
          d = pixGetDepth(pix);
          lept_stderr("%d bpp\n", d);
@@ -2937,9 +2949,9 @@ diff -Nura leptonica-1.83.1/prog/ioformats_reg.c leptonica_patch/prog/ioformats_
      pixEqual(pix, pixd, &same);
      if (same) {
          lept_stderr("    **** success writing 24 bpp tif ****\n");
-diff -Nura leptonica-1.83.1/prog/iomisc_reg.c leptonica_patch/prog/iomisc_reg.c
+diff -Nura leptonica-1.83.1/prog/iomisc_reg.c leptonica-1.83.1-patch/prog/iomisc_reg.c
 --- leptonica-1.83.1/prog/iomisc_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/iomisc_reg.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/iomisc_reg.c	2024-09-05 14:26:11.035617826 +0800
 @@ -77,14 +77,14 @@
  
          /* Test 16 to 8 stripping */
@@ -3105,9 +3117,9 @@ diff -Nura leptonica-1.83.1/prog/iomisc_reg.c leptonica_patch/prog/iomisc_reg.c
      regTestComparePix(rp, pixs, pix1);  /* 31 */
      pixDisplayWithTitle(pix1, 600, 100, NULL, rp->display);
      pixDestroy(&pixs);
-diff -Nura leptonica-1.83.1/prog/italic_reg.c leptonica_patch/prog/italic_reg.c
+diff -Nura leptonica-1.83.1/prog/italic_reg.c leptonica-1.83.1-patch/prog/italic_reg.c
 --- leptonica-1.83.1/prog/italic_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/italic_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/italic_reg.c	2024-09-05 14:26:11.035617826 +0800
 @@ -61,14 +61,14 @@
  
          /* Basic functionality with debug flag */
@@ -3162,9 +3174,9 @@ diff -Nura leptonica-1.83.1/prog/italic_reg.c leptonica_patch/prog/italic_reg.c
      regTestCompareFiles(rp, 7, 9);  /* 10 */
  
      boxaDestroy(&boxa1);
-diff -Nura leptonica-1.83.1/prog/jbclass_reg.c leptonica_patch/prog/jbclass_reg.c
+diff -Nura leptonica-1.83.1/prog/jbclass_reg.c leptonica-1.83.1-patch/prog/jbclass_reg.c
 --- leptonica-1.83.1/prog/jbclass_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/jbclass_reg.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/jbclass_reg.c	2024-09-05 14:26:11.035617826 +0800
 @@ -69,18 +69,18 @@
      pixGetDimensions(pix1, &w, &h, NULL);
      box = boxCreate(0, 0, w, h / 2);
@@ -3214,9 +3226,9 @@ diff -Nura leptonica-1.83.1/prog/jbclass_reg.c leptonica_patch/prog/jbclass_reg.
      regTestWritePixAndCheck(rp, pix1, IFF_TIFF_G4);  /* 4 */
      pixDisplayWithTitle(pix1, 200, 0, NULL, rp->display);
      pixDestroy(&pix1);
-diff -Nura leptonica-1.83.1/prog/jbcorrelation.c leptonica_patch/prog/jbcorrelation.c
+diff -Nura leptonica-1.83.1/prog/jbcorrelation.c leptonica-1.83.1-patch/prog/jbcorrelation.c
 --- leptonica-1.83.1/prog/jbcorrelation.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/jbcorrelation.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/jbcorrelation.c	2024-09-05 14:26:11.035617826 +0800
 @@ -39,7 +39,7 @@
   *             The default size is given in jbclass.c.
   *         (2) The two output files (for templates and c.c. data)
@@ -3253,9 +3265,9 @@ diff -Nura leptonica-1.83.1/prog/jbcorrelation.c leptonica_patch/prog/jbcorrelat
      pixDestroy(&pix);
  #endif  /* DISPLAY_ALL_INSTANCES */
  
-diff -Nura leptonica-1.83.1/prog/jbrankhaus.c leptonica_patch/prog/jbrankhaus.c
+diff -Nura leptonica-1.83.1/prog/jbrankhaus.c leptonica-1.83.1-patch/prog/jbrankhaus.c
 --- leptonica-1.83.1/prog/jbrankhaus.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/jbrankhaus.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/jbrankhaus.c	2024-09-05 14:26:11.035617826 +0800
 @@ -42,7 +42,7 @@
   *               rank = 0.97
   *     (3) The two output files (for templates and c.c. data)
@@ -3292,9 +3304,9 @@ diff -Nura leptonica-1.83.1/prog/jbrankhaus.c leptonica_patch/prog/jbrankhaus.c
      pixDestroy(&pix);
  #endif  /* DISPLAY_ALL_INSTANCES */
  
-diff -Nura leptonica-1.83.1/prog/jp2kio_reg.c leptonica_patch/prog/jp2kio_reg.c
+diff -Nura leptonica-1.83.1/prog/jp2kio_reg.c leptonica-1.83.1-patch/prog/jp2kio_reg.c
 --- leptonica-1.83.1/prog/jp2kio_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/jp2kio_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/jp2kio_reg.c	2024-09-05 14:26:11.035617826 +0800
 @@ -114,7 +114,7 @@
          /* Test cropping and scaling in the jp2 interface */
      box = boxCreate(w / 4, h / 4, w / 2, h / 2);
@@ -3327,9 +3339,9 @@ diff -Nura leptonica-1.83.1/prog/jp2kio_reg.c leptonica_patch/prog/jp2kio_reg.c
      regTestCompareSimilarPix(rp, pix0, pix1, 20, 0.01, 0);  /* 16 */
      pixDisplayWithTitle(pix1, 500, 500, NULL, rp->display);
      pixDestroy(&pix0);
-diff -Nura leptonica-1.83.1/prog/jpegio_reg.c leptonica_patch/prog/jpegio_reg.c
+diff -Nura leptonica-1.83.1/prog/jpegio_reg.c leptonica-1.83.1-patch/prog/jpegio_reg.c
 --- leptonica-1.83.1/prog/jpegio_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/jpegio_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/jpegio_reg.c	2024-09-05 14:26:11.035617826 +0800
 @@ -106,7 +106,7 @@
  
          /* Test file read/write (general functions) */
@@ -3375,9 +3387,9 @@ diff -Nura leptonica-1.83.1/prog/jpegio_reg.c leptonica_patch/prog/jpegio_reg.c
      pixWrite(buf, pixs, IFF_JFIF_JPEG);
      regTestCheckFile(rp, buf);
      fp = lept_fopen(buf, "rb");
-diff -Nura leptonica-1.83.1/prog/kernel_reg.c leptonica_patch/prog/kernel_reg.c
+diff -Nura leptonica-1.83.1/prog/kernel_reg.c leptonica-1.83.1-patch/prog/kernel_reg.c
 --- leptonica-1.83.1/prog/kernel_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/kernel_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/kernel_reg.c	2024-09-05 14:26:11.035617826 +0800
 @@ -70,21 +70,21 @@
      pixa = pixaCreate(0);
      kel1 = kernelCreateFromString(5, 5, 2, 2, kdatastr);
@@ -3596,9 +3608,9 @@ diff -Nura leptonica-1.83.1/prog/kernel_reg.c leptonica_patch/prog/kernel_reg.c
      pixDestroy(&pixd);
      pixaaDestroy(&paa);
  
-diff -Nura leptonica-1.83.1/prog/lightcolortest.c leptonica_patch/prog/lightcolortest.c
+diff -Nura leptonica-1.83.1/prog/lightcolortest.c leptonica-1.83.1-patch/prog/lightcolortest.c
 --- leptonica-1.83.1/prog/lightcolortest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/lightcolortest.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/lightcolortest.c	2024-09-05 14:26:11.039617748 +0800
 @@ -118,8 +118,8 @@
  
      lept_mkdir("lept/color");
@@ -3610,9 +3622,9 @@ diff -Nura leptonica-1.83.1/prog/lightcolortest.c leptonica_patch/prog/lightcolo
             __func__);
      pixaDestroy(&pixa);
      sarrayDestroy(&sa);
-diff -Nura leptonica-1.83.1/prog/lineremoval_reg.c leptonica_patch/prog/lineremoval_reg.c
+diff -Nura leptonica-1.83.1/prog/lineremoval_reg.c leptonica-1.83.1-patch/prog/lineremoval_reg.c
 --- leptonica-1.83.1/prog/lineremoval_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/lineremoval_reg.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/lineremoval_reg.c	2024-09-05 14:26:11.039617748 +0800
 @@ -107,11 +107,11 @@
      if (rp->display) {
          lept_rmdir("lept/lines");
@@ -3628,9 +3640,9 @@ diff -Nura leptonica-1.83.1/prog/lineremoval_reg.c leptonica_patch/prog/lineremo
          pixDisplay(pix1, 100, 100);
          pixDestroy(&pix1);
      }
-diff -Nura leptonica-1.83.1/prog/livre_adapt.c leptonica_patch/prog/livre_adapt.c
+diff -Nura leptonica-1.83.1/prog/livre_adapt.c leptonica-1.83.1-patch/prog/livre_adapt.c
 --- leptonica-1.83.1/prog/livre_adapt.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/livre_adapt.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/livre_adapt.c	2024-09-05 14:26:11.039617748 +0800
 @@ -91,12 +91,12 @@
  
              /* Generate the output image and pdf */
@@ -3647,9 +3659,9 @@ diff -Nura leptonica-1.83.1/prog/livre_adapt.c leptonica_patch/prog/livre_adapt.
      pixDestroy(&pix1);
      pixaDestroy(&pixa);
      return 0;
-diff -Nura leptonica-1.83.1/prog/livre_hmt.c leptonica_patch/prog/livre_hmt.c
+diff -Nura leptonica-1.83.1/prog/livre_hmt.c leptonica-1.83.1-patch/prog/livre_hmt.c
 --- leptonica-1.83.1/prog/livre_hmt.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/livre_hmt.c	2024-08-15 11:14:31.841859094 +0800
++++ leptonica-1.83.1-patch/prog/livre_hmt.c	2024-09-05 14:26:11.039617748 +0800
 @@ -96,7 +96,7 @@
          /* Display the sel */
      pixsel = pixDisplayHitMissSel(pixp, selhm, 7, HitColor, MissColor);
@@ -3689,9 +3701,9 @@ diff -Nura leptonica-1.83.1/prog/livre_hmt.c leptonica_patch/prog/livre_hmt.c
      pixDisplay(pixd, 1000, 600);
  
      selDestroy(&selhm);
-diff -Nura leptonica-1.83.1/prog/livre_makefigs.c leptonica_patch/prog/livre_makefigs.c
+diff -Nura leptonica-1.83.1/prog/livre_makefigs.c leptonica-1.83.1-patch/prog/livre_makefigs.c
 --- leptonica-1.83.1/prog/livre_makefigs.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/livre_makefigs.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/livre_makefigs.c	2024-09-05 14:26:11.039617748 +0800
 @@ -54,47 +54,47 @@
          /* Generate Figure 1 (page segmentation) */
      ignore = system("livre_seedgen");
@@ -3749,9 +3761,9 @@ diff -Nura leptonica-1.83.1/prog/livre_makefigs.c leptonica_patch/prog/livre_mak
      ignore = system(buf);
  
          /* Run livre_adapt to generate an expanded version of Figure 9 */
-diff -Nura leptonica-1.83.1/prog/livre_orient.c leptonica_patch/prog/livre_orient.c
+diff -Nura leptonica-1.83.1/prog/livre_orient.c leptonica-1.83.1-patch/prog/livre_orient.c
 --- leptonica-1.83.1/prog/livre_orient.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/livre_orient.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/livre_orient.c	2024-09-05 14:26:11.039617748 +0800
 @@ -84,7 +84,7 @@
      selaAddSel(sela, sel4, "textsel4", L_INSERT);
  
@@ -3761,9 +3773,9 @@ diff -Nura leptonica-1.83.1/prog/livre_orient.c leptonica_patch/prog/livre_orien
      pixDisplay(pix1, 1200, 1200);
  
      pixDestroy(&pix1);
-diff -Nura leptonica-1.83.1/prog/livre_pageseg.c leptonica_patch/prog/livre_pageseg.c
+diff -Nura leptonica-1.83.1/prog/livre_pageseg.c leptonica-1.83.1-patch/prog/livre_pageseg.c
 --- leptonica-1.83.1/prog/livre_pageseg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/livre_pageseg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/livre_pageseg.c	2024-09-05 14:26:11.039617748 +0800
 @@ -125,7 +125,7 @@
      pix1 = pixScaleToGray2(pixs);
      if (ws_flag || ht_flag || block_flag) pixaAddPix(pixa, pix1, L_COPY);
@@ -3918,9 +3930,9 @@ diff -Nura leptonica-1.83.1/prog/livre_pageseg.c leptonica_patch/prog/livre_page
      pixWrite(buf, pix1, IFF_PNG);
      pixDestroy(&pix1);
      pixaDestroy(&pixa);
-diff -Nura leptonica-1.83.1/prog/livre_seedgen.c leptonica_patch/prog/livre_seedgen.c
+diff -Nura leptonica-1.83.1/prog/livre_seedgen.c leptonica-1.83.1-patch/prog/livre_seedgen.c
 --- leptonica-1.83.1/prog/livre_seedgen.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/livre_seedgen.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/livre_seedgen.c	2024-09-05 14:26:11.039617748 +0800
 @@ -64,9 +64,9 @@
  
          /* Generate the output image */
@@ -3933,9 +3945,9 @@ diff -Nura leptonica-1.83.1/prog/livre_seedgen.c leptonica_patch/prog/livre_seed
      pixDisplay(pix1, 1100, 0);
      pixDestroy(&pix1);
      pixaDestroy(&pixa);
-diff -Nura leptonica-1.83.1/prog/livre_tophat.c leptonica_patch/prog/livre_tophat.c
+diff -Nura leptonica-1.83.1/prog/livre_tophat.c leptonica-1.83.1-patch/prog/livre_tophat.c
 --- leptonica-1.83.1/prog/livre_tophat.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/livre_tophat.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/livre_tophat.c	2024-09-05 14:26:11.039617748 +0800
 @@ -62,9 +62,9 @@
  
          /* Generate the output image */
@@ -3948,9 +3960,9 @@ diff -Nura leptonica-1.83.1/prog/livre_tophat.c leptonica_patch/prog/livre_topha
      pixDisplay(pix1, 1200, 800);
      pixDestroy(&pix1);
      pixaDestroy(&pixa);
-diff -Nura leptonica-1.83.1/prog/maptest.c leptonica_patch/prog/maptest.c
+diff -Nura leptonica-1.83.1/prog/maptest.c leptonica-1.83.1-patch/prog/maptest.c
 --- leptonica-1.83.1/prog/maptest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/maptest.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/maptest.c	2024-09-05 14:26:11.039617748 +0800
 @@ -84,12 +84,12 @@
      m = BuildMapHistogram(pix, 1, FALSE);
      TestMapIterator1(m, FALSE);
@@ -3986,9 +3998,9 @@ diff -Nura leptonica-1.83.1/prog/maptest.c leptonica_patch/prog/maptest.c
      pixNumColors(pix, 1, &ncolors);
      lept_stderr(" Using pixNumColors: %d\n", ncolors);
      pixCountRGBColors(pix, 1, &ncolors);
-diff -Nura leptonica-1.83.1/prog/misctest1.c leptonica_patch/prog/misctest1.c
+diff -Nura leptonica-1.83.1/prog/misctest1.c leptonica-1.83.1-patch/prog/misctest1.c
 --- leptonica-1.83.1/prog/misctest1.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/misctest1.c	2024-08-15 11:14:31.841859094 +0800
++++ leptonica-1.83.1-patch/prog/misctest1.c	2024-09-05 14:26:11.039617748 +0800
 @@ -109,7 +109,7 @@
      pixaAddPix(pixa1, pixd, L_INSERT);
      pixaaAddPixa(paa, pixa1, L_INSERT);
@@ -4095,9 +4107,9 @@ diff -Nura leptonica-1.83.1/prog/misctest1.c leptonica_patch/prog/misctest1.c
          lept_stderr("zlib level = %d, file size = %lu, delta = %lu\n",
                      2 * i, (unsigned long)size, (unsigned long)(size - zlibsize[i]));
      }
-diff -Nura leptonica-1.83.1/prog/modifyhuesat.c leptonica_patch/prog/modifyhuesat.c
+diff -Nura leptonica-1.83.1/prog/modifyhuesat.c leptonica-1.83.1-patch/prog/modifyhuesat.c
 --- leptonica-1.83.1/prog/modifyhuesat.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/modifyhuesat.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/modifyhuesat.c	2024-09-05 14:26:11.043617670 +0800
 @@ -34,7 +34,7 @@
   *     This gives a rectangle of nhue x nsat output images,
   *     where the center image is not modified.
@@ -4107,9 +4119,9 @@ diff -Nura leptonica-1.83.1/prog/modifyhuesat.c leptonica_patch/prog/modifyhuesa
   */
  
  #ifdef HAVE_CONFIG_H
-diff -Nura leptonica-1.83.1/prog/morphseq_reg.c leptonica_patch/prog/morphseq_reg.c
+diff -Nura leptonica-1.83.1/prog/morphseq_reg.c leptonica-1.83.1-patch/prog/morphseq_reg.c
 --- leptonica-1.83.1/prog/morphseq_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/morphseq_reg.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/morphseq_reg.c	2024-09-05 14:26:11.043617670 +0800
 @@ -62,13 +62,13 @@
      pixd = pixMorphSequence(pixs, SEQUENCE1, -1);
      pixDestroy(&pixd);
@@ -4165,9 +4177,9 @@ diff -Nura leptonica-1.83.1/prog/morphseq_reg.c leptonica_patch/prog/morphseq_re
      pixDestroy(&pixc);
      pixDestroy(&pixd);
  
-diff -Nura leptonica-1.83.1/prog/mtiff_reg.c leptonica_patch/prog/mtiff_reg.c
+diff -Nura leptonica-1.83.1/prog/mtiff_reg.c leptonica-1.83.1-patch/prog/mtiff_reg.c
 --- leptonica-1.83.1/prog/mtiff_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/mtiff_reg.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/mtiff_reg.c	2024-09-05 14:26:11.043617670 +0800
 @@ -40,9 +40,9 @@
  #include "allheaders.h"
  #include <string.h>
@@ -4330,9 +4342,9 @@ diff -Nura leptonica-1.83.1/prog/mtiff_reg.c leptonica_patch/prog/mtiff_reg.c
      lept_stderr("num flags = %d\n", numaGetCount(naflags));
      lept_stderr("num sizes = %d\n", numaGetCount(nasizes));
      lept_stderr("num vals = %d\n", sarrayGetCount(savals));
-diff -Nura leptonica-1.83.1/prog/nearline_reg.c leptonica_patch/prog/nearline_reg.c
+diff -Nura leptonica-1.83.1/prog/nearline_reg.c leptonica-1.83.1-patch/prog/nearline_reg.c
 --- leptonica-1.83.1/prog/nearline_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/nearline_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/nearline_reg.c	2024-09-05 14:26:11.043617670 +0800
 @@ -105,25 +105,25 @@
      regTestCompareValues(rp, similar, 1, 0);  /* 0 */
      numaSimilar(na3, na4, 1.0, &similar);  /* should be TRUE */
@@ -4394,9 +4406,9 @@ diff -Nura leptonica-1.83.1/prog/nearline_reg.c leptonica_patch/prog/nearline_re
      regTestWritePixAndCheck(rp, pix4, IFF_PNG);  /* 9 */
      pixDisplayWithTitle(pix4, 800, 100, NULL, rp->display);
      numaaDestroy(&naa);
-diff -Nura leptonica-1.83.1/prog/newspaper_reg.c leptonica_patch/prog/newspaper_reg.c
+diff -Nura leptonica-1.83.1/prog/newspaper_reg.c leptonica-1.83.1-patch/prog/newspaper_reg.c
 --- leptonica-1.83.1/prog/newspaper_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/newspaper_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/newspaper_reg.c	2024-09-05 14:26:11.043617670 +0800
 @@ -150,8 +150,8 @@
      regTestWritePixAndCheck(rp, pixt, IFF_PNG);  /* 12 */
      pixDisplayWithTitle(pixt, 900, 300, "stuff under mask2", rp->display);
@@ -4408,9 +4420,9 @@ diff -Nura leptonica-1.83.1/prog/newspaper_reg.c leptonica_patch/prog/newspaper_
  
      pixaDestroy(&pixa1);
      pixDestroy(&pixs);
-diff -Nura leptonica-1.83.1/prog/numa1_reg.c leptonica_patch/prog/numa1_reg.c
+diff -Nura leptonica-1.83.1/prog/numa1_reg.c leptonica-1.83.1-patch/prog/numa1_reg.c
 --- leptonica-1.83.1/prog/numa1_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/numa1_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/numa1_reg.c	2024-09-05 14:26:11.043617670 +0800
 @@ -77,7 +77,7 @@
      nahisto = numaMakeHistogramClipped(na, 6, 2000);
      nbins = numaGetCount(nahisto);
@@ -4515,9 +4527,9 @@ diff -Nura leptonica-1.83.1/prog/numa1_reg.c leptonica_patch/prog/numa1_reg.c
                          "angle", "val");
      numaInterpolateArbxInterval(nasx, nasy, L_LINEAR_INTERP,
                                  -2.00, 0.0, 50, &nafx, &nafy);
-diff -Nura leptonica-1.83.1/prog/numa2_reg.c leptonica_patch/prog/numa2_reg.c
+diff -Nura leptonica-1.83.1/prog/numa2_reg.c leptonica-1.83.1-patch/prog/numa2_reg.c
 --- leptonica-1.83.1/prog/numa2_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/numa2_reg.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/numa2_reg.c	2024-09-05 14:26:11.043617670 +0800
 @@ -76,16 +76,16 @@
       * -------------------------------------------------------------------*/
      na = numaRead("lyra.5.na");
@@ -4570,9 +4582,9 @@ diff -Nura leptonica-1.83.1/prog/numa2_reg.c leptonica_patch/prog/numa2_reg.c
      regTestWritePixAndCheck(rp, pix1, IFF_PNG);  /* 6 */
      regTestWritePixAndCheck(rp, pix2, IFF_PNG);  /* 7 */
      regTestWritePixAndCheck(rp, pix3, IFF_PNG);  /* 8 */
-diff -Nura leptonica-1.83.1/prog/numa3_reg.c leptonica_patch/prog/numa3_reg.c
+diff -Nura leptonica-1.83.1/prog/numa3_reg.c leptonica-1.83.1-patch/prog/numa3_reg.c
 --- leptonica-1.83.1/prog/numa3_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/numa3_reg.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/numa3_reg.c	2024-09-05 14:26:11.043617670 +0800
 @@ -70,7 +70,7 @@
      pixs = pixRead("test8.jpg");
      nasy= pixGetGrayHistogramMasked(pixs, NULL, 0, 0, 1);
@@ -4642,9 +4654,9 @@ diff -Nura leptonica-1.83.1/prog/numa3_reg.c leptonica_patch/prog/numa3_reg.c
      numaDestroy(&na1);
      numaDestroy(&na4);
      pixaDestroy(&pixa);
-diff -Nura leptonica-1.83.1/prog/numaranktest.c leptonica_patch/prog/numaranktest.c
+diff -Nura leptonica-1.83.1/prog/numaranktest.c leptonica-1.83.1-patch/prog/numaranktest.c
 --- leptonica-1.83.1/prog/numaranktest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/numaranktest.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/numaranktest.c	2024-09-05 14:26:11.043617670 +0800
 @@ -76,16 +76,16 @@
          numaHistogramGetRankFromVal(nah, rval, &rank);
          numaAddNumber(nar, rank);
@@ -4666,9 +4678,9 @@ diff -Nura leptonica-1.83.1/prog/numaranktest.c leptonica_patch/prog/numaranktes
  
      pixDestroy(&pix);
      numaDestroy(&na);
-diff -Nura leptonica-1.83.1/prog/otsutest1.c leptonica_patch/prog/otsutest1.c
+diff -Nura leptonica-1.83.1/prog/otsutest1.c leptonica-1.83.1-patch/prog/otsutest1.c
 --- leptonica-1.83.1/prog/otsutest1.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/otsutest1.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/otsutest1.c	2024-09-05 14:26:11.043617670 +0800
 @@ -61,17 +61,17 @@
         /* Read the results back in ...  */
      pixa = pixaCreate(0);
@@ -4708,9 +4720,9 @@ diff -Nura leptonica-1.83.1/prog/otsutest1.c leptonica_patch/prog/otsutest1.c
      snprintf(title, sizeof(title), "Plot %d", i);
      gplot = gplotCreate(buf, GPLOT_PNG,
                          "Otsu score function for splitting",
-diff -Nura leptonica-1.83.1/prog/otsutest2.c leptonica_patch/prog/otsutest2.c
+diff -Nura leptonica-1.83.1/prog/otsutest2.c leptonica-1.83.1-patch/prog/otsutest2.c
 --- leptonica-1.83.1/prog/otsutest2.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/otsutest2.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/otsutest2.c	2024-09-05 14:26:11.047617592 +0800
 @@ -94,7 +94,7 @@
  
              /* Save and display the result */
@@ -4732,9 +4744,9 @@ diff -Nura leptonica-1.83.1/prog/otsutest2.c leptonica_patch/prog/otsutest2.c
      bmfDestroy(&bmf);
      pixDestroy(&pixs);
      pixDestroy(&pixg);
-diff -Nura leptonica-1.83.1/prog/overlap_reg.c leptonica_patch/prog/overlap_reg.c
+diff -Nura leptonica-1.83.1/prog/overlap_reg.c leptonica-1.83.1-patch/prog/overlap_reg.c
 --- leptonica-1.83.1/prog/overlap_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/overlap_reg.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/overlap_reg.c	2024-09-05 14:26:11.047617592 +0800
 @@ -177,7 +177,7 @@
      /* --------------------------------------------------------- */
      box1 = boxCreate(0, 0, 1, 1);
@@ -4753,9 +4765,9 @@ diff -Nura leptonica-1.83.1/prog/overlap_reg.c leptonica_patch/prog/overlap_reg.
      regTestWriteDataAndCheck(rp, data, nbytes, "dat");  /* 12 */
      lept_free(data);
      boxDestroy(&box1);
-diff -Nura leptonica-1.83.1/prog/pagesegtest1.c leptonica_patch/prog/pagesegtest1.c
+diff -Nura leptonica-1.83.1/prog/pagesegtest1.c leptonica-1.83.1-patch/prog/pagesegtest1.c
 --- leptonica-1.83.1/prog/pagesegtest1.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pagesegtest1.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/pagesegtest1.c	2024-09-05 14:26:11.047617592 +0800
 @@ -62,7 +62,7 @@
          /* Display intermediate images in a single image */
      lept_mkdir("lept/pagseg");
@@ -4765,9 +4777,9 @@ diff -Nura leptonica-1.83.1/prog/pagesegtest1.c leptonica_patch/prog/pagesegtest
      pixaDestroy(&pixadb);
      pixDestroy(&pixd);
      return 0;
-diff -Nura leptonica-1.83.1/prog/paintmask_reg.c leptonica_patch/prog/paintmask_reg.c
+diff -Nura leptonica-1.83.1/prog/paintmask_reg.c leptonica-1.83.1-patch/prog/paintmask_reg.c
 --- leptonica-1.83.1/prog/paintmask_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/paintmask_reg.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/paintmask_reg.c	2024-09-05 14:26:11.047617592 +0800
 @@ -206,8 +206,8 @@
          /* If in testing mode, make a pdf */
      if (rp->display) {
@@ -4779,9 +4791,9 @@ diff -Nura leptonica-1.83.1/prog/paintmask_reg.c leptonica_patch/prog/paintmask_
      }
  
      pixaDestroy(&pixa);
-diff -Nura leptonica-1.83.1/prog/paint_reg.c leptonica_patch/prog/paint_reg.c
+diff -Nura leptonica-1.83.1/prog/paint_reg.c leptonica-1.83.1-patch/prog/paint_reg.c
 --- leptonica-1.83.1/prog/paint_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/paint_reg.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/paint_reg.c	2024-09-05 14:26:11.047617592 +0800
 @@ -294,8 +294,8 @@
          /* If in testing mode, make a pdf */
      if (rp->display) {
@@ -4793,9 +4805,9 @@ diff -Nura leptonica-1.83.1/prog/paint_reg.c leptonica_patch/prog/paint_reg.c
      }
  
      pixaDestroy(&pixa);
-diff -Nura leptonica-1.83.1/prog/partifytest.c leptonica_patch/prog/partifytest.c
+diff -Nura leptonica-1.83.1/prog/partifytest.c leptonica-1.83.1-patch/prog/partifytest.c
 --- leptonica-1.83.1/prog/partifytest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/partifytest.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/partifytest.c	2024-09-05 14:26:11.047617592 +0800
 @@ -43,9 +43,9 @@
      setLeptDebugOK(1);
      lept_mkdir("lept/partify");
@@ -4808,9 +4820,9 @@ diff -Nura leptonica-1.83.1/prog/partifytest.c leptonica_patch/prog/partifytest.
  #endif
      return 0;
  }
-diff -Nura leptonica-1.83.1/prog/partitiontest.c leptonica_patch/prog/partitiontest.c
+diff -Nura leptonica-1.83.1/prog/partitiontest.c leptonica-1.83.1-patch/prog/partitiontest.c
 --- leptonica-1.83.1/prog/partitiontest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/partitiontest.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/partitiontest.c	2024-09-05 14:26:11.047617592 +0800
 @@ -160,10 +160,10 @@
      pixaAddPix(pixa, pix2, L_INSERT);
      pixDestroy(&pix1);
@@ -4824,9 +4836,9 @@ diff -Nura leptonica-1.83.1/prog/partitiontest.c leptonica_patch/prog/partitiont
      pixaDestroy(&pixa);
  
      pixDestroy(&pix);
-diff -Nura leptonica-1.83.1/prog/pdfio1_reg.c leptonica_patch/prog/pdfio1_reg.c
+diff -Nura leptonica-1.83.1/prog/pdfio1_reg.c leptonica-1.83.1-patch/prog/pdfio1_reg.c
 --- leptonica-1.83.1/prog/pdfio1_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pdfio1_reg.c	2024-08-15 11:14:31.841859094 +0800
++++ leptonica-1.83.1-patch/prog/pdfio1_reg.c	2024-09-05 14:26:11.047617592 +0800
 @@ -81,33 +81,33 @@
      /* ---------------  Single image tests  ------------------- */
      lept_stderr("\n*** Writing single images as pdf files\n");
@@ -5110,9 +5122,9 @@ diff -Nura leptonica-1.83.1/prog/pdfio1_reg.c leptonica_patch/prog/pdfio1_reg.c
 +    regTestCheckFile(rp, "/data/local/tmp/lept/pdf1/file26.pdf");
      return regTestCleanup(rp);
  }
-diff -Nura leptonica-1.83.1/prog/pdfio2_reg.c leptonica_patch/prog/pdfio2_reg.c
+diff -Nura leptonica-1.83.1/prog/pdfio2_reg.c leptonica-1.83.1-patch/prog/pdfio2_reg.c
 --- leptonica-1.83.1/prog/pdfio2_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pdfio2_reg.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/pdfio2_reg.c	2024-09-05 14:26:11.047617592 +0800
 @@ -79,9 +79,9 @@
           * the demonstration. */
      pix1 = pixRead("rabi.png");
@@ -5383,9 +5395,9 @@ diff -Nura leptonica-1.83.1/prog/pdfio2_reg.c leptonica_patch/prog/pdfio2_reg.c
      snprintf(buffer, sizeof(buffer), "pdftk %s output %s",
               tempfile1, tempfile2);
      ret = system(buffer);  /* pdftk */
-diff -Nura leptonica-1.83.1/prog/pdfseg_reg.c leptonica_patch/prog/pdfseg_reg.c
+diff -Nura leptonica-1.83.1/prog/pdfseg_reg.c leptonica-1.83.1-patch/prog/pdfseg_reg.c
 --- leptonica-1.83.1/prog/pdfseg_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pdfseg_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/pdfseg_reg.c	2024-09-05 14:26:11.047617592 +0800
 @@ -78,8 +78,8 @@
          /* Image region input.  */
      pix1 = pixRead("wet-day.jpg");
@@ -5475,9 +5487,9 @@ diff -Nura leptonica-1.83.1/prog/pdfseg_reg.c leptonica_patch/prog/pdfseg_reg.c
  
      boxaaDestroy(&baa);
      return regTestCleanup(rp);
-diff -Nura leptonica-1.83.1/prog/percolatetest.c leptonica_patch/prog/percolatetest.c
+diff -Nura leptonica-1.83.1/prog/percolatetest.c leptonica-1.83.1-patch/prog/percolatetest.c
 --- leptonica-1.83.1/prog/percolatetest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/percolatetest.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/percolatetest.c	2024-09-05 14:26:11.051617513 +0800
 @@ -74,7 +74,7 @@
      }
      pix3 = pixaDisplayTiledInRows(pixa, 32, 1500, 1.0, 0, 30, 2);
@@ -5563,9 +5575,9 @@ diff -Nura leptonica-1.83.1/prog/percolatetest.c leptonica_patch/prog/percolatet
      pixDisplay(pix3, 500, 0);
      pixDestroy(&pixs);
      pixDestroy(&pix1);
-diff -Nura leptonica-1.83.1/prog/pixa1_reg.c leptonica_patch/prog/pixa1_reg.c
+diff -Nura leptonica-1.83.1/prog/pixa1_reg.c leptonica-1.83.1-patch/prog/pixa1_reg.c
 --- leptonica-1.83.1/prog/pixa1_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pixa1_reg.c	2024-08-15 11:14:31.841859094 +0800
++++ leptonica-1.83.1-patch/prog/pixa1_reg.c	2024-09-05 14:26:11.051617513 +0800
 @@ -98,7 +98,7 @@
          pixDestroy(&pixd);
      }
@@ -5593,9 +5605,9 @@ diff -Nura leptonica-1.83.1/prog/pixa1_reg.c leptonica_patch/prog/pixa1_reg.c
      pixDestroy(&pixd);
      pixaDestroy(&pixa);
  
-diff -Nura leptonica-1.83.1/prog/pixa2_reg.c leptonica_patch/prog/pixa2_reg.c
+diff -Nura leptonica-1.83.1/prog/pixa2_reg.c leptonica-1.83.1-patch/prog/pixa2_reg.c
 --- leptonica-1.83.1/prog/pixa2_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pixa2_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/pixa2_reg.c	2024-09-05 14:26:11.051617513 +0800
 @@ -72,7 +72,7 @@
      pixaInitFull(pixa, pix1, NULL);  /* fill it up */
      pixd = pixaDisplayTiledInRows(pixa, 32, 1000, 1.0, 0, 25, 2);
@@ -5623,9 +5635,9 @@ diff -Nura leptonica-1.83.1/prog/pixa2_reg.c leptonica_patch/prog/pixa2_reg.c
      pixDestroy(&pixd);
      sarrayDestroy(&sa3);
  
-diff -Nura leptonica-1.83.1/prog/pixaatest.c leptonica_patch/prog/pixaatest.c
+diff -Nura leptonica-1.83.1/prog/pixaatest.c leptonica-1.83.1-patch/prog/pixaatest.c
 --- leptonica-1.83.1/prog/pixaatest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pixaatest.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/pixaatest.c	2024-09-05 14:26:11.051617513 +0800
 @@ -67,38 +67,38 @@
      pixGetDimensions(pixs, &w, NULL, &d);
      pixa = pixaSplitPix(pixs, nx, ny, 0, 0);
@@ -5678,9 +5690,9 @@ diff -Nura leptonica-1.83.1/prog/pixaatest.c leptonica_patch/prog/pixaatest.c
  
      pixDestroy(&pixs);
      pixaaDestroy(&pixaa1);
-diff -Nura leptonica-1.83.1/prog/pixadisp_reg.c leptonica_patch/prog/pixadisp_reg.c
+diff -Nura leptonica-1.83.1/prog/pixadisp_reg.c leptonica-1.83.1-patch/prog/pixadisp_reg.c
 --- leptonica-1.83.1/prog/pixadisp_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pixadisp_reg.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/pixadisp_reg.c	2024-09-05 14:26:11.051617513 +0800
 @@ -193,12 +193,12 @@
  
      if (rp->display) {
@@ -5698,9 +5710,9 @@ diff -Nura leptonica-1.83.1/prog/pixadisp_reg.c leptonica_patch/prog/pixadisp_re
          pixDisplay(pix1, 100, 100);
          pixDestroy(&pix1);
      }
-diff -Nura leptonica-1.83.1/prog/pixalloc_reg.c leptonica_patch/prog/pixalloc_reg.c
+diff -Nura leptonica-1.83.1/prog/pixalloc_reg.c leptonica-1.83.1-patch/prog/pixalloc_reg.c
 --- leptonica-1.83.1/prog/pixalloc_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pixalloc_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/pixalloc_reg.c	2024-09-05 14:26:11.051617513 +0800
 @@ -81,7 +81,7 @@
      numaAddNumber(nas, 3);
      numaAddNumber(nas, 2);
@@ -5719,9 +5731,9 @@ diff -Nura leptonica-1.83.1/prog/pixalloc_reg.c leptonica_patch/prog/pixalloc_re
      else
          pmsCreate(20, 40, nab, NULL);
      pixs = pixRead("feyn.tif");
-diff -Nura leptonica-1.83.1/prog/pixcomp_reg.c leptonica_patch/prog/pixcomp_reg.c
+diff -Nura leptonica-1.83.1/prog/pixcomp_reg.c leptonica-1.83.1-patch/prog/pixcomp_reg.c
 --- leptonica-1.83.1/prog/pixcomp_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pixcomp_reg.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/pixcomp_reg.c	2024-09-05 14:26:11.051617513 +0800
 @@ -161,13 +161,13 @@
      sarrayDestroy(&sa);
  
@@ -5757,9 +5769,9 @@ diff -Nura leptonica-1.83.1/prog/pixcomp_reg.c leptonica_patch/prog/pixcomp_reg.
      regTestCompareFiles(rp, 11, 12);  /* 13 */
      pixacompDestroy(&pixac1);
      pixacompDestroy(&pixac2);
-diff -Nura leptonica-1.83.1/prog/pixserial_reg.c leptonica_patch/prog/pixserial_reg.c
+diff -Nura leptonica-1.83.1/prog/pixserial_reg.c leptonica-1.83.1-patch/prog/pixserial_reg.c
 --- leptonica-1.83.1/prog/pixserial_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pixserial_reg.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/pixserial_reg.c	2024-09-05 14:26:11.051617513 +0800
 @@ -75,8 +75,8 @@
              /* Serialize to memory */
          pixSerializeToMemory(pixs, &data32, &size);
@@ -5780,9 +5792,9 @@ diff -Nura leptonica-1.83.1/prog/pixserial_reg.c leptonica_patch/prog/pixserial_
                   rp->index + 1);
          pixWrite(buf, pixt, IFF_SPIX);
          regTestCheckFile(rp, buf);  /* nfiles + 2 * i */
-diff -Nura leptonica-1.83.1/prog/plottest.c leptonica_patch/prog/plottest.c
+diff -Nura leptonica-1.83.1/prog/plottest.c leptonica-1.83.1-patch/prog/plottest.c
 --- leptonica-1.83.1/prog/plottest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/plottest.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/plottest.c	2024-09-05 14:26:11.051617513 +0800
 @@ -89,7 +89,7 @@
      }
  
@@ -5850,9 +5862,9 @@ diff -Nura leptonica-1.83.1/prog/plottest.c leptonica_patch/prog/plottest.c
  
      gplotDestroy(&gplot1);
      gplotDestroy(&gplot2);
-diff -Nura leptonica-1.83.1/prog/pngio_reg.c leptonica_patch/prog/pngio_reg.c
+diff -Nura leptonica-1.83.1/prog/pngio_reg.c leptonica-1.83.1-patch/prog/pngio_reg.c
 --- leptonica-1.83.1/prog/pngio_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pngio_reg.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/pngio_reg.c	2024-09-05 14:26:11.051617513 +0800
 @@ -328,8 +328,8 @@
      pixSetColormap(pix1, cmap);
      pixcmapAddRGBA(cmap, 180, 130, 220, 0);  /* transparent */
@@ -5979,9 +5991,9 @@ diff -Nura leptonica-1.83.1/prog/pngio_reg.c leptonica_patch/prog/pngio_reg.c
      fgetPngColormapInfo(fp, &cmap, &transp);
      if (fp) fclose(fp);
      if (transp)
-diff -Nura leptonica-1.83.1/prog/pnmio_reg.c leptonica_patch/prog/pnmio_reg.c
+diff -Nura leptonica-1.83.1/prog/pnmio_reg.c leptonica-1.83.1-patch/prog/pnmio_reg.c
 --- leptonica-1.83.1/prog/pnmio_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/pnmio_reg.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/pnmio_reg.c	2024-09-05 14:26:11.055617434 +0800
 @@ -62,18 +62,18 @@
  
          /* Test 1 bpp (pbm) read/write */
@@ -6130,9 +6142,9 @@ diff -Nura leptonica-1.83.1/prog/pnmio_reg.c leptonica_patch/prog/pnmio_reg.c
      regTestComparePix(rp, pix1, pix3);  /* 11 */
      pixDestroy(&pix1);
      pixDestroy(&pix2);
-diff -Nura leptonica-1.83.1/prog/printimage.c leptonica_patch/prog/printimage.c
+diff -Nura leptonica-1.83.1/prog/printimage.c leptonica-1.83.1-patch/prog/printimage.c
 --- leptonica-1.83.1/prog/printimage.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/printimage.c	2024-08-15 11:14:31.837858846 +0800
++++ leptonica-1.83.1-patch/prog/printimage.c	2024-09-05 14:26:11.055617434 +0800
 @@ -35,7 +35,7 @@
   *
   *   The simplest input would be something like
@@ -6167,9 +6179,9 @@ diff -Nura leptonica-1.83.1/prog/printimage.c leptonica_patch/prog/printimage.c
  #if USE_COMPRESSED
      index = 0;
      pixWriteCompressedToPS(pix1, fname, (l_int32)(300. / scale), 3, &index);
-diff -Nura leptonica-1.83.1/prog/printsplitimage.c leptonica_patch/prog/printsplitimage.c
+diff -Nura leptonica-1.83.1/prog/printsplitimage.c leptonica-1.83.1-patch/prog/printsplitimage.c
 --- leptonica-1.83.1/prog/printsplitimage.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/printsplitimage.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/printsplitimage.c	2024-09-05 14:26:11.055617434 +0800
 @@ -44,8 +44,8 @@
   *
   *   If your system does not have lpr, it likely has lp.  You can run
@@ -6190,9 +6202,9 @@ diff -Nura leptonica-1.83.1/prog/printsplitimage.c leptonica_patch/prog/printspl
          lept_stderr("fname: %s\n", fname);
          sarrayAddString(sa, fname, L_INSERT);
  #if USE_COMPRESSED
-diff -Nura leptonica-1.83.1/prog/printtiff.c leptonica_patch/prog/printtiff.c
+diff -Nura leptonica-1.83.1/prog/printtiff.c leptonica-1.83.1-patch/prog/printtiff.c
 --- leptonica-1.83.1/prog/printtiff.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/printtiff.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/printtiff.c	2024-09-05 14:26:11.055617434 +0800
 @@ -32,16 +32,16 @@
   *   Prints a multipage tiff file of 1 bpp images to a printer.
   *   If the tiff is at standard fax resolution, it expands the
@@ -6223,9 +6235,9 @@ diff -Nura leptonica-1.83.1/prog/printtiff.c leptonica_patch/prog/printtiff.c
      convertTiffMultipageToPS(filein, tempfile, FILL_FACTOR);
  
      if (argc == 3) {
-diff -Nura leptonica-1.83.1/prog/psio_reg.c leptonica_patch/prog/psio_reg.c
+diff -Nura leptonica-1.83.1/prog/psio_reg.c leptonica-1.83.1-patch/prog/psio_reg.c
 --- leptonica-1.83.1/prog/psio_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/psio_reg.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/psio_reg.c	2024-09-05 14:26:11.055617434 +0800
 @@ -94,10 +94,10 @@
      pixs = pixRead("feyn-fract.tif");
      pixGetDimensions(pixs, &w, &h, NULL);
@@ -6422,9 +6434,9 @@ diff -Nura leptonica-1.83.1/prog/psio_reg.c leptonica_patch/prog/psio_reg.c
      pixaDestroy(&pixa);
      sarrayDestroy(&sa);
  
-diff -Nura leptonica-1.83.1/prog/psioseg_reg.c leptonica_patch/prog/psioseg_reg.c
+diff -Nura leptonica-1.83.1/prog/psioseg_reg.c leptonica-1.83.1-patch/prog/psioseg_reg.c
 --- leptonica-1.83.1/prog/psioseg_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/psioseg_reg.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/psioseg_reg.c	2024-09-05 14:26:11.055617434 +0800
 @@ -126,19 +126,19 @@
  
           /* Write out the files to be imaged */
@@ -6487,9 +6499,9 @@ diff -Nura leptonica-1.83.1/prog/psioseg_reg.c leptonica_patch/prog/psioseg_reg.
      else
          L_WARNING("ps2pdf failed to generate pdf\n", rp->testname);
  
-diff -Nura leptonica-1.83.1/prog/ptra2_reg.c leptonica_patch/prog/ptra2_reg.c
+diff -Nura leptonica-1.83.1/prog/ptra2_reg.c leptonica-1.83.1-patch/prog/ptra2_reg.c
 --- leptonica-1.83.1/prog/ptra2_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/ptra2_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/ptra2_reg.c	2024-09-05 14:26:11.055617434 +0800
 @@ -92,18 +92,18 @@
  
          /* Sort by x */
@@ -6567,9 +6579,9 @@ diff -Nura leptonica-1.83.1/prog/ptra2_reg.c leptonica_patch/prog/ptra2_reg.c
      pixaWrite(buf, pixa2);
      regTestCheckFile(rp, buf);  /* 5 */
  
-diff -Nura leptonica-1.83.1/prog/rank_reg.c leptonica_patch/prog/rank_reg.c
+diff -Nura leptonica-1.83.1/prog/rank_reg.c leptonica-1.83.1-patch/prog/rank_reg.c
 --- leptonica-1.83.1/prog/rank_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/rank_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/rank_reg.c	2024-09-05 14:26:11.055617434 +0800
 @@ -107,7 +107,7 @@
      nax = numaMakeSequence(1, 1, 20);
      nay1 = numaCreate(20);
@@ -6588,9 +6600,9 @@ diff -Nura leptonica-1.83.1/prog/rank_reg.c leptonica_patch/prog/rank_reg.c
      pixDisplayWithTitle(pix1, 100, 100, NULL, rp->display);
      pixDestroy(&pix1);
      pixDestroy(&pix0);
-diff -Nura leptonica-1.83.1/prog/recog_bootnum1.c leptonica_patch/prog/recog_bootnum1.c
+diff -Nura leptonica-1.83.1/prog/recog_bootnum1.c leptonica-1.83.1-patch/prog/recog_bootnum1.c
 --- leptonica-1.83.1/prog/recog_bootnum1.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/recog_bootnum1.c	2024-08-15 11:14:31.841859094 +0800
++++ leptonica-1.83.1-patch/prog/recog_bootnum1.c	2024-09-05 14:26:11.055617434 +0800
 @@ -46,9 +46,9 @@
   *      (b) Add code to MakeBootnum1() for this set, selecting with the
   *          string those templates you want to use.
@@ -6676,9 +6688,9 @@ diff -Nura leptonica-1.83.1/prog/recog_bootnum1.c leptonica_patch/prog/recog_boo
      recogDestroy(&recog);
      return pixa;
  }
-diff -Nura leptonica-1.83.1/prog/recog_bootnum2.c leptonica_patch/prog/recog_bootnum2.c
+diff -Nura leptonica-1.83.1/prog/recog_bootnum2.c leptonica-1.83.1-patch/prog/recog_bootnum2.c
 --- leptonica-1.83.1/prog/recog_bootnum2.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/recog_bootnum2.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/recog_bootnum2.c	2024-09-05 14:26:11.055617434 +0800
 @@ -69,18 +69,18 @@
      pixa1 = pixaRead(buf);
  
@@ -6723,9 +6735,9 @@ diff -Nura leptonica-1.83.1/prog/recog_bootnum2.c leptonica_patch/prog/recog_boo
      pixWrite(buf, pix1, IFF_TIFF_G4);
  
          /* The number of templates is in the pix text string; check it. */
-diff -Nura leptonica-1.83.1/prog/recog_bootnum3.c leptonica_patch/prog/recog_bootnum3.c
+diff -Nura leptonica-1.83.1/prog/recog_bootnum3.c leptonica-1.83.1-patch/prog/recog_bootnum3.c
 --- leptonica-1.83.1/prog/recog_bootnum3.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/recog_bootnum3.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/recog_bootnum3.c	2024-09-05 14:26:11.055617434 +0800
 @@ -77,14 +77,14 @@
          pixaDestroy(&pixa2);
      }
@@ -6743,9 +6755,9 @@ diff -Nura leptonica-1.83.1/prog/recog_bootnum3.c leptonica_patch/prog/recog_boo
      strcodeFinalize(&strc, ".");
      return 0;
  }
-diff -Nura leptonica-1.83.1/prog/recogsort.c leptonica_patch/prog/recogsort.c
+diff -Nura leptonica-1.83.1/prog/recogsort.c leptonica-1.83.1-patch/prog/recogsort.c
 --- leptonica-1.83.1/prog/recogsort.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/recogsort.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/recogsort.c	2024-09-05 14:26:11.055617434 +0800
 @@ -95,7 +95,7 @@
          boxaaWriteStream(stderr, baa1);
          numaaWriteStream(stderr, naa1);
@@ -6768,9 +6780,9 @@ diff -Nura leptonica-1.83.1/prog/recogsort.c leptonica_patch/prog/recogsort.c
      pixaDestroy(&pixa2);
      pixaDestroy(&pixa3);
      pixDestroy(&pix1);
-diff -Nura leptonica-1.83.1/prog/recogtest1.c leptonica_patch/prog/recogtest1.c
+diff -Nura leptonica-1.83.1/prog/recogtest1.c leptonica-1.83.1-patch/prog/recogtest1.c
 --- leptonica-1.83.1/prog/recogtest1.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/recogtest1.c	2024-08-15 11:14:31.837858846 +0800
++++ leptonica-1.83.1-patch/prog/recogtest1.c	2024-09-05 14:26:11.059617356 +0800
 @@ -76,7 +76,7 @@
      pixa1 = pixaRead("recog/digits/bootnum1.pa");
      recog1 = recogCreateFromPixa(pixa1, scaledw, scaledh, linew, 120, 1);
@@ -6829,9 +6841,9 @@ diff -Nura leptonica-1.83.1/prog/recogtest1.c leptonica_patch/prog/recogtest1.c
      recogShowAverageTemplates(recog2);
      pixaDestroy(&pixa1);
      recogDestroy(&recog2);
-diff -Nura leptonica-1.83.1/prog/recogtest2.c leptonica_patch/prog/recogtest2.c
+diff -Nura leptonica-1.83.1/prog/recogtest2.c leptonica-1.83.1-patch/prog/recogtest2.c
 --- leptonica-1.83.1/prog/recogtest2.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/recogtest2.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/recogtest2.c	2024-09-05 14:26:11.059617356 +0800
 @@ -87,7 +87,7 @@
           * and scaled versions of the templates */
      pixa1 = (PIXA *)l_bootnum_gen1();  /* from recog/digits/bootnum1.pa */
@@ -6892,9 +6904,9 @@ diff -Nura leptonica-1.83.1/prog/recogtest2.c leptonica_patch/prog/recogtest2.c
      pixDestroy(&pix1);
      pixDestroy(&pix2);
      pixDestroy(&pix3);
-diff -Nura leptonica-1.83.1/prog/recogtest3.c leptonica_patch/prog/recogtest3.c
+diff -Nura leptonica-1.83.1/prog/recogtest3.c leptonica-1.83.1-patch/prog/recogtest3.c
 --- leptonica-1.83.1/prog/recogtest3.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/recogtest3.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/recogtest3.c	2024-09-05 14:26:11.059617356 +0800
 @@ -131,11 +131,11 @@
      recogShowContent(stderr, recog2, 2, 1);
  
@@ -6912,9 +6924,9 @@ diff -Nura leptonica-1.83.1/prog/recogtest3.c leptonica_patch/prog/recogtest3.c
      if (!same)
          lept_stderr("Error in serialization!\n");
      recogDestroy(&recog3);
-diff -Nura leptonica-1.83.1/prog/recogtest4.c leptonica_patch/prog/recogtest4.c
+diff -Nura leptonica-1.83.1/prog/recogtest4.c leptonica-1.83.1-patch/prog/recogtest4.c
 --- leptonica-1.83.1/prog/recogtest4.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/recogtest4.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/recogtest4.c	2024-09-05 14:26:11.059617356 +0800
 @@ -76,7 +76,7 @@
      recog = recogCreateFromPixa(pixa1, 0, 0, 0, 128, 1);
  #endif
@@ -6933,9 +6945,9 @@ diff -Nura leptonica-1.83.1/prog/recogtest4.c leptonica_patch/prog/recogtest4.c
          pixWrite(buf, pixdb, IFF_PNG);
          pixDestroy(&pixdb);
          boxaDestroy(&boxa);
-diff -Nura leptonica-1.83.1/prog/recogtest5.c leptonica_patch/prog/recogtest5.c
+diff -Nura leptonica-1.83.1/prog/recogtest5.c leptonica-1.83.1-patch/prog/recogtest5.c
 --- leptonica-1.83.1/prog/recogtest5.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/recogtest5.c	2024-08-15 11:14:31.837858846 +0800
++++ leptonica-1.83.1-patch/prog/recogtest5.c	2024-09-05 14:26:11.059617356 +0800
 @@ -65,7 +65,7 @@
      pixa1 = pixaRead("recog/sets/train01.pa");
      recog = recogCreateFromPixa(pixa1, 0, 0, 0, 128, 1);  /* no scaling */
@@ -6945,9 +6957,9 @@ diff -Nura leptonica-1.83.1/prog/recogtest5.c leptonica_patch/prog/recogtest5.c
  
          /* Show the templates */
      recogDebugAverages(recog, 1);
-diff -Nura leptonica-1.83.1/prog/recogtest7.c leptonica_patch/prog/recogtest7.c
+diff -Nura leptonica-1.83.1/prog/recogtest7.c leptonica-1.83.1-patch/prog/recogtest7.c
 --- leptonica-1.83.1/prog/recogtest7.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/recogtest7.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/recogtest7.c	2024-09-05 14:26:11.059617356 +0800
 @@ -74,8 +74,8 @@
      pix3 = pixaDisplayTiledWithText(pixa3, 1400, 1.0, 10, 2, 6, 0xff000000);
      pixEqual(pix2, pix3, &same);
@@ -7004,9 +7016,9 @@ diff -Nura leptonica-1.83.1/prog/recogtest7.c leptonica_patch/prog/recogtest7.c
      if (!same)
          lept_stderr("Error in serialization!\n");
      recogDestroy(&recog1);
-diff -Nura leptonica-1.83.1/prog/rectangle_reg.c leptonica_patch/prog/rectangle_reg.c
+diff -Nura leptonica-1.83.1/prog/rectangle_reg.c leptonica-1.83.1-patch/prog/rectangle_reg.c
 --- leptonica-1.83.1/prog/rectangle_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/rectangle_reg.c	2024-08-15 11:14:31.853859836 +0800
++++ leptonica-1.83.1-patch/prog/rectangle_reg.c	2024-09-05 14:26:11.059617356 +0800
 @@ -104,7 +104,7 @@
                                  L_GEOMETRIC_UNION, TRUE);
      boxDestroy(&box2);
@@ -7079,9 +7091,9 @@ diff -Nura leptonica-1.83.1/prog/rectangle_reg.c leptonica_patch/prog/rectangle_
      regTestCheckFile(rp, newpath);  /* 8 */
      if (rp->display) l_fileDisplay(newpath, 1400, 500, 0.4);
      lept_free(newpath);
-diff -Nura leptonica-1.83.1/prog/renderfonts.c leptonica_patch/prog/renderfonts.c
+diff -Nura leptonica-1.83.1/prog/renderfonts.c leptonica-1.83.1-patch/prog/renderfonts.c
 --- leptonica-1.83.1/prog/renderfonts.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/renderfonts.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/renderfonts.c	2024-09-05 14:26:11.059617356 +0800
 @@ -58,7 +58,7 @@
      lept_stderr("n = %d\n", pixaGetCount(bmf->pixa));
      pix = pixaGetPix(bmf->pixa, 6, L_CLONE);
@@ -7109,9 +7121,9 @@ diff -Nura leptonica-1.83.1/prog/renderfonts.c leptonica_patch/prog/renderfonts.
      pixDisplay(pixs, 0, 500);
      if (overflow)
          lept_stderr("Text overflow beyond image boundary\n");
-diff -Nura leptonica-1.83.1/prog/rotatetest1.c leptonica_patch/prog/rotatetest1.c
+diff -Nura leptonica-1.83.1/prog/rotatetest1.c leptonica-1.83.1-patch/prog/rotatetest1.c
 --- leptonica-1.83.1/prog/rotatetest1.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/rotatetest1.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/rotatetest1.c	2024-09-05 14:26:11.059617356 +0800
 @@ -131,7 +131,7 @@
      for (i = 0; i < NTIMES; i++) {
          pixRotateShearIP(pixs, w/2, h/2, -deg2rad * angle, L_BRING_IN_WHITE);
@@ -7174,9 +7186,9 @@ diff -Nura leptonica-1.83.1/prog/rotatetest1.c leptonica_patch/prog/rotatetest1.
      pixDisplay(pixd, 0, 500);
      pixDestroy(&pixd);
  #endif
-diff -Nura leptonica-1.83.1/prog/runlengthtest.c leptonica_patch/prog/runlengthtest.c
+diff -Nura leptonica-1.83.1/prog/runlengthtest.c leptonica-1.83.1-patch/prog/runlengthtest.c
 --- leptonica-1.83.1/prog/runlengthtest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/runlengthtest.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/runlengthtest.c	2024-09-05 14:26:11.059617356 +0800
 @@ -65,12 +65,12 @@
      pixDisplay(pix5, 1800, 0);
      pixDisplay(pix6, 1200, 0);
@@ -7218,9 +7230,9 @@ diff -Nura leptonica-1.83.1/prog/runlengthtest.c leptonica_patch/prog/runlengtht
  
      pixDestroy(&pix1);
      pixDestroy(&pix2);
-diff -Nura leptonica-1.83.1/prog/scaletest2.c leptonica_patch/prog/scaletest2.c
+diff -Nura leptonica-1.83.1/prog/scaletest2.c leptonica-1.83.1-patch/prog/scaletest2.c
 --- leptonica-1.83.1/prog/scaletest2.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/scaletest2.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/scaletest2.c	2024-09-05 14:26:11.059617356 +0800
 @@ -60,22 +60,22 @@
          PIX  *pixd;
  
@@ -7406,9 +7418,9 @@ diff -Nura leptonica-1.83.1/prog/scaletest2.c leptonica_patch/prog/scaletest2.c
          pixDestroy(&pixt);
          pixDestroy(&pix0);
          pixDestroy(&pix1);
-diff -Nura leptonica-1.83.1/prog/seedfilltest.c leptonica_patch/prog/seedfilltest.c
+diff -Nura leptonica-1.83.1/prog/seedfilltest.c leptonica-1.83.1-patch/prog/seedfilltest.c
 --- leptonica-1.83.1/prog/seedfilltest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/seedfilltest.c	2024-08-15 11:14:31.841859094 +0800
++++ leptonica-1.83.1-patch/prog/seedfilltest.c	2024-09-05 14:26:11.063617278 +0800
 @@ -87,8 +87,8 @@
      pixInvert(pixd, pixd);
      pixDisplay(pixmi, 500, 100);
@@ -7469,9 +7481,9 @@ diff -Nura leptonica-1.83.1/prog/seedfilltest.c leptonica_patch/prog/seedfilltes
  #endif
  
      pixDestroy(&pixs);
-diff -Nura leptonica-1.83.1/prog/selio_reg.c leptonica_patch/prog/selio_reg.c
+diff -Nura leptonica-1.83.1/prog/selio_reg.c leptonica-1.83.1-patch/prog/selio_reg.c
 --- leptonica-1.83.1/prog/selio_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/selio_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/selio_reg.c	2024-09-05 14:26:11.063617278 +0800
 @@ -84,11 +84,11 @@
  
          /* selaRead() / selaWrite()  */
@@ -7511,9 +7523,9 @@ diff -Nura leptonica-1.83.1/prog/selio_reg.c leptonica_patch/prog/selio_reg.c
      regTestCompareFiles(rp, 4, 5);  /* 6 */
      selaDestroy(&sela2);
  
-diff -Nura leptonica-1.83.1/prog/skewtest.c leptonica_patch/prog/skewtest.c
+diff -Nura leptonica-1.83.1/prog/skewtest.c leptonica-1.83.1-patch/prog/skewtest.c
 --- leptonica-1.83.1/prog/skewtest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/skewtest.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/skewtest.c	2024-09-05 14:26:11.063617278 +0800
 @@ -86,7 +86,7 @@
  
          /* Find the skew angle various ways */
@@ -7559,9 +7571,9 @@ diff -Nura leptonica-1.83.1/prog/skewtest.c leptonica_patch/prog/skewtest.c
      pixDestroy(&pixd);
  #endif
  
-diff -Nura leptonica-1.83.1/prog/smoothedge_reg.c leptonica_patch/prog/smoothedge_reg.c
+diff -Nura leptonica-1.83.1/prog/smoothedge_reg.c leptonica-1.83.1-patch/prog/smoothedge_reg.c
 --- leptonica-1.83.1/prog/smoothedge_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/smoothedge_reg.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/smoothedge_reg.c	2024-09-05 14:26:11.063617278 +0800
 @@ -71,7 +71,7 @@
  
          /* Display at 2x scaling */
@@ -7584,9 +7596,9 @@ diff -Nura leptonica-1.83.1/prog/smoothedge_reg.c leptonica_patch/prog/smoothedg
      pixt2 = pixAddBorder(pixt1, 10, 0);  /* 10 pixel white border */
      pixaAddPix(pixa, pixt2, L_INSERT);
      pixDestroy(&pixt1);
-diff -Nura leptonica-1.83.1/prog/sorttest.c leptonica_patch/prog/sorttest.c
+diff -Nura leptonica-1.83.1/prog/sorttest.c leptonica-1.83.1-patch/prog/sorttest.c
 --- leptonica-1.83.1/prog/sorttest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/sorttest.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/sorttest.c	2024-09-05 14:26:11.063617278 +0800
 @@ -61,14 +61,14 @@
      boxas = boxaSort(boxa, L_SORT_BY_PERIMETER, L_SORT_DECREASING, NULL);
      ns = boxaGetCount(boxas);
@@ -7623,9 +7635,9 @@ diff -Nura leptonica-1.83.1/prog/sorttest.c leptonica_patch/prog/sorttest.c
      pixDestroy(&pixt);
      pixaDestroy(&pixa);
      pixaDestroy(&pixas);
-diff -Nura leptonica-1.83.1/prog/string_reg.c leptonica_patch/prog/string_reg.c
+diff -Nura leptonica-1.83.1/prog/string_reg.c leptonica-1.83.1-patch/prog/string_reg.c
 --- leptonica-1.83.1/prog/string_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/string_reg.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/string_reg.c	2024-09-05 14:26:11.063617278 +0800
 @@ -102,14 +102,14 @@
      data1 = arrayReplaceEachSequence((l_uint8 *)str1, size1,
                                       (l_uint8 *)"Destroy", 7,
@@ -7728,9 +7740,9 @@ diff -Nura leptonica-1.83.1/prog/string_reg.c leptonica_patch/prog/string_reg.c
          str3 = (char *)l_binaryRead(fname, &size2);
          stringJoinIP(&str2, str3);
          lept_free(str3);
-diff -Nura leptonica-1.83.1/prog/stringtemplate1.txt leptonica_patch/prog/stringtemplate1.txt
+diff -Nura leptonica-1.83.1/prog/stringtemplate1.txt leptonica-1.83.1-patch/prog/stringtemplate1.txt
 --- leptonica-1.83.1/prog/stringtemplate1.txt	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/stringtemplate1.txt	2024-08-15 11:14:31.793856125 +0800
++++ leptonica-1.83.1-patch/prog/stringtemplate1.txt	2024-09-05 14:26:11.063617278 +0800
 @@ -73,16 +73,16 @@
  ---    case 0:
  ---        data1 = decodeBase64(l_strdata_0, strlen(l_strdata_0), &size1);
@@ -7752,9 +7764,9 @@ diff -Nura leptonica-1.83.1/prog/stringtemplate1.txt leptonica_patch/prog/string
  ---        lept_free(data1);
  ---        lept_free(data2);
  ---        break;
-diff -Nura leptonica-1.83.1/prog/tiffpdftest.c leptonica_patch/prog/tiffpdftest.c
+diff -Nura leptonica-1.83.1/prog/tiffpdftest.c leptonica-1.83.1-patch/prog/tiffpdftest.c
 --- leptonica-1.83.1/prog/tiffpdftest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/tiffpdftest.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/tiffpdftest.c	2024-09-05 14:26:11.063617278 +0800
 @@ -67,20 +67,20 @@
      pixa1 = pixaCreate(2);
      pixaAddPix(pixa1, pix1, L_INSERT);
@@ -7825,9 +7837,9 @@ diff -Nura leptonica-1.83.1/prog/tiffpdftest.c leptonica_patch/prog/tiffpdftest.
      pixDestroy(&pix1);
      pixDestroy(&pix2);
  
-diff -Nura leptonica-1.83.1/prog/trctest.c leptonica_patch/prog/trctest.c
+diff -Nura leptonica-1.83.1/prog/trctest.c leptonica-1.83.1-patch/prog/trctest.c
 --- leptonica-1.83.1/prog/trctest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/trctest.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/trctest.c	2024-09-05 14:26:11.063617278 +0800
 @@ -27,7 +27,7 @@
  /*
   * trctest.c
@@ -7837,9 +7849,9 @@ diff -Nura leptonica-1.83.1/prog/trctest.c leptonica_patch/prog/trctest.c
   */
  
  #ifdef HAVE_CONFIG_H
-diff -Nura leptonica-1.83.1/prog/underlinetest.c leptonica_patch/prog/underlinetest.c
+diff -Nura leptonica-1.83.1/prog/underlinetest.c leptonica-1.83.1-patch/prog/underlinetest.c
 --- leptonica-1.83.1/prog/underlinetest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/underlinetest.c	2024-08-15 11:14:31.897862558 +0800
++++ leptonica-1.83.1-patch/prog/underlinetest.c	2024-09-05 14:26:11.063617278 +0800
 @@ -87,7 +87,7 @@
      lept_stderr("\n");
  
@@ -7849,9 +7861,9 @@ diff -Nura leptonica-1.83.1/prog/underlinetest.c leptonica_patch/prog/underlinet
      pixDisplay(pixd, 100, 100);
      pixaDestroy(&pixa);
      pixDestroy(&pixd);
-diff -Nura leptonica-1.83.1/prog/warpertest.c leptonica_patch/prog/warpertest.c
+diff -Nura leptonica-1.83.1/prog/warpertest.c leptonica-1.83.1-patch/prog/warpertest.c
 --- leptonica-1.83.1/prog/warpertest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/warpertest.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/warpertest.c	2024-09-05 14:26:11.063617278 +0800
 @@ -85,9 +85,9 @@
      pixDestroy(&pixs);
  
@@ -7924,9 +7936,9 @@ diff -Nura leptonica-1.83.1/prog/warpertest.c leptonica_patch/prog/warpertest.c
      pixaDestroy(&pixa);
      pixDestroy(&pixd);
  #endif
-diff -Nura leptonica-1.83.1/prog/webpanimio_reg.c leptonica_patch/prog/webpanimio_reg.c
+diff -Nura leptonica-1.83.1/prog/webpanimio_reg.c leptonica-1.83.1-patch/prog/webpanimio_reg.c
 --- leptonica-1.83.1/prog/webpanimio_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/webpanimio_reg.c	2024-08-15 11:14:31.861860331 +0800
++++ leptonica-1.83.1-patch/prog/webpanimio_reg.c	2024-09-05 14:26:11.067617200 +0800
 @@ -85,9 +85,9 @@
      pixa = pixaCreate(6);
      pixaAddPix(pixa, pix1, L_COPY);
@@ -7939,9 +7951,9 @@ diff -Nura leptonica-1.83.1/prog/webpanimio_reg.c leptonica_patch/prog/webpanimi
      pixaDestroy(&pixa);
      pixDestroy(&pix1);
      pixDestroy(&pix2);
-diff -Nura leptonica-1.83.1/prog/webpio_reg.c leptonica_patch/prog/webpio_reg.c
+diff -Nura leptonica-1.83.1/prog/webpio_reg.c leptonica-1.83.1-patch/prog/webpio_reg.c
 --- leptonica-1.83.1/prog/webpio_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/webpio_reg.c	2024-08-15 11:14:31.869860826 +0800
++++ leptonica-1.83.1-patch/prog/webpio_reg.c	2024-09-05 14:26:11.067617200 +0800
 @@ -102,7 +102,7 @@
      pixs = pixRead(fname);
      lept_stderr("Time to read jpg: %7.3f\n", stopTimer());
@@ -7966,9 +7978,9 @@ diff -Nura leptonica-1.83.1/prog/webpio_reg.c leptonica_patch/prog/webpio_reg.c
      pixGetPSNR(pixs, pix1, 4, &psnr);
      if (lossless)
          lept_stderr("lossless; psnr should be 1000: psnr = %7.3f\n", psnr);
-diff -Nura leptonica-1.83.1/prog/wordboxes_reg.c leptonica_patch/prog/wordboxes_reg.c
+diff -Nura leptonica-1.83.1/prog/wordboxes_reg.c leptonica-1.83.1-patch/prog/wordboxes_reg.c
 --- leptonica-1.83.1/prog/wordboxes_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/wordboxes_reg.c	2024-08-15 11:14:31.905863053 +0800
++++ leptonica-1.83.1-patch/prog/wordboxes_reg.c	2024-09-05 14:26:11.067617200 +0800
 @@ -116,9 +116,9 @@
      pix2 = pixClipRectangle(pix1, box1, NULL);
      box2 = boxCreate(150, 130, 1500, 355);
@@ -7997,9 +8009,9 @@ diff -Nura leptonica-1.83.1/prog/wordboxes_reg.c leptonica_patch/prog/wordboxes_
  
          /* For a few boxes, show the (up to 4) adjacent boxes */
      n = boxaGetCount(boxa1);
-diff -Nura leptonica-1.83.1/prog/writetext_reg.c leptonica_patch/prog/writetext_reg.c
+diff -Nura leptonica-1.83.1/prog/writetext_reg.c leptonica-1.83.1-patch/prog/writetext_reg.c
 --- leptonica-1.83.1/prog/writetext_reg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/writetext_reg.c	2024-08-15 11:14:31.845859341 +0800
++++ leptonica-1.83.1-patch/prog/writetext_reg.c	2024-09-05 14:26:11.067617200 +0800
 @@ -29,7 +29,7 @@
   *
   *   Regression test for writing a block of text in one of 4 locations
@@ -8009,9 +8021,9 @@ diff -Nura leptonica-1.83.1/prog/writetext_reg.c leptonica_patch/prog/writetext_
   */
  
  #ifdef HAVE_CONFIG_H
-diff -Nura leptonica-1.83.1/prog/yuvtest.c leptonica_patch/prog/yuvtest.c
+diff -Nura leptonica-1.83.1/prog/yuvtest.c leptonica-1.83.1-patch/prog/yuvtest.c
 --- leptonica-1.83.1/prog/yuvtest.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/prog/yuvtest.c	2024-08-15 11:14:31.881861568 +0800
++++ leptonica-1.83.1-patch/prog/yuvtest.c	2024-09-05 14:26:11.067617200 +0800
 @@ -66,7 +66,7 @@
  
      pixd = pixaDisplayTiledAndScaled(pixa, 32, 755, 1, 0, 20, 2);
@@ -8030,9 +8042,9 @@ diff -Nura leptonica-1.83.1/prog/yuvtest.c leptonica_patch/prog/yuvtest.c
      pixDestroy(&pixd);
      pixaDestroy(&pixa);
      bmfDestroy(&bmf);
-diff -Nura leptonica-1.83.1/README.html leptonica_patch/README.html
+diff -Nura leptonica-1.83.1/README.html leptonica-1.83.1-patch/README.html
 --- leptonica-1.83.1/README.html	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/README.html	2024-08-15 11:14:31.789855877 +0800
++++ leptonica-1.83.1-patch/README.html	2024-09-05 14:26:11.067617200 +0800
 @@ -415,10 +415,10 @@
         -fsanitize=fuzzer,memory,undefined"
  
@@ -8046,9 +8058,9 @@ diff -Nura leptonica-1.83.1/README.html leptonica_patch/README.html
  
  5. The 270+ programs in the prog directory are an integral part of this
     package.  They can be divided into four groups:
-diff -Nura leptonica-1.83.1/src/baseline.c leptonica_patch/src/baseline.c
+diff -Nura leptonica-1.83.1/src/baseline.c leptonica-1.83.1-patch/src/baseline.c
 --- leptonica-1.83.1/src/baseline.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/baseline.c	2024-08-15 11:14:31.805856867 +0800
++++ leptonica-1.83.1-patch/src/baseline.c	2024-09-05 14:26:11.071617122 +0800
 @@ -157,8 +157,8 @@
  
      if (pixadb) {  /* show the difference signal */
@@ -8093,9 +8105,9 @@ diff -Nura leptonica-1.83.1/src/baseline.c leptonica_patch/src/baseline.c
                              "skew as fctn of y", "y (in raster lines from top)",
                              "angle (in degrees)");
          gplotAddPlot(gplot, NULL, naskew, GPLOT_POINTS, "linear lsf");
-diff -Nura leptonica-1.83.1/src/binarize.c leptonica_patch/src/binarize.c
+diff -Nura leptonica-1.83.1/src/binarize.c leptonica-1.83.1-patch/src/binarize.c
 --- leptonica-1.83.1/src/binarize.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/binarize.c	2024-08-15 11:14:31.801856619 +0800
++++ leptonica-1.83.1-patch/src/binarize.c	2024-09-05 14:26:11.071617122 +0800
 @@ -1067,7 +1067,7 @@
      }
      if (debugflag) {
@@ -8116,9 +8128,9 @@ diff -Nura leptonica-1.83.1/src/binarize.c leptonica_patch/src/binarize.c
      }
      if (pnahisto)
          *pnahisto = na3;
-diff -Nura leptonica-1.83.1/src/bmf.c leptonica_patch/src/bmf.c
+diff -Nura leptonica-1.83.1/src/bmf.c leptonica-1.83.1-patch/src/bmf.c
 --- leptonica-1.83.1/src/bmf.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/bmf.c	2024-08-16 10:25:13.893535286 +0800
++++ leptonica-1.83.1-patch/src/bmf.c	2024-09-05 14:26:11.071617122 +0800
 @@ -611,11 +611,11 @@
          pixRenderLine(pix1, 0, yval, pixGetWidth(pix1), yval, 1,
                        L_FLIP_PIXELS);
@@ -8134,9 +8146,9 @@ diff -Nura leptonica-1.83.1/src/bmf.c leptonica_patch/src/bmf.c
          pixDestroy(&pix1);
  #endif  /* DEBUG_BASELINE */
  
-diff -Nura leptonica-1.83.1/src/boxfunc5.c leptonica_patch/src/boxfunc5.c
+diff -Nura leptonica-1.83.1/src/boxfunc5.c leptonica-1.83.1-patch/src/boxfunc5.c
 --- leptonica-1.83.1/src/boxfunc5.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/boxfunc5.c	2024-08-15 11:14:31.809857114 +0800
++++ leptonica-1.83.1-patch/src/boxfunc5.c	2024-09-05 14:26:11.071617122 +0800
 @@ -138,37 +138,37 @@
      boxaSplitEvenOdd(boxas, 0, &boxae, &boxao);
      if (debug) {
@@ -8261,9 +8273,9 @@ diff -Nura leptonica-1.83.1/src/boxfunc5.c leptonica_patch/src/boxfunc5.c
          snprintf(titlebuf, sizeof(titlebuf), "Box size vs. box index");
      }
      gplot = gplotCreate(buf, GPLOT_PNG, titlebuf,
-diff -Nura leptonica-1.83.1/src/ccthin.c leptonica_patch/src/ccthin.c
+diff -Nura leptonica-1.83.1/src/ccthin.c leptonica-1.83.1-patch/src/ccthin.c
 --- leptonica-1.83.1/src/ccthin.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/ccthin.c	2024-08-15 11:14:31.829858351 +0800
++++ leptonica-1.83.1-patch/src/ccthin.c	2024-09-05 14:26:11.071617122 +0800
 @@ -457,7 +457,7 @@
          char  buf[32];
          lept_mkdir("/lept/sels");
@@ -8273,9 +8285,9 @@ diff -Nura leptonica-1.83.1/src/ccthin.c leptonica_patch/src/ccthin.c
          pixWrite(buf, pix1, IFF_PNG);
          pixDisplay(pix1, 100, 100);
          pixDestroy(&pix1);
-diff -Nura leptonica-1.83.1/src/classapp.c leptonica_patch/src/classapp.c
+diff -Nura leptonica-1.83.1/src/classapp.c leptonica-1.83.1-patch/src/classapp.c
 --- leptonica-1.83.1/src/classapp.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/classapp.c	2024-08-15 11:14:31.829858351 +0800
++++ leptonica-1.83.1-patch/src/classapp.c	2024-09-05 14:26:11.071617122 +0800
 @@ -562,7 +562,7 @@
      boxa1 = boxaTransform(boxa1a, 0, 0, 1.0 / scalefact, 1.0 / scalefact);
      if (debugdir) {
@@ -8285,9 +8297,9 @@ diff -Nura leptonica-1.83.1/src/classapp.c leptonica_patch/src/classapp.c
          lept_mkdir(subdir);
          LEPT_FREE(subdir);
          pix4 = pixConvertTo32(pix2);
-diff -Nura leptonica-1.83.1/src/colorseg.c leptonica_patch/src/colorseg.c
+diff -Nura leptonica-1.83.1/src/colorseg.c leptonica-1.83.1-patch/src/colorseg.c
 --- leptonica-1.83.1/src/colorseg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/colorseg.c	2024-08-15 11:14:31.793856125 +0800
++++ leptonica-1.83.1-patch/src/colorseg.c	2024-09-05 14:26:11.071617122 +0800
 @@ -151,20 +151,20 @@
          return (PIX *)ERROR_PTR("pixd not made", __func__, NULL);
      if (debugflag) {
@@ -8312,9 +8324,9 @@ diff -Nura leptonica-1.83.1/src/colorseg.c leptonica_patch/src/colorseg.c
  
          /* Phase 4: removal of colors with small population and
           * reassignment of pixels to remaining colors */
-diff -Nura leptonica-1.83.1/src/compare.c leptonica_patch/src/compare.c
+diff -Nura leptonica-1.83.1/src/compare.c leptonica-1.83.1-patch/src/compare.c
 --- leptonica-1.83.1/src/compare.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/compare.c	2024-08-15 11:14:31.833858599 +0800
++++ leptonica-1.83.1-patch/src/compare.c	2024-09-05 14:26:11.075617043 +0800
 @@ -919,14 +919,14 @@
          na = pixGetGrayHistogram(pixt, 1);
          numaGetNonzeroRange(na, TINY, &first, &last);
@@ -8487,9 +8499,9 @@ diff -Nura leptonica-1.83.1/src/compare.c leptonica_patch/src/compare.c
                   debugflag);
          pixWrite(buf, pix4, IFF_PNG);
          pixDestroy(&pix3);
-diff -Nura leptonica-1.83.1/src/conncomp.c leptonica_patch/src/conncomp.c
+diff -Nura leptonica-1.83.1/src/conncomp.c leptonica-1.83.1-patch/src/conncomp.c
 --- leptonica-1.83.1/src/conncomp.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/conncomp.c	2024-08-15 11:14:31.829858351 +0800
++++ leptonica-1.83.1-patch/src/conncomp.c	2024-09-05 14:26:11.075617043 +0800
 @@ -270,7 +270,7 @@
      pixCountPixels(pix1, &iszero, NULL);
      lept_stderr("Number of remaining pixels = %d\n", iszero);
@@ -8508,9 +8520,9 @@ diff -Nura leptonica-1.83.1/src/conncomp.c leptonica_patch/src/conncomp.c
  #endif  /* DEBUG */
  
          /* Cleanup, freeing the fillsegs on each stack */
-diff -Nura leptonica-1.83.1/src/dewarp2.c leptonica_patch/src/dewarp2.c
+diff -Nura leptonica-1.83.1/src/dewarp2.c leptonica-1.83.1-patch/src/dewarp2.c
 --- leptonica-1.83.1/src/dewarp2.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/dewarp2.c	2024-08-15 11:14:31.809857114 +0800
++++ leptonica-1.83.1-patch/src/dewarp2.c	2024-09-05 14:26:11.075617043 +0800
 @@ -171,7 +171,7 @@
          lept_rmdir("lept/dewmod");  /* erase previous images */
          lept_mkdir("lept/dewmod");
@@ -8842,9 +8854,9 @@ diff -Nura leptonica-1.83.1/src/dewarp2.c leptonica_patch/src/dewarp2.c
                            "Dewarp Build Line Model", debugfile);
          lept_stderr("pdf file: %s\n", debugfile);
      }
-diff -Nura leptonica-1.83.1/src/dewarp3.c leptonica_patch/src/dewarp3.c
+diff -Nura leptonica-1.83.1/src/dewarp3.c leptonica-1.83.1-patch/src/dewarp3.c
 --- leptonica-1.83.1/src/dewarp3.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/dewarp3.c	2024-08-15 11:14:31.825858104 +0800
++++ leptonica-1.83.1-patch/src/dewarp3.c	2024-09-05 14:26:11.075617043 +0800
 @@ -150,8 +150,8 @@
          pixDisplayWithTitle(pixv, 300, 0, "pixv", 1);
          lept_rmdir("lept/dewapply");  /* remove previous images */
@@ -8907,9 +8919,9 @@ diff -Nura leptonica-1.83.1/src/dewarp3.c leptonica_patch/src/dewarp3.c
                           "Dewarp Apply Disparity Boxa", debugfile);
          lept_stderr("Dewarp Apply Disparity Boxa pdf file: %s\n",
                  debugfile);
-diff -Nura leptonica-1.83.1/src/dewarp4.c leptonica_patch/src/dewarp4.c
+diff -Nura leptonica-1.83.1/src/dewarp4.c leptonica-1.83.1-patch/src/dewarp4.c
 --- leptonica-1.83.1/src/dewarp4.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/dewarp4.c	2024-08-15 11:14:31.825858104 +0800
++++ leptonica-1.83.1-patch/src/dewarp4.c	2024-09-05 14:26:11.075617043 +0800
 @@ -249,7 +249,7 @@
          /* Generate the page model */
      dew = dewarpCreate(pixb, 0);
@@ -8995,9 +9007,9 @@ diff -Nura leptonica-1.83.1/src/dewarp4.c leptonica_patch/src/dewarp4.c
                        0, "Dewarp sequence", pdfout);
      lept_stderr("Output written to: %s\n", pdfout);
      bmfDestroy(&bmf);
-diff -Nura leptonica-1.83.1/src/environ.h leptonica_patch/src/environ.h
+diff -Nura leptonica-1.83.1/src/environ.h leptonica-1.83.1-patch/src/environ.h
 --- leptonica-1.83.1/src/environ.h	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/environ.h	2024-08-15 11:14:31.805856867 +0800
++++ leptonica-1.83.1-patch/src/environ.h	2024-09-05 14:26:11.075617043 +0800
 @@ -211,9 +211,9 @@
   * It is desirable on Windows to have all temp files written to the same
   * subdirectory of the Windows <Temp> directory, because files under <Temp>
@@ -9010,9 +9022,9 @@ diff -Nura leptonica-1.83.1/src/environ.h leptonica_patch/src/environ.h
   *--------------------------------------------------------------------*/
  
  
-diff -Nura leptonica-1.83.1/src/finditalic.c leptonica_patch/src/finditalic.c
+diff -Nura leptonica-1.83.1/src/finditalic.c leptonica-1.83.1-patch/src/finditalic.c
 --- leptonica-1.83.1/src/finditalic.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/finditalic.c	2024-08-15 11:14:31.801856619 +0800
++++ leptonica-1.83.1-patch/src/finditalic.c	2024-09-05 14:26:11.075617043 +0800
 @@ -179,7 +179,7 @@
          PIX   *pix1, *pix2, *pix3;
          pixa1 = pixaCreate(0);
@@ -9049,9 +9061,9 @@ diff -Nura leptonica-1.83.1/src/finditalic.c leptonica_patch/src/finditalic.c
                  "Histogram of horizontal runs of white pixels, vs length",
                  "run length", "number of runs");
          gplotAddPlot(gplot, NULL, na, GPLOT_LINES, "plot1");
-diff -Nura leptonica-1.83.1/src/flipdetect.c leptonica_patch/src/flipdetect.c
+diff -Nura leptonica-1.83.1/src/flipdetect.c leptonica-1.83.1-patch/src/flipdetect.c
 --- leptonica-1.83.1/src/flipdetect.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/flipdetect.c	2024-08-15 11:14:31.805856867 +0800
++++ leptonica-1.83.1-patch/src/flipdetect.c	2024-09-05 14:26:11.079616965 +0800
 @@ -618,7 +618,7 @@
          pixAnd(pix1, pix1, pixm);
      pix3 = pixReduceRankBinaryCascade(pix1, 1, 1, 0, 0);
@@ -9097,9 +9109,9 @@ diff -Nura leptonica-1.83.1/src/flipdetect.c leptonica_patch/src/flipdetect.c
      pixDestroy(&pix2);
      pixDestroy(&pix3);
  
-diff -Nura leptonica-1.83.1/src/flipdetectdwa.c.notused leptonica_patch/src/flipdetectdwa.c.notused
+diff -Nura leptonica-1.83.1/src/flipdetectdwa.c.notused leptonica-1.83.1-patch/src/flipdetectdwa.c.notused
 --- leptonica-1.83.1/src/flipdetectdwa.c.notused	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/flipdetectdwa.c.notused	2024-08-15 11:14:31.793856125 +0800
++++ leptonica-1.83.1-patch/src/flipdetectdwa.c.notused	2024-09-05 14:26:11.079616965 +0800
 @@ -265,7 +265,7 @@
      if (debug) {
          if (pixm) {
@@ -9109,9 +9121,9 @@ diff -Nura leptonica-1.83.1/src/flipdetectdwa.c.notused leptonica_patch/src/flip
          }
          lept_stderr("nup = %7.3f, ndown = %7.3f, conf = %7.3f\n",
                  nup, ndown, *pconf);
-diff -Nura leptonica-1.83.1/src/gplot.c leptonica_patch/src/gplot.c
+diff -Nura leptonica-1.83.1/src/gplot.c leptonica-1.83.1-patch/src/gplot.c
 --- leptonica-1.83.1/src/gplot.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/gplot.c	2024-08-15 11:14:31.833858599 +0800
++++ leptonica-1.83.1-patch/src/gplot.c	2024-09-05 14:26:11.079616965 +0800
 @@ -92,7 +92,7 @@
   *         Specify the root of output files, the output format,
   *         and the title (optional), but not the x and y coordinate labels
@@ -9175,9 +9187,9 @@ diff -Nura leptonica-1.83.1/src/gplot.c leptonica_patch/src/gplot.c
      gplot = gplotSimpleXYN(NULL, naa, GPLOT_LINES, GPLOT_PNG, buf, title);
      if (!gplot)
          return (PIX *)ERROR_PTR("failed to generate plot", __func__, NULL);
-diff -Nura leptonica-1.83.1/src/gplot.h leptonica_patch/src/gplot.h
+diff -Nura leptonica-1.83.1/src/gplot.h leptonica-1.83.1-patch/src/gplot.h
 --- leptonica-1.83.1/src/gplot.h	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/gplot.h	2024-08-15 11:14:31.833858599 +0800
++++ leptonica-1.83.1-patch/src/gplot.h	2024-09-05 14:26:11.079616965 +0800
 @@ -36,8 +36,8 @@
   *   We used to support X11 output, but recent versions of gnuplot do not
   *   support the X11 terminal.  To get display to your screen, use
@@ -9189,9 +9201,9 @@ diff -Nura leptonica-1.83.1/src/gplot.h leptonica_patch/src/gplot.h
   * </pre>
   */
  
-diff -Nura leptonica-1.83.1/src/jbclass.c leptonica_patch/src/jbclass.c
+diff -Nura leptonica-1.83.1/src/jbclass.c leptonica-1.83.1-patch/src/jbclass.c
 --- leptonica-1.83.1/src/jbclass.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/jbclass.c	2024-08-16 10:25:13.892535278 +0800
++++ leptonica-1.83.1-patch/src/jbclass.c	2024-09-05 14:26:11.079616965 +0800
 @@ -1521,14 +1521,14 @@
              L_INFO("Best dilation: %d\n", __func__, L_MAX(3, ibest + 1));
              naseq = numaMakeSequence(1, 1, numaGetCount(nacc));
@@ -9218,9 +9230,9 @@ diff -Nura leptonica-1.83.1/src/jbclass.c leptonica_patch/src/jbclass.c
      sarrayDestroy(&sa);
      return jbdata;
  }
-diff -Nura leptonica-1.83.1/src/morphseq.c leptonica_patch/src/morphseq.c
+diff -Nura leptonica-1.83.1/src/morphseq.c leptonica-1.83.1-patch/src/morphseq.c
 --- leptonica-1.83.1/src/morphseq.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/morphseq.c	2024-08-15 11:14:31.829858351 +0800
++++ leptonica-1.83.1-patch/src/morphseq.c	2024-09-05 14:26:11.079616965 +0800
 @@ -241,7 +241,7 @@
      }
  
@@ -9275,9 +9287,9 @@ diff -Nura leptonica-1.83.1/src/morphseq.c leptonica_patch/src/morphseq.c
                   L_ABS(dispsep));
          pixaConvertToPdf(pixa, 0, 1.0, L_FLATE_ENCODE, 0, fname, fname);
          pixaDestroy(&pixa);
-diff -Nura leptonica-1.83.1/src/numafunc2.c leptonica_patch/src/numafunc2.c
+diff -Nura leptonica-1.83.1/src/numafunc2.c leptonica-1.83.1-patch/src/numafunc2.c
 --- leptonica-1.83.1/src/numafunc2.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/numafunc2.c	2024-08-15 11:14:31.825858104 +0800
++++ leptonica-1.83.1-patch/src/numafunc2.c	2024-09-05 14:26:11.083616887 +0800
 @@ -2080,7 +2080,7 @@
      if (pnascore) {  /* debug mode */
          lept_stderr("minrange = %d, maxrange = %d\n", minrange, maxrange);
@@ -9287,9 +9299,9 @@ diff -Nura leptonica-1.83.1/src/numafunc2.c leptonica_patch/src/numafunc2.c
                       "Score for split distribution");
          *pnascore = nascore;
      } else {
-diff -Nura leptonica-1.83.1/src/pageseg.c leptonica_patch/src/pageseg.c
+diff -Nura leptonica-1.83.1/src/pageseg.c leptonica-1.83.1-patch/src/pageseg.c
 --- leptonica-1.83.1/src/pageseg.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/pageseg.c	2024-08-15 11:14:31.805856867 +0800
++++ leptonica-1.83.1-patch/src/pageseg.c	2024-09-05 14:26:11.087616808 +0800
 @@ -219,7 +219,7 @@
          PTAA     *ptaa;
          ptaa = pixGetOuterBordersPtaa(pixtb);
@@ -9357,9 +9369,9 @@ diff -Nura leptonica-1.83.1/src/pageseg.c leptonica_patch/src/pageseg.c
          pixDestroy(&pix1);
          pixDestroy(&pixdb1);
          pixaDestroy(&pixadb);
-diff -Nura leptonica-1.83.1/src/pix3.c leptonica_patch/src/pix3.c
+diff -Nura leptonica-1.83.1/src/pix3.c leptonica-1.83.1-patch/src/pix3.c
 --- leptonica-1.83.1/src/pix3.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/pix3.c	2024-08-15 11:14:31.809857114 +0800
++++ leptonica-1.83.1-patch/src/pix3.c	2024-09-05 14:26:11.087616808 +0800
 @@ -1385,9 +1385,9 @@
      if (debug) {
          lept_rmdir("masknear");  /* erase previous images */
@@ -9373,9 +9385,9 @@ diff -Nura leptonica-1.83.1/src/pix3.c leptonica_patch/src/pix3.c
          lept_stderr("Input box; with adjusted sides; clipped\n");
          boxPrintStreamInfo(stderr, box);
          boxPrintStreamInfo(stderr, box1);
-diff -Nura leptonica-1.83.1/src/pix4.c leptonica_patch/src/pix4.c
+diff -Nura leptonica-1.83.1/src/pix4.c leptonica-1.83.1-patch/src/pix4.c
 --- leptonica-1.83.1/src/pix4.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/pix4.c	2024-08-15 11:14:31.817857609 +0800
++++ leptonica-1.83.1-patch/src/pix4.c	2024-09-05 14:26:11.087616808 +0800
 @@ -2604,7 +2604,7 @@
      }
      if (array && pixadb) {
@@ -9394,9 +9406,9 @@ diff -Nura leptonica-1.83.1/src/pix4.c leptonica_patch/src/pix4.c
                              "Grayscale value", "Number of pixels");
          gplotAddPlot(gplot, NULL, na, GPLOT_LINES, NULL);
          nax = numaMakeConstant(thresh, 2);
-diff -Nura leptonica-1.83.1/src/pixafunc2.c leptonica_patch/src/pixafunc2.c
+diff -Nura leptonica-1.83.1/src/pixafunc2.c leptonica-1.83.1-patch/src/pixafunc2.c
 --- leptonica-1.83.1/src/pixafunc2.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/pixafunc2.c	2024-08-16 10:25:13.866535070 +0800
++++ leptonica-1.83.1-patch/src/pixafunc2.c	2024-09-05 14:26:11.087616808 +0800
 @@ -865,7 +865,7 @@
      }
      if (boxaWriteMem(&data, &size, boxa) == 0)
@@ -9454,9 +9466,9 @@ diff -Nura leptonica-1.83.1/src/pixafunc2.c leptonica_patch/src/pixafunc2.c
   * \return  0 if OK, 1 on error
   *
   * <pre>
-diff -Nura leptonica-1.83.1/src/pixcomp.c leptonica_patch/src/pixcomp.c
+diff -Nura leptonica-1.83.1/src/pixcomp.c leptonica-1.83.1-patch/src/pixcomp.c
 --- leptonica-1.83.1/src/pixcomp.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/pixcomp.c	2024-08-16 10:25:13.895535302 +0800
++++ leptonica-1.83.1-patch/src/pixcomp.c	2024-09-05 14:26:11.087616808 +0800
 @@ -2330,7 +2330,7 @@
   * \brief   pixacompWriteFiles()
   *
@@ -9475,9 +9487,9 @@ diff -Nura leptonica-1.83.1/src/pixcomp.c leptonica_patch/src/pixcomp.c
          pixcompWriteFile(buf, pixc);
      }
      return 0;
-diff -Nura leptonica-1.83.1/src/ptafunc1.c leptonica_patch/src/ptafunc1.c
+diff -Nura leptonica-1.83.1/src/ptafunc1.c leptonica-1.83.1-patch/src/ptafunc1.c
 --- leptonica-1.83.1/src/ptafunc1.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/ptafunc1.c	2024-08-15 11:14:31.829858351 +0800
++++ leptonica-1.83.1-patch/src/ptafunc1.c	2024-09-05 14:26:11.091616730 +0800
 @@ -1858,13 +1858,13 @@
              numaAddNumber(nab, bval);
          }
@@ -9504,9 +9516,9 @@ diff -Nura leptonica-1.83.1/src/ptafunc1.c leptonica_patch/src/ptafunc1.c
          gplotSimple1(na, outformat, buffer, title);
          numaDestroy(&na);
      }
-diff -Nura leptonica-1.83.1/src/readbarcode.c leptonica_patch/src/readbarcode.c
+diff -Nura leptonica-1.83.1/src/readbarcode.c leptonica-1.83.1-patch/src/readbarcode.c
 --- leptonica-1.83.1/src/readbarcode.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/readbarcode.c	2024-08-15 11:14:31.809857114 +0800
++++ leptonica-1.83.1-patch/src/readbarcode.c	2024-09-05 14:26:11.091616730 +0800
 @@ -234,7 +234,7 @@
  
  #if  DEBUG_DESKEW
@@ -9534,9 +9546,9 @@ diff -Nura leptonica-1.83.1/src/readbarcode.c leptonica_patch/src/readbarcode.c
                              "Raw width histogram", "Width", "Number");
          gplotAddPlot(gplot, NULL, naehist, GPLOT_LINES, "plot black");
          gplotAddPlot(gplot, NULL, naohist, GPLOT_LINES, "plot white");
-diff -Nura leptonica-1.83.1/src/readfile.c leptonica_patch/src/readfile.c
+diff -Nura leptonica-1.83.1/src/readfile.c leptonica-1.83.1-patch/src/readfile.c
 --- leptonica-1.83.1/src/readfile.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/readfile.c	2024-08-15 11:14:31.825858104 +0800
++++ leptonica-1.83.1-patch/src/readfile.c	2024-09-05 14:26:11.091616730 +0800
 @@ -79,21 +79,21 @@
  #include "allheaders.h"
  
@@ -9583,9 +9595,9 @@ diff -Nura leptonica-1.83.1/src/readfile.c leptonica_patch/src/readfile.c
   *          result before and after is unchanged.
   *      (2) This should work properly on input images of any depth,
   *          with and without colormaps.
-diff -Nura leptonica-1.83.1/src/recogident.c leptonica_patch/src/recogident.c
+diff -Nura leptonica-1.83.1/src/recogident.c leptonica-1.83.1-patch/src/recogident.c
 --- leptonica-1.83.1/src/recogident.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/recogident.c	2024-08-15 11:14:31.801856619 +0800
++++ leptonica-1.83.1-patch/src/recogident.c	2024-09-05 14:26:11.095616652 +0800
 @@ -342,7 +342,7 @@
      boxaDestroy(&boxa1);
      if (pixa) {  /* debug */
@@ -9604,9 +9616,9 @@ diff -Nura leptonica-1.83.1/src/recogident.c leptonica_patch/src/recogident.c
          pixWrite(buf, pixt2, IFF_PNG);
          pixDestroy(&pixt1);
          pixDestroy(&pixt2);
-diff -Nura leptonica-1.83.1/src/recogtrain.c leptonica_patch/src/recogtrain.c
+diff -Nura leptonica-1.83.1/src/recogtrain.c leptonica-1.83.1-patch/src/recogtrain.c
 --- leptonica-1.83.1/src/recogtrain.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/recogtrain.c	2024-08-15 11:14:31.837858846 +0800
++++ leptonica-1.83.1-patch/src/recogtrain.c	2024-09-05 14:26:11.095616652 +0800
 @@ -1984,14 +1984,14 @@
      if (display) {
          lept_mkdir("lept/recog");
@@ -9633,9 +9645,9 @@ diff -Nura leptonica-1.83.1/src/recogtrain.c leptonica_patch/src/recogtrain.c
                        IFF_PNG);
          pixDisplay(recog->pixdb_ave, 100, 100);
      }
-diff -Nura leptonica-1.83.1/src/regutils.c leptonica_patch/src/regutils.c
+diff -Nura leptonica-1.83.1/src/regutils.c leptonica-1.83.1-patch/src/regutils.c
 --- leptonica-1.83.1/src/regutils.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/regutils.c	2024-08-15 11:14:31.837858846 +0800
++++ leptonica-1.83.1-patch/src/regutils.c	2024-09-05 14:26:11.099616574 +0800
 @@ -101,7 +101,7 @@
   *              the results to a file.  The output, which includes
   *              logging of all reg test failures plus a SUCCESS or
@@ -9802,9 +9814,9 @@ diff -Nura leptonica-1.83.1/src/regutils.c leptonica_patch/src/regutils.c
               rp->testname, ind, ImageFileFormatExtensions[format]);
      return stringNew(buf);
  }
-diff -Nura leptonica-1.83.1/src/regutils.h leptonica_patch/src/regutils.h
+diff -Nura leptonica-1.83.1/src/regutils.h leptonica-1.83.1-patch/src/regutils.h
 --- leptonica-1.83.1/src/regutils.h	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/regutils.h	2024-08-15 11:14:31.833858599 +0800
++++ leptonica-1.83.1-patch/src/regutils.h	2024-09-05 14:26:11.099616574 +0800
 @@ -49,7 +49,7 @@
   *           Using 'compare' on the command line is optional.
   *
@@ -9814,9 +9826,9 @@ diff -Nura leptonica-1.83.1/src/regutils.h leptonica_patch/src/regutils.h
   *
   *       Case 3: distance_reg display
   *           This runs the test but makes no comparison of the output
-diff -Nura leptonica-1.83.1/src/sel2.c leptonica_patch/src/sel2.c
+diff -Nura leptonica-1.83.1/src/sel2.c leptonica-1.83.1-patch/src/sel2.c
 --- leptonica-1.83.1/src/sel2.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/sel2.c	2024-08-15 11:14:31.805856867 +0800
++++ leptonica-1.83.1-patch/src/sel2.c	2024-09-05 14:26:11.099616574 +0800
 @@ -513,11 +513,11 @@
          lept_mkdir("lept/sel");
          pixaGetPixDimensions(pixa, 0, &w, NULL, NULL);
@@ -9845,9 +9857,9 @@ diff -Nura leptonica-1.83.1/src/sel2.c leptonica_patch/src/sel2.c
          pixDisplay(pixt, 500, 100);
          pixDestroy(&pixt);
          selaWriteStream(stderr, sela);
-diff -Nura leptonica-1.83.1/src/stringcode.c leptonica_patch/src/stringcode.c
+diff -Nura leptonica-1.83.1/src/stringcode.c leptonica-1.83.1-patch/src/stringcode.c
 --- leptonica-1.83.1/src/stringcode.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/stringcode.c	2024-08-16 10:25:13.868535086 +0800
++++ leptonica-1.83.1-patch/src/stringcode.c	2024-09-05 14:26:11.099616574 +0800
 @@ -205,7 +205,7 @@
   *
   * \param[in]    filein    containing filenames of serialized data
@@ -9877,9 +9889,9 @@ diff -Nura leptonica-1.83.1/src/stringcode.c leptonica_patch/src/stringcode.c
      } else {
          realoutdir = stringNew(outdir);
      }
-diff -Nura leptonica-1.83.1/src/stringtemplate1.txt leptonica_patch/src/stringtemplate1.txt
+diff -Nura leptonica-1.83.1/src/stringtemplate1.txt leptonica-1.83.1-patch/src/stringtemplate1.txt
 --- leptonica-1.83.1/src/stringtemplate1.txt	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/stringtemplate1.txt	2024-08-15 11:14:31.793856125 +0800
++++ leptonica-1.83.1-patch/src/stringtemplate1.txt	2024-09-05 14:26:11.099616574 +0800
 @@ -73,16 +73,16 @@
  ---    case 0:
  ---        data1 = decodeBase64(l_strdata_0, strlen(l_strdata_0), &size1);
@@ -9901,9 +9913,9 @@ diff -Nura leptonica-1.83.1/src/stringtemplate1.txt leptonica_patch/src/stringte
  ---        lept_free(data1);
  ---        lept_free(data2);
  ---        break;
-diff -Nura leptonica-1.83.1/src/utils2.c leptonica_patch/src/utils2.c
+diff -Nura leptonica-1.83.1/src/utils2.c leptonica-1.83.1-patch/src/utils2.c
 --- leptonica-1.83.1/src/utils2.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/utils2.c	2024-08-16 10:25:13.882535198 +0800
++++ leptonica-1.83.1-patch/src/utils2.c	2024-09-05 14:26:11.099616574 +0800
 @@ -134,16 +134,16 @@
   *  This is important:
   *  (1) With the exception of splitPathAtDirectory(), splitPathAtExtension()
@@ -10313,9 +10325,9 @@ diff -Nura leptonica-1.83.1/src/utils2.c leptonica_patch/src/utils2.c
   *          where each X is a random character.
   *      (2) On Windows, this makes a filename of the form
   *               "/[Temp]/lp.XXXXXX".
-diff -Nura leptonica-1.83.1/src/writefile.c leptonica_patch/src/writefile.c
+diff -Nura leptonica-1.83.1/src/writefile.c leptonica-1.83.1-patch/src/writefile.c
 --- leptonica-1.83.1/src/writefile.c	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/src/writefile.c	2024-08-15 11:14:31.829858351 +0800
++++ leptonica-1.83.1-patch/src/writefile.c	2024-09-05 14:26:11.099616574 +0800
 @@ -840,7 +840,7 @@
   *          with xv, because xv automatically downscales large images
   *          by subsampling, which looks poor.  For 1 bpp, we use
@@ -10338,9 +10350,9 @@ diff -Nura leptonica-1.83.1/src/writefile.c leptonica_patch/src/writefile.c
          pixWrite(buffer, pix2, IFF_JFIF_JPEG);
      }
      tempname = genPathname(buffer, NULL);
-diff -Nura leptonica-1.83.1/version-notes.html leptonica_patch/version-notes.html
+diff -Nura leptonica-1.83.1/version-notes.html leptonica-1.83.1-patch/version-notes.html
 --- leptonica-1.83.1/version-notes.html	2023-01-26 14:12:24.000000000 +0800
-+++ leptonica_patch/version-notes.html	2024-08-15 11:14:31.789855877 +0800
++++ leptonica-1.83.1-patch/version-notes.html	2024-09-05 14:26:11.103616495 +0800
 @@ -271,7 +271,7 @@
            rootnames containing any of: ;&|>"?*$()/<
          * CVE-2017-18196: duplicated path components.
