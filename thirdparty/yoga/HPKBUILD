@@ -56,11 +56,11 @@ package() {
 
 check() {
     cd $builddir/$ARCH-build/tests/
-    # 将cmkae路径修改为 占位字符串CMAKE_SHARE_REPLACE
+    
     # 具体测试HPKCHECK 脚本中，会用cmke具体版本号 替换掉CMAKE_SHARE_REPLACE
     # 从而避免编译环境cmake的版本号与设备上cmake版本号不匹配导致的路径错误
-    cmake_name=`ls $OHOS_SDK/native/build-tools/cmake/share | grep cmake`
-    sed -i "s#${OHOS_SDK}native/build-tools/cmake/share/$cmake_name#CMAKE_SHARE_REPLACE#g" yogatests[1]_include.cmake
+    # 整行替换: 将SDK的cmkae路径修改为 占位字符串CMAKE_SHARE_REPLACE
+    sed -i '5s#.*#    include("CMAKE_SHARE_REPLACE/Modules/GoogleTestAddTests.cmake")#' yogatests\[1\]_include.cmake
     echo "The test must be on an OpenHarmony device!"
     cd $OLDPWD
     # 测试方式
