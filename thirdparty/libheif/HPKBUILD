@@ -80,6 +80,9 @@ package() {
 check() {
     cd $builddir/$ARCH-build/tests
     sed -i.bak 's|test-local: heif-unit-tests|test-local: #heif-unit-tests|g' Makefile
+    # 针对测试失败修改工具路径
+    sed -i "s#/bin/bash#/data/CIusr/bin/bash#g" `grep -rn '/bin/bash' | awk -F ':' '{print $1}' | sort -u`
+    sed -i "s#/usr/bin/sed#sed#g" `grep -rn '/usr/bin/sed' | awk -F ':' '{print $1}' | sort -u` 
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
     # real test CMD
