@@ -39,7 +39,7 @@ prepare() {
     then
        cd $builddir
        # 该patch 修改测试文件中的/tmp 目录，替换为/data/local/tmp
-       patch -p < ../libarchive_ohos_test.patch
+       patch -p1 < ../libarchive_ohos_test.patch
        patchflag=false
        cd $OLDPWD
     fi
