@@ -22,7 +22,7 @@ url="https://github.com/tesseract-ocr/tesseract"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("Apache-2.0 license")
 depends=("glib" "curl" "tiff" "leptonica" "libarchive" "icu" "pango" "cairo" "fontconfig" "harfbuzz" "libpng" "freetype2" "fribidi" "libwebp" "openjpeg" "libjpeg-turbo")
-makedepends=("libtool" "automake" "cabextract")
+makedepends=("libtool" "automake" "cabextract" "bison" "flex" "libtool-bin" "autopoint" "byacc" "gperf" "gettext" "libglib2.0-dev" "xmlto" "meson" "texinfo")
 # 原仓地址: https://github.com/tesseract-ocr/$pkgname/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用镜像
 source="https://gitee.com/mirrors_tesseract-ocr/$pkgname/repository/archive/$pkgver.zip"
 buildtools="configure"
