@@ -23,7 +23,7 @@ prepare() {
     if $patchflag
     then
         cd $builddir
-        patch -p1 < `pwd`/../p7zip_oh_pkg.patch
+        patch -p1 < `pwd`/../p7zip_oh_pkg.patch > $publicbuildlog 2>&1
         # patch只需要打一次,关闭打patch
         patchflag=false
         cd $OLDPWD
@@ -33,8 +33,8 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S`pwd`/CPP/7zip/CMAKE/ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S`pwd`/CPP/7zip/CMAKE/ -L > $buildlog 2>&1
+    $MAKE -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -53,7 +53,21 @@ package() {
 }
 
 check() {
+    cd $builddir
+    # 下载官方测试
+    if $clonetestflag
+    then
+        git clone https://github.com/jinfeihan57/p7zip_test_utils.git >> $publicbuildlog 2>&1
+        res=$?
+        if [ $res -ne 0 ]
+        then
+            return -1
+        fi
+        clonetestflag=false
+    fi
+    cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
+    # 进入 sh p7zip_test_utils/check/check.sh bin/7zz
 }
 
 # 清理环境
