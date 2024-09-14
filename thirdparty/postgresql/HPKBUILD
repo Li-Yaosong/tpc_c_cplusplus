@@ -32,6 +32,7 @@ builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
 buildtools="configure"
 patch_flag=true
+ln_flag=true
 source envset.sh
 host=
 
@@ -64,6 +65,11 @@ build() {
     export ICU_CFLAGS="-I${LYCIUM_ROOT}/usr/icu/${ARCH}/include"
     export ICU_LIBS="-L${LYCIUM_ROOT}/usr/icu/${ARCH}/lib -licuuc -licui18n -licudata"
     ./configure --without-readline --enable-debug "$@" --host=$host > $buildlog 2>&1
+
+    sed -i 's/\/usr\/bin\/install/\/bin\/install/g' ./src/Makefile.global
+    sed -i 's/\/usr\/bin\/mkdir/\/data\/CIusr\/bin\/mkdir/g' ./src/Makefile.global
+    sed -i 's/\/usr\/sbin\/zic/\/data\/bin\/zic/g' ./src/Makefile.global
+
     $MAKE > $buildlog 2>&1
     ret=$?
     cd $OLDPWD
@@ -71,6 +77,14 @@ build() {
 }
 
 package() {
+    if [ "$ln_flag" == true ]
+    then
+        mkdir -p /data/CIusr/bin
+        mkdir -p /data/bin
+        ln -s /usr/sbin/zic /data/bin
+        ln -s /bin/mkdir /data/CIusr/bin
+        ln_flag=false
+    fi
     cd $builddir-$ARCH-build
     $MAKE install >> $buildlog 2>&1
     cd $OLDPWD

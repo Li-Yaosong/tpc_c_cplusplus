@@ -18,24 +18,17 @@ source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
 openharmonycheck() {
-    chmod 777 -R /tmp
+
     chmod 777 -R $builddir-$ARCH-build
     chmod 777 -R $LYCIUM_FAULT_PATH/$pkgname
-    mkdir -p /usr/sbin/
-    ln -s /bin/install /usr/bin/
-    ln -s $LYCIUM_THIRDPARTY_ROOT/tzdb/tzdb-2024a-$ARCH-build/zic /usr/sbin/
 
-    touch Enter.txt
-    echo "
-
-
-
-
-    " > Enter.txt
-    busybox adduser postgres < Enter.txt
-    
     cd $builddir-$ARCH-build
-    su postgres make check > ${logfile} 2>&1
+
+    mkdir -p /data/bin/
+    ln -s $LYCIUM_THIRDPARTY_ROOT/tzdb/tzdb-2024a-$ARCH-build/zic /data/bin/
+
+    
+    /data/CIusr/bin/su system make check > ${logfile} 2>&1
     res=$?
     if [ $res -ne 0 ]
     then
@@ -43,13 +36,9 @@ openharmonycheck() {
         cp test-suite.log ${LYCIUM_FAULT_PATH}/${pkgname}/
     fi
 
-    rm Enter.txt
 
-    chmod 771 -R /tmp
     chmod 664 -R $builddir-$ARCH-build
     chmod 664 -R $LYCIUM_FAULT_PATH/$pkgname
-
-    busybox deluser postgres
 
     cd $OLDPWD
     return $res
