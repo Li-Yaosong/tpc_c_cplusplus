@@ -141,15 +141,17 @@
 
 进入到对应版本目录,根据你的实际路径，参考执行如下命令
 ```
+hdc target mount
+export PATH=/data/CIusr/bin:$PATH
 chmod -R 777 postgresql-16.3-arm64-v8a-build
-chmod 777 -R /tmp
+
 export LD_LIBRARY_PATH=/data/tpc_c_cplusplus/lycium/usr/icu/arm64-v8a/lib:$ LD_LIBRARY_PATH 
-mkdir -p /usr/sbin/
-ln -s /bin/install /usr/bin/
-ln -s /data/tpc_c_cplusplus/thirdparty/tzdb/tzdb-2024a-arm64-v8a-build/zic /usr/sbin/
-busybox adduser postgres
+mkdir -p /data/bin/
+
+ln -s /data/tpc_c_cplusplus/thirdparty/tzdb/tzdb-2024a-arm64-v8a-build/zic /data/bin/
+
 cd /home/cwx1312875/tpc_c_cplusplus/thirdparty/postgresql/postgresql-16.3-arm64-v8a-build
-su postgres
+su system
 make check
 ```
 
@@ -160,6 +162,7 @@ make check
 
 ## FAQ
 在进行make check测试时，对测试的目标设备需要进行联网对时间同步，否则可能会有个别测试用例失败的情况。
+并且确保CI工具的su命令和make命令可用
 
 ## 参考资料
 
