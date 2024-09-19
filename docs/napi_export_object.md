@@ -9,56 +9,49 @@ js调用napi的数据，对于简单的数据类型，只需要napi返回对应�
 
 ## NAPI导出类对象具体实现
 
-这里我们以导出NapiTest类为例说明导出一个类的实现过程
+这里我们以导出person类为例说明导出一个类的实现过程
 
-### 定义NapiTest类以及相关方法
+### 定义person类以及相关方法
 
-NapiTest类主要实现了接收js设置的数据并将该数据返回到js应用中，具体定义如下(NapiTest.h)：
+person类主要实现了对person属性的配置以及获取，具体定义如下(NapiTest.h)：
 
 ```c++
-class NapiTest {
-public:
-  NapiTest() : mEnv(nullptr), mRef(nullptr) {
-  }
-  ~NapiTest();
-  
-  static napi_value Create(napi_env env, napi_callback_info info);  // 创建NapiTest类的实体，并将实体返回到应用端，该方法为js创建一个类实体，因此需要将该接口对外导出
-  static napi_value Init(napi_env env, napi_value exports);         // 初始化js类并设置对应属性并将其导出。
+class person {
+public:    
+    person() = default;
+    person(uint32_t age, std::string name);
+    static napi_value SayName(napi_env env, napi_callback_info info);
+    static napi_value SetName(napi_env env, napi_callback_info info);
+    static napi_value GetName(napi_env env, napi_callback_info info);
+    static napi_value SayAge(napi_env env, napi_callback_info info);
+    static napi_value Construct(napi_env env, napi_callback_info info);
+    static napi_value Init(napi_env env, napi_value &exports);
 
+    ~person() = default;
+
+    std::string name_;
 private:
-	static napi_value SetMsg(napi_env env, napi_callback_info info);            // 设置数据，此方法给到js直接调用，因此需要将该接口对外导出
-    static napi_value GetMsg(napi_env env, napi_callback_info info);          // 获取数据，此方法给到js直接调用，因此需要将该接口对外导出
-    static napi_value Constructor(napi_env env, napi_callback_info info);     // 定义js结构体时实际的构建函数
-    static void Destructor(napi_env env, void *nativeObject, void *finalize); // 释放资源的函数(类似类的析构函数)
-    
-    static napi_ref sConstructor_;  // 生命周期变量
-    static std::string _msg;        // 设置和获取数据的变量
-    napi_env mEnv = nullptr;        // 记录环境变量
-    napi_ref mRef = nullptr;        // 记录生命周期变量
+    uint32_t age_;
 };
+
 ```
 
-### 将NapiTest定义为js类
+### 将 person 定义为js类
 
 - 在定义js类之前，需要先设置类对外导出的方法
 
   ```c++
   napi_property_descriptor desc[] = {
-      { "getMsg", nullptr, NapiTest::GetMsg, nullptr, nullptr, nullptr,
-          napi_default, nullptr },
-      { "setMsg", nullptr, NapiTest::SetMsg, nullptr, nullptr, nullptr, 
-        napi_default, nullptr },
+      {"SayAge", nullptr, person::SayAge, nullptr, nullptr, nullptr, napi_default, nullptr},
+      {"SayName", nullptr, person::SayName, nullptr, nullptr, nullptr, napi_default, nullptr},
+      {"name", nullptr, nullptr, person::GetName, person::SetName, nullptr, napi_default, nullptr}
   }
   ```
 
 - 定义js类
   
   ```c++
-  napi_value mConstructor = nullptr;
-  if (napi_define_class(env, NAPI_CLASS_NAME, NAPI_AUTO_LENGTH, Constructor, nullptr,
-      sizeof(desc) / sizeof(desc[0]), desc, &mConstructor) != napi_ok) {
-      return nullptr;
-  }
+  napi_define_class(env, "person", NAPI_AUTO_LENGTH, person::Construct, nullptr, sizeof(descClass) / sizeof(descClass[0]), descClass, &cons); // 将person定义为JS类
   ```
 
   使用到函数说明:
@@ -92,35 +85,27 @@ private:
   当js应用通过new方法获取类对象的时候，此时会调用 napi_define_class 中设置 constructor 回调函数，该函数实现方法如下：
 
   ```c++
-  napi_value NapiTest::Constructor(napi_env env, napi_callback_info info)
+  napi_value person::Constructor(napi_env env, napi_callback_info info)
   {
-    napi_value undefineVar = nullptr, thisVar = nullptr;
-      napi_get_undefined(env, &undefineVar);
-      
-      if (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) ==
-          napi_ok && thisVar != nullptr) {
-          // 创建NapiTest 实例
-          NapiTest *reference = new NapiTest(env);
-          // 绑定实例类创建NapiTest到导出的对象result
-          if (napi_wrap(env, thisVar, reinterpret_cast<void *>(reference),
-              NapiTest::Destructor, nullptr, &(reference->mRef)) == napi_ok) {
-              return thisVar;
-          }
-  
-          return thisVar;
-      }
-      
-      return undefineVar;
-  }
-  ```
+    size_t argc = 2;
+    napi_value argv[2] = {nullptr};
+    napi_value jsthis = nullptr;
+    
+    napi_get_cb_info(env, info, &argc, argv, &jsthis, nullptr);
+    
+    int32_t age;
+    char buf[BUFF_SIZE] = {0};
+    size_t len = 0;
 
-  其中NapiTest::Destructo方法是用来释放创建的对象：
-
-  ```c++
-  void NapiTest::Destructor(napi_env env, void *nativeObject, void *finalize)
-  {
-      NapiTest *test = reinterpret_cast<NapiTest*>(nativeObject);
-      test->~NapiTest();
+    napi_get_value_int32(env, argv[0], &age);                          // 获取年龄参数
+    napi_get_value_string_utf8(env, argv[1], buf, BUFF_SIZE, &len);    // 获取姓名参数
+    person *ps = new person(age, std::string(buf));                    // 创建person实例
+    // 绑定类实例到JS对象
+    napi_wrap(env, jsthis, ps, [](napi_env env, void* finalize_data, void* finalize_hint)
+                               {
+                                  delete reinterpret_cast<person *>(finalize_data); 
+                               }, nullptr, nullptr);    
+    return jsthis;
   }
   ```
 
@@ -152,51 +137,132 @@ private:
   在设置类导出前，需要先创建生命周期
 
   ```c++
-  if (napi_create_reference(env, mConstructor , 1, &sConstructor_) != napi_ok) {
+  napi_value cons;
+  napi_ref *ref = new napi_ref;
+  if (napi_create_reference(env, cons , 1, ref) != napi_ok) {
       return nullptr;
   }
+
+  // 保存当前的生命周期变量
+  napi_set_instance_data(env, ref, [](napi_env env, void *data, void *hint){
+    uint32_t count = 0;
+    napi_ref *ref = (napi_ref *)data;
+    napi_reference_unref(env, *ref, &count);      // 程序结束后进入此回调，释放生命周期变量
+    napi_delete_reference(env, *ref);
+    delete ref;
+  }, nullptr);
   ```
 
-  mConstructor 定义js类时返回的代表类的构造函数的数据 <br>
-  sConstructor_  生命周期变量 <br>
+  使用到函数说明：
+
+  ```c++
+  napi_status napi_set_instance_data(node_api_basic_env env,
+                                   void* data,
+                                   napi_finalize finalize_cb,
+                                   void* finalize_hint); 
+  ```
+  功能：将`data`与当前正在运行的`Node.js`环境相关联。此`data`可以通过`napi_get_instance_data()`获取。<br>
+  参数说明：
+  - [in] env: 调用api的环境
+  - [in] data: 对此实例的绑定可用的数据项。
+  - [in] finalize_cb: 当环境结束时要调用的函数。该函数接收data以便释放它。
+  - [in] finalize_hint: 传递给回调函数的数据。
+
+  返回：调用成功返回0，失败返回其他
+
+  **注意**：通过上一次调用设置的与当前正在运行的`Node.js`环境相关联的任何现有数据`napi_set_instance_data()`都将被覆盖。如果`finalize_cb`上一次调用提供了 ，则不会调用它。
+
 - 将类导出到exports中
+
   将类以属性值的方式导出
 
   ```c++
-  if (napi_set_named_property(env, exports, NAPI_CLASS_NAME, constructor) !=  napi_ok) {
+  if (napi_set_named_property(env, exports, "person", cons)) !=  napi_ok) {
       return nullptr;
   }
   ```
 
-通过以上步骤，我们基本实现了NapiTest这个类的导出。<br>
-注意：以上实现都是在类的Init方法中，我们只需要在NAPI注册的接口中调用该Init即可。完整代码可以查看[NapiTest源码](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/FA/NapiStudy_ObjectWrapTest/entry/src/main/cpp/NapiTest.cpp)
+通过以上步骤，我们基本实现了Person这个类的导出。<br>
+注意：以上实现都是在类的Init方法中，我们只需要在NAPI注册的接口中调用该Init即可。完整代码可以查看[ClassDemo源码](https://gitee.com/openharmony-sig/knowledge_demo_temp/blob/master/FA/NapiStudy/ClassDemo/entry/src/main/cpp/ClassDemo.cpp)
 
 ### 创建类的实例对象
 
-js应用除了调用new方法获取类的实例外，我们也可以提供一些方法让js应用获取对应的类的实例，如在我们的NapiTest类中，我们定义了一个Create方法，该方法实现了NapiTest类实例的获取。具体实现如下：
+js应用除了调用new方法获取类的实例外，我们也可以提供一些方法让js应用获取对应的类的实例，如在我们的Person用例中，我们定义了一个GetPerson方法，该方法实现了person类实例的获取。具体实现如下：
 
 ```c++
-napi_value NapiTest::Create(napi_env env, napi_callback_info info) {
+//返回类对象
+napi_value GetPerson(napi_env env, napi_callback_info info) {
+    napi_value constructs;
     napi_status status;
-    napi_value constructor = nullptr, result = nullptr;
-    // 获取生命周期变量
-    status = napi_get_reference_value(env, sConstructor_, &constructor);
+    napi_ref *ref;
+    // 获取初始化时保存的生命周期
+    status = napi_get_instance_data(env, (void **)&ref);
+    // 获取生命周期保存的JS对象
+    status = napi_get_reference_value(env, *ref, &constructs);
+    if (status != napi_ok) {
+        OH_LOG_INFO(LOG_APP, "napi_get_reference_value falied, satus=%{public}d", status);
+        return nullptr;
+    }
 
-    // 创建生命周期内的实例对象并将其返回
-    status = napi_new_instance(env, constructor, 0, nullptr, &result);
-    auto napiTest = new NapiTest();
-    // 绑定实例类创建NapiTest到导出的对象result
-    if (napi_wrap(env, result, reinterpret_cast<void *>(napiTest), Destructor,
-    	nullptr, &(napiTest->mRef)) == napi_ok) {
-        return result;
+    size_t argc = 2;
+    napi_value argv[2];
+
+    status = napi_create_int32(env, 18, &argv[0]);
+    if (status != napi_ok) {
+        OH_LOG_INFO(LOG_APP, "napi_create_int32 falied, satus=%{public}d", status);
+        return nullptr;
+    }
+
+    status = napi_create_string_utf8(env, "xiaoli", NAPI_AUTO_LENGTH, &argv[1]);
+    if (status != napi_ok) {
+        OH_LOG_INFO(LOG_APP, "napi_create_string_utf8 falied, satus=%{public}d", status);
+        return nullptr;
+    }
+
+    napi_value instance;
+    // 创建新的JS对象，此时会触发person类的构造函数并生成person类的C++实例，argv作为实例的构造函数的参数；该C++实例与该JS对象进行绑定。
+    status = napi_new_instance(env, constructs, argc, argv, &instance);
+    if (status != napi_ok) {
+        OH_LOG_INFO(LOG_APP, "napi_create_string_utf8 falied, satus=%{public}d", status);
+        return nullptr;
     }
     
-    return nullptr;
+    person *ps;
+    // 获取与该JS对象绑定的C++实例。
+    status = napi_unwrap(env, instance, (void**)&ps);
+    ps->name_ = "xiaoxiao";
+
+    return instance;
 }
 ```
 
-在napi接口的注册中将该方法以接口的方式导出，应用层就可以直接调用该接口并获取到该类的实例对。<br>
-特别说明：如果单独实现了一个类实例获取的方法，那么js的类构造函数可以不实现。
+使用到函数说明：
+
+  ```c++
+  napi_status napi_get_instance_data(node_api_basic_env env,
+                                   void** data); 
+  ```
+  功能：将`data`与当前正在运行的`Node.js`环境相关联。此`data`可以通过`napi_get_instance_data()`获取。<br>
+  参数说明：
+  - [in] env: 调用api的环境
+  - [out] data：先前通过调用与当前正在运行的`Node.js`环境关联的数据项`napi_set_instance_data()`。
+
+  返回：调用成功返回0，失败返回其他
+
+ ```c++
+ napi_status napi_unwrap(napi_env env,
+                        napi_value js_object,
+                        void** result);
+ ```
+ 
+ 功能：获取先前通过`napi_wrap()`绑定到`JS`对象的`native`实例。
+ 
+ 参数说明：
+  - [in] env: 调用api的环境
+  - [in] js_object：与`native`实例绑定的对象。
+  - [out] result：指向绑定的`native`实例的指针。
+
+ 返回：调用成功返回0，失败返回其他
 
 ### 实现NAPI接口的注册
 
@@ -223,12 +289,12 @@ napi_value NapiTest::Create(napi_env env, napi_callback_info info) {
   static napi_value Init(napi_env env, napi_value exports)
   {
     napi_property_descriptor desc[] = {
-        { "create", nullptr, NapiTest::Create, nullptr, nullptr, nullptr, napi_default, nullptr }   // 单独导出 create 方法，js应用可以直接调用Create方法获取类实例
+        {"GetPerson", nullptr, GetPerson, nullptr, nullptr, nullptr, napi_default, nullptr}
     };
-    
-    napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
 
-    return NapiTest::Init(env, exports);    // 导出类以及类的方法
+    napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);     // 将GetPerson方法导出
+
+    return person::Init(env, exports);    // 导出类以及类的方法
   }
   EXTERN_C_END
   ```
@@ -252,11 +318,14 @@ napi_value NapiTest::Create(napi_env env, napi_callback_info info) {
 在使用该NAPI的时候，我们需要在ts文件(路径在\entry\src\main\cpp\types\libentry\index.d.ts)，声明以下内容:
 
 ```js
-export const create : () => NapiTest;
-export class  NapiTest {
-    setMsg(msg: string): void;
-    getMsg(): string;
+export class person {
+  constructor(age : number, name : string)
+  name : string
+  SayAge : () => void;
+  SayName : () => void;
 }
+
+export const GetPerson : () => person;
 ```
 
 该文件申明了NAPI接口中导出的方法和类
@@ -268,16 +337,15 @@ export class  NapiTest {
 - 导出napi对应的库(之前NAPI接口生成的库名为libentry.so)
 
   ```js
-  import testNapi from "libentry.so";
+  import testNapi,{person} from "libentry.so";
   ```
 
-- 定义变量 tt
+- 使用person类
 
   ```js
   struct Index {
     @State message: string = 'Hello World'
     @State flag:number = 0
-    tt = testNapi.create();
   
     build() {
       Row() {
@@ -286,6 +354,10 @@ export class  NapiTest {
             .fontSize(50)
             .fontWeight(FontWeight.Bold)
             .onClick(() => {
+              let ps = new person(10, 'zhangsan')
+              hilog.info(0x0000, 'testTag', 'Test NAPI person name is ' + ps.name + ", age is " + ps.SayAge());
+              let pps = testNapi.GetPerson();
+              hilog.info(0x0000, 'testTag', 'Test NAPI person name is ' + pps.name);
             })
         }
         .width('100%')
@@ -294,24 +366,11 @@ export class  NapiTest {
     }
   ```
 
-- 在按键中调用对应的接口并输出内容
-  
-  ```js
-  if (this.falg == 0) {
-      this.flag = 2
-      this.tt.setMsg("1+1")
-  } else {
-      this.flag = 0
-      this.tt.setMsg("1-1")
-  }
-  console.info("[NapiTest]:" + this.tt.getMsg() + " = " + this.flag);
-  ```
-
   通过IDE LOG信息可以查看到，当按多次下按钮时，出现交替以下信息：
 
   ```js
-  02200/JsApp: [NapiTest]： 1+1 = 2
-  02200/JsApp: [NapiTest]： 1-1 = 0 
+  02200/JsApp: Test NAPI person name is zhangsan, age is 10
+  02200/JsApp: Test NAPI person name is xiaoxiao, age is 18
   ```
 
 ## 参考资料
