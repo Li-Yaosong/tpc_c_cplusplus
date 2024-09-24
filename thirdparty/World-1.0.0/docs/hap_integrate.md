@@ -51,13 +51,13 @@
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件拷贝到该目录下，将编译生成的三方库以及依赖库全部（动态库名字带版本号和不带版本号的都需要）拷贝到工程的libs目录下，如下图所示：
   &nbsp;
 
-  &nbsp;![thirdparty_install_dir](pic/bdwgc_install_dir.png)
+  &nbsp;![thirdparty_install_dir](pic/World_install_dir.png)
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
 
   ```shell
   #将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/bdwgc/${OHOS_ARCH}/lib/libgcmt-lib.a)
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/World/${OHOS_ARCH}/lib/libWORLD.so)
   ```
 
 ## 测试三方库
@@ -67,7 +67,7 @@
   cd /data/tpc_c_cplusplus/thirdparty/World-1.0.0/World-1.0.0/arm64-v8a-build/
   ./ctest
 ```
-&nbsp;![bdwgc_test](pic/bdwgc_test.png)
+&nbsp;![World_test](pic/World_test.png)
 
 ## 参考资料
 
