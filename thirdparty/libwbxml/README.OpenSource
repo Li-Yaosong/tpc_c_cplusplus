@@ -1,7 +1,7 @@
 [
     {
         "Name": "libwbxml",
-        "License": "LGPL V2.1",
+        "License": "LGPL V2.1 or later",
         "License File": " https://github.com/libwbxml/libwbxml/blob/master/GNU-LGPL ",
         "Version Number": "0.11.10",
         "Owner": "xiafeng@huawei.com",
