@@ -68,7 +68,6 @@ build() {
     cd $builddir/$ARCH-build
     ../Configure "$@" $host no-shared > `pwd`/build.log 2>&1
     make -j4 >> `pwd`/build.log 2>&1
-    sed -i 's#/usr/bin/perl#/data/CIusr/bin/perl#g' Makefile
     ret=$?
     cd $OLDPWD
     return $ret
@@ -96,6 +95,7 @@ check() {
         return -1
     fi
     echo "The test must be on an OpenHarmony device!"
+    sed -i 's#/usr/bin/perl#/data/CIusr/bin/perl#g' $builddir/$ARCH-build/Makefile
     # real test CMD
     # 将编译目录加到 LD_LIBRARY_PATH 环境变量
     # make test
