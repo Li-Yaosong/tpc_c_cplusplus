@@ -1,0 +1,35 @@
+diff -urN meshoptimizer-0.19_old/CMakeLists.txt meshoptimizer-0.19/CMakeLists.txt
+--- meshoptimizer-0.19_old/CMakeLists.txt	2023-04-30 02:06:54.000000000 +0800
++++ meshoptimizer-0.19/CMakeLists.txt	2024-09-28 17:06:50.172515878 +0800
+@@ -158,3 +158,11 @@
+     ${CMAKE_CURRENT_BINARY_DIR}/meshoptimizerConfigVersion.cmake
+     COMPONENT meshoptimizer
+     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/meshoptimizer)
++# 启用 CTest 测试
++enable_testing()
++# 添加测试可执行文件
++add_executable(meshoptimizer_tests demo/tests.cpp)
++# 将测试可执行文件链接到 meshoptimizer 库
++target_link_libraries(meshoptimizer_tests meshoptimizer)
++# 添加测试
++add_test(NAME MeshOptimizerTests COMMAND meshoptimizer_tests)
+diff -urN meshoptimizer-0.19_old/demo/tests.cpp meshoptimizer-0.19/demo/tests.cpp
+--- meshoptimizer-0.19_old/demo/tests.cpp	2023-04-30 02:06:54.000000000 +0800
++++ meshoptimizer-0.19/demo/tests.cpp	2024-09-28 17:08:18.226676794 +0800
+@@ -1,5 +1,5 @@
+ #include "../src/meshoptimizer.h"
+-
++#include <iostream>
+ #include <assert.h>
+ #include <math.h>
+ #include <stdlib.h>
+@@ -1202,3 +1202,9 @@
+ 	adjacency();
+ 	tessellation();
+ }
++int main() {
++    //调用runTests()启动测试，该函数包含了所有测试用函数
++    runTests();
++    std::cout << "All tests executed." << std::endl;
++    return 0;
++}
