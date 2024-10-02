@@ -38,8 +38,6 @@ prepare() {
     if $patchflag
     then
         cd $builddir
-        # openharmony不支持的文件<catch.hpp>
-        # <catch.hpp>中定义了TEST_CASE 宏，也将无法使用
         patch -p1 < `pwd`/../meshoptimizer-0.19_oh_pkg.patch
         # patch只需要打一次,关闭打patch
         patchflag=false
