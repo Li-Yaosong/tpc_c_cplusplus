@@ -1,7 +1,7 @@
 # Contributor: Jeff Han <hanjinfei@foxmail.com>
 # Maintainer: Jeff Han <hanjinfei@foxmail.com>
 pkgname=LuaJIT
-pkgver=2.1.0-beta3
+pkgver=v2.1.0-beta3
 pkgrel=0
 pkgdesc="A Just-In-Time Compiler for Lua."
 url="https://luajit.org/"
@@ -10,13 +10,13 @@ license=("MIT")
 depends=()
 makedepends=("gcc")
 
-source="https://luajit.org/download/$pkgname-$pkgver.tar.gz"
+source="https://github.com/LuaJIT/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
 autounpack=true
 downloadpackage=true
 buildtools="make"
 
-builddir=$pkgname-${pkgver}
+builddir=$pkgname-${pkgver:1}
 packagename=$builddir.tar.gz
 
 dynamic_cc=
