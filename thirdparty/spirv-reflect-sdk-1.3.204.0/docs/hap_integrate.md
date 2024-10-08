@@ -49,11 +49,17 @@
 - 编译出可执行的文件进行测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的文件拷贝到该目录下，该库编译后只生成二进制文件，如下图所示：
+- 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件拷贝到该目录下，将编译生成的三方库以及依赖库全部（动态库名字带版本号和不带版本号的都需要）拷贝到工程的libs目录下，如下图所示：
   &nbsp;
 
   &nbsp;![thirdparty_install_dir](pic/spirv_reflect_install_dir.png)
 
+- 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
+ 
+  ```shell
+  #将三方库加入工程中
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/json11/${OHOS_ARCH}/lib/libspirv-reflect-static.a)
+  ```
 
 ## 测试三方库
 进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录）。执行结果如图所示
