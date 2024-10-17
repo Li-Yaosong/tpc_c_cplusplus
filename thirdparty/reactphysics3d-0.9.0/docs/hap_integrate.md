@@ -69,7 +69,7 @@
 
 ```shell
   cd /data/tpc_c_cplusplus/thirdparty/reactphysics3d-0.9.0/reactphysics3d-0.9.0/arm64-v8a-build/
-  ./ctest
+  ctest
 ```
 &nbsp;![reactphysics3d_test](pic/reactphysics3d_test.png)
 
