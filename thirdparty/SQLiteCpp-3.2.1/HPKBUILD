@@ -38,12 +38,12 @@ packagename=SQLiteCpp-3.2.1.zip
 prepare() {
     if $patchflag
     then
-        cd $builddir
-	#patch用来打开测试用例构建开关
-        patch -p1 < `pwd`/../SQLiteCpp-3.2.1_oh_pkg.patch
-        # patch只需要打一次,关闭打patch
-        patchflag=false
-        cd $OLDPWD
+    cd $builddir
+    #patch用来打开测试用例构建开关；修改了头文件路径
+    patch -p1 < `pwd`/../SQLiteCpp-3.2.1_oh_pkg.patch
+    # patch只需要打一次,关闭打patch
+    patchflag=false
+    cd $OLDPWD
     fi
 
     mkdir -p $builddir/$ARCH-build
