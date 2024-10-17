@@ -45,7 +45,7 @@
 
 - [测试三方库](#测试三方库)
 
-- 编译出可执行的文件进行测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
+
 ## 应用中使用三方库
 
 - 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件拷贝到该目录下，如下图所示：
@@ -63,11 +63,12 @@
   ```
 
 ## 测试三方库
+- 编译出可执行的文件，使用原库自带的测试用例来做测试 [准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录）。执行结果如图所示
 
 ```shell
   cd /data/tpc_c_cplusplus/thirdparty/libsamplerate-0.2.2/libsamplerate-0.2.2/arm64-v8a-build/
-  ./ctest
+  ctest
 ```
 &nbsp;![libsamplerate_test](pic/libsamplerate_test.png)
 
