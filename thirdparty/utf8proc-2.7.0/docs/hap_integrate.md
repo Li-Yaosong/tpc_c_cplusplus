@@ -69,7 +69,7 @@
 
 ```shell
   cd /data/tpc_c_cplusplus/thirdparty/utf8proc-2.7.0/utf8proc-2.7.0/arm64-v8a-build/
-  ./ctest
+  ctest
 ```
 &nbsp;![utf8proc_test](pic/utf8proc_test.png)
 
