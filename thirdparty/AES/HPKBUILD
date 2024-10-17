@@ -54,7 +54,7 @@ prepare() {
 build() {
     cd ${builddir}
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -B${ARCH}-build -S./ > ${buildlog} 2>&1 || return -1
-    ${MAKE} -C${ARCH}-build >> ${buildlog} 2>&1 || return -1
+    ${MAKE} VERBOSE=1 -C${ARCH}-build >> ${buildlog} 2>&1 || return -1
     cd ${OLDPWD}
     return 0
 }
@@ -62,7 +62,7 @@ build() {
 package() {
     cd ${builddir}/${ARCH}-build
     mv aestest aes
-    ${MAKE} install >> ${buildlog} 2>&1 || return -1
+    ${MAKE} VERBOSE=1 install >> ${buildlog} 2>&1 || return -1
     cd ${OLDPWD}
     return 0
 }
