@@ -37,8 +37,8 @@ prepare() {
 build() {
 
     cd $builddir/$ARCH-build
-    ../configure "$@" --host=$host > `pwd`/build.log 2>&1
-    make -j4 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ../configure "$@" --host=$host > $buildlog 2>&1
+    $MAKE >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -46,7 +46,7 @@ build() {
 
 package() {
     cd $builddir/$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE install >> $buildlog 2>&1
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
     then
@@ -61,7 +61,7 @@ package() {
 
 check() {
     cd $builddir/$ARCH-build
-    make testprogs >> `pwd`/build.log 2>&1
+    $MAKE testprogs >> $buildlog 2>&1
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
     # 保证设备联网
