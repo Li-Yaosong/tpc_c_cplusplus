@@ -21,7 +21,7 @@ pkgdesc="This library aims to be a friendly, portable C implementation of the AV
 url="https://github.com/AOMediaCodec/libavif.git"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD-2-Clause")
-depends=("libyuv" "libpng" "jpeg" "googletest" "libaom")
+depends=("libyuv" "libpng" "jpeg" "googletest" "libaom" "zlib")
 makedepends=()
 source="https://github.com/AOMediaCodec/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
@@ -38,7 +38,8 @@ prepare() {
 
 build() {
     cd $builddir
-    PKG_CONFIG_LIBDIR="${pkgconfigpath}" cmake "$@" -DCMAKE_C_FLAGS=-Wno-unused-command-line-argument \
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" $OHOS_SDK/native/build-tools/cmake/bin/cmake "$@" \
+    -DCMAKE_C_FLAGS=-Wno-unused-command-line-argument \
     -DCMAKE_CXX_FLAGS=-Wno-unused-command-line-argument -DAVIF_BUILD_APPS=ON -DAVIF_BUILD_TESTS=ON \
     -DAVIF_BUILD_EXAMPLES=ON -DAVIF_ENABLE_GTEST=ON -DAVIF_CODEC_AOM=ON \
     -B${ARCH}-build -S./ > $buildlog 2>&1
