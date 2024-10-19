@@ -7,7 +7,7 @@ pkgdesc="Libxlsxwriter is a C library that can be used to write text, numbers, f
 url="https://github.com/jmcnamara/libxlsxwriter"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("FreeBSD")
-depends=()
+depends=("zlib")
 makedepends=()
 install=
 source="https://github.com/jmcnamara/$pkgname/archive/refs/tags/$pkgver.tar.gz"
@@ -23,7 +23,7 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -DBUILD_TESTS=ON -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" cmake "$@" -DOHOS_ARCH=$ARCH -DZLIB_ROOT="$LYCIUM_ROOT/usr/zlib/$ARCH" -DBUILD_TESTS=ON -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
     make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
