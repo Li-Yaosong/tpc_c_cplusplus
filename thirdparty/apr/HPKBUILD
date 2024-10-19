@@ -15,7 +15,7 @@
 # Maintainer: dingqian <1052888395@qq.com>
 
 pkgname=apr
-pkgver=1.7.4
+pkgver=1.7.5
 pkgrel=0
 pkgdesc="APR is a software library that creates and maintains a set of APIs that map to the underlying operating system"
 url="https://apr.apache.org"
@@ -119,4 +119,3 @@ check() {
 cleanbuild(){
     rm -rf ${PWD}/${builddir} ${PWD}/${builddir}-armeabi-v7a-build ${PWD}/${builddir}-arm64-v8a-build #${PWD}/$packagename
 }
-
