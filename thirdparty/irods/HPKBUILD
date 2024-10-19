@@ -76,7 +76,8 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+        -DCURL_LIBRARY="${LYCIUM_ROOT}/usr/curl/$ARCH"   \
         -DIRODS_EXTERNALS_PACKAGE_ROOT=`pwd`/$ARCH-build/irods-externals \
         -DOHOS_ARCH=$ARCH -DIRODS_BUILD_AGAINST_LIBCXX=OFF \
         -DIRODS_DISABLE_COMPILER_OPTIMIZATIONS=ON -DIRODS_UNIT_TESTS_BUILD=ON \
