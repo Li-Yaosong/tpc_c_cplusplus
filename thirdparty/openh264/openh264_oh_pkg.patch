@@ -1,0 +1,12 @@
+diff -Naur openh264-2.4.1/codec/common/src/welsCodecTrace.cpp openh264-2.4.1-new/codec/common/src/welsCodecTrace.cpp
+--- openh264-2.4.1/codec/common/src/welsCodecTrace.cpp	2024-01-30 13:56:32.000000000 +0800
++++ openh264-2.4.1-new/codec/common/src/welsCodecTrace.cpp	2024-10-17 12:58:06.683361221 +0800
+@@ -47,7 +47,7 @@
+ 
+ 
+ static void welsStderrTrace (void* ctx, int level, const char* string) {
+-  fprintf (stderr, "%s\n", string);
++  perror(string);
+ }
+ 
+ welsCodecTrace::welsCodecTrace() {
