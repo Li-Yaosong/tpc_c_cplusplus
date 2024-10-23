@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "openh264",
+        "License": "BSD-2-Clause",
+        "License File": "https://github.com/cisco/openh264/blob/master/LICENSE",
+        "Version Number": "2.4.1",
+        "Owner": "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/cisco/openh264/archive/refs/tags/v2.4.1.tar.gz",
+        "Description": "Open Source H.264 Codec"
+    }
+]
