@@ -56,7 +56,8 @@ target_link_libraries(ijkplayer PUBLIC swscale)
 target_link_libraries(ijkplayer PUBLIC avdevice)
 target_link_libraries(ijkplayer PUBLIC crypto)
 target_link_libraries(ijkplayer PUBLIC ssl)
-target_link_directories(ijkplayer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/ffmpeg/${OHOS_ARCH}/lib ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/openssl/${OHOS_ARCH}/lib)
+target_link_libraries(ijkplayer PUBLIC openh264)
+target_link_directories(ijkplayer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/ffmpeg/${OHOS_ARCH}/lib ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/openssl/${OHOS_ARCH}/lib ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/openh264/${OHOS_ARCH}/lib)
 ```
 
 ```
@@ -74,7 +75,8 @@ target_link_libraries(ijksdl PUBLIC swscale)
 target_link_libraries(ijksdl PUBLIC avdevice)
 target_link_libraries(ijksdl PUBLIC crypto)
 target_link_libraries(ijksdl PUBLIC ssl)
-target_link_directories(ijksdl PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/ffmpeg/${OHOS_ARCH}/lib ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/openssl/${OHOS_ARCH}/lib)
+target_link_libraries(ijksdl PUBLIC openh264)
+target_link_directories(ijksdl PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/ffmpeg/${OHOS_ARCH}/lib ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/openssl/${OHOS_ARCH}/lib ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/openh264/${OHOS_ARCH}/lib)
 ```
 
 ```
