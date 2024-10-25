@@ -22,7 +22,8 @@ url="https://github.com/alsa-project/alsa-lib"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("LGPL-2.1")
 depends=()
-makedepends=("automake" "makeinfo") 
+#need to install libool
+makedepends=("automake" "makeinfo")
 
 source="https://github.com/alsa-project/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
@@ -56,9 +57,9 @@ buildgnutool() {
     fi
     tar -xf $toolname-$toolver.tar.gz
     cd $toolpath
-    ./configure --prefix=$prefixpath >> `pwd`/build.log 2>&1
-    $MAKE VERBOSE=1 >> `pwd`/build.log 2>&1
-    $MAKE install VERBOSE=1 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="{pkgconfigpath}" ./configure --prefix=$prefixpath >> $publicbuildlog 2>&1
+    $MAKE VERBOSE=1 >> $publicbuildlog 2>&1    
+    $MAKE install VERBOSE=1 >> $publicbuildlog 2>&1
     if [ $? -ne 0 ];then
         return -2
     fi
@@ -114,7 +115,7 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    ./configure "$@" ac_cv_header_wordexp_h=no --host=$host --disable-python > $buildlog 2>&1
+    PKG_CONFIG_LIBDIR="{pkgconfigpath}" ./configure "$@" ac_cv_header_wordexp_h=no --host=$host --disable-python > $buildlog 2>&1
     $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
@@ -129,7 +130,7 @@ package() {
 
 check() {
     cd $builddir-$ARCH-build/test/lsb
-    $MAKE config midi_event >> $buildlog 2>&1
+    $MAKE VERBOSE=1 config midi_event >> $buildlog 2>&1
     # 注释掉一些依赖，让测试在板端跳过编译
     sed -i.bak '/\($(srcdir)\/Makefile.in:\)/,/\($(am__aclocal_m4_deps):\)/{s/^/#/}' Makefile
     sed -i.bak 's/\([a-zA-Z_]\.log:\)/\1 #/' Makefile
