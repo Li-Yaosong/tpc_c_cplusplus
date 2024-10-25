@@ -11,9 +11,11 @@ license=("BSD License")
 depends=()
 makedepends=()
 
-source="https://github.com/ghaerr/${pkgname}-${pkgver}/archive/refs/heads/master.zip"
+commitid=ecc670b3e2445344f95da4356e5922cf4da5701a
+source="https://github.com/ghaerr/agg-2.6/archive/${commitid}.zip"
 
-builddir=${pkgname}-${pkgver}-master
+#builddir=${pkgname}-${pkgver}-master
+builddir=${pkgname}-${pkgver}-${commitid}
 packagename=${builddir}.zip
 autounpack=true
 downloadpackage=true
@@ -39,8 +41,8 @@ prepare() {
 }
 
 build() {
-    cd $builddir-${ARCH}-build/agg-src
-    make C="$cc" LIB="$ar cr" CXX="$cc" -j4 > build.log 2>&1
+    cd $builddir-${ARCH}-build/agg-src    
+    ${MAKE} VERBOSE=1 C="$cc" LIB="$ar cr" CXX="$cc" > build.log 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
