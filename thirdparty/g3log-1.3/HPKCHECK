@@ -23,7 +23,7 @@ openharmonycheck() {
     cd ${builddir}/${ARCH}-build        # 进入到测试目录
     ctest > $logfile 2>&1
     #批量测试时，有4个测试用例因找不到符号“backtrace”和“backtrace_symbols”而失败。
-    #尝试将libexecinfo.so、libunwind.so.8.0.1等可以替代backtrace功能的部署到开发板并设置环境变量，仍无法解决问题。可能是由于平台本身不支持或限制了完整的堆栈回溯功能。
+    #尝试将libexecinfo.so、libunwind.so.8.0.1等可以与backtrace功能兼容的轻量级库部署到开发板并设置环境变量，仍无法解决问题。可能是由于平台本身不支持或限制了完整的堆栈回溯功能。
     res=$?      
     if [ $res -ne 0 ];then
         mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
