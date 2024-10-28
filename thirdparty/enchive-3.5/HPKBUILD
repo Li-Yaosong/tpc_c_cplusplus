@@ -1,0 +1,71 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: wangjialun <2271411@stu.neu.edu.cn>, zhangqian<2371418@stu.neu.edu.cn>, wangyihao<2471389@stu.neu.edu.cn>, wangying<wangying@swc.neu.edu.cn>
+# Maintainer: wangyihao<2471389@stu.neu.edu.cn>, wangjialun<2271411@stu.neu.edu.cn>, zhangqian<2371418@stu.neu.edu.cn>, wangying<wangying@swc.neu.edu.cn>
+
+pkgname=enchive-3.5
+pkgver=3.5
+pkgrel=0
+pkgdesc="enchive is a tool to encrypt files to yourself for long-term archival. It's a focused, simple alternative to more complex solutions such as GnuPG or encrypted filesystems"
+url="https://github.com/skeeto/enchive/tree/3.5"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("Unlicense license")
+depends=()
+makedepends=()
+source="https://github.com/skeeto/enchive/archive/refs/tags/3.5.zip"
+
+downloadpackage=true
+autounpack=true
+buildtools=make
+
+builddir=enchive-3.5
+packagename=enchive-3.5.zip
+
+source envset.sh
+
+prepare() {
+    cp -rf $builddir $builddir-$ARCH-build
+    if [ $ARCH == "armeabi-v7a" ];then
+        setarm32ENV
+    elif [ $ARCH == "arm64-v8a" ];then
+        setarm64ENV
+    else
+        echo "Not support ${ARCH} yet"
+        return -1
+    fi
+}
+
+build() {
+    make -j4 -C $builddir-$ARCH-build VERBOSE=1 >> $builddir-$ARCH-build/build.log 2>&1
+    ret=$?
+    return $ret
+}
+
+package() {
+    cd $builddir-$ARCH-build
+    make install PREFIX=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> `pwd`/build.log 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+}
+
+
+cleanbuild() {
+    rm -rf ${PWD}/$builddir $builddir-armeabi-v7a-build  $builddir-arm64-v8a-build #${PWD}/$packagename
+}
