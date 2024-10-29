@@ -38,12 +38,12 @@ packagename=spirv-reflect-sdk-1.3.204.0.zip
 prepare() {
     if $patchflag
     then
-    cd $builddir
-    #在原库根目录下的CMakeLists.txt中添加测试至ctest
-    patch -p1 < `pwd`/../spirv-reflect-sdk-1.3.204.0_oh_pkg.patch
-    # patch只需要打一次,关闭打patch
-    patchflag=false
-    cd $OLDPWD
+        cd $builddir
+        #在原库根目录下的CMakeLists.txt中添加测试至ctest
+        patch -p1 < `pwd`/../spirv-reflect-sdk-1.3.204.0_oh_pkg.patch
+        #patch只需要打一次,关闭打patch
+        patchflag=false
+        cd $OLDPWD
     fi
 
     mkdir -p $builddir/$ARCH-build
