@@ -48,7 +48,7 @@
 
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件拷贝到该目录下，如下图所示：
+- 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件和静态库文件拷贝到该目录下，如下图所示：
   &nbsp;
 
   &nbsp;![thirdparty_install_dir](pic/libsamplerate_install_dir.png)
