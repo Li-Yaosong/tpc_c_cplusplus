@@ -37,12 +37,12 @@ packagename=utf8proc-v2.7.0.zip
 prepare() {
     if $patchflag
     then
-    cd $builddir
-    #在原库根目录下的CMakeLists.txt中打开构建单元测试的开关，以便测试
-    patch -p1 < `pwd`/../utf8proc-2.7.0_oh_pkg.patch
-    # patch只需要打一次,关闭打patch
-    patchflag=false
-    cd $OLDPWD
+        cd $builddir
+        #在原库根目录下的CMakeLists.txt中打开构建单元测试的开关，以便测试
+        patch -p1 < `pwd`/../utf8proc-2.7.0_oh_pkg.patch
+        #patch只需要打一次,关闭打patch
+        patchflag=false
+        cd $OLDPWD
     fi
     mkdir -p $builddir/$ARCH-build
 }
