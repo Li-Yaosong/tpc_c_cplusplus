@@ -67,9 +67,9 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DCMAKE_CXX_FLAGS="-Wno-unused-command-line-argument" \
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DCMAKE_CXX_FLAGS="-Wno-unused-command-line-argument" \
     -B$ARCH-build -S./ > $buildlog 2>&1
-    $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
+    ${MAKE} VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -77,7 +77,7 @@ build() {
 
 package() {
     cd $builddir
-    $MAKE -C $ARCH-build install >> $buildlog 2>&1
+    ${MAKE} VERBOSE=1 -C $ARCH-build install >> $buildlog 2>&1
     cd $OLDPWD
 
     # 需要手动拷贝头文件
