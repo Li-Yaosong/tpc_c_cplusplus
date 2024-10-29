@@ -40,7 +40,8 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    ../configure "$@" --host=$host --enable-shared --enable-static > `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ../configure "$@" \
+    --host=$host --enable-shared --enable-static > $buildlog 2>&1
     # 修改导致测试失败的字符串
     find . -name Makefile -exec sed -i 's#mawk#awk#' {} +
     find . -name Makefile -exec sed -i 's#/bin/bash#bash#' {} +
@@ -49,10 +50,10 @@ build() {
     ret=-1
     if [ $LYCIUM_BUILD_OS == "CYGWI" ]
     then
-        make libpng16.la -j4 >> `pwd`/build.log 2>&1
+        $MAKE libpng16.la >> $buildlog 2>&1
         ret=$?
     else
-        make -j4 >> `pwd`/build.log 2>&1
+        $MAKE >> $buildlog 2>&1
         ret=$?
     fi
     cd $OLDPWD
@@ -64,14 +65,14 @@ package() {
     ret=-1
     if [ $LYCIUM_BUILD_OS == "CYGWI" ]
     then   
-        make install-libLTLIBRARIES >> `pwd`/build.log 2>&1
-        make install-library-links >> `pwd`/build.log 2>&1
-        make install-pkgincludeHEADERS >> `pwd`/build.log 2>&1
-        make install-header-links >> `pwd`/build.log 2>&1
-        make install-pkgconfigDATA >> `pwd`/build.log 2>&1
+        $MAKE install-libLTLIBRARIES >> $buildlog 2>&1
+        $MAKE install-library-links >> $buildlog 2>&1
+        $MAKE install-pkgincludeHEADERS >> $buildlog 2>&1
+        $MAKE install-header-links >> $buildlog 2>&1
+        $MAKE install-pkgconfigDATA >> $buildlog 2>&1
         ret=$?
     else
-        make install >> `pwd`/build.log 2>&1
+        $MAKE install >> $buildlog 2>&1
         ret=$?
     fi
     cd $OLDPWD
@@ -80,7 +81,7 @@ package() {
 
 check() {
     cd $builddir/$ARCH-build
-    make pngtest pngunknown pngstest pngvalid pngimage pngcp timepng >> `pwd`/build.log 2>&1
+    $MAKE pngtest pngunknown pngstest pngvalid pngimage pngcp timepng >> $buildlog 2>&1
     sed -i 's#/bin/bash#/bin/env bash#' pngtest pngunknown pngstest pngvalid pngimage pngcp timepng
     sed -i '/.*check-TESTS: $(check_PROGRAMS)/c\check-TESTS: #$(check_PROGRAMS)' Makefile
     cd $OLDPWD
