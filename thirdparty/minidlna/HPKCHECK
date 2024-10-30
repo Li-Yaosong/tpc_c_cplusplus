@@ -53,7 +53,12 @@ openharmonycheck() {
         echo "copy video file failed" > ${logfile} 2>&1
         return res;
     fi
-    # 启动minidlna服务器程序
+    # 启动minidlna服务器程序,并检查端口是否被占用
+    pid=$(netstat -tulnp | grep 8080 | awk '{print $7}' | cut -d'/' -f1)
+    if [ -n $pid ]
+    then
+        kill -9 $pid
+    fi
     minidlnad -v -f ${LYCIUM_ROOT}/usr/${pkgname}/$ARCH/minidlna.conf -p 8080 -P ${LYCIUM_ROOT}/usr/${pkgname}/$ARCH/minidlna.pid > ${logfile} 2>&1
     res=$?
     if [ $res -ne 0 ]
