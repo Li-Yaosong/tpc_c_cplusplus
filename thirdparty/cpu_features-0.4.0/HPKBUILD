@@ -38,7 +38,7 @@ prepare() {
     if $patchflag
     then
     	cd $builddir
-    	#克隆googletest源码时，由于master分支已不存在，更新为默认的main分支；在根目录下的CMakeLists.txt中激活测试至ctest
+    	#克隆googletest源码时，由于master分支已不存在，更新为默认的main分支
     	patch -p1 < `pwd`/../cpu_features-0.4.0_oh_pkg.patch
     	#patch只需要打一次,关闭打patch
     	patchflag=false
@@ -50,7 +50,7 @@ prepare() {
 build() {
     cd $builddir
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DCMAKE_C_FLAGS="-Wno-unused-command-line-argument" \
-        -DCMAKE_CXX_FLAGS="-Wno-unused-command-line-argument" -B$ARCH-build -S./ > $buildlog 2>&1
+        -DCMAKE_CXX_FLAGS="-Wno-unused-command-line-argument" -B$ARCH-build -S./ -DBUILD_TESTING=ON > $buildlog 2>&1
     $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD

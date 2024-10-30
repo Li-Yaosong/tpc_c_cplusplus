@@ -15,16 +15,4 @@ diff -urN cpu_features-0.4.0_old/cmake/googletest.CMakeLists.txt.in cpu_features
    TEST_COMMAND      ""
 -)
 \ No newline at end of file
-+)
-diff -urN cpu_features-0.4.0_old/CMakeLists.txt cpu_features-0.4.0/CMakeLists.txt
---- cpu_features-0.4.0_old/CMakeLists.txt	2019-07-05 14:47:41.000000000 +0800
-+++ cpu_features-0.4.0/CMakeLists.txt	2024-10-13 14:55:57.025803997 +0800
-@@ -13,7 +13,7 @@
- 
- # BUILD_TESTING is a standard CMake variable, but we declare it here to make it
- # prominent in the GUI.
--option(BUILD_TESTING "Enable test (depends on googletest)." OFF)
-+option(BUILD_TESTING "Enable test (depends on googletest)." ON)
- # BUILD_SHARED_LIBS is a standard CMake variable, but we declare it here to make
- # it prominent in the GUI.
- # cpu_features uses bit-fields which are - to some extends - implementation-defined (see https://en.cppreference.com/w/c/language/bit_field). 
++
