@@ -30,18 +30,13 @@ openharmonycheck() {
     echo "开始测试 exhaustive1_test：" >> ${logfile}
     ./exhaustive1_test >> ${logfile} 2>&1
     if [ $? -ne 0 ]; then
-        res=1
-        # 保存测试失败日志
-        mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
-        cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/exhaustive1_test_failed.log
+        res=1        
     fi 
 
     echo "开始测试 exhaustive_test：" >> ${logfile}
     ./exhaustive_test >> ${logfile} 2>&1
     if [ $? -ne 0 ]; then
         res=1
-        mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
-        cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/exhaustive_test_failed.log
     fi
     
     echo "ctest批量测试，排除已执行的exhaustive1_test和exhaustive_test：" >> ${logfile}  
@@ -49,10 +44,13 @@ openharmonycheck() {
     ctest -E "exhaustive1_test|exhaustive_test" >> ${logfile} 2>&1            
     if [ $? -ne 0 ]; then
         res=1
-        mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
-        cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/test_failed.log
     fi
-                              
+    #保存测试失败日志
+    if [ $res -ne 0 ]; then
+        mkdir -p ${LYCIUM_FAULT_PATH}/${pkgname}
+	cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/test_failed.log
+    fi
+      
     cd $OLDPWD                          
     return $res                         
 }
