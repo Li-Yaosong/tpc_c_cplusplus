@@ -46,9 +46,10 @@
 
 - [测试三方库](#测试三方库)
 
+- 编译出可执行的文件进行测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的静态库文件拷贝到该目录下，如下图所示：
+- 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件和库文件拷贝到该目录下，如下图所示：
   &nbsp;
 
   &nbsp;![thirdparty_install_dir](pic/spirv_reflect_install_dir.png)
@@ -57,16 +58,17 @@
  
   ```shell
   #将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/json11/${OHOS_ARCH}/lib/libspirv-reflect-static.a)
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/spirv_reflect/${OHOS_ARCH}/lib/libspirv-reflect-static.a)
+  #将三方库的头文件加入工程中
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/spirv_reflect/${OHOS_ARCH}/include)
   ```
 
 ## 测试三方库
-- 编译出可执行的文件，使用原库自带的测试用例来做测试 [准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录）。执行结果如图所示
 
 ```shell
   cd /data/tpc_c_cplusplus/thirdparty/spirv-reflect-sdk-1.3.204.0/spirv-reflect-sdk-1.3.204.0/arm64-v8a-build/
-  ctest
+  ./ctest
 ```
 &nbsp;![spirv-reflect_test](pic/spirv_reflect_test.png)
 
