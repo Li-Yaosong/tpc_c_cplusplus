@@ -29,8 +29,8 @@ downloadpackage=true
 autounpack=true
 buildtools=make
 
-builddir=enchive-3.5
-packagename=enchive-3.5.zip
+builddir=lizard-1.0
+packagename=lizard-1.0.zip
 
 source envset.sh
 
