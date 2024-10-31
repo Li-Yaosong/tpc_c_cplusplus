@@ -1,6 +1,6 @@
 diff -urN cpu_features-0.4.0_old/cmake/googletest.CMakeLists.txt.in cpu_features-0.4.0/cmake/googletest.CMakeLists.txt.in
 --- cpu_features-0.4.0_old/cmake/googletest.CMakeLists.txt.in	2019-07-05 14:47:41.000000000 +0800
-+++ cpu_features-0.4.0/cmake/googletest.CMakeLists.txt.in	2024-10-13 14:54:59.848433567 +0800
++++ cpu_features-0.4.0/cmake/googletest.CMakeLists.txt.in	2024-10-31 00:24:41.901607783 +0800
 @@ -5,11 +5,11 @@
  include(ExternalProject)
  ExternalProject_Add(googletest
@@ -15,4 +15,4 @@ diff -urN cpu_features-0.4.0_old/cmake/googletest.CMakeLists.txt.in cpu_features
    TEST_COMMAND      ""
 -)
 \ No newline at end of file
-+
++)
