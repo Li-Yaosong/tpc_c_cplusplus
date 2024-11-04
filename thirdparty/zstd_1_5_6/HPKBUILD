@@ -38,8 +38,10 @@ prepare() {
 }
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -B$ARCH-build -S./build/cmake -DZSTD_BUILD_TESTS=ON > $buildlog 2>&1
-    $MAKE -C $ARCH-build >> $buildlog 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    -B$ARCH-build -S./build/cmake -DZSTD_BUILD_TESTS=ON > $buildlog 2>&1
+    $MAKE -C $ARCH-build VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
