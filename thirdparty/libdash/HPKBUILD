@@ -24,21 +24,26 @@ prepare() {
         cd $builddir
         # 由于找不到CURL的头文件，因此打补丁
         patch -p1 < `pwd`/../libdash_oh_pkg.patch
-        patchflag=false
+  	patchflag=false
         cd $OLDPWD
     fi
     cd $builddir
     # 由于原库的libcurl头文件和lycium下的curl的版本不一致导致编译有错误，因此做了拷贝处理，先清掉原库的头文件再拷贝
     rm -rf libdash/libcurl/*
     cp -rf $LYCIUM_ROOT/usr/curl/$ARCH/include libdash/libcurl/include
+    # 将lib文件夹拷贝过来之后在CMakeLists.txt中设置libcurl.so路径以解决编译时undefined symbol问题
+    cp -rf $LYCIUM_ROOT/usr/curl/$ARCH/lib libdash/libcurl/lib
     cd $OLDPWD     
     mkdir -p $builddir/$ARCH-build
 }
 
 build() {
     cd $builddir/$pkgname
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B`pwd`/../$ARCH-build -S./ -L > `pwd`/../$ARCH-build/build.log 2>&1
-    make -j4 -C `pwd`/../$ARCH-build >> `pwd`/../$ARCH-build/build.log 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    -DOPENSSL_CRYPTO_LIBRARY=$LYCIUM_ROOT/usr/openssl/lib \
+    -DOPENSSL_INCLUDE_DIR=$LYCIUM_ROOT/usr/openssl/include \
+    -DOHOS_ARCH=$ARCH -B`pwd`/../$ARCH-build -S./ -L > $buildlog 2>&1
+    $MAKE -C `pwd`/../$ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
