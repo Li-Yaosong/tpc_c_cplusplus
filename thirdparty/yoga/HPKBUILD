@@ -39,9 +39,12 @@ prepare() {
 build() {
     cd $builddir
     # SDK中cmake 已更新至少3.26版本以上。
-    $OHOS_SDK/native/build-tools/cmake/bin/cmake "$@" -DCMAKE_C_FLAGS="-Wno-error=unused-command-line-argument" \
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    $OHOS_SDK/native/build-tools/cmake/bin/cmake "$@" \
+    -DCMAKE_C_FLAGS="-Wno-error=unused-command-line-argument" \
     -DCMAKE_CXX_FLAGS="-Wno-error=unused-command-line-argument" \
-    -DCMAKE_GTEST_DISCOVER_TESTS_DISCOVERY_MODE="PRE_TEST" -B$ARCH-build -S./ > $buildlog 2>&1
+    -DCMAKE_GTEST_DISCOVER_TESTS_DISCOVERY_MODE="PRE_TEST" \
+    -B$ARCH-build -S./ > $buildlog 2>&1
     $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
