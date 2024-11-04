@@ -36,7 +36,7 @@ prepare() {
 
 build() {
     cd $pkgname-$ARCH-build/$builddir
-    make -j4 > `pwd`/build.log 2>&1
+    $MAKE VERBOSE=1 > $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -44,7 +44,8 @@ build() {
 
 package() {
     cd $pkgname-$ARCH-build/$builddir
-    make install PREFIX="" DESTDIR=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> `pwd`/build.log 2>&1
+    $MAKE install PREFIX="" \
+    DESTDIR=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> $buildlog 2>&1
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
     then
