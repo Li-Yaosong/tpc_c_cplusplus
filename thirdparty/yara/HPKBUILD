@@ -65,7 +65,9 @@ prepare() {
 build() {
     cd $ARCH-build
     ./bootstrap.sh >> $buildlog 2>&1
-    ./configure "$@" --host=$host --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH/ >> $buildlog 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    ./configure "$@" --host=$host \
+    --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH/ >> $buildlog 2>&1
 
     # 修改Makefile文件，只编译测试用例不执行
     sed -i.bak '/\($(srcdir)\/Makefile.in:\)/,/\($(am__aclocal_m4_deps):\)/{s/^/#/}' Makefile
