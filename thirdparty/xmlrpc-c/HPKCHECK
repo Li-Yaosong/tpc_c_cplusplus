@@ -11,6 +11,12 @@ openharmonycheck() {
     old_pwd=$OLDPWD
 
     cd test
+    # 测试前先检查8080端口是否被占用
+    pid=$(netstat -tulnp | grep 8080 | awk '{print $7}' | cut -d'/' -f1)
+    if [ -n $pid ]
+    then
+        kill -9 $pid
+    fi
     ./test > $logfile 2>&1
     res=$?
     if [ $res -eq 0 ]
