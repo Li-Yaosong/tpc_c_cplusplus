@@ -38,7 +38,7 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
     -DCMAKE_C_FLAGS="-Wno-unused-command-line-argument" -DBUILD_TESTING=ON -B$ARCH-build -S./ -L >  $buildlog 2>&1
     $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
@@ -49,7 +49,7 @@ build() {
 # 打包安装
 package() {
     cd $builddir
-    make -C $ARCH-build install >>  $buildlog 2>&1
+    $MAKE VERBOSE=1 -C $ARCH-build install >>  $buildlog 2>&1
     cd $OLDPWD
 }
 
