@@ -10,12 +10,13 @@ license=("Apache-2.0 license")
 depends=()
 makedepends=()
 
-source="https://github.com/apache/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+# 原仓位置：source="https://github.com/apache/$pkgname/archive/refs/tags/$pkgver.tar.gz"，因网络原因使用镜像
+source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver.tar.gz"
 
 autounpack=true
 downloadpackage=true
 
-builddir=$pkgname-${pkgver:1}
+builddir=$pkgname-$pkgver
 packagename=$builddir.tar.gz
 
 prepare() {
@@ -24,8 +25,10 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > $buildlog 2>&1
+    $MAKE -C $ARCH-build  VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -33,7 +36,7 @@ build() {
 
 package() {
     cd $builddir
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    $MAKE -C $ARCH-build install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
