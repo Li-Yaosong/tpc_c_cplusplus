@@ -53,7 +53,8 @@ prepare() {
 build() {
     cd $builddir-$ARCH-build/xvidcore/build/generic
     ./bootstrap.sh > $buildlog 2>&1
-    ./configure "$@" --host=$host --prefix=${LYCIUM_ROOT}/usr/$pkgname/$ARCH >> $buildlog 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" \
+    --host=$host --prefix=${LYCIUM_ROOT}/usr/$pkgname/$ARCH >> $buildlog 2>&1
     $MAKE V=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
