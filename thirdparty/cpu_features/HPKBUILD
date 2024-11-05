@@ -14,7 +14,7 @@
 # Contributor: wangjialun<2271411@stu.neu.edu.cn>, zhangqian<2371418@stu.neu.edu.cn>, wangyihao<2471389@stu.neu.edu.cn>, wangying<wangying@swc.neu.edu.cn>
 # Maintainer: wangyihao<2471389@stu.neu.edu.cn>, wangjialun<2271411@stu.neu.edu.cn>, zhangqian<2371418@stu.neu.edu.cn>, wangying<wangying@swc.neu.edu.cn>
 
-pkgname=cpu_features-0.4.0
+pkgname=cpu_features
 pkgver=v0.4.0
 pkgrel=0
 pkgdesc="cpu_features is a cross-platform C library to retrieve CPU features (such as available instructions) at runtime."

@@ -17,14 +17,14 @@
 - 三方库目录结构
 
   ```shell
-  tpc_c_cplusplus/thirdparty/cpu_features-0.4.0  #三方库cpu_features-0.4.0的目录结构如下
+  tpc_c_cplusplus/thirdparty/cpu_features  #三方库cpu_features的目录结构如下
   ├── docs                              #三方库相关文档的文件夹
   ├── HPKBUILD                          #构建脚本
   ├── HPKCHECK                          #测试脚本
   ├── SHA512SUM                         #三方库校验文件
   ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
   ├── README_zh.md                      #三方库简介
-  ├── cpu_features-0.4.0_oh_pkg.patch   #用于cpu_features-0.4.0库编译的补丁
+  ├── cpu_features_oh_pkg.patch   #用于cpu_features库编译的补丁
   ```
 
 - 在lycium目录下编译三方库
@@ -33,7 +33,7 @@
 
   ```shell
   cd lycium
-  ./build.sh cpu_features-0.4.0
+  ./build.sh cpu_features
   ```
 
 - 三方库头文件及生成的库
@@ -41,7 +41,7 @@
   在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
 
   ```shell
-  cpu_features-0.4.0/arm64-v8a   cpu_features-0.4.0/armeabi-v7a
+  cpu_features/arm64-v8a   cpu_features/armeabi-v7a
   ```
 
 - [测试三方库](#测试三方库)
@@ -68,7 +68,7 @@
 进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录）。执行结果如图所示
 
 ```shell
-  cd /data/tpc_c_cplusplus/thirdparty/cpu_features-0.4.0/cpu_features-0.4.0/arm64-v8a-build/
+  cd /data/tpc_c_cplusplus/thirdparty/cpu_features/cpu_features-0.4.0/arm64-v8a-build/
   ctest
 ```
 &nbsp;![cpu_features_test](pic/cpu_features_test.png)

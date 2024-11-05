@@ -12,7 +12,4 @@ diff -urN cpu_features-0.4.0_old/cmake/googletest.CMakeLists.txt.in cpu_features
    CONFIGURE_COMMAND ""
    BUILD_COMMAND     ""
    INSTALL_COMMAND   ""
-   TEST_COMMAND      ""
--)
-\ No newline at end of file
-+)
+   TEST_COMMAND      "
