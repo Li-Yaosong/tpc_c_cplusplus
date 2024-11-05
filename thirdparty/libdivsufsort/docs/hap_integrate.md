@@ -17,7 +17,7 @@
 - 三方库目录结构
 
   ```shell
-  tpc_c_cplusplus/thirdparty/libdivsufsort-2.0.0   #三方库libdivsufsort-2.0.0的目录结构如下
+  tpc_c_cplusplus/thirdparty/libdivsufsort   #三方库libdivsufsort的目录结构如下
   ├── docs                              #三方库相关文档的文件夹
   ├── HPKBUILD                          #构建脚本
   ├── HPKCHECK                          #测试脚本
@@ -32,7 +32,7 @@
 
   ```shell
   cd lycium
-  ./build.sh libdivsufsort-2.0.0
+  ./build.sh libdivsufsort
   ```
 
 - 三方库头文件及生成的库
@@ -40,7 +40,7 @@
   在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
 
   ```shell
-  libdivsufsort-2.0.0/arm64-v8a   libdivsufsort-2.0.0/armeabi-v7a
+  libdivsufsort/arm64-v8a   libdivsufsort/armeabi-v7a
   ```
 
 - [测试三方库](#测试三方库)

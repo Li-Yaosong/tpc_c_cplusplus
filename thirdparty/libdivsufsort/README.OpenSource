@@ -1,6 +1,6 @@
 [
     {
-        "Name": "libdivsufsort-2.0.0",
+        "Name": "libdivsufsort",
         "License": "MIT license",
         "License File": "https://github.com/y-256/libdivsufsort/blob/master/LICENSE",
         "Version Number": "2.0.0",

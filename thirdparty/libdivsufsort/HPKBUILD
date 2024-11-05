@@ -14,7 +14,7 @@
 # Contributor: wangjialun <2271411@stu.neu.edu.cn>, zhangqian<2371418@stu.neu.edu.cn>, wangyihao<2471389@stu.neu.edu.cn> , wangying<wangying@swc.neu.edu.cn>
 # Maintainer: wangyihao<2471389@stu.neu.edu.cn>, wangjialun<2271411@stu.neu.edu.cn>, zhangqian<2371418@stu.neu.edu.cn>, wangying<wangying@swc.neu.edu.cn>
 
-pkgname=libdivsufsort-2.0.0
+pkgname=libdivsufsort
 pkgver=2.0.0
 pkgrel=0
 pkgdesc="libdivsufsort is a lightweight suffix-sorting library."

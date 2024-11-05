@@ -1,6 +1,6 @@
 # libdivsufsort三方库说明
 ## 功能简介
-Libdivsufsort是一个轻量级的后缀排序库。
+libdivsufsort是一个轻量级的后缀排序库。
 ## 三方库版本：
 - 2.0.0
 ## 使用约束：
