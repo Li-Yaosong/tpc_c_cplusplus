@@ -11,7 +11,7 @@
     {
         "Name": "openssl",
         "License": "OpenSSL License and Original SSLeay License",
-        "License File": "https://www.openssl.org/source/license-openssl-ssleay.txt",
+        "License File": "https://www.openssl-library.org/source/license/license-openssl-ssleay.txt",
         "Version Number": "1.1.1u",
         "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://www.openssl.org/source/old/1.1.1/openssl-1.1.1u.tar.gz",

@@ -55,8 +55,8 @@
     },
     {
         "Name": "openssl",
-        "License": "Apache License 2.0",
-        "License File": "notes.txt",
+        "License": "OpenSSL License and Original SSLeay License",
+        "License File": "https://www.openssl-library.org/source/license/license-openssl-ssleay.txt",
         "Version Number": "OpenSSL_1_1_1t",
         "Owner": "llh_01129@163.com",
         "Upstream URL": "https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1t.zip",
