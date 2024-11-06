@@ -10,7 +10,8 @@ license=("Apache License 2.0")
 depends=()
 makedepends=()
 
-source="https://github.com/waywardgeek/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+# 原仓地址：source="https://github.com/waywardgeek/$pkgname/archive/refs/tags/$pkgver.tar.gz"，由于网络原因使用镜像
+source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver.tar.gz"
 
 autounpack=true
 downloadpackage=true
