@@ -35,7 +35,7 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    make CXX=${cxx} -j4 > `pwd`/build.log 2>&1
+    $MAKE CXX=${cxx} VERBOSE=1 > $buildlog 2>&1
     # 对最关键一步的退出码进行判断
     ret=$?
     cd $OLDPWD
