@@ -23,8 +23,12 @@ prepare() {
 build() {
     cd $builddir
     # 该库直接交叉编译会失败，提示部分变量必须配置成"advanced"
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -DBUILD_TESTING=ON -DHAVE_DEFAULT_SOURCE_RUN="advanced" -DHAVE_DEFAULT_SOURCE_RUN__TRYRUN_OUTPUT="advanced" -DTEST_LFS_WORKS_RUN="advanced" -DTEST_LFS_WORKS_RUN__TRYRUN_OUTPUT="advanced" -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    -DOHOS_ARCH=$ARCH -B$ARCH-build -DBUILD_TESTING=ON \
+    -DHAVE_DEFAULT_SOURCE_RUN="advanced" -DHAVE_DEFAULT_SOURCE_RUN__TRYRUN_OUTPUT="advanced" \
+    -DTEST_LFS_WORKS_RUN="advanced" -DTEST_LFS_WORKS_RUN__TRYRUN_OUTPUT="advanced" -S./ -L > $buildlog 2>&1
+    $MAKE -C $ARCH-build VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -32,7 +36,7 @@ build() {
 
 package() {
     cd "$builddir"
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    $MAKE -C $ARCH-build install >> $buildlog 2>&1
     cd $OLDPWD
     cd $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib
     ln -s libszip.a libsz.a
