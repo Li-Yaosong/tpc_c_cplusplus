@@ -57,8 +57,9 @@ prepare() {
 build() {
     cd $builddir
     #"-ffp-contract=off" 禁用 floating-point expression contraction.否则会因为浮点精度问题造成64位的测试用例失败。
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DEARCUT_BUILD_VIZ=OFF -DCMAKE_C_FLAGS="-ffp-contract=off" \
-    -DCMAKE_CXX_FLAGS="-ffp-contract=off" -B$ARCH-build -S./ > $buildlog 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+        -DEARCUT_BUILD_VIZ=OFF -DCMAKE_C_FLAGS="-ffp-contract=off" \
+        -DCMAKE_CXX_FLAGS="-ffp-contract=off" -B$ARCH-build -S./ > $buildlog 2>&1
     $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
