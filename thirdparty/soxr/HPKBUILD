@@ -26,8 +26,11 @@ prepare() {
 build() {
     cd $builddir
     # 交叉编译不支持ctest，故关闭tests打开examples，使用examples进行测试
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -DBUILD_EXAMPLES=1 -DBUILD_TESTS=0 -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make VERBOSE=1 -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    -DOHOS_ARCH=$ARCH -DBUILD_EXAMPLES=1 -DBUILD_TESTS=0 \
+    -B$ARCH-build -S./ -L > $buildlog 2>&1
+    $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -35,7 +38,7 @@ build() {
 
 package() {
     cd $builddir
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    $MAKE -C $ARCH-build install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
