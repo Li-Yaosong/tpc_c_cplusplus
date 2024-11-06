@@ -319,7 +319,7 @@ copytools() {
         return 0
     else
         tar xvf Buildtools/toolchain.tar.gz
-        cp -rfa toolchain/* $OHOS_SDK/native/llvm/bin
+        cp -fa toolchain/* $OHOS_SDK/native/llvm/bin
         rm -rf toolchain
     fi
 }
