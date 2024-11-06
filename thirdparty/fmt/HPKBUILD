@@ -26,8 +26,9 @@ prepare()  {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L  > `pwd`/build.log 2>&1
-    make -j4 -C $ARCH-build  >> `pwd`/build.log 2>&1 
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+        -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L  > $buildlog 2>&1
+    $MAKE VERBOSE=1 -C $ARCH-build  >> $buildlog 2>&1 
     ret=$?
     cd $OLDPWD
     return $ret
@@ -36,7 +37,7 @@ build() {
 # 打包安装
 package() {
     cd $builddir
-    make -C $ARCH-build install
+    $MAKE VERBOSE=1 -C $ARCH-build install
     cd $OLDPWD
 }
 
