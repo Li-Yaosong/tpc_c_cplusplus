@@ -10,7 +10,8 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD-3-Clause license")
 depends=()
 makedepends=()
-source="https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+# 原仓地址：source="https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz"，由于网络原因使用镜像
+source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver.tar.gz"
 
 autounpack=true
 downloadpackage=true
@@ -25,8 +26,10 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L  > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L  > $buildlog 2>&1
+    $MAKE -C $ARCH-build VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -34,7 +37,7 @@ build() {
 
 package() {
     cd $builddir
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    $MAKE -C $ARCH-build install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
