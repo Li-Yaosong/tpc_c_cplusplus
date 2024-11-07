@@ -62,7 +62,7 @@ prepare() {
 
 build() {
     cd $builddir-${ARCH}-build/src
-    $MAKE LIB="$ar cr" CC="$cc" -j4 > build.log 2>&1
+    $MAKE VERBOSE=1 LIB="$ar cr" CC="$cc" > $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -83,7 +83,7 @@ package() {
 check() {
     echo "The test must be on an OpenHarmony device!"
 	cd $builddir-${ARCH}-build/test
-	$MAKE LIB="$ar cr" CC="$cc" -j4 > build.log 2>&1
+	$MAKE VERBOSE=1 LIB="$ar cr" CC="$cc" > $buildlog 2>&1
 	ret=$?
 	cd $OLDPWD
 	unset ar
