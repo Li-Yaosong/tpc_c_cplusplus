@@ -37,7 +37,7 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    make -j4 >> `pwd`/build.log 2>&1
+    $MAKE VERBOSE=1 > $buildlog 2>&1
     # 对最关键一步的退出码进行判断
     ret=$?
     cd $OLDPWD
@@ -46,7 +46,7 @@ build() {
 
 package() {
     cd $builddir-$ARCH-build
-    make install PREFIX=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> `pwd`/build.log 2>&1
+    $MAKE VERBOSE=1 install PREFIX=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> $buildlog 2>&1
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
     then
