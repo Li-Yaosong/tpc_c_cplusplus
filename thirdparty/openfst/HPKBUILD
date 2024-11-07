@@ -54,11 +54,11 @@ automakebuildhost() {
     cd $automakebuilddir    
     mkdir build
 
-    ./configure --prefix=${PWD}/build > `pwd`/build.log 2>&1
-    make -j4 VERBOSE=1 >> build.log 2>&1
-    make install >> build.log 2>&1
+    ./configure --prefix=${PWD}/build > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
+    $MAKE install >> $buildlog 2>&1
 
-    $PWD/build/bin/automake --version >> build.log 2>&1
+    $PWD/build/bin/automake --version >> $buildlog 2>&1
     if [ "$?" != "0" ];then
         echo "compile linux  automake 1.16.5 fail"
         return 1
@@ -116,9 +116,12 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build    
-    ./configure "$@" --host=$host --enable-static --enable-compact-fsts --enable-compress --enable-const-fsts --enable-far \
-    --enable-fsts --enable-grm --enable-linear-fsts --enable-lookahead-fsts --enable-mpdt --enable-ngram-fsts --enable-pdt  >> `pwd`/build.log 2>&1
-    make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    ./configure "$@" --host=$host --enable-static --enable-compact-fsts \
+    --enable-compress --enable-const-fsts --enable-far \
+    --enable-fsts --enable-grm --enable-linear-fsts --enable-lookahead-fsts \
+    --enable-mpdt --enable-ngram-fsts --enable-pdt  >> $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
      
@@ -127,7 +130,7 @@ build() {
 
 package() {
     cd $builddir-$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE install >> $buildlog 2>&1
     cd $OLDPWD
 
     if [ $ARCH == "armeabi-v7a" ]; then
