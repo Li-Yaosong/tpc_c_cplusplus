@@ -22,7 +22,7 @@ url="https://github.com/fribidi/fribidi"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("LGPL-2.1-only")
 depends=()
-makedepends=("unzip")
+makedepends=("unzip" "yacc" "flex")
 # 原仓地址: https://github.com/$pkgname/$pkgname/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用镜像
 source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 
@@ -49,10 +49,10 @@ prepare() {
         then
             return -1
         fi
-        unzip c2man.zip > `pwd`/build.log 2>&1
+        unzip c2man.zip > $buildlog 2>&1
         cd c2man-master
-        ./Configure -d -e > `pwd`/build.log 2>&1
-        $MAKE >> `pwd`/build.log 2>&1
+        PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./Configure -d -e > $buildlog 2>&1
+        $MAKE VERBOSE=1 >> $buildlog 2>&1
         cd $OLDPWD
         buildhostc2man=false
     fi
@@ -73,7 +73,7 @@ prepare() {
     if $autogenflag
     then
         cd $builddir
-        ./autogen.sh > `pwd`/build.log 2>&1
+        ./autogen.sh > $buildlog 2>&1
         autogenflag=false
         cd $OLDPWD
     fi
@@ -82,8 +82,9 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    ../configure "$@" --host=$host --enable-static > $buildlog 2>&1
-    $MAKE >> $buildlog 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ../configure "$@" \
+        --host=$host --enable-static > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -97,7 +98,7 @@ package() {
 
 check() {
     cd $builddir/$ARCH-build
-    $MAKE -C test/unicode-conformance BidiTest BidiCharacterTest >> $buildlog 2>&1
+    $MAKE VERBOSE=1 -C test/unicode-conformance BidiTest BidiCharacterTest >> $buildlog 2>&1
     ret=$?
     if [ $ARCH == "armeabi-v7a" ]
     then
