@@ -76,14 +76,15 @@ prepare() {
 
 build() {
     cd $pkgname-$ARCH-build/$pkgname
-    ./configure "$@" --host=$host --with-pthreads >> $publicbuildlog 2>&1
-    $MAKE VERBOSE=1 >> $publicbuildlog 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    ./configure "$@" --host=$host --with-pthreads > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     if [ $ret -ne 0 ]
     then
         # 交叉编译依赖X86编译生成的nsinstall文件
         cp $LYCIUM_ROOT/../thirdparty/$pkgname/$builddir-host/$pkgname/config/nsinstall ./config/
-        $MAKE VERBOSE=1 >> $publicbuildlog 2>&1
+        $MAKE VERBOSE=1 >> $buildlog 2>&1
         ret=$?
     fi
     cd $OLDPWD
@@ -92,7 +93,7 @@ build() {
 
 package() {
     cd $pkgname-$ARCH-build/$pkgname
-    $MAKE VERBOSE=1 install >> $publicbuildlog 2>&1
+    $MAKE VERBOSE=1 install >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -115,7 +116,7 @@ recoverpkgbuildenv() {
 check() {
     echo "The test must be on an OpenHarmony device!"
     cd $pkgname-$ARCH-build/$pkgname/pr/tests
-    $MAKE VERBOSE=1 >> $publicbuildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
