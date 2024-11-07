@@ -23,8 +23,8 @@ prepare() {
     if [ $syncsubmodule == true ];then
         cd "$builddir"
         # 同步子模块，这里采用git submodule update容易失败，进行git clone下载
-        git clone https://github.com/philsquared/Catch.git -b v2.13.9  catch >> `pwd`/build.log 2>&1
-        git clone https://github.com/log4cplus/ThreadPool.git threadpool >> `pwd`/build.log 2>&1
+        git clone https://github.com/philsquared/Catch.git -b v2.13.9  catch > $publicbuildlog 2>&1
+        git clone https://github.com/log4cplus/ThreadPool.git threadpool >> $publicbuildlog 2>&1
         cd $OLDPWD
         syncsubmodule=false
     fi
@@ -32,8 +32,10 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > $ARCH-build/build.log 2>&1 
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > $buildlog 2>&1 
+    $MAKE -C $ARCH-build VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -41,7 +43,7 @@ build() {
 
 package() {
     cd "$builddir"
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    $MAKE -C $ARCH-build install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
