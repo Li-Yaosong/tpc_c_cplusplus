@@ -38,9 +38,10 @@ prepare() {
 
 build() {
     cd $builddir
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
-        -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > $ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build VERBOSE=1 >> $ARCH-build/build.log 2>&1
+    -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > $buildlog 2>&1
+    $MAKE -C $ARCH-build VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -48,7 +49,7 @@ build() {
 
 package() {
     cd $builddir
-    make -C $ARCH-build install VERBOSE=1 >> $ARCH-build/build.log 2>&1
+    $MAKE -C $ARCH-build install VERBOSE=1 >> $buildlog 2>&1
     cd $OLDPWD
 }
 
