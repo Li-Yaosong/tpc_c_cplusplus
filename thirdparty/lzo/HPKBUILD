@@ -50,7 +50,7 @@ prepare() {
 
 build() {
     cd $pkgname-$ARCH-build
-    ./configure "$@" --host=$host > $buildlog 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" --host=$host > $buildlog 2>&1
     $MAKE V=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
