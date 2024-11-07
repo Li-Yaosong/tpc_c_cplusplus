@@ -55,8 +55,8 @@ prepare() {
 }
 
 build() {
-    $MAKE CC=${cc} LD=${ld} CFLAGS=-DLUA_USE_LINUX MYLIBS=-ldl -j4 -C $builddir-$ARCH-build VERBOSE=1 > \
-	    $builddir-$ARCH-build/build.log 2>&1
+    $MAKE CC=${cc} LD=${ld} CFLAGS=-DLUA_USE_LINUX MYLIBS=-ldl -C $builddir-$ARCH-build VERBOSE=1 > \
+    $buildlog 2>&1
     ret=$?
     return $ret
 }
