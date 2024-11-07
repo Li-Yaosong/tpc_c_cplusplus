@@ -61,7 +61,7 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    make CC=${cc} AR=${ar} md5 build -j4 > `pwd`/build.log 2>&1
+    $MAKE CC=${cc} AR=${ar} md5 build VERBOSE=1 > $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -69,7 +69,7 @@ build() {
 
 package() {
     cd $builddir-$ARCH-build
-    make install DESTDIR=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> `pwd`/build.log 2>&1
+    $MAKE install DESTDIR=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     unset cc ar
