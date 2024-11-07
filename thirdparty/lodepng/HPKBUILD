@@ -79,7 +79,7 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    $MAKE CXX=${cxx} -j4 >> $buildlog 2>&1
+    $MAKE CXX=${cxx} VERBOSE=1 > $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
