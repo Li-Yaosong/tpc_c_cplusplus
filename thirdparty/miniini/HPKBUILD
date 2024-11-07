@@ -49,13 +49,13 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    make CXX=${cxx} AR=${ar} -j4 > `pwd`/build.log 2>&1
+    $MAKE CXX=${cxx} AR=${ar} VERBOSE=1 > $buildlog 2>&1
     cd $OLDPWD
 }
 
 package() {
     cd $builddir-$ARCH-build
-    make install DESTDIR=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> `pwd`/build.log 2>&1
+    $MAKE install DESTDIR=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> $buildlog 2>&1
     cd $OLDPWD
     unset cxx ar
 }
