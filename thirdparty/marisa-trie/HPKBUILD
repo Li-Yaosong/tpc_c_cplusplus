@@ -35,14 +35,14 @@ prepare() {
         export LDFLAGS="${OHOS_SDK}/native/llvm/lib/clang/${CLANG_VERSION}/lib/aarch64-linux-ohos/libclang_rt.builtins.a ${LDFLAGS}"
     fi
     cd $builddir-$ARCH-build
-    autoreconf -i > ./build.log 2>&1
+    autoreconf -i > $publicbuildlog 2>&1
     cd $OLDPWD
 }
 
 build() {
     cd $builddir-$ARCH-build
-    ./configure "$@" --host=$host >> ./build.log 2>&1
-    make -j4 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" --host=$host > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
 
     cd $OLDPWD
@@ -51,7 +51,7 @@ build() {
 
 package() {
     cd $builddir-$ARCH-build
-    make install >> ./build.log 2>&1
+    $MAKE install >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -60,7 +60,7 @@ package() {
 check() {
     cd $builddir-$ARCH-build/tests
     ## 编译出测试应用
-    make base-test io-test vector-test trie-test marisa-test >> ../build.log 2>&1
+    $MAKE base-test io-test vector-test trie-test marisa-test >> $buildlog 2>&1
     ret=$?
     ## 修改测试条件， 使测试时不在进行编译操作
     sed -i "s/check-TESTS: \$(check_PROGRAMS)/check-TESTS: # \$(check_PROGRAMS)/" Makefile
