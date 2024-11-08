@@ -33,7 +33,7 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    make CXX=${cxx} all lib -j4 > `pwd`/build.log 2>&1
+    $MAKE CXX=${cxx} all lib > $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
