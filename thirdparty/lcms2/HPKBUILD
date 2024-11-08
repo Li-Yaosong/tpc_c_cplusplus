@@ -37,8 +37,8 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    ../configure "$@" $host > `pwd`/build.log 2>&1
-    make -j4 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ../configure "$@" $host > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     res=$?
     cd $OLDPWD
     return $res
@@ -47,7 +47,7 @@ build() {
 package() {
 
     cd $builddir/$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE VERBOSE=1 install >> $buildlog 2>&1
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
     then
@@ -65,7 +65,7 @@ check() {
     cd $builddir/$ARCH-build
     # 原库的check将构建测试和执行测试合并在一起了，这里将构建测试和执行测试进行分离，构建测试不变，执行测试修改成check-TESTS
     sed -i 's/check:$/check-TESTS:/g' testbed/Makefile
-    make check >> `pwd`/build.log 2>&1
+    $MAKE VERBOSE=1 check >> $buildlog 2>&1
     res=$?
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
