@@ -70,6 +70,7 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
     ../configure "$@" --target=$host --enable-unit-tests > $buildlog 2>&1
     $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
