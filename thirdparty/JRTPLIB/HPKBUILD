@@ -50,17 +50,17 @@ prepare() {
 
 build() {
     cd ${builddir}
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -B${ARCH}-build \
-    -DJRTPLIB_COMPILE_TESTS=ON -S./ -L > ${buildlog} 2>&1 || return -1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -B${ARCH}-build \
+        -DJRTPLIB_COMPILE_TESTS=ON -S./ -L > ${buildlog} 2>&1 || return -1
 
-    ${MAKE} -C ${ARCH}-build >> ${buildlog} 2>&1 || return -1
+    ${MAKE} VERBOSE=1 -C ${ARCH}-build >> ${buildlog} 2>&1 || return -1
     cd ${OLDPWD}
     return 0
 }
 
 package() {
     cd ${builddir}/${ARCH}-build
-    ${MAKE} install >> ${buildlog} 2>&1 || return -1
+    ${MAKE} VERBOSE=1 install >> ${buildlog} 2>&1 || return -1
     cd ${OLDPWD}
     return 0
 }
