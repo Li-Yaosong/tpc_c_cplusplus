@@ -37,7 +37,9 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -DUSE_LIBXML2=OFF -B$ARCH-build -S./ -L > $buildlog 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    -DOHOS_ARCH=$ARCH -DUSE_LIBXML2=OFF -B$ARCH-build -S./ -L > $buildlog 2>&1
     ${MAKE} -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
