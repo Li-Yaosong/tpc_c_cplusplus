@@ -46,10 +46,10 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    premake4 gmake > `pwd`/build.log 2>&1
+    premake4 gmake > $buildlog 2>&1
     cd $OLDPWD
     cd $builddir-$ARCH-build/Build
-    make CC=${cc} -j4 > `pwd`/build.log 2>&1
+    $MAKE CC=${cc} >> $buildlog 2>&1
     # 对最关键一步的退出码进行判断
     ret=$?
     cd $OLDPWD
