@@ -54,8 +54,9 @@ prepare() {
 #参数1
 build() {
     cd $builddir/$ARCH-build
-    ../Configure "$@" $host > `pwd`/build.log 2>&1
-    make -j4 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    ../Configure "$@" $host > $buildlog 2>&1
+    $MAKE >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -63,13 +64,13 @@ build() {
 
 package() {
     cd $builddir/$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
 check() {
     cd $builddir/$ARCH-build
-    make depend >> `pwd`/build.log 2>&1
+    $MAKE depend >> $buildlog 2>&1
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
     then
