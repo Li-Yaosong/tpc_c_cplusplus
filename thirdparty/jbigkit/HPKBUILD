@@ -36,7 +36,7 @@ prepare() {
 }
 build() {
     cd $builddir-$ARCH-build
-    make CC=${cc} -j4 > `pwd`/build.log 2>&1
+    $MAKE VERBOSE=1 CC=${cc} > $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
