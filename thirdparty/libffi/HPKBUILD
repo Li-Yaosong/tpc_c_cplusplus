@@ -58,9 +58,9 @@ buildgnutool() {
     fi
     tar -xf $toolname-$toolver.tar.gz
     cd $toolpath
-    ./configure --prefix=$prefixpath >> `pwd`/build.log 2>&1
-    $MAKE VERBOSE=1 >> `pwd`/build.log 2>&1
-    $MAKE install VERBOSE=1 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure --prefix=$prefixpath >> $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
+    $MAKE install VERBOSE=1 >> $buildlog 2>&1
     if [ $? -ne 0 ];then
         return -2
     fi
@@ -95,7 +95,7 @@ prepare() {
     mkdir $builddir/$ARCH-build
     if [ $genconfigure == true ];then
         cd $builddir
-        $AUTORECONF -v -i >> `pwd`/build.log 2>&1
+        $AUTORECONF -v -i >> $buildlog 2>&1
         if [ $? -ne 0 ];then
             return -3
         fi
@@ -124,7 +124,8 @@ prepare() {
 
 build() {
     cd $builddir
-    ./configure "$@" --host=$host --enable-static=yes  --disable-multi-os-directory \
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" \
+        --host=$host --enable-static=yes  --disable-multi-os-directory \
         --enable-builddir=$ARCH-build > $buildlog 2>&1
     $MAKE -C $ARCH-build  VERBOSE=1 >> $buildlog 2>&1
     ret=$?
