@@ -34,7 +34,7 @@ prepare() {
 }
 
 build() {
-    make -j4 -C $builddir-$ARCH-build VERBOSE=1 >> $builddir-$ARCH-build/build.log 2>&1
+    $MAKE -C $builddir-$ARCH-build VERBOSE=1 >> $builddir-$ARCH-build/build.log 2>&1
     ret=$?
     return $ret
 }
