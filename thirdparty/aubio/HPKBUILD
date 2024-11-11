@@ -77,7 +77,7 @@ prepare() {
 
 build() {
     cd $builddir-${ARCH}-build
-    $MAKE build LIB="$ar cr" CC="$cc" > $buildlog 2>&1
+    $MAKE VERBOSE=1 build LIB="$ar cr" CC="$cc" > $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -85,7 +85,7 @@ build() {
 
 package() {
     cd $builddir-${ARCH}-build
-    $MAKE install >> $buildlog 2>&1
+    $MAKE VERBOSE=1 install >> $buildlog 2>&1
     ret=$?
     
     install_dir=${LYCIUM_ROOT}/usr/${pkgname}/${ARCH}
