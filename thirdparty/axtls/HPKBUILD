@@ -10,8 +10,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD-3-Clause")
 depends=()
 makedepends=()
-#source="https://sourceforge.net/projects/${pkgname}/files/${pkgver}/axTLS-${pkgver}.tar.gz/download"
-source="https://sourceforge.net/projects/${pkgname}/files/${pkgver}/axTLS-${pkgver}.tar.gz/download?use_mirror=altushost-swe"
+source="https://sourceforge.net/projects/${pkgname}/files/${pkgver}/axTLS-${pkgver}.tar.gz/download"
 
 downloadpackage=true
 autounpack=true
