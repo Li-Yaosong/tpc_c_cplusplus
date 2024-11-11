@@ -38,10 +38,11 @@ prepare() {
 build() {
     cd $builddir
     # 禁用注释检测、未使用的命令参数检测
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
     ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
-        -DCMAKE_C_FLAGS="-Wno-error=documentation -Wno-error=unused-command-line-argument" \
-        -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L  > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+    -DCMAKE_C_FLAGS="-Wno-error=documentation -Wno-error=unused-command-line-argument" \
+    -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L  > $buildlog 2>&1
+    $MAKE -C $ARCH-build VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -49,7 +50,7 @@ build() {
 
 package() {
     cd $builddir
-    make -C $ARCH-build install VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+    $MAKE -C $ARCH-build install VERBOSE=1 >> $buildlog 2>&1
     cd $OLDPWD
 }
 
