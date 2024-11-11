@@ -72,8 +72,8 @@ build() {
     cd $builddir-$ARCH
     # 需要提前创建安装目录，否则会导致 --prefix 配置报错
     mkdir -p $LYCIUM_ROOT/usr/libmad/$ARCH/
-    ./configure "$@" cross_compiling=yes > build.log 2>&1
-    make -j4 >> build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" cross_compiling=yes > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     # 测试dome需要单独编译
     $CC minimad.c .libs/libmad.a -o minimad 
     ret=$?
@@ -84,7 +84,7 @@ build() {
 # 打包安装
 package() {
     cd $builddir-$ARCH
-    make install >> build.log 2>&1
+    $MAKE VERBOSE=1 install >> $buildlog 2>&1
     cd $OLDPWD
  
     if [ $ARCH == "armeabi-v7a" ]
