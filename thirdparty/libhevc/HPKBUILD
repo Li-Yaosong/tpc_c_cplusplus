@@ -55,7 +55,7 @@ prepare() {
 }
 
 build() {
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake \
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake \
     -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake \
     -DCMAKE_SYSTEM_PROCESSOR=${systemprocesser} \
     -DCMAKE_C_FLAGS="-DENABLE_NEON" \
