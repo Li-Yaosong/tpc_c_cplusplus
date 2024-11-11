@@ -17,14 +17,14 @@
 - 三方库目录结构
 
   ```shell
-  tpc_c_cplusplus/thirdparty/g3log-1.3   #三方库g3log-1.3的目录结构如下
+  tpc_c_cplusplus/thirdparty/g3log-1.3   #三方库g3log的目录结构如下
   ├── docs                              #三方库相关文档的文件夹
   ├── HPKBUILD                          #构建脚本
   ├── HPKCHECK                          #测试脚本
   ├── SHA512SUM                         #三方库校验文件
   ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
   ├── README_zh.md                      #三方库简介
-  ├── g3log-1.3_oh_pkg.patch            #用于g3log-1.3库编译的补丁
+  ├── g3log-1.3_oh_pkg.patch            #用于g3log库编译的补丁
   ```
 
 - 在lycium目录下编译三方库
@@ -33,7 +33,7 @@
 
   ```shell
   cd lycium
-  ./build.sh g3log-1.3
+  ./build.sh g3log
   ```
 
 - 三方库头文件及生成的库
@@ -41,14 +41,14 @@
   在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
 
   ```shell
-  g3log-1.3/arm64-v8a   g3log-1.3/armeabi-v7a
+  g3log/arm64-v8a   g3log/armeabi-v7a
   ```
 
 - [测试三方库](#测试三方库)
 
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件拷贝到该目录下，将编译生成的三方库以及依赖库全部（动态库名字带版本号和不带版本号的都需要）拷贝到工程的libs目录下，如下图所示：
+- 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件和库文件拷贝到该目录下，将编译生成的三方库（动态库名字带版本号和不带版本号的都需要）拷贝到工程的libs目录下，如下图所示：
   &nbsp;
 
   &nbsp;![thirdparty_install_dir](pic/g3log_install_dir.png)

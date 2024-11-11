@@ -14,7 +14,7 @@
 # Contributor: wangjialun <2271411@stu.neu.edu.cn>, zhangqian<2371418@stu.neu.edu.cn>, wangyihao<2471389@stu.neu.edu.cn>, wangying<wangying@swc.neu.edu.cn>
 # Maintainer: wangyihao<2471389@stu.neu.edu.cn>, wangjialun<2271411@stu.neu.edu.cn>, zhangqian<2371418@stu.neu.edu.cn>, wangying<wangying@swc.neu.edu.cn>
 
-pkgname=g3log-1.3
+pkgname=g3log
 pkgver=1.3
 pkgrel=0
 pkgdesc="G3log is an asynchronous, "crash safe", logger that is easy to use with default logging sinks."
@@ -37,7 +37,7 @@ prepare() {
     if $patchflag
     then
         cd $builddir
-	#解压gtest压缩包到原目录，供激活测试后用；激活ctest批量测试
+	#解压gtest压缩包到原目录，供激活测试后用；添加测试到ctest
         patch -p1 < `pwd`/../g3log-1.3_oh_pkg.patch
         # patch只需要打一次,关闭打patch
         patchflag=false
