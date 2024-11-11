@@ -119,8 +119,8 @@ build() {
         -DLITE_BUILD_EXTRA=ON \
         -DWITH_COVERAGE=ON \
         -DLITE_WITH_LIGHT_WEIGHT_FRAMEWORK=ON \
-        -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make -j32 -C $ARCH-build VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+        -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > $buildlog 2>&1
+    $MAKE -C $ARCH-build VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -129,7 +129,7 @@ build() {
 package() {
     cd $builddir
     # 不支持make install, 参考$builddir/lite/tools/build_android.sh 的做法
-    make -C $ARCH-build publish_inference VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
+    $MAKE -C $ARCH-build publish_inference VERBOSE=1 >> $buildlog 2>&1
     mkdir -p $LYCIUM_ROOT/usr/$pkgname/$ARCH
     cp -rf $ARCH-build/inference_lite_lib.armlinux.${arch}/cxx/* $LYCIUM_ROOT/usr/$pkgname/$ARCH/
     #cp -rf $ARCH-build/lite/api/*.so $ARCH-build/lite/api/*.a $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib
