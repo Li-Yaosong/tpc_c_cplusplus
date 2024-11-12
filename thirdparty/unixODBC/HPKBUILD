@@ -38,8 +38,10 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    ../configure "$@" --host=$host --enable-static --disable-shared > `pwd`/build.log 2>&1
-    make -j4 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
+    ../configure "$@" --host=$host --enable-static \
+    --disable-shared > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -47,7 +49,7 @@ build() {
 
 package() {
     cd $builddir/$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE install >> $buildlog 2>&1
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
     then
@@ -71,6 +73,9 @@ check() {
     sed -i '/.*all-am: Makefile $(LTLIBRARIES)/c\all-am: #Makefile $(LTLIBRARIES)' DriverManager/Makefile
     sed -i '/.*all-am: Makefile $(PROGRAMS)/c\all-am: #Makefile $(PROGRAMS)' exe/Makefile
     sed -i '/.*all-am: Makefile $(LTLIBRARIES)/c\all-am: #Makefile $(LTLIBRARIES)' cur/Makefile
+    # 解决因/bin/bash和/usr/bin/sed No such file or directory导致的测试失败问题
+    sed -i "s#/bin/bash#bash#g" `grep -rn '/bin/bash' | awk -F ':' '{print $1}' | sort -u`
+    sed -i "s#/usr/bin/sed#sed#g" `grep -rn '/usr/bin/sed' | awk -F ':' '{print $1}' | sort -u`
     cd $OLDPWD
     echo "The test must be on an OpenHarmony device!"
     # real test CMD
