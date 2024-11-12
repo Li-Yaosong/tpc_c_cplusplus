@@ -38,7 +38,7 @@ cc=
 prepare() {
     apt-get update  
     apt-get install lzip
-    tar -xvf $packagename > $buildlog 2>&1
+    tar -xvf $packagename > $publicbuildlog 2>&1
     cp -rf $builddir $builddir-$ARCH-build
     cd $builddir-$ARCH-build
     if [ $ARCH == "arm64-v8a" ]
@@ -56,7 +56,7 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    $MAKE CC="${cc}" >> $buildlog 2>&1
+    $MAKE CC="${cc}" > $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -64,7 +64,7 @@ build() {
 
 package() {
     cd $builddir-$ARCH-build
-    $MAKE install PREFIX=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> `pwd`/build.log 2>&1
+    $MAKE install PREFIX=$LYCIUM_ROOT/usr/$pkgname/$ARCH >> $buildlog 2>&1
     cd $OLDPWD
 }
 
