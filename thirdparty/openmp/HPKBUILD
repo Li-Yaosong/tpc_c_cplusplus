@@ -32,7 +32,8 @@ prepare() {
 
 build() {
     cd $builddir
-    cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
+    # LIBOMP_USE_VERSION_SYMBOLS 打开后需要添加-DLIBOMP_LDFLAGS="-Wl,--version-script=`pwd`/runtime/src/exports_so.txt" 才可编译通过
+    cmake "$@" -DLIBOMP_USE_VERSION_SYMBOLS=OFF -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
     make -j4 -C $ARCH-build VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
