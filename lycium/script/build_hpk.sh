@@ -253,9 +253,8 @@ cleanhpk() {
                 rm -f ${PWD}/$packagename
             fi
         fi
-        
     fi
-    
+
     rm -rf *-lycium_build.log
 }
 
