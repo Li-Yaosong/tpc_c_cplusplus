@@ -20,6 +20,7 @@ elif [ "$osname" == "Darwi" ] # Darwin
 then
     echo "Build OS Darwin"
     LYCIUM_ROOT=$(cd $(dirname ${BASH_SOURCE[0]}); pwd)
+    buildcheckflag=false
 else
     echo "System cannot recognize, exiting"
     exit 0
@@ -60,10 +61,28 @@ do
 done
 
 hpksdir="../thirdparty/" # 所有 hpk 项目存放的目录
+communitydir="../community"
+
+preparetoolchain() {
+    # 检查工具链，不存在则解压工具链
+    if [ ! -f $OHOS_SDK/native/llvm/bin/aarch64-linux-ohos-clang ] ||
+       [ ! -f $OHOS_SDK/native/llvm/bin/aarch64-linux-ohos-clang++ ] ||
+       [ ! -f $OHOS_SDK/native/llvm/bin/arm-linux-ohos-clang ] ||
+       [ ! -f $OHOS_SDK/native/llvm/bin/arm-linux-ohos-clang++ ] ||
+       [ ! -f $OHOS_SDK/native/llvm/bin/aarch64-linux-ohos-clang.cmd ] ||
+       [ ! -f $OHOS_SDK/native/llvm/bin/aarch64-linux-ohos-clang++.cmd ] ||
+       [ ! -f $OHOS_SDK/native/llvm/bin/arm-linux-ohos-clang.cmd ] ||
+       [ ! -f $OHOS_SDK/native/llvm/bin/arm-linux-ohos-clang++.cmd ]
+    then
+        cd ${LYCIUM_ROOT}/Buildtools/
+        tar -zxf toolchain.tar.gz -C $OHOS_SDK/native/llvm/bin/
+        cd ${OLDPWD}
+    fi
+}
 
 checkbuildenv() {
-    cmdlist=("gcc" "cmake" "make" "pkg-config" "autoconf" "autoreconf" "automake" \
-             "patch" "unzip" "tar" "git" "ninja" "curl" "sha512sum")
+    cmdlist=("gcc" "g++" "cmake" "make" "pkg-config" "autoconf" "autoreconf" "automake" \
+             "patch" "unzip" "tar" "git" "ninja" "curl" "sha512sum" "wget")
     for cmd in ${cmdlist[@]}
     do
         which $cmd >/dev/null 2>&1
@@ -85,6 +104,7 @@ checkbuildenv() {
 hpkPaths=()
 donelist=()
 donelibs=()
+communitylibs=()
 readdonelibs() {
     if [ -f $1 ]
     then
@@ -112,6 +132,16 @@ readdonelibs() {
     donelist=(${donelibs[@]})
 }
 
+collectcommunitylibs() {
+    for file in $(ls $LYCIUM_ROOT/$1)
+    do
+        if [ -d $1/$file ]
+        then
+            communitylibs[${#communitylibs[@]}]=$LYCIUM_ROOT/$1/$file
+        fi
+    done
+}
+
 makelibsdir() {
     jobs=($*)
     for job in ${jobs[@]}
@@ -119,7 +149,8 @@ makelibsdir() {
         doneflags=false
         for donelib in ${donelibs[@]}
         do
-            if [ $donelib == $job ]
+            libname=${job##*/} # 截取库名
+            if [ $donelib == $libname ]
             then
                 doneflags=true
             fi
@@ -128,23 +159,36 @@ makelibsdir() {
         then
             continue
         fi
-        tmppath=$LYCIUM_ROOT/$hpksdir/$job
-        if [[ -d $tmppath && -f $tmppath/HPKBUILD ]]
+        if [[ -d $job && -f $job/HPKBUILD ]]
         then
-            hpkPaths[${#hpkPaths[@]}]=$tmppath
+            hpkPaths[${#hpkPaths[@]}]=$job
         fi
     done
 }
 
-# 找到main目录下的所有目录
-# 参数1 为项目根路径
-findmainhpkdir() {
+findarglibsdir() {
+    libs=($*)
     tmplibs=()
-    for file in $(ls $1)
+    for lib in ${libs[@]}
+    do
+        tmplib=$LYCIUM_ROOT/$hpksdir/$lib
+        if [[ -d $tmplib && -f $tmplib/HPKBUILD ]]
+        then
+            tmplibs[${#tmplibs[@]}]=$tmplib
+        fi
+    done
+    makelibsdir ${tmplibs[@]}
+}
+
+# 找到 $1 目录下的所有目录
+# 参数1 为项目根路径
+findhpkdir() {
+    tmplibs=()
+    for file in $(ls $LYCIUM_ROOT/$1)
     do
         if [ -d $1/$file ]
         then
-            tmplibs[${#tmplibs[@]}]=$file
+            tmplibs[${#tmplibs[@]}]=$LYCIUM_ROOT/$1/$file
         fi
     done
     makelibsdir ${tmplibs[@]}
@@ -218,14 +262,23 @@ buildhpk() {
                     # echo "添加依赖"
                     for deppkg in `cat ${LYCIUM_DEPEND_PKGNAMES}`
                     do
-                        # echo "Line contents are : $deppkg "
+                        # find in hpksdir
                         tmppath=$LYCIUM_ROOT/$hpksdir/$deppkg
                         if [[ -d $tmppath  && -f $tmppath/HPKBUILD ]]
+                        then
+                            deppath=$tmppath
+                        else
+                            # find in communitydir
+                            deppath=$LYCIUM_ROOT/$communitydir/$deppkg
+                        fi
+
+                        # 如果 deppath 合法，即将其添加到编译列表
+                        if [[ -d $deppath  && -f $deppath/HPKBUILD ]]
                         then
                             doneflag=false
                             for libname in ${donelist[@]} # 不在已完成的列表中
                             do
-                                if [ $tmppath == $LYCIUM_ROOT/$hpksdir/$libname ]
+                                if [ $deppath == $LYCIUM_ROOT/$hpksdir/$libname ]
                                 then
                                     doneflag=true
                                 fi
@@ -233,7 +286,7 @@ buildhpk() {
                             nextflag=false
                             for libname in ${nextroundlist[@]} # 不在待编译的列表中
                             do
-                                if [ $tmppath == $libname ]
+                                if [ $deppath == $libname ]
                                 then
                                     nextflag=true
                                 fi
@@ -241,7 +294,7 @@ buildhpk() {
                             notdoneflag=false
                             for libname in ${notdonelist[@]} # 不在未完成的列表中
                             do
-                                if [ $tmppath == $libname ]
+                                if [ $deppath == $libname ]
                                 then
                                     notdoneflag=true
                                 fi
@@ -249,16 +302,16 @@ buildhpk() {
                             buildfalseflag=false
                             for libname in ${buildfalselist[@]} # 不在编译失败的列表中
                             do
-                                if [ $tmppath == $libname ]
+                                if [ $deppath == $libname ]
                                 then
                                     buildfalseflag=true
                                 fi
                             done
                             if ! $doneflag && ! $nextflag && ! $notdoneflag && ! $buildfalseflag # 添加到下一轮的编译中
                             then
-                                nextroundlist[${#nextroundlist[@]}]=$tmppath
-                                hpkPaths[${#hpkPaths[@]}]=$tmppath
-                                prepareshell $tmppath
+                                nextroundlist[${#nextroundlist[@]}]=$deppath
+                                hpkPaths[${#hpkPaths[@]}]=$deppath
+                                prepareshell $deppath
                             fi
                             
                         fi
@@ -277,7 +330,7 @@ buildhpk() {
                 done
                 if ! $roundflag
                 then
-                    nextroundlist[${#nextroundlist[@]}]=${notdonelist[$i]}
+                    nextroundlist[${#nextroundlist[@]}]=${notdonelist[$i]} # 将自己放在依赖库最后（如果有deps）
                 fi
                 echo nextroundlist:${nextroundlist[*]} > $LYCIUM_ROOT/lycium_build_intl.log
             else
@@ -313,37 +366,31 @@ buildhpk() {
     done
 }
 
-copytools() {
-    if [ -e $OHOS_SDK/native/llvm/bin/aarch64-linux-ohos-clang ]
-    then
-        return 0
-    else
-        tar xvf Buildtools/toolchain.tar.gz
-        cp -rfa toolchain/* $OHOS_SDK/native/llvm/bin
-        rm -rf toolchain
-    fi
-}
-
 main() {
-    copytools
-
+    # 准备编译工具链
+    preparetoolchain
+    # 检查编译环境
     checkbuildenv
-
+    # 读取编译记录
     readdonelibs "$LYCIUM_ROOT/usr/hpk_build.csv"
-
-    if [ $# -ne 0 ]
+    # 搜集 communitydir 目录库
+    collectcommunitylibs $communitydir
+    # 搜集libs
+    if [ $# -ne 0 ] # 参数个数不为 0
     then
-        makelibsdir $*
+        # 搜集指定的libs
+        findarglibsdir $*
     else
-        findmainhpkdir $LYCIUM_ROOT/$hpksdir
-        # exit 2
+        # 搜集所有可编译的库
+        findhpkdir $hpksdir
     fi
-
+    # 准备脚本软链接
     prepareshell ${hpkPaths[@]}
+    # 编译
     buildhpk
-
+    # 清理
     cleanhpkdir
-    unset LYCIUM_BUILD_OS LYCIUM_ROOT LYCIUM_BUILD_CHECK CLANG_VERSION
+    unset LYCIUM_BUILD_OS LYCIUM_ROOT CLANG_VERSION
 }
 
 main $*

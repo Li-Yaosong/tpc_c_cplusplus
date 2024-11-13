@@ -22,7 +22,8 @@ download() {
     then
         echo ${PWD}/$2"，存在"
     else
-        curl -f -L -k -- "$1" > ${PWD}/$2
+        echo "Downloading "$2
+        wget "$1" -O ${PWD}/$2 -o download.log
         return $?
     fi
 }
@@ -65,12 +66,7 @@ source ${PWD}/HPKBUILD
 checksum() {
     sha512sum -c ${PWD}/$1
     ret=$?
-    if [ $ret -ne 0 ]
-    then
-        echo "$pkg2name SHA512SUM 校验失败, 请确认 SHA512SUM 无误后, 重新编译."
-        rm -rf $packagename
-        exit $ret
-    fi
+    return $ret
 }
 
 newdeps=()
@@ -112,7 +108,7 @@ recordbuildlibs() {
 buildargs=
 pkgconfigpath=
 cmakedependpath() { # 参数1为cpu type
-    buildargs="-LH -DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_RPATH=ON -DCMAKE_SKIP_INSTALL_RPATH=ON -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$LYCIUM_ROOT/usr/$pkgname/$1 -G \"Unix Makefiles\" -DOHOS_ARCH=$1 "
+    buildargs="-LH -DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_RPATH=ON -DCMAKE_SKIP_INSTALL_RPATH=ON -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX=$LYCIUM_ROOT/usr/$pkgname/$1/ -G \"Unix Makefiles\" -DOHOS_ARCH=$1 "
     pkgconfigpath=""
     if [ ${#depends[@]} -ne 0 ] 
     then
@@ -137,7 +133,7 @@ cmakedependpath() { # 参数1为cpu type
 
 configuredependpath() {
     pkgconfigpath=""
-    buildargs="--prefix=$LYCIUM_ROOT/usr/$pkgname/$1"
+    buildargs="--prefix=$LYCIUM_ROOT/usr/$pkgname/$1/"
     if [ ${#depends[@]} -ne 0 ] 
     then
         for depend in ${depends[@]}
@@ -185,13 +181,20 @@ builpackage() {
         done
         exit 101
     fi
-    echo "Build $pkgname $pkgver start!"
+    echo "Start building $pkgname $pkgver!"
     if [ ! $downloadpackage ] || [ $downloadpackage != false ]
     then
         sure download $source $packagename
         if [ -f "SHA512SUM" ]
         then
-            sure checksum SHA512SUM
+            # 判断新下载的源码压缩包正确性。如果失败退出编译，不删除，下载的压缩包
+            checksum SHA512SUM
+            ret=$?
+            if [ $ret -ne 0 ]
+            then
+                echo "SHA512SUM 校验失败, 请确认 SHA512SUM 无误后, 重新编译"
+                exit $ret
+            fi
         fi
     fi
     if [ ! $autounpack ] || [ $autounpack != false ]
@@ -203,7 +206,7 @@ builpackage() {
     for arch in ${archs[@]}
     do
         # TODO archs1 编译失败，继续编译archs2
-        echo "Compile OpenHarmony $arch $pkgname $pkgver libs..." 
+        echo "Compileing OpenHarmony $arch $pkgname $pkgver libs..." 
         ARCH=$arch
         buildlog=$PKGBUILD_ROOT/$pkgname-$pkgver-$ARCH"-lycium_build.log"
         publicbuildlog=$PKGBUILD_ROOT/$pkgname"-public-lycium_build.log"
@@ -219,9 +222,12 @@ builpackage() {
         fi
         sure build $buildargs
         sure package
-        if $LYCIUM_BUILD_CHECK
+        if [ -n "${LYCIUM_BUILD_CHECK}" ]
         then
-            sure check
+            if [ ${LYCIUM_BUILD_CHECK} == "true" ]
+            then
+                sure check
+            fi
         fi
         f=`type -t recoverpkgbuildenv`
         if [ "x$f" = "xfunction" ]
@@ -235,6 +241,21 @@ builpackage() {
 
 cleanhpk() {
     sure cleanbuild
+    # 提前校验已存在的压缩包, 非法则清理. 待后续新下载
+    if [ -s ${PWD}/$packagename ]
+    then
+        if [ -f "SHA512SUM" ]
+        then
+            checksum SHA512SUM
+            ret=$?
+            if [ $ret -ne 0 ]
+            then
+                rm -f ${PWD}/$packagename
+            fi
+        fi
+        
+    fi
+    
     rm -rf *-lycium_build.log
 }
 
