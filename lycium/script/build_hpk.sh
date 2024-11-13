@@ -244,12 +244,16 @@ cleanhpk() {
     # 提前校验已存在的压缩包, 非法则清理. 待后续新下载
     if [ -s ${PWD}/$packagename ]
     then
-        checksum SHA512SUM
-        ret=$?
-        if [ $ret -ne 0 ]
+        if [ -f "SHA512SUM" ]
         then
-            rm -f ${PWD}/$packagename
+            checksum SHA512SUM
+            ret=$?
+            if [ $ret -ne 0 ]
+            then
+                rm -f ${PWD}/$packagename
+            fi
         fi
+        
     fi
     
     rm -rf *-lycium_build.log
