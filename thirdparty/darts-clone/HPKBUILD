@@ -23,19 +23,35 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD 2-clause license")
 depends=()
 makedepends=("automake" "autoconf")
+source="https://gitee.com/lycium_pkg_mirror/$pkgname.git"
+downloadpackage=false
+autounpack=false
+buildtools=configure
+builddir=${pkgname}-master
 
 commitid=e40ce4627526985a7767444b6ed6893ab6ff8983
-source="https://github.com/s-yata/darts-clone/archive/${commitid}.zip"
-downloadpackage=true
-autounpack=true
-buildtools=configure
-
-builddir=${pkgname}-${commitid}
-packagename=$builddir.zip
-
+cloneflag=true
 source envset.sh
 host=
 prepare() {
+    if [ $cloneflag == true ]
+    then
+        mkdir $builddir
+        git clone -b $pkgver $source $builddir > $publicbuildlog 2>&1 
+        if [ $? != 0 ]
+        then
+            return -1
+        fi
+        cd $builddir
+        git reset --hard $commitid > $publicbuildlog 2>&1 
+        if [ $? != 0 ]
+        then
+            return -1
+        fi
+        cd $OLDPWD
+        cloneflag=false
+    fi
+
     cp -rf $builddir $pkgname-$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]
     then
@@ -72,8 +88,8 @@ prepare() {
 
 build() {
     cd $pkgname-$ARCH-build  
-    ./configure "$@" --host=$host > `pwd`/build.log 2>&1
-    ${MAKE} VERBOSE=1 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" --host=$host > $buildlog 2>&1
+    ${MAKE} VERBOSE=1 >> $buildlog 2>&1
     # 对最关键一步的退出码进行判断
     ret=$?
     cd $OLDPWD
@@ -82,7 +98,7 @@ build() {
 
 package() {
     cd $pkgname-$ARCH-build
-    ${MAKE} install >> `pwd`/build.log 2>&1
+    ${MAKE} VERBOSE=1 install >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
