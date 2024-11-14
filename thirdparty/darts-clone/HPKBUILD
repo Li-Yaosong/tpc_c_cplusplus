@@ -28,7 +28,6 @@ downloadpackage=false
 autounpack=false
 buildtools=configure
 builddir=${pkgname}-master
-packagename=$builddir.zip
 
 commitid=e40ce4627526985a7767444b6ed6893ab6ff8983
 cloneflag=true
@@ -49,7 +48,7 @@ prepare() {
         then
             return -1
         fi
-        cd ..
+        cd $OLDPWD
         cloneflag=false
     fi
 
