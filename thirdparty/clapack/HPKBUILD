@@ -55,9 +55,10 @@ prepare() {
     then
         mkdir -p $builddir/host-build
         cd $builddir
-        cmake -G "Unix Makefiles" -DCMAKE_C_FLAGS=-Wno-format-security \
+        PKG_CONFIG_LIBDIR="${pkgconfigpath}" cmake -G "Unix Makefiles" \
+	    -DCMAKE_C_FLAGS=-Wno-format-security \
             -Bhost-build -S./ -L > $publicbuildlog 2>&1
-        make arithchk -j4 -C host-build VERBOSE=1 >> $publicbuildlog 2>&1
+        $MAKE arithchk -C host-build VERBOSE=1 >> $publicbuildlog 2>&1
         ret=$?
         cd $OLDPWD
         if [ $ret -ne 0 ]
@@ -79,7 +80,7 @@ build() {
     # 由于是交叉编译，需要使用arithchk生成头文件arith.h才能继续编译
     originpath=$PATH
     export PATH=`pwd`/host-build/F2CLIBS/libf2c/:$PATH
-    make -j4 -C $ARCH-build >> $buildlog 2>&1
+    $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     export PATH=$originpath
     cd $OLDPWD
