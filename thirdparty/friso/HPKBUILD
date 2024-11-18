@@ -23,7 +23,8 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("Apache License 2.0")
 depends=()
 makedepends=()
-source="https://github.com/lionsoul2014/${pkgname}/archive/refs/tags/${pkgver}.tar.gz"
+#source="https://github.com/lionsoul2014/${pkgname}/archive/refs/tags/${pkgver}.tar.gz"
+source="https://gitee.com/lycium_pkg_mirror/${pkgname}/repository/archive/${pkgver}.tar.gz"
 autounpack=true
 downloadpackage=true
 buildtools="make"
@@ -34,7 +35,8 @@ cc=
 ar=
 
 prepare() {
-    cp -arf $builddir $builddir-$ARCH-build
+    #cp -arf $builddir $builddir-$ARCH-build
+    cp -arf ${pkgname}-v${pkgver:1} $builddir-$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]
     then
         cc=${OHOS_SDK}/native/llvm/bin/arm-linux-ohos-clang
@@ -49,7 +51,8 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build/src
-    make CC=$cc AR=$ar >> $buildlog 2>&1
+    #$MAKE VERBOSE=1 CC=$cc AR=$ar >> $buildlog 2>&1 #多线程编译会报错
+    make VERBOSE=1 CC=$cc AR=$ar >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
