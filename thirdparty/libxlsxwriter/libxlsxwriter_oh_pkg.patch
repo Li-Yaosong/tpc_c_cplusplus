@@ -1,0 +1,12 @@
+diff -Nura libxlsxwriter-RELEASE_1.1.5/CMakeLists.txt patch/CMakeLists.txt
+--- libxlsxwriter-RELEASE_1.1.5/CMakeLists.txt	2022-12-30 07:25:10.000000000 -0800
++++ patch/CMakeLists.txt	2024-11-11 23:32:31.799840842 -0800
+@@ -219,7 +219,7 @@
+ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+ 
+ # ZLIB
+-find_package(ZLIB REQUIRED "1.0")
++find_package(ZLIB REQUIRED)
+ list(APPEND LXW_PRIVATE_INCLUDE_DIRS ${ZLIB_INCLUDE_DIRS})
+ message("zlib version: " ${ZLIB_VERSION})
+ 
