@@ -35,14 +35,16 @@ prepare() {
         host=aarch64-linux
     fi
     cd $pkgname-$ARCH-build/$builddir
-    ./bootstrap > `pwd`/build.log 2>&1
+    ./bootstrap > $buildlog 2>&1
     cd $OLDPWD
 }
 
 build() {
     cd $pkgname-$ARCH-build/$builddir
-    ./configure "$@" --host=$host --enable-debug --enable-automated --enable-basic --enable-console --enable-examples --enable-test >> `pwd`/build.log 2>&1
-    make -j4 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" --host=$host --enable-debug \
+    	--enable-automated --enable-basic --enable-console 
+	--enable-examples --enable-test >> $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -50,7 +52,7 @@ build() {
 
 package() {
     cd $pkgname-$ARCH-build/$builddir
-    make install >> `pwd`/build.log 2>&1
+    $MAKE VERBOSE=1 install >> $buildlog 2>&1
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
     then
