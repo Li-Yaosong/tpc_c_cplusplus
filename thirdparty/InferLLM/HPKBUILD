@@ -36,7 +36,8 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -B$ARCH-build -S./ > $buildlog 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    -B$ARCH-build -S./ > $buildlog 2>&1
     $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1 # 此处使用$MAKE，在lycium/build.sh中定义，变量值为make -j32。日志路径使用变量build.log
     ret=$?
     cd $OLDPWD
