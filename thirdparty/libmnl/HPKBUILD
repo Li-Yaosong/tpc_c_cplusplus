@@ -50,8 +50,8 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    ./../configure "$@" --host=$host > `pwd`/build.log 2>&1
-    make -j4 V=1 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./../configure "$@" --host=$host > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -59,7 +59,7 @@ build() {
 
 package() {
     cd $builddir/$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE VERBOSE=1 install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
