@@ -11,7 +11,7 @@ depends=()
 makedepends=()
 
 #source="https://github.com/mstorsjo/$pkgname/archive/refs/tags/$pkgver.tar.gz"github链接挂了
-source="https://gitee.com/lycium_pkg_mirror/fdk-aac/repository/archive/v2.0.2.tar.gz"
+source="https://gitee.com/lycium_pkg_mirror/fdk-aac/repository/archive/$pkgver.tar.gz"
 autounpack=true
 downloadpackage=true
 #builddir=$pkgname-${pkgver:1}
