@@ -1,0 +1,76 @@
+# Contributor: Jeff Han <hanjinfei@foxmail.com>
+# Maintainer: Jeff Han <hanjinfei@foxmail.com>
+pkgname=openssl_1_0_2u
+pkgver=OpenSSL_1_0_2u
+pkgrel=0
+pkgdesc="TLS/SSL and crypto library"
+url="https://www.openssl.org/"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("Apache License 2.0")
+depends=()
+makedepends=()
+
+source="https://github.com/openssl/${pkgname:0:7}/archive/refs/tags/$pkgver.tar.gz"
+
+autounpack=true
+downloadpackage=true
+buildtools="configure"
+
+builddir=${pkgname:0:7}-${pkgver}
+packagename=$builddir.tar.gz
+
+source envset.sh
+
+host=
+prepare() {
+    cp -rf $builddir $builddir-$ARCH-build
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        setarm32ENV
+        host=linux-generic32
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        setarm64ENV
+        host=linux-aarch64
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
+}
+
+#参数1
+build() {
+    cd $builddir-$ARCH-build
+    PKG_CONFIG_LIBDIR=$pkgconfigpath ./Configure "$@" -fPIC $host > $buildlog 2>&1
+    $MAKE >> $buildlog 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir-$ARCH-build
+    $MAKE install >> $buildlog 2>&1
+    cd $OLDPWD
+}
+
+check() {
+    unset host
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        unsetarm32ENV
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        unsetarm64ENV
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
+    echo "The test must be on an OpenHarmony device!"
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir $builddir-*-build #${PWD}/$packagename
+}
+
