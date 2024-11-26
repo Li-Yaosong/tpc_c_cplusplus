@@ -22,20 +22,20 @@ url="https://libexif.github.io/"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("LGPL-2.1-only")
 depends=()
+#要安装bzip2才能编译过
 makedepends=()
-source="https://github.com/libexif/$pkgname/releases/download/$pkgver/$pkgname-${pkgver:1}.tar.bz2"
-
+#source="https://github.com/libexif/$pkgname/releases/download/$pkgver/$pkgname-${pkgver:1}.tar.bz2"github链接挂了
+source="https://gitee.com/lycium_pkg_mirror/libexif/repository/archive/$pkgver.tar.gz"
 autounpack=true
 downloadpackage=true
 buildtools="configure"
-
 builddir=$pkgname-${pkgver:1}
-packagename=$builddir.tar.bz2
+packagename=$builddir.tar.gz
 
 source envset.sh
 host=
 prepare() {
-    cp -arf $builddir $builddir-$ARCH-build
+    cp -arf $pkgname-v${pkgver:1} $builddir-$ARCH-build    
     if [ $ARCH == "armeabi-v7a" ]
     then
         setarm32ENV
@@ -52,8 +52,9 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    ./configure "$@" --host=$host > $buildlog 2>&1
-    $MAKE V=1 >> $buildlog 2>&1
+    autoreconf -i
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" --host=$host > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -61,7 +62,7 @@ build() {
 
 package() {
     cd $builddir-$ARCH-build
-    $MAKE install >> $buildlog 2>&1
+    $MAKE VERBOSE=1 install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
