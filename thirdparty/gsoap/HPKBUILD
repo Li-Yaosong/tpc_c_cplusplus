@@ -45,7 +45,7 @@ prepare() {
     then
         #编译openssl
         mkdir -p linux/openssl
-        cp -rf ${LYCIUM_ROOT}/../thirdparty/openssl_1_1_1w/$opensslpackagename.zip .
+        cp -rf ${LYCIUM_ROOT}/../community/openssl_1_1_1w/$opensslpackagename.zip .
         unzip $opensslpackagename.zip > /dev/null 2>&1
         cd $opensslpackagename
         mkdir build && cd build
@@ -60,7 +60,7 @@ prepare() {
 
         #编译zlib
         mkdir -p linux/zlib
-        cp -rf ${LYCIUM_ROOT}/../thirdparty/zlib_1_3_1/$zlibpackagename.zip .
+        cp -rf ${LYCIUM_ROOT}/../community/zlib_1_3_1/$zlibpackagename.zip .
         unzip $zlibpackagename.zip > /dev/null 2>&1
         cd $zlibpackagename
         mkdir build && cd build
