@@ -65,7 +65,7 @@ prepare() {
 
 build() {
     cd $builddir 
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DGTEST_SOURCE_DIR="$LYCIUM_ROOT/../thirdparty/googletest_1.11.0/googletest-release-1.11.0" -DCMAKE_CXX_FLAGS="-Wno-unused-command-line-argument -Wno-deprecated-declarations -Wno-unknown-warning-option" -B${ARCH}-build -S./ > $buildlog 2>&1   
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DGTEST_SOURCE_DIR="$LYCIUM_ROOT/../community/googletest_1.11.0/googletest-release-1.11.0" -DCMAKE_CXX_FLAGS="-Wno-unused-command-line-argument -Wno-deprecated-declarations -Wno-unknown-warning-option" -B${ARCH}-build -S./ > $buildlog 2>&1   
     $MAKE -C $ARCH-build
     ret=$?
     cd $OLDPWD
