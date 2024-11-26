@@ -46,7 +46,7 @@ prepare() {
 
     ln -s ${LYCIUM_ROOT}/usr/avrocpp/${ARCH}/include/* $builddir/$ARCH-build/irods-externals/avro1.11.0-3/include
     ln -s ${LYCIUM_ROOT}/usr/avrocpp/${ARCH}/lib/* $builddir/$ARCH-build/irods-externals/avro1.11.0-3/lib
-    ln -s ${LYCIUM_ROOT}/../thirdparty/avrocpp/avro-release-1.11.1/host-build/avrogencpp $builddir/$ARCH-build/irods-externals/avro1.11.0-3/bin/avrogencpp
+    ln -s ${LYCIUM_ROOT}/../community/avrocpp/avro-release-1.11.1/host-build/avrogencpp $builddir/$ARCH-build/irods-externals/avro1.11.0-3/bin/avrogencpp
     ln -s ${LYCIUM_ROOT}/usr/boost/${ARCH}/* $builddir/$ARCH-build/irods-externals/boost1.81.0-1
     ln -s ${LYCIUM_ROOT}/usr/Catch2/${ARCH}/* $builddir/$ARCH-build/irods-externals/catch22.13.8-0
     ln -s ${LYCIUM_ROOT}/usr/cppzmq/${ARCH}/* $builddir/$ARCH-build/irods-externals/cppzmq4.8.1-1
@@ -56,8 +56,8 @@ prepare() {
     ln -s ${LYCIUM_ROOT}/usr/spdlog/${ARCH}/* $builddir/$ARCH-build/irods-externals/spdlog1.9.2-2
     ln -s ${LYCIUM_ROOT}/usr/nanodbc/${ARCH}/* $builddir/$ARCH-build/irods-externals/nanodbc2.13.0-2
     ln -s ${LYCIUM_ROOT}/usr/libarchive/${ARCH}/* $builddir/$ARCH-build/irods-externals/libarchive3.5.2-0
-    ln -s ${LYCIUM_ROOT}/../thirdparty/avrocpp/avro-release-1.11.1/lang/c++/impl/json/*  $builddir/$ARCH-build/irods-externals/impl/impl/json/
-    ln -s ${LYCIUM_ROOT}/../thirdparty/avrocpp/avro-release-1.11.1/lang/c++/api/*  $builddir/$ARCH-build/irods-externals/impl/api/
+    ln -s ${LYCIUM_ROOT}/../community/avrocpp/avro-release-1.11.1/lang/c++/impl/json/*  $builddir/$ARCH-build/irods-externals/impl/impl/json/
+    ln -s ${LYCIUM_ROOT}/../community/avrocpp/avro-release-1.11.1/lang/c++/api/*  $builddir/$ARCH-build/irods-externals/impl/api/
 
     if $onceflag
     then
@@ -82,7 +82,7 @@ build() {
         -DOHOS_ARCH=$ARCH -DIRODS_BUILD_AGAINST_LIBCXX=OFF \
         -DIRODS_DISABLE_COMPILER_OPTIMIZATIONS=ON -DIRODS_UNIT_TESTS_BUILD=ON \
         -Dfmt_DIR=${LYCIUM_ROOT}/usr/linux-pam/$ARCH/include \
-        -DCMAKE_CXX_FLAGS="-I${LYCIUM_ROOT}/../thirdparty/linux-pam/linux-pam-8562cb1b951e7bd807af6b43d85c71cedd7b10d7-${ARCH}-build/libpam/include \
+        -DCMAKE_CXX_FLAGS="-I${LYCIUM_ROOT}/../community/linux-pam/linux-pam-8562cb1b951e7bd807af6b43d85c71cedd7b10d7-${ARCH}-build/libpam/include \
         -I${LYCIUM_ROOT}/usr/openssl_1_1_1w/$ARCH/include \
         -I${LYCIUM_ROOT}/usr/curl_8_9_0/$ARCH/include \
         -I${LYCIUM_ROOT}/usr/unixODBC/$ARCH/include \
