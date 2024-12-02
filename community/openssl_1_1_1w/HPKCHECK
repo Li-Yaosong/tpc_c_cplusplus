@@ -19,6 +19,7 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname:0:7}/${pkgname:0:7}_${ARCH}_${OHOS_S
 openharmonycheck() {
     res=0
     cd ${builddir}/${ARCH}-build
+    sed -i "s#usr/bin/perl#perl#g" `grep -rn 'usr/bin/perl'|awk -F':'{print $1}'|sort -u`
     make test > ${logfile} 2>&1
     res=$?
     cd $OLDPWD
