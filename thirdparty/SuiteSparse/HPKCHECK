@@ -18,6 +18,8 @@ source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
 checkprepare() {
+    ln -s /data/python3.8.10/bin/python /data/CIusr/bin/python3.10
+    export LD_LIBRARY_PATH=/data/python3.8.10/lib:$LD_LIBRARY_PATH
     export LD_LIBRARY_PATH=`pwd`/$builddir/$ARCH-build/LAGraph/experimental/test:`pwd`/$builddir/$ARCH-build/LAGraph/src/test:$LD_LIBRARY_PATH
 }
 
