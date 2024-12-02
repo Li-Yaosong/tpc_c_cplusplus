@@ -10,11 +10,11 @@ license=("LicenseRef-scancode-fraunhofer-fdk-aac-codec")
 depends=()
 makedepends=()
 
-source="https://github.com/mstorsjo/$pkgname/archive/refs/tags/$pkgver.tar.gz"
-
+#source="https://github.com/mstorsjo/$pkgname/archive/refs/tags/$pkgver.tar.gz"github链接挂了
+source="https://gitee.com/lycium_pkg_mirror/fdk-aac/repository/archive/$pkgver.tar.gz"
 autounpack=true
 downloadpackage=true
-builddir=$pkgname-${pkgver:1}
+builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
 
 prepare() {
@@ -23,16 +23,18 @@ prepare() {
 
 build() {
     cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=ON -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+        -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=ON \
+        -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > $buildlog 2>&1
+    $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
 }
 
 package() {
-    cd $builddir
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $builddir/$ARCH-build
+    $MAKE VERBOSE=1 install >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
