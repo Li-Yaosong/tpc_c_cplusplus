@@ -22,6 +22,10 @@ openharmonycheck() {
         echo "create python link" >> ${logfile}
     fi
 
+    cd ${builddir}
+    mv ./host-build/compiler/cpp/bin/thrift ./host-build/compiler/cpp/bin/thrift.bak
+    cp ./${ARCH}-build/compiler/cpp/bin/thrift ./host-build/compiler/cpp/bin
+
     cd ${builddir}/${ARCH}-build
     ctest >> ${logfile} 2>&1
     res=$?
