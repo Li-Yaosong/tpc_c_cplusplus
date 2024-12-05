@@ -10,7 +10,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD-3-Clause")
 depends=()
 makedepends=()
-source="https://sourceforge.net/projects/${pkgname}/files/${pkgver}/axTLS-${pkgver}.tar.gz/download"
+source="https://sourceforge.net/projects/${pkgname}/files/${pkgver}/axTLS-${pkgver}.tar.gz/download?use_mirror=excellmedia"
 
 downloadpackage=true
 autounpack=true
@@ -49,7 +49,7 @@ prepare() {
 
 build() {
     cd $builddir-$ARCH-build
-    make linuxconf VERBOSE=1 CC=$CC LDFLAGS=$ASAN_LIB STRIP=$STRIP > `pwd`/build.log 2>&1
+    $MAKE linuxconf VERBOSE=1 CC=$CC LDFLAGS=$ASAN_LIB STRIP=$STRIP > $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     unset ASAN_LIB
@@ -58,7 +58,7 @@ build() {
 
 package() {
     cd $builddir-$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE VERBOSE=1 install >> $buildlog 2>&1
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
     then
