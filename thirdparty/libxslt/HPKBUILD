@@ -22,7 +22,7 @@ license=("MIT license")
 depends=("libxml2")
 makedepends=()
 
-source="https://mirror.ossplanet.net/gnome/sources/$pkgname/1.1/$pkgname-$pkgver.tar.xz"
+source="https://download.gnome.org/sources/$pkgname/1.1/$pkgname-$pkgver.tar.xz"
 
 autounpack=true
 downloadpackage=true
