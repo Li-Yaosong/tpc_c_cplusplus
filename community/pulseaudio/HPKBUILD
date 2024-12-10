@@ -10,7 +10,10 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("LGPLv2.1") 
 depends=("libsndfile" "libatomic_ops" "speexdsp" "json-c" "gettext" "check" "fftw3" "gdbm")
 makedepends=("meson" "ninja")
-source="git://anongit.freedesktop.org/$pkgname/$pkgname"
+
+# 官网提供的两个地址，其中一个不行可以更换为另一个
+# source="git://anongit.freedesktop.org/$pkgname/$pkgname"
+source="http://anongit.freedesktop.org/git/$pkgname/$pkgname.git"
 
 downloadpackage=false
 autounpack=false
