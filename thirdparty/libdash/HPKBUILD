@@ -7,7 +7,7 @@ pkgdesc="libdash is the official reference software of the ISO/IEC MPEG-DASH sta
 url="https://github.com/bitmovin/libdash"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("LGPL-2.1-or-later")
-depends=("libxml2" "curl")
+depends=("libxml2" "curl" "openssl")
 makedepends=()
 install=
 source="https://github.com/bitmovin/$pkgname/archive/refs/tags/$pkgver.tar.gz"
@@ -37,7 +37,7 @@ prepare() {
 
 build() {
     cd $builddir/$pkgname
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B`pwd`/../$ARCH-build -S./ -L > `pwd`/../$ARCH-build/build.log 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DCMAKE_CXX_FLAGS="-L$LYCIUM_ROOT/usr/curl/$ARCH/lib -lcurl" -DOHOS_ARCH=$ARCH -B`pwd`/../$ARCH-build -S./ -L > `pwd`/../$ARCH-build/build.log 2>&1
     make -j4 -C `pwd`/../$ARCH-build >> `pwd`/../$ARCH-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
