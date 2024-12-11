@@ -74,7 +74,7 @@ prepare() {
 build() {
     cd $builddir-$ARCH-build
     envarch=$ARCH
-    $MAKE PREFIX=$destdir ARCH=$arch > $buildlog 2>&1
+    $MAKE PREFIX=$destdir ARCH=$arch OS=linux > $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     ARCH=$envarch
