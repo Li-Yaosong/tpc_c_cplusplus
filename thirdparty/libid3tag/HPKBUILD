@@ -29,7 +29,7 @@ prepare() {
     if [ $patchflag == true ];then
         cd $builddir
         # 该库由于没有测试用例，所以打patch新增测试用例
-        patch -p1 < `pwd`/../libid3tag_oh_pkg.patch
+        patch -p1 < $PKGBUILD_ROOT/libid3tag_oh_pkg.patch > $publicbuildlog  2>&1
         # patch只需要打一次,关闭打patch
         patchflag=false
         cd $OLDPWD
@@ -37,12 +37,12 @@ prepare() {
    
     if [ $downloadconfigflag == true ];then
         # 获取最新的config.sub和config.guess以支持aarch64架构编译
-        wget -O $builddir/config.sub "git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD" > $builddir/build.log 2>&1
+        wget -O $builddir/config.sub "git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD" >> $publicbuildlog  2>&1
         ret=$?
         if [ $ret -ne 0 ];then
             return -1
         fi
-        wget -O $builddir/config.guess "git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" >> $builddir/build.log 2>&1
+        wget -O $builddir/config.guess "git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" >> $publicbuildlog  2>&1
         ret=$?
         if [ $ret -ne 0 ];then
             return -2
@@ -65,8 +65,8 @@ prepare() {
 
 build() {
     cd $pkgname-$ARCH-build
-    ./configure "$@" --host=$host --enable-static > `pwd`/build.log 2>&1
-    make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
+    ./configure "$@" --host=$host --enable-static --enable-profiling > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -74,7 +74,7 @@ build() {
 
 package() {
     cd $pkgname-$ARCH-build
-    make install VERBOSE=1 >> `pwd`/build.log 2>&1
+    $MAKE install VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
