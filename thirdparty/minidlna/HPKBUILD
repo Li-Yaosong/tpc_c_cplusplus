@@ -8,7 +8,7 @@ pkgdesc="MiniDLNA is a simple media server software, with the aim of being fully
 url="https://sourceforge.net/projects/minidlna"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("GPL-2.0")
-depends=("FFmpeg" "jpeg" "sqlite" "libexif" "libid3tag" "libogg" "libvorbis" "flac")
+depends=("jpeg" "sqlite" "FFmpeg" "libexif" "libid3tag" "libogg" "libvorbis" "flac" "zlib")
 makedepends=()
 
 source="https://sourceforge.net/projects/$pkgname/files/$pkgname/$pkgver/$pkgname-$pkgver.tar.gz"
@@ -28,7 +28,7 @@ prepare() {
     then
         cd $builddir
         # SDK 不支持sys/queue.h
-        patch -p1 < `pwd`/../minidlna_oh_pkg.patch
+        patch -p1 < $PKGBUILD_ROOT/minidlna_oh_pkg.patch > $publicbuildlog 2>&1
         # patch只需要打一次,关闭打patch
         patchflag=false
         cd $OLDPWD
@@ -47,13 +47,13 @@ prepare() {
 	return -1
     fi
     # pkgconfig找不到头文件和库，使用CFLAGS方式
-    export CFLAGS="-I${LYCIUM_ROOT}/usr/FFmpeg/$ARCH/include -I${LYCIUM_ROOT}/usr/jpeg/$ARCH/include -I${LYCIUM_ROOT}/usr/sqlite/$ARCH/include -I${LYCIUM_ROOT}/usr/libexif/$ARCH/include -I${LYCIUM_ROOT}/usr/libid3tag/$ARCH/include -I${LYCIUM_ROOT}/usr/libogg/$ARCH/include -I${LYCIUM_ROOT}/usr/libvorbis/$ARCH/include -I${LYCIUM_ROOT}/usr/flac/$ARCH/include -L${LYCIUM_ROOT}/usr/jpeg/$ARCH/lib -L${LYCIUM_ROOT}/usr/libexif/$ARCH/lib -L${LYCIUM_ROOT}/usr/libid3tag/$ARCH/lib -L${LYCIUM_ROOT}/usr/libogg/$ARCH/lib -L${LYCIUM_ROOT}/usr/sqlite/$ARCH/lib -L${LYCIUM_ROOT}/usr/FFmpeg/$ARCH/lib -L${LYCIUM_ROOT}/usr/libvorbis/$ARCH/lib -L${LYCIUM_ROOT}/usr/flac/$ARCH/lib $CFLAGS"
+    export CFLAGS="-I${LYCIUM_ROOT}/usr/FFmpeg/$ARCH/include -I${LYCIUM_ROOT}/usr/jpeg/$ARCH/include -I${LYCIUM_ROOT}/usr/sqlite/$ARCH/include -I${LYCIUM_ROOT}/usr/libexif/$ARCH/include -I${LYCIUM_ROOT}/usr/libid3tag/$ARCH/include -I${LYCIUM_ROOT}/usr/libogg/$ARCH/include -I${LYCIUM_ROOT}/usr/libvorbis/$ARCH/include -I${LYCIUM_ROOT}/usr/flac/$ARCH/include -I${LYCIUM_ROOT}/usr/zlib/$ARCH/include -L${LYCIUM_ROOT}/usr/jpeg/$ARCH/lib -L${LYCIUM_ROOT}/usr/libexif/$ARCH/lib -L${LYCIUM_ROOT}/usr/libid3tag/$ARCH/lib -L${LYCIUM_ROOT}/usr/libogg/$ARCH/lib -L${LYCIUM_ROOT}/usr/sqlite/$ARCH/lib -L${LYCIUM_ROOT}/usr/FFmpeg/$ARCH/lib -L${LYCIUM_ROOT}/usr/libvorbis/$ARCH/lib -L${LYCIUM_ROOT}/usr/flac/$ARCH/lib -L${LYCIUM_ROOT}/usr/zlib/$ARCH/lib $CFLAGS"
 }
 
 build() {
     cd $builddir-$ARCH-build
-    ./configure "$@" --host=$host > `pwd`/build.log 2>&1
-    make VERBOSE=1 -j4 >> `pwd`/build.log 2>&1
+    ./configure "$@" --host=$host > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -61,7 +61,7 @@ build() {
 
 package() {
     cd $builddir-$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE install VERBOSE=1 >> $buildlog 2>&1
     cd $OLDPWD
     if [ $ARCH == "armeabi-v7a" ]
     then
