@@ -15,13 +15,16 @@
 # Maintainer: lpzhong <278527840@qq.com>
 
 source HPKBUILD > /dev/null 2>&1
-logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname:0:7}/${pkgname:0:7}_${ARCH}_${OHOS_SDK_VER}_test.log
+logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 openharmonycheck() {
     res=0
     cd ${builddir}/${ARCH}-build
-    sed -i "s#usr/bin/perl#perl#g" `grep -rn 'usr/bin/perl'|awk -F':'{print $1}'|sort -u`
     make test > ${logfile} 2>&1
     res=$?
+    if [ $res -ne 0 ];then
+        mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
+        cp ${logfile} ${LYCIUM_FAULT_PATH}/${pkgname}/     
+    fi 
     cd $OLDPWD
 
     return $res

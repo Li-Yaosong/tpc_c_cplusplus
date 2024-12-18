@@ -43,7 +43,7 @@ prepare() {
     then
         cd $builddir
         # 屏蔽测试bug
-        patch -p1 < `pwd`/../openssl_oh_test.patch
+        patch -p1 < $PKGBUILD_ROOT/openssl_oh_test.patch > $publicbuildlog 2>&1
         # patch只需要打一次,关闭打patch
         patchflag=false
         cd $OLDPWD
@@ -67,8 +67,8 @@ prepare() {
 build() {
     cd $builddir/$ARCH-build
      #依赖zlib的OpenSSL支持使用gzip和deflate压缩算法的HTTPS协议可根据需求开启关闭
-    ../Configure "$@" $host zlib > `pwd`/build.log 2>&1
-    make -j4 >> `pwd`/build.log 2>&1
+    ../Configure "$@" $host zlib > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -76,13 +76,13 @@ build() {
 
 package() {
     cd $builddir/$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE install VERBOSE=1 >> $buildlog 2>&1
     cd $OLDPWD
 }
 
 check() {
     cd $builddir/$ARCH-build
-    make depend >> `pwd`/build.log 2>&1
+    $MAKE depend VERBOSE=1 >> $buildlog 2>&1
     cd $OLDPWD
     unset host
     if [ $ARCH == "armeabi-v7a" ]
@@ -96,6 +96,7 @@ check() {
         return -1
     fi
     echo "The test must be on an OpenHarmony device!"
+    sed -i 's#/usr/bin/perl#/data/CIusr/bin/perl#g' $builddir/$ARCH-build/Makefile
     # real test CMD
     # 将编译目录加到 LD_LIBRARY_PATH 环境变量
     # make test
