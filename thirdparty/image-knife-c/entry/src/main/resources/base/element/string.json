@@ -1,0 +1,40 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "adjust_size",
+      "value": "Adjust size"
+    },
+    {
+      "name": "local_r_file",
+      "value": "Local $r file"
+    },
+    {
+      "name": "local_rawfile",
+      "value": "Local rawfile"
+    },
+    {
+      "name": "Under_context_file",
+      "value": "Files under context file"
+    },
+    {
+      "name": "local_other_module",
+      "value": "Local other module"
+    },
+    {
+      "name": "in_other_module",
+      "value": "in other module"
+    }
+  ]
+}
