@@ -17,13 +17,14 @@
 - 三方库目录结构
 
   ```shell
-  tpc_c_cplusplus/thirdparty/bullet3-3.22   #三方库bullet3-3.22的目录结构如下
+  tpc_c_cplusplus/thirdparty/bullet3   #三方库bullet3的目录结构如下
   ├── docs                              #三方库相关文档的文件夹
   ├── HPKBUILD                          #构建脚本
   ├── HPKCHECK                          #测试脚本
   ├── SHA512SUM                         #三方库校验文件
   ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
   ├── README_zh.md                      #三方库简介
+  ├── bullet3-3.22_oh_pkg.patch      #用于bullet3库编译的补丁
   ```
 
 - 在lycium目录下编译三方库
@@ -32,7 +33,7 @@
 
   ```shell
   cd lycium
-  ./build.sh bullet3-3.22
+  ./build.sh bullet3
   ```
 
 - 三方库头文件及生成的库
@@ -40,15 +41,14 @@
   在lycium目录下会生成usr目录，该目录下存在已编译完成的32位和64位三方库
 
   ```shell
-  bullet3-3.22/arm64-v8a   bullet3-3.22/armeabi-v7a
+  bullet3/arm64-v8a   bullet3/armeabi-v7a
   ```
 
 - [测试三方库](#测试三方库)
 
-- 编译出可执行的文件进行测试，[准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件拷贝到该目录下，将编译生成的三方库以及依赖库全部（动态库名字带版本号和不带版本号的都需要）拷贝到工程的libs目录下，如下图所示：
+- 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件和静态库文件拷贝到该目录下，如下图所示：
   &nbsp;
 
   &nbsp;![thirdparty_install_dir](pic/bullet3_install_dir.png)
@@ -66,7 +66,8 @@
   ```
 
 ## 测试三方库
-进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录），执行结果如图所示
+- 编译出可执行的文件，使用原库自带的测试用例来做测试 [准备三方库测试环境](../../../lycium/README.md#3ci环境准备)
+进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录）。执行结果如图所示
 
 ```shell
   cd /data/tpc_c_cplusplus/thirdparty/bullet3-3.22/arm64-v8a-build/

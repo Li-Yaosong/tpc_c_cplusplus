@@ -22,9 +22,12 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${OHOS_SDK_VER}_test.log
 openharmonycheck() {
     res=0                               
     cd ${builddir}/${ARCH}-build        # 进入到测试目录
-    ctest > ${logfile} 2>&1             # 执行测试命令并将测试结果导出到${logfile}
-    res=$?                             
-    cd $OLDPWD                         
-
-    return $res                        
+    ctest > $logfile 2>&1
+    res=$?      
+    if [ $res -ne 0 ];then
+        mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
+        cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/     
+    fi 
+    cd $OLDPWD
+    return $res                       
 }
