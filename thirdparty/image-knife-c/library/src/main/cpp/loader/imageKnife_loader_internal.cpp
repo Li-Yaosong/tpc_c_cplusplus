@@ -125,7 +125,7 @@ bool ImageKnifeLoaderInternal::LoadFromMemory(ImageKnifeTaskInternal *task)
 bool ImageKnifeLoaderInternal::LoadFromFile(ImageKnifeTaskInternal *task)
 {
     if (fileInterceptorHead_ == nullptr) {
-        task->FatalError("Not Find File Interceptor!"); 
+        task->FatalError("Not Find File Interceptor!");
         return false;
     }
 

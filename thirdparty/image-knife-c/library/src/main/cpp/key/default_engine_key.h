@@ -32,9 +32,16 @@ public:
     OH_Crypto_ErrCode DoMd5Hash(const std::string &url, std::string &fileName);
 
     // 实现纯虚函数
-    std::string GenerateFileKey(const ImageData *imageData, const std::string& signature = "", bool isAnimator = false) override;
-    std::string GenerateMemoryKey(const ImageData *imageData, ImageKnifeC::ImageKnifeRequestSource type, const ImageKnifeOption * const imageKnifeOption,
-                                  const std::string &signature = "", bool isAnimator = false, int width = 0, int height = 0) override;
+    std::string GenerateFileKey(const ImageData *imageData,
+                                const std::string& signature = "",
+                                bool isAnimator = false) override;
+    std::string GenerateMemoryKey(const ImageData *imageData,
+                                  ImageKnifeC::ImageKnifeRequestSource type,
+                                  const ImageKnifeOption * const imageKnifeOption,
+                                  const std::string &signature = "",
+                                  bool isAnimator = false,
+                                  int width = 0,
+                                  int height = 0) override;
 };
 
 } // namespace ImageKnifeC

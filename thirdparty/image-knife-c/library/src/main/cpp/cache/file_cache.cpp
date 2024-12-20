@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-
 #include <iostream>
 #include <vector>
 #include <string>
@@ -25,9 +24,9 @@
 #include <cerrno>
 #include <cstring>
 
-#include "file_cache.h"
 #include "native_entry.h"
 #include "imageKnife.h"
+#include "file_cache.h"
 
 namespace ImageKnifeC {
 
@@ -40,24 +39,22 @@ FileCache::AsyncData *FileCache::asyncData = new FileCache::AsyncData();
 FileCache *FileCache::fileCachePtr = nullptr;
 lru11::Cache<std::string, size_t> *FileCache::cachePtr = nullptr;
 
-void FileCache::Init(int size, int memory) 
+void FileCache::Init(int size, int memory)
 {
-    if(!cachePtr) {
-       cachePtr = new lru11::Cache<std::string, size_t>(size, 0);
+    if (!cachePtr) {
+        cachePtr = new lru11::Cache<std::string, size_t>(size, 0);
     }
 
-   allowMaxSize_ = (size > 0 && size <= defaultMaxSize) ? size : defaultSize;
-   allowMaxMemory_ = (memory > 0 && memory <= defaultMaxMemory) ? memory : defaultMemory;
+    allowMaxSize_ = (size > 0 && size <= defaultMaxSize) ? size : defaultSize;
+    allowMaxMemory_ = (memory > 0 && memory <= defaultMaxMemory) ? memory : defaultMemory;
 }
 
 FileCache *FileCache::GetInstance()
 {
-#define DEFAULT_MAX_SIZE 50
-#define DEFAULT_MAX_MEMORY 100 * 1024 * 1024
     if (!fileCachePtr) {
         // 未正确调用情况下使用的默认数据
-        size_t allowMaxsize = DEFAULT_MAX_SIZE;
-        size_t allowMaxMemory = DEFAULT_MAX_MEMORY;
+        const size_t allowMaxsize = 50;
+        const size_t allowMaxMemory = 100 * 1024 * 1024;
         fileCachePtr = new FileCache(allowMaxsize, allowMaxMemory);
     }
     return fileCachePtr;
@@ -104,7 +101,7 @@ void FileCache::Put(const std::string &key, size_t value)
         if (cachePtr->getTail(keyOut, valueOut)) {
             cachePtr->remove(keyOut);
             DeleteFile(keyOut);
-            RemoveMemorySize(valueOut);  
+            RemoveMemorySize(valueOut);
         }
     }
     cachePtr->insert(key, value);
@@ -140,7 +137,7 @@ bool FileCache::Contains(const std::string &key) const
     return cachePtr->contains(key);
 }
 
-bool FileCache::DeleteFile( const std::string &fileName)
+bool FileCache::DeleteFile(const std::string &fileName)
 {
     std::string path = filePath + "/" + fileName;
     if (remove(path.c_str()) != 0) {
@@ -191,9 +188,8 @@ void FileCache::InitFileCache()
     closedir(dir);
 
     // 最近访问的排在后面
-    std::sort(filesVector.begin(), filesVector.end(), [](const FileInfo &a, const FileInfo &b)
-    {
-        return a.lastAccessTime < b.lastAccessTime; 
+    std::sort(filesVector.begin(), filesVector.end(), [](const FileInfo &a, const FileInfo &b) {
+        return a.lastAccessTime < b.lastAccessTime;
     });
 
     for (const auto &fileInfo : filesVector) {
@@ -238,7 +234,7 @@ void FileCache::SaveImageToDisk(const char *buffer, uint32_t length, std::string
                          "FileCache::SaveImageToDisk",
                          "Directory already exists");
         } else {
-            OH_LOG_Print(LOG_APP, LOG_ERROR,LOG_DOMAIN,
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN,
                          "FileCache::SaveImageToDisk",
                          "Failed to create directory");
             return;

@@ -67,8 +67,7 @@ OH_Crypto_ErrCode DefaultEngineKey::DoMd5Hash(const std::string &url, std::strin
 {
     OH_Crypto_ErrCode ret;
     OH_CryptoDigest *ctx = nullptr;
-    const char *testData = url.c_str();
-    Crypto_DataBlob in = {.data = (uint8_t *)(testData), .len = strlen(testData)};
+    Crypto_DataBlob in = {.data = (uint8_t *)(url.c_str()), .len = strlen(url.c_str())};
     Crypto_DataBlob out = {.data = nullptr, .len = 0};
     int mdLen = 0;
     ret = OH_CryptoDigest_Create("MD5", &ctx);
@@ -87,10 +86,10 @@ OH_Crypto_ErrCode DefaultEngineKey::DoMd5Hash(const std::string &url, std::strin
         }
         mdLen = OH_CryptoDigest_GetLength(ctx);
     } while (0);
-
+    const size_t defaultW = 2;
     for (int i = 0; i < out.len; ++i) {
         std::ostringstream oss;
-        oss << std::setw(2) << std::setfill('0') << std::hex << static_cast<int>(out.data[i]);
+        oss << std::setw(defaultW) << std::setfill('0') << std::hex << static_cast<int>(out.data[i]);
         fileName += oss.str();
     }
     OH_LOG_Print(LOG_APP, LOG_DEBUG, LOG_DOMAIN,

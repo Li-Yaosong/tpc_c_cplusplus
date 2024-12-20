@@ -33,13 +33,20 @@ public:
     // 析构函数
     virtual ~IEngineKey() = default;
 
-    //生成文件缓存key
-    virtual std::string GenerateFileKey(const ImageData *imageData, const std::string &signature = "", bool isAnimator = false) = 0;
+    // 生成文件缓存key
+    virtual std::string GenerateFileKey(const ImageData *imageData,
+                                        const std::string &signature = "",
+                                        bool isAnimator = false) = 0;
 
-    //生成内存缓存key
-    virtual std::string GenerateMemoryKey(const ImageData *imageData, ImageKnifeC::ImageKnifeRequestSource type, const ImageKnifeOption * const imageKnifeOption,
-                                          const std::string &signature = "", bool isAnimator = false, int width = 0, int height = 0) = 0;
-}; 
-}// namespace ImageKnifeC
+    // 生成内存缓存key
+    virtual std::string GenerateMemoryKey(const ImageData *imageData,
+                                          ImageKnifeC::ImageKnifeRequestSource type,
+                                          const ImageKnifeOption * const imageKnifeOption,
+                                          const std::string &signature = "",
+                                          bool isAnimator = false,
+                                          int width = 0,
+                                          int height = 0) = 0;
+};
+} // namespace ImageKnifeC
 
 #endif // IMAGE_KNIFE_C_IENGINE_KEY_H

@@ -33,7 +33,7 @@ ImageKnifeDispatcher::ImageKnifeDispatcher()
 ImageKnifeDispatcher::~ImageKnifeDispatcher()
 {
     if (jobQueuePtr_ != nullptr) {
-       delete jobQueuePtr_;
+        delete jobQueuePtr_;
     }
 }
 
@@ -137,7 +137,7 @@ void ImageKnifeDispatcher::LoadImageSource(void *arg)
     TransformImage(task);
 
     if (request->IsDestroy() || task->IsFatalErrorHappened()) {
-        return; 
+        return;
     }
 
     // 写内存缓存
@@ -158,7 +158,8 @@ void ImageKnifeDispatcher::OnComplete(void *arg)
             if (request->IsDestroy()) {
                 // 任务在执行中被取消
                 if (option->onLoadListener.onLoadCancel != nullptr) {
-                    option->onLoadListener.onLoadCancel(task->GetTaskInfo(task->type, task->request.get()) + "Request Abort");
+                    option->onLoadListener.onLoadCancel(task->GetTaskInfo(task->type,
+                    task->request.get()) + "Request Abort");
                 }
             } else if (task->IsSuccess()) {
                 if (queueElement.type != ImageKnifeRequestSource::PLACESRC) {
@@ -185,7 +186,7 @@ void ImageKnifeDispatcher::OnComplete(void *arg)
                         pixelmapCallbackData.CopyFromPixelmap(task->product.pixelmap->GetPixelMap());
                     }
 
-                    option->onLoadListener.onLoadSuccess(pixelmapCallbackData,data);
+                    option->onLoadListener.onLoadSuccess(pixelmapCallbackData, data);
                 }
             } else if (queueElement.type == ImageKnifeRequestSource::MAINSRC) {
                 // 任务执行失败
@@ -221,8 +222,9 @@ bool ImageKnifeDispatcher::DisplayImage(std::shared_ptr<ImageKnifeRequestInterna
         // 状态不处于available 或 request版本号不是最新则不进行显示
         if (type == ImageKnifeRequestSource::MAINSRC &&
             request->GetImageKnifeOption()->onLoadListener.onLoadCancel != nullptr) {
-            request->GetImageKnifeOption()->onLoadListener.onLoadCancel(
-                     ImageKnifeTaskInternal::GetTaskInfo(type, request.get()) + "Request Overdue");
+            request->GetImageKnifeOption()->
+            onLoadListener.onLoadCancel(ImageKnifeTaskInternal::
+            GetTaskInfo(type, request.get()) + "Request Overdue");
         }
         return false;
     }
@@ -272,7 +274,7 @@ bool ImageKnifeDispatcher::LoadSrcFromMemory(std::shared_ptr<ImageKnifeRequestIn
                                              ImageKnifeRequestSource type)
 {
     try {
-        ImageData *data = GetImageSrc(request,type);
+        ImageData *data = GetImageSrc(request, type);
         if (data == nullptr) {
             return false;
         }
@@ -293,7 +295,7 @@ bool ImageKnifeDispatcher::LoadSrcFromMemory(std::shared_ptr<ImageKnifeRequestIn
             request->MarkDisplayStartTime(type, true);
 
             bool trigerCallback = true;
-            //preload 只加载不显示
+            // preload 只加载不显示
             if (!request->IsPreload()) {
                 trigerCallback = DisplayImage(request, type, task.product.pixelmap);
             }
@@ -304,7 +306,7 @@ bool ImageKnifeDispatcher::LoadSrcFromMemory(std::shared_ptr<ImageKnifeRequestIn
                 ImageDataBack pixelmapCallbackData;
                 pixelmapCallbackData.CopyFromPixelmap(task.product.pixelmap->GetPixelMap());
                 ImageKnifeData data;
-                request->GetImageKnifeOption()->onLoadListener.onLoadSuccess(pixelmapCallbackData,data);
+                request->GetImageKnifeOption()->onLoadListener.onLoadSuccess(pixelmapCallbackData, data);
             }
             if (type != ImageKnifeRequestSource::PLACESRC) {
                 request->MarkStatusComplete();
@@ -313,8 +315,11 @@ bool ImageKnifeDispatcher::LoadSrcFromMemory(std::shared_ptr<ImageKnifeRequestIn
         }
     } catch (std::exception err) {
         std::string info = ImageKnifeTaskInternal::GetTaskInfo(type, request.get());
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, "Dispatcher",
-            "%{public}s [Fatal Error] %{public}s (LoadSrcFromMemory)", info.c_str(), err.what());
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN,
+                     "Dispatcher",
+                     "%{public}s [Fatal Error] %{public}s (LoadSrcFromMemory)",
+                     info.c_str(),
+                     err.what());
     }
 
     return false;
@@ -324,18 +329,18 @@ ImageData *ImageKnifeDispatcher::GetImageSrc(std::shared_ptr<ImageKnifeRequestIn
                                              ImageKnifeRequestSource type)
 {
     ImageData *data = nullptr;
-    switch(type) {
-    case ImageKnifeRequestSource::MAINSRC:
-        data = &request->GetImageKnifeOption()->loadSrc;
-        break;
-    case ImageKnifeRequestSource::PLACESRC:
-        data = &request->GetImageKnifeOption()->placeholderSrc;
-        break;
-    case ImageKnifeRequestSource::ERRORSRC:
-        data = &request->GetImageKnifeOption()->errorholderSrc;
-        break;
-    default:
-        break;
+    switch (type) {
+        case ImageKnifeRequestSource::MAINSRC:
+            data = &request->GetImageKnifeOption()->loadSrc;
+            break;
+        case ImageKnifeRequestSource::PLACESRC:
+            data = &request->GetImageKnifeOption()->placeholderSrc;
+            break;
+        case ImageKnifeRequestSource::ERRORSRC:
+            data = &request->GetImageKnifeOption()->errorholderSrc;
+            break;
+        default:
+            break;
     }
 
     if (data == nullptr || data->GetType() == DataType::UNDEFINED) {
@@ -369,7 +374,7 @@ bool ImageKnifeDispatcher::ExecuteJob(ImageKnifeRequestSource type,
         this->LoadImageSource(data);
     };
     memoryKey = ImageKnife::GetInstance().GetEngineKeyImpl()->GenerateMemoryKey(data, type,
-                imageKnifeOption.get(), request->GetImageKnifeOption()->signature);
+    imageKnifeOption.get(), request->GetImageKnifeOption()->signature);
 
     DefaultJobQueue::QueueElement queueElement(request, type);
 
@@ -379,7 +384,7 @@ bool ImageKnifeDispatcher::ExecuteJob(ImageKnifeRequestSource type,
         } else {
             executingJobMap_[memoryKey].emplace_back(std::move(queueElement));
             return false;
-        }  
+        }
     }
 
     ImageKnifeTaskInternal* task = new ImageKnifeTaskInternal(type, request, data);
@@ -405,10 +410,12 @@ bool ImageKnifeDispatcher::ExecuteJob(ImageKnifeRequestSource type,
         void *taskId = TaskWorker::GetInstance()->PushTask(func, completeCallback, task, errorInfo);
         if (taskId != nullptr) {
             task->SetTaskId(taskId);
-            request->InsertTask(task,type);
+            request->InsertTask(task, type);
             // 线程任务push时info日志
-            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, "ExecuteJob", "%{public}s Push Task Success",
-                        ImageKnifeTaskInternal::GetTaskInfo(type, request.get()).c_str());
+            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN,
+                         "ExecuteJob",
+                         "%{public}s Push Task Success",
+                         ImageKnifeTaskInternal::GetTaskInfo(type, request.get()).c_str());
         } else {
             task->EchoError(errorInfo + " (Create Task)");
             if (request->GetImageKnifeOption()->onLoadListener.onLoadFailed != nullptr) {
@@ -438,18 +445,17 @@ void ImageKnifeDispatcher::CancelRequest(std::shared_ptr<ImageKnifeRequestIntern
 {
     request->Destroy();
 
-    //　TODO 从任务队列中移除取消request， 成功后直接触发finalize和callback并返回(request 没有开始)
-    // TODO 从napi worker中取消移除，将对应的图片类型标记为complete，暂不能区分
     // 调用对应interceptor的cancel函数
     CancelInterceptor(request, ImageKnifeRequestSource::MAINSRC);
     CancelInterceptor(request, ImageKnifeRequestSource::PLACESRC);
     CancelInterceptor(request, ImageKnifeRequestSource::ERRORSRC);
 }
 
-void ImageKnifeDispatcher::CancelInterceptor(std::shared_ptr<ImageKnifeRequestInternal> request, ImageKnifeRequestSource type)
+void ImageKnifeDispatcher::CancelInterceptor(std::shared_ptr<ImageKnifeRequestInternal> request,
+                                             ImageKnifeRequestSource type)
 {
     ImageKnifeTaskInternal *task = static_cast<ImageKnifeTaskInternal*>(request->GetTask(type));
-    if (task != nullptr ) {
+    if (task != nullptr) {
         auto interceptor = task->GetCurrentInterceptor();
         if (interceptor != nullptr) {
             interceptor->Cancel(task);
@@ -471,20 +477,20 @@ void ImageKnifeDispatcher::DispatchNextJob()
         return;
     }
     while (true) {
-       DefaultJobQueue::QueueElement queueElement = jobQueuePtr_->Pop();
-       ImageKnifeRequest::Status status = queueElement.request->GetStatus();
-       if (queueElement.request == nullptr) {
+        DefaultJobQueue::QueueElement queueElement = jobQueuePtr_->Pop();
+        ImageKnifeRequest::Status status = queueElement.request->GetStatus();
+        if (queueElement.request == nullptr) {
             break;
-       } else if (status == ImageKnifeRequest::Status::PROGRESS || status == ImageKnifeRequest::Status::ERROR) {
-            //任务开启成功
+        } else if (status == ImageKnifeRequest::Status::PROGRESS || status == ImageKnifeRequest::Status::ERROR) {
+            // 任务开启成功
             if (ExecuteJob(queueElement.type, queueElement.request)) {
                 break;
             }
-       } else if (status == ImageKnifeRequest::Status::DESTROY &&
+        } else if (status == ImageKnifeRequest::Status::DESTROY &&
                     queueElement.request->GetImageKnifeOption()->onLoadListener.onLoadCancel != nullptr) {
             queueElement.request->GetImageKnifeOption()->onLoadListener.onLoadCancel(
                 ImageKnifeTaskInternal::GetTaskInfo(queueElement.type, queueElement.request.get()) + "Request DESTROY");
-       }
+        }
     }
 }
 } //  end of namespace

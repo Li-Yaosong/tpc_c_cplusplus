@@ -42,11 +42,11 @@ private:
     bool Read(ImageKnifeTask *task)
     {
         std::string fileKey;
-        if(!task->imageSrc->GetString(fileKey)) {
+        if (!task->imageSrc->GetString(fileKey)) {
             return false;
         }
-        fileKey = ImageKnife::GetInstance().GetEngineKeyImpl()->GenerateFileKey(task->imageSrc,
-                                                                                task->request->GetImageKnifeOption()->signature);
+        fileKey = ImageKnife::GetInstance().GetEngineKeyImpl()->
+                  GenerateFileKey(task->imageSrc, task->request->GetImageKnifeOption()->signature);
         FileCache::FileData fileData;
         if (FileCache::GetInstance()->GetImageFromDisk(fileKey, fileData)) {
             task->product.imageBuffer = fileData.buffer;
@@ -62,8 +62,8 @@ private:
         if (!task->imageSrc->GetString(fileKey)) {
             return false;
         }
-        fileKey = ImageKnife::GetInstance().GetEngineKeyImpl()->GenerateFileKey(task->imageSrc,
-                                                task->request->GetImageKnifeOption()->signature);
+        fileKey = ImageKnife::GetInstance().GetEngineKeyImpl()->
+                  GenerateFileKey(task->imageSrc, task->request->GetImageKnifeOption()->signature);
         FileCache::GetInstance()->SaveImageToDisk(task->product.response->body.buffer,
                                                   task->product.response->body.length,
                                                   fileKey);

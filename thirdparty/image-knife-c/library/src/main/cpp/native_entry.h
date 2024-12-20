@@ -75,4 +75,4 @@ private:
 
 } // namespace ImageKnifeC
 
-#endif //IMAGE_KNIFE_C_NATIVE_ENTRY_H
+#endif // IMAGE_KNIFE_C_NATIVE_ENTRY_H

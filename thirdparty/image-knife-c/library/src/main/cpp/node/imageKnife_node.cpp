@@ -64,7 +64,7 @@ void ImageKnifeNode::RegisterNodeEvent()
     }
 }
 
-// static 
+// static
 void ImageKnifeNode::OnNodeEvent(ArkUI_NodeEvent *event)
 {
     auto nodeHandle = OH_ArkUI_NodeEvent_GetNodeHandle(event);
@@ -112,7 +112,6 @@ void ImageKnifeNode::ReleaseDrawableDescriptor()
 void ImageKnifeNode::SetBorder()
 {
     BorderOption &border = imageKnifeRequest_->GetImageKnifeOption()->border;
-    // TODO 先获取当前的border状态，把用户对应的设置项填上
     for (int i = 0; i < sizeof(border.width) / sizeof(float); i++) {
         borderWidth_[i].f32 = border.width[i];
         borderRadius_[i].f32 = border.radius[i];

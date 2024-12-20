@@ -50,7 +50,7 @@ public:
     static FileCache *GetInstance();
     static void DestroyInstance();
 
-    //初始化lru,内存数量和大小
+    // 初始化lru,内存数量和大小
     void Init(int size, int memory);
 
     // 禁止复制构造和赋值

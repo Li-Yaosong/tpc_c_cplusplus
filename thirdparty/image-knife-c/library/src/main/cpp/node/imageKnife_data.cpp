@@ -134,7 +134,7 @@ void OptionData::CopyFromPixelmap(OH_PixelmapNative *source)
         return;
     }
 
-    if (OH_PixelmapNative_GetImageInfo(source,imageInfo) != IMAGE_SUCCESS) {
+    if (OH_PixelmapNative_GetImageInfo(source, imageInfo) != IMAGE_SUCCESS) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN,
                      "OptionData",
                      "CopyFromPixelmap GetImageInfo failed");
@@ -175,10 +175,12 @@ void OptionData::CopyFromPixelmap(OH_PixelmapNative *source)
     // RGBA格式的缓冲区大小等于width * height * 4
     // NV21与NV12格式的缓冲区大小等于width * height+((width+1)/2) * ((height+1)/2) * 2
     size_t bufferSize;
+    const int half = 2;
+    const int four = 4;
     if (pixelFormat == PIXEL_FORMAT_NV21 || pixelFormat == PIXEL_FORMAT_NV12) {
-        bufferSize = width * height + ((width + 1) / 2) * ((height + 1) / 2) * 2;
+        bufferSize = width * height + ((width + 1) / half) * ((height + 1) / half) * half;
     } else {
-        bufferSize = width * height * 4;
+        bufferSize = width * height * four;
     }
     
     OH_LOG_Print(LOG_APP, LOG_DEBUG, LOG_DOMAIN,
@@ -190,7 +192,8 @@ void OptionData::CopyFromPixelmap(OH_PixelmapNative *source)
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN,
                      "OptionData",
                      "Failed to allocate memory, format:%{public}d , bufferSize:%{public}d",
-                     pixelFormat,bufferSize);
+                     pixelFormat,
+                     bufferSize);
         OH_PixelmapInitializationOptions_Release(options);
         OH_PixelmapImageInfo_Release(imageInfo);
     }
@@ -199,7 +202,8 @@ void OptionData::CopyFromPixelmap(OH_PixelmapNative *source)
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN,
                      "OptionData",
                      "CopyFromPixelmap ReadPixels failed, format:%{public}d , bufferSize:%{public}ld",
-                     pixelFormat,bufferSize);
+                     pixelFormat,
+                     bufferSize);
         OH_PixelmapInitializationOptions_Release(options);
         OH_PixelmapImageInfo_Release(imageInfo);
         free(buffer);
@@ -295,7 +299,7 @@ std::string OptionData::ParseNapiString(napi_env env, napi_value value)
 
 bool OptionData::IsUndefined()
 {
-    if (DataType::UNDEFINED & availableType_ && type_ == DataType::UNDEFINED) {
+    if ((DataType::UNDEFINED & availableType_) && type_ == DataType::UNDEFINED) {
         return true;
     }
     return false;
@@ -315,7 +319,7 @@ void OptionData::CleanData()
     if (type_ == DataType::UNDEFINED) {
         return;
     }
-    switch(type_) {
+    switch (type_) {
         case DataType::STRING :
             data_.str.~basic_string();
             break;
@@ -337,23 +341,22 @@ void Context::SetContext(napi_env env, napi_value value)
 {
     bool hasProperty = false;
     napi_status status = napi_has_named_property(env, value, "resourceManager", &hasProperty);
-
     if (status == napi_ok && hasProperty) {
         napi_value jsResMgr;
         status = napi_get_named_property(env, value, "resourceManager", &jsResMgr);
         if (status == napi_ok) {
-            resourceManager = OH_ResourceManager_InitNativeResourceManager(env, jsResMgr);    
+            resourceManager = OH_ResourceManager_InitNativeResourceManager(env, jsResMgr);
         }
     }
 }
 
 void BorderOption::SetBorderOption(napi_env env, napi_value &value)
 {
-    napi_status status= napi_has_named_property(env, value, "width", &hasWidth);
+    napi_status status = napi_has_named_property(env, value, "width", &hasWidth);
     if (status == napi_ok && hasWidth) {
         napi_value width;
         napi_get_named_property(env, value, "width", &width);
-        ParseWidth(env,width);
+        ParseWidth(env, width);
     }
 
     status= napi_has_named_property(env, value, "color", &hasColor);
@@ -386,7 +389,8 @@ void BorderOption::ParseWidth(napi_env env, napi_value &value)
 
     // LocalizedEdgeWidths
     std::vector<std::string> names = {"top", "end", "bottom", "start"};
-    for (int i = 0; i < 4; i++) {
+    const int namesSize = 4;
+    for (int i = 0; i < namesSize; i++) {
         napi_value lengthMetrics;
         status = napi_has_named_property(env, value, names[i].c_str(), &hasProperty);
         if (status == napi_ok && hasProperty) {
@@ -399,7 +403,6 @@ void BorderOption::ParseWidth(napi_env env, napi_value &value)
     }
 
     if (typeMatched) {
-        // TODO support LocalizedEdgeWidths
         OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN,
                      "BorderOption",
                      "Border width only support number for now");
@@ -409,7 +412,8 @@ void BorderOption::ParseWidth(napi_env env, napi_value &value)
 
     // EdgeWidths
     names = {"top", "right", "bottom", "left"};
-    for (int i = 0; i < 4; i++) {
+
+    for (int i = 0; i < namesSize; i++) {
         napi_value length;
         status = napi_has_named_property(env, value, names[i].c_str(), &hasProperty);
         if (status == napi_ok && hasProperty) {
@@ -432,7 +436,8 @@ void BorderOption::ParseRadius(napi_env env, napi_value &value)
     napi_status status;
 
     std::vector<std::string> names = {"topLeft", "topRight", "bottomLeft", "bottomRight"};
-    for (int i = 0; i < 4; i++) {
+    const int namesSize = 4;
+    for (int i = 0; i < namesSize; i++) {
         napi_value lengthValue;
         status = napi_has_named_property(env, value, names[i].c_str(), &hasProperty);
         if (status == napi_ok && hasProperty) {
@@ -441,7 +446,6 @@ void BorderOption::ParseRadius(napi_env env, napi_value &value)
             // LocalizedBorderRadiuses
             status = napi_has_named_property(env, lengthValue, "value", &hasProperty);
             if (status == napi_ok && hasProperty) {
-                // TODO support LocalizedBorderRadiuses
                 OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN,
                              "BorderOption",
                              "Border radius only support number for now");
@@ -466,7 +470,8 @@ void BorderOption::ParseColor(napi_env env, napi_value &value)
     // LocalizedEdgeColors |  EdgeColors
     napi_value resourceColor;
     std::vector<std::string> names = {"top", "end", "bottom", "start"};
-    for (int i = 0; i < 4; i++) {
+    const int namesSize = 4;
+    for (int i = 0; i < namesSize; i++) {
         status = napi_has_named_property(env, value, names[i].c_str(), &hasProperty);
         if (status == napi_ok && hasProperty) {
             typeMatched = true;
@@ -483,10 +488,11 @@ void BorderOption::ParseColor(napi_env env, napi_value &value)
     }
 
     status = napi_has_named_property(env, value, "left", &hasProperty);
+    const int colorLeftIndex = 3;
     if (status == napi_ok && hasProperty) {
         typeMatched = true;
         napi_get_named_property(env, value, "left", &resourceColor);
-        color[3] = ParseResourceColor(env, resourceColor);
+        color[colorLeftIndex] = ParseResourceColor(env, resourceColor);
     }
 
     // ResourceColor
@@ -504,7 +510,8 @@ void BorderOption::ParseStyle(napi_env env, napi_value &value)
     // EdgeStyles
     napi_value styleValue;
     std::vector<std::string> names = {"top", "right", "bottom", "left"};
-    for (int i = 0; i < 4; i++) {
+    const int namesSize = 4;
+    for (int i = 0; i < namesSize; i++) {
         status = napi_has_named_property(env, value, names[i].c_str(), &hasProperty);
         if (status == napi_ok && hasProperty) {
             typeMatched = true;
@@ -523,7 +530,6 @@ float BorderOption::ParseLength(napi_env env, napi_value &value)
     // string | number | Resource
     napi_valuetype type;
     if (napi_typeof(env, value, &type) == napi_ok && type == napi_string) {
-        // TODO Percentage support
         size_t length;
         napi_get_value_string_utf8(env, value, nullptr, 0, &length);
         char buf[length + 1];
@@ -543,7 +549,6 @@ float BorderOption::ParseLength(napi_env env, napi_value &value)
 
 uint32_t BorderOption::ParseResourceColor(napi_env env, napi_value &value)
 {
-    // TODO support ResourceColor parse
     OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN,
                  "BorderOption",
                  "Border only support width radius for now");
@@ -554,7 +559,6 @@ int32_t BorderOption::parseBorderStyle(napi_env env, napi_value &value)
 {
     // C: ARKUI_BORDER_STYLE_SOLID = 0, ARKUI_BORDER_STYLE_DASHED, ARKUI_BORDER_STYLE_DOTTED
     // JS: Dotted, Dashed, Solid
-    // TODO support BorderStyle parse
     OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN,
                  "BorderOption",
                  "Border only support width radius for now");

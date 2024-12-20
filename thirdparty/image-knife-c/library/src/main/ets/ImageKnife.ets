@@ -15,6 +15,7 @@
 import { ImageKnifeRequest } from './model/ImageKnifeRequest';
 import nativeNode from 'libimageknifec.so';
 import { ImageKnifeOption } from './model/ImageKnifeOption';
+import { common } from '@kit.AbilityKit';
 
 export class ImageKnife {
   private static instance: ImageKnife;
@@ -38,7 +39,7 @@ export class ImageKnife {
    * @param path 文件目录
    */
   async initFileCache(context: Context, size: number = 256, memory: number = 256 * 1024 * 1024,path?: string): Promise<string>  {
-    return await nativeNode.initFileCache(context, size, memory, path);
+    return await nativeNode.initFileCache(context.filesDir, size, memory, path);
   }
 
   /**
@@ -61,7 +62,15 @@ export class ImageKnife {
     } else {
       imageKnifeOption = loadSrc;
     }
-    return nativeNode.preload(imageKnifeOption)
+    // 创建 ImageKnifeRequest 实例，其他参数为空或使用默认值
+    const request = new ImageKnifeRequest(
+      imageKnifeOption,
+      imageKnifeOption.context !== undefined ? imageKnifeOption.context : getContext() as common.UIAbilityContext,
+      0,
+      0,
+      0
+    );
+    return nativeNode.preload(request)
   }
   /**
    * 取消图片请求

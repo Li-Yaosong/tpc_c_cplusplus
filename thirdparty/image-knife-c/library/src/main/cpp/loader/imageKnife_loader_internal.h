@@ -48,7 +48,7 @@ public:
                               Position postion = Position::FRONT) override;
 
 private:
-    std::shared_ptr<MemoryCacheInterceptor> memoryInterceptorHead_ = nullptr; 
+    std::shared_ptr<MemoryCacheInterceptor> memoryInterceptorHead_ = nullptr;
     std::shared_ptr<MemoryCacheInterceptor> memoryInterceptorTail_ = nullptr;
 
     std::shared_ptr<FileCacheInterceptor> fileInterceptorHead_ = nullptr;

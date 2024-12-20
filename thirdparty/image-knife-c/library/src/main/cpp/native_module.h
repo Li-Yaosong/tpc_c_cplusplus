@@ -46,9 +46,7 @@ public:
 
     NativeModuleInstance()
     {
-        // 获取NDK接口的函数指针结构体对象，用于后续操作。
         OH_ArkUI_GetModuleInterface(ARKUI_NATIVE_NODE, ArkUI_NativeNodeAPI_1, arkUINativeNodeApi_);
-        assert(arkUINativeNodeApi_);
     }
     // 暴露给其他模块使用。
     ArkUI_NativeNodeAPI_1 *GetNativeNodeAPI()
@@ -63,4 +61,4 @@ private:
 
 } // namespace ImageKnifeC
 
-#endif //IMAGE_KNIFE_C_NATIVE_MODULE_H
+#endif // IMAGE_KNIFE_C_NATIVE_MODULE_H

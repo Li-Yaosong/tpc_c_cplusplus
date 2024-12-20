@@ -42,7 +42,7 @@ public:
             {"initFileCache", nullptr, InitFileCache, nullptr, nullptr, nullptr, napi_default, nullptr},
             {"preload", nullptr, Preload, nullptr, nullptr, nullptr, napi_default, nullptr},
             {"cancel", nullptr, Cancel, nullptr, nullptr, nullptr, napi_default, nullptr},
-            {"setMaxRequests", nullptr, SetMaxRequests, nullptr, nullptr, nullptr, napi_default,nullptr}
+            {"setMaxRequests", nullptr, SetMaxRequests, nullptr, nullptr, nullptr, napi_default, nullptr}
         };
         napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
     }
@@ -54,7 +54,7 @@ private:
     static napi_value InitFileCache(napi_env env, napi_callback_info info);
     static napi_value Preload(napi_env env, napi_callback_info info);
 
-    //用于取消等待队列的任务
+    // 用于取消等待队列的任务
     static napi_value Cancel(napi_env env, napi_callback_info info);
     static napi_value SetMaxRequests(napi_env env, napi_callback_info info);
 };

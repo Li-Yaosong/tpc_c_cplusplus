@@ -62,7 +62,6 @@ private:
 
         if (length > UINT32_MAX) {
             // 默认拦截器支持的length类型为uint32_t
-            // TODO 这里使用delete 还是free ？
             free(buffer);
             task->EchoError("Resource Image size out of range!");
             return false;

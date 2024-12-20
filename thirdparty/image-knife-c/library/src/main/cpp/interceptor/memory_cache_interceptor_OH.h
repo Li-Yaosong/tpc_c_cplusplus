@@ -44,9 +44,11 @@ private:
     bool Read(ImageKnifeTask *task)
     {
         std::shared_ptr<ImageKnifeOption> imageKnifeOption = task->request->GetImageKnifeOption();
-        std::string memoryKey = ImageKnife::GetInstance().GetEngineKeyImpl()->GenerateMemoryKey(task->imageSrc, task->type,
-                                            imageKnifeOption.get(), task->request->GetImageKnifeOption()->signature);
-
+        std::string memoryKey = ImageKnife::GetInstance().GetEngineKeyImpl()->
+                                GenerateMemoryKey(task->imageSrc,
+                                                  task->type,
+                                                  imageKnifeOption.get(),
+                                                  task->request->GetImageKnifeOption()->signature);
         if (LruCache::GetInstance()->Contains(memoryKey)) {
             task->product.pixelmap = LruCache::GetInstance()->Get(memoryKey);
 
@@ -62,8 +64,11 @@ private:
     bool Write(ImageKnifeTask *task)
     {
         std::shared_ptr<ImageKnifeOption> imageKnifeOption = task->request->GetImageKnifeOption();
-        std::string memoryKey = ImageKnife::GetInstance().GetEngineKeyImpl()->GenerateMemoryKey(task->imageSrc, task->type,
-                                            imageKnifeOption.get(), task->request->GetImageKnifeOption()->signature);
+        std::string memoryKey = ImageKnife::GetInstance().GetEngineKeyImpl()->
+                                GenerateMemoryKey(task->imageSrc,
+                                                  task->type,
+                                                  imageKnifeOption.get(),
+                                                  task->request->GetImageKnifeOption()->signature);
 
         if (task->product.pixelmap != nullptr && task->product.pixelmap->GetPixelMap() != nullptr) {
             LruCache::GetInstance()->Put(memoryKey, task->product.pixelmap);

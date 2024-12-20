@@ -25,6 +25,8 @@ namespace ImageKnifeC {
 napi_value ImageKnifeNapi::CreateNativeRoot(napi_env env, napi_callback_info info)
 {
     size_t argc = 4;
+    const size_t syncLoadIndex = 3;
+    const size_t optionIndex = 2;
     napi_value args[4] = {nullptr};
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
 
@@ -39,11 +41,11 @@ napi_value ImageKnifeNapi::CreateNativeRoot(napi_env env, napi_callback_info inf
     napi_get_value_string_utf8(env, args[1], componentId, length + 1, nullptr);
 
     // 获取ImageKnifeOption及创建imageKnifeNode
-    auto imageKnifeOption = std::make_shared<ImageKnifeOption>(env, args[2]);
+    auto imageKnifeOption = std::make_shared<ImageKnifeOption>(env, args[optionIndex]);
 
     // 获取syncLoad
     bool syncLoad = false;
-    napi_get_value_bool(env, args[3], &syncLoad);
+    napi_get_value_bool(env, args[syncLoadIndex], &syncLoad);
 
     auto imageKnifeNode = std::make_shared<ImageKnifeNode>(std::string(componentId), imageKnifeOption);
     imageKnifeNode->SyncLoad(syncLoad);
@@ -58,6 +60,8 @@ napi_value ImageKnifeNapi::CreateNativeRoot(napi_env env, napi_callback_info inf
 napi_value ImageKnifeNapi::UpdateNativeRoot(napi_env env, napi_callback_info info)
 {
     size_t argc = 4;
+    const size_t componentVersionIndex = 2;
+    const size_t syncLoadIndex = 3;
     napi_value args[4] = {nullptr};
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
 
@@ -72,11 +76,11 @@ napi_value ImageKnifeNapi::UpdateNativeRoot(napi_env env, napi_callback_info inf
 
     // 获取componentVersion
     int componentVersion;
-    napi_get_value_int32(env, args[2], &componentVersion);
+    napi_get_value_int32(env, args[componentVersionIndex], &componentVersion);
 
     // 获取syncLoad
     bool syncLoad = false;
-    napi_get_value_bool(env, args[3], &syncLoad);
+    napi_get_value_bool(env, args[syncLoadIndex], &syncLoad);
     // 找到ImageNode
     auto baseNode = NativeEntry::GetInstance()->GetArkUIBaseNode(componentId).get();
     if (baseNode != nullptr) {
@@ -181,7 +185,7 @@ napi_value ImageKnifeNapi::InitFileCache(napi_env env, napi_callback_info info)
         return promise;
     }
 
-    //获取 filesDir 参数
+    // 获取 filesDir 参数
     napi_value jsFilesDir = args[0];
     size_t strLength;
     status = napi_get_value_string_utf8(env, jsFilesDir, nullptr, 0, &strLength);
@@ -225,7 +229,7 @@ napi_value ImageKnifeNapi::InitFileCache(napi_env env, napi_callback_info info)
     size_t pathLength = 0;
     status = napi_get_value_string_utf8(env, jsPath, nullptr, 0, &pathLength);
     if (status == napi_ok) {
-       FileCache::asyncData->path.resize(pathLength);
+        FileCache::asyncData->path.resize(pathLength);
         status = napi_get_value_string_utf8(env, jsPath,
                                             &FileCache::asyncData->path[0],
                                             pathLength + 1,
@@ -255,7 +259,6 @@ napi_value ImageKnifeNapi::InitFileCache(napi_env env, napi_callback_info info)
                                     FileCache::FileCacheInitComplete,
                                     FileCache::asyncData,
                                     &FileCache::asyncData->asyncWork);
-
     if (status != napi_ok) {
         handleError("Failed to create async work");
         return promise;
@@ -274,13 +277,76 @@ napi_value ImageKnifeNapi::InitFileCache(napi_env env, napi_callback_info info)
 
 napi_value ImageKnifeNapi::Preload(napi_env env, napi_callback_info info)
 {
+    napi_status status;
+    size_t argc = 1;
+    napi_value args[1] = {nullptr};
+    status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
+
+    // 获取传入的 request 参数
+    napi_value jsRequest = args[0];
+
+    // 从 request 中获取 imageKnifeOption 属性
+    napi_value jsImageKnifeOption;
+    status = napi_get_named_property(env, jsRequest, "imageKnifeOption", &jsImageKnifeOption);
+    if (status != napi_ok) {
+        napi_throw_error(env, "ImageKnifeNapi::Preload", "Failed to get 'imageKnifeOption' property from request");
+        return nullptr;
+    }
+
+    auto imageKnifeOption = std::make_shared<ImageKnifeOption>(env, jsImageKnifeOption);
+
+    std::shared_ptr<ImageKnifeRequestInternal> request =
+        std::dynamic_pointer_cast<ImageKnifeRequestInternal>(ImageKnife::GetInstance().Preload(imageKnifeOption));
+    if (!request) {
+        napi_throw_error(env, "ImageKnifeNapi::Preload", "Failed to cast request");
+        return nullptr;
+    }
+
+    request->SetEnv(env);
+
+    // 创建对 jsRequest 的引用并保存到 request 中
+    napi_ref jsRequestRef = nullptr;
+
+    // 第四个参数必填项，即使不使用
+    status = napi_wrap(env, args[0], request.get(), [](napi_env env, void* data, void* hint) {},
+                       nullptr, &jsRequestRef);
+    if (status != napi_ok) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, "ImageKnifeNapi::Preload", "Failed to bind the JavaScript object");
+    }
+
+    request->SetJsRequestRef(jsRequestRef);
+    return jsRequest;
 }
 
 napi_value ImageKnifeNapi::Cancel(napi_env env, napi_callback_info info)
 {
+    napi_status status;
+    size_t argc = 1;
+    napi_value args[1] = {nullptr};
+    status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
+    if (status != napi_ok) {
+        return nullptr;
+    }
+
+    ImageKnifeRequestInternal* request = nullptr;
+    status = napi_unwrap(env, args[0], (void**)&request);
+    if (status != napi_ok) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, "ImageKnifeNapi::Cancel", "Failed to unwrap");
+        return nullptr;
+    }
+
+    if (request == nullptr) {
+        OH_LOG_Print(LOG_APP, LOG_DEBUG, LOG_DOMAIN, "ImageKnifeNapi::Cancel", "request is null");
+        return nullptr;
+    }
+    // 恢复成智能指针
+    auto requestSharePtr = request->shared_from_this();
+    ImageKnife::GetInstance().Cancel(requestSharePtr);
+    return nullptr;
 }
 
-napi_value ImageKnifeNapi::SetMaxRequests(napi_env env, napi_callback_info info) {
+napi_value ImageKnifeNapi::SetMaxRequests(napi_env env, napi_callback_info info)
+{
     // 获取 concurrency 参数
     napi_status status;
     // 获取传递的参数数量

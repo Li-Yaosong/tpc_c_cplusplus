@@ -24,7 +24,7 @@ std::string ImageKnifeTaskInternal::GetTaskInfo(ImageKnifeRequestSource type, Im
     }
 
     std::string source;
-    switch(type) {
+    switch (type) {
         case ImageKnifeRequestSource::MAINSRC:
             source = "MainSrc";
             break;
@@ -52,7 +52,7 @@ void ImageKnifeTaskInternal::QueryDisplayPixelmapInfo()
         return;
     }
 
-    if (OH_PixelmapNative_GetImageInfo(product.pixelmap->GetPixelMap(),imageInfo) != IMAGE_SUCCESS) {
+    if (OH_PixelmapNative_GetImageInfo(product.pixelmap->GetPixelMap(), imageInfo) != IMAGE_SUCCESS) {
         return;
     }
 
@@ -61,12 +61,13 @@ void ImageKnifeTaskInternal::QueryDisplayPixelmapInfo()
     OH_PixelmapImageInfo_GetHeight(imageInfo, &pixelmapInfo.height);
     OH_PixelmapImageInfo_GetPixelFormat(imageInfo, &pixelFormat);
     OH_PixelmapImageInfo_Release(imageInfo);
-
+    const int half = 2;
+    const int four = 4;
     if (pixelFormat == PIXEL_FORMAT_NV21 || pixelFormat == PIXEL_FORMAT_NV12) {
         pixelmapInfo.size = pixelmapInfo.width * pixelmapInfo.height +
-                            ((pixelmapInfo.width + 1) / 2) * ((pixelmapInfo.height + 1) / 2) * 2;
+                            ((pixelmapInfo.width + 1) / half) * ((pixelmapInfo.height + 1) / half) * half;
     } else {
-        pixelmapInfo.size = pixelmapInfo.width * pixelmapInfo.height * 4;
+        pixelmapInfo.size = pixelmapInfo.width * pixelmapInfo.height * four;
     }
 
     switch (pixelFormat) {

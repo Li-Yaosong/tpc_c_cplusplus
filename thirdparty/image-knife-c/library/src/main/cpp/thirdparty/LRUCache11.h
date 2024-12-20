@@ -88,7 +88,7 @@ template <class Key, class Value, class Lock = NullLock,
           class Map = std::unordered_map<
               Key, typename std::list<KeyValuePair<Key, Value>>::iterator>>
 class Cache {
-    public:
+public:
     typedef KeyValuePair<Key, Value> node_type;
     typedef std::list<KeyValuePair<Key, Value>> list_type;
     typedef Map map_type;
@@ -245,15 +245,15 @@ class Cache {
     {
         Guard g(lock_);
         if (keys_.empty()) {
-        return false;  
+            return false;
         }
         const auto& tail = keys_.back();
         key = tail.key;
         value = tail.value;
-        return true;  
+        return true;
     }
 
- protected:
+protected:
     const Value& get_nolock(const Key& k)
     {
         const auto iter = cache_.find(k);

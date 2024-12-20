@@ -39,14 +39,14 @@ public:
 
     void Cancel(ImageKnifeTask *task) override
     {
-        // TODO 使用线程内同步下载时，cancel存在问题，暂时屏蔽
         return;
+        const uint64_t errorCode = 1007900993;
         if (task->product.request != nullptr && task->product.session != nullptr) {
             uint32_t errorCode = HMS_Rcp_CancelRequest(task->product.session, task->product.request);
             uint32_t errCodeSession = HMS_Rcp_CancelSession(task->product.session);
             if (!errorCode) {
                 task->cancelInfo = "Cancel download success: " + std::to_string(errCodeSession);
-            } else if (errorCode == 1007900993) {
+            } else if (errorCode == errorCode) {
                 task->cancelInfo = "Cancel Failed: Session is closed or not work," + std::to_string(errCodeSession);
             } else {
                 task->cancelInfo = "Cancel Failed, error code: " +
@@ -112,7 +112,7 @@ private:
         data->fetchFinished = true;
     }
 
-    bool HttpFetchSync(Rcp_Session *session, Rcp_Request *request,ImageKnifeTask *task)
+    bool HttpFetchSync(Rcp_Session *session, Rcp_Request *request, ImageKnifeTask *task)
     {
         uint32_t errCode = 0;
         Rcp_Response *response = HMS_Rcp_FetchSync(session, request, &errCode);

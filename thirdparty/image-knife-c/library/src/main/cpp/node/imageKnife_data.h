@@ -84,7 +84,7 @@ private:
 };
 
 // ArkTs EventImage
-struct EventImage{
+struct EventImage {
     int32_t loadingStatus;
     float width;
     float height;
@@ -132,8 +132,8 @@ public:
         return type_;
     }
 
-    OptionData():type_(DataType::UNDEFINED) {};
-    OptionData(unsigned int type):type_(DataType::UNDEFINED),availableType_(type) {};
+    OptionData() : type_(DataType::UNDEFINED) {};
+    explicit OptionData(unsigned int type) : type_(DataType::UNDEFINED), availableType_(type) {};
     ~OptionData()
     {
         CleanData();
@@ -147,8 +147,8 @@ private:
         // Resource has attr: id
         Resource resource;
         // 由OptionData管理
-        ImageSrc():pixelMap(nullptr){};
-        ~ImageSrc(){};
+        ImageSrc() : pixelMap(nullptr) {};
+        ~ImageSrc() {};
     };
 
     unsigned int availableType_;
@@ -164,21 +164,21 @@ struct ImageData : public OptionData {
     {
     }
 
-    ImageData(std::string url) : ImageData()
+    explicit ImageData(std::string url) : ImageData()
     {
         SetString(url);
     }
 
-    ImageData(const char* url) : ImageData(std::string(url))
+    explicit ImageData(const char* url) : ImageData(std::string(url))
     {
     }
 
-    ImageData(OH_PixelmapNative *pixelMap) : ImageData()
+    explicit ImageData(OH_PixelmapNative *pixelMap) : ImageData()
     {
         SetPixelMap(pixelMap);
     }
 
-    ImageData(Resource resource) : ImageData()
+    explicit ImageData(Resource resource) : ImageData()
     {
         SetResource(resource);
     }
@@ -189,12 +189,12 @@ struct ImageDataBack : public OptionData {
     {
     }
 
-    ImageDataBack(std::string base64) : ImageDataBack()
+    explicit ImageDataBack(std::string base64) : ImageDataBack()
     {
         SetString(base64);
     }
 
-    ImageDataBack(OH_PixelmapNative *pixelMap) : ImageDataBack()
+    explicit ImageDataBack(OH_PixelmapNative *pixelMap) : ImageDataBack()
     {
         SetPixelMap(pixelMap);
     }

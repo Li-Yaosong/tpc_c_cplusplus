@@ -34,8 +34,8 @@ bool Interceptor::Process(ImageKnifeTask *task)
         OH_LOG_Print(LOG_APP, LOG_DEBUG, LOG_DOMAIN,
                      "Performance",
                      "[%{public}lld] %{public}s %{public}s Finished WirteMode: %{public}d",
-                     duration.count(), ImageKnifeTaskInternal::GetTaskInfo(task->type,
-                     task->request.get()).c_str(),
+                     duration.count(),
+                     ImageKnifeTaskInternal::GetTaskInfo(task->type, task->request.get()).c_str(),
                      name.c_str(),
                      task->product.writeCache);
 

@@ -66,12 +66,12 @@ public:
         start_ = std::chrono::high_resolution_clock::now();
     }
 
-    ImageKnifeRequestInternal(std::shared_ptr<ImageKnifeOption> option)
+    eplicit ImageKnifeRequestInternal(std::shared_ptr<ImageKnifeOption> option)
         :imageKnifeOption_(option), isPreload_(true)
     {
     }
 
-    ~ImageKnifeRequestInternal() 
+    ~ImageKnifeRequestInternal() override
     {
         if (isPreload_) {
             napi_value jsRequest = nullptr;
@@ -98,7 +98,7 @@ private:
     std::string componentId_ = "Preload";
     int componentVersion_;
     bool syncLoad_ = false;
-    std::unordered_map<ImageKnifeRequestSource,ImageKnifeTask*>taskIdMap_;
+    std::unordered_map<ImageKnifeRequestSource, ImageKnifeTask*> taskIdMap_;
 
     // ---- 性能日志相关 ----
     typedef std::chrono::time_point<std::chrono::high_resolution_clock> TimePoint;
@@ -111,7 +111,7 @@ private:
     // 标记当前显示的图片是否来自内存缓存
     bool fromMemory_;
 
-    //判断是否显示图片
+    // 判断是否显示图片
     bool isPreload_;
     napi_env env_ = nullptr;
     napi_ref jsRequestRef_ = nullptr;

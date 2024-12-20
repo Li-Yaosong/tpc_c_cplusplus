@@ -31,12 +31,19 @@ public:
 
     void SetDefaultImageKnifeLoader(std::shared_ptr<ImageKnifeLoader> imageLoader) override;
 
-    void InitFileCache(std::string context = "", int size = 256,
+    virtual std::shared_future<std::string> InitFileCacheAsync(std::string cachePath, int size, int memory,
+                                                               std::string path) override ;
+
+    void InitFileCache(std::string cachePath = "", int size = 256,
                        int memory = 256 * 1024 * 1024, std::string path = "ImageKnife") override;
 
     void SetEngineKeyImpl(IEngineKey *keyPtr) override;
 
     IEngineKey *GetEngineKeyImpl() const override;
+
+    std::shared_ptr<ImageKnifeRequest> Preload(std::shared_ptr<ImageKnifeOption> imageKnifeOption) override ;
+
+    void Cancel(std::shared_ptr<ImageKnifeRequest> request) override ;
 
     void SetMaxRequests(int concurrency) override;
 private:
@@ -47,10 +54,10 @@ private:
 
     ImageKnifeInternal() = default;
     ImageKnifeInternal(const ImageKnifeInternal&) = delete;
-    ImageKnifeInternal &operator= (const ImageKnifeInternal&) = delete;
+    ImageKnifeInternal &operator = (const ImageKnifeInternal&) = delete;
     friend ImageKnife &ImageKnife::GetInstance();
 
-    ~ImageKnifeInternal()
+    ~ImageKnifeInternal() override
     {
         if (keyPtr_ != nullptr) {
             delete keyPtr_;

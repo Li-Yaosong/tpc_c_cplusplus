@@ -88,9 +88,7 @@ public:
         }
 
         InnerWorker *worker = static_cast<InnerWorker*>(task);
-        napi_status status; 
-        status = napi_cancel_async_work(env_, worker->worker_);
-
+        napi_status status = napi_cancel_async_work(env_, worker->worker_);
         if (status == napi_generic_failure) {
             // Task已经开始
             if (func) {
@@ -118,7 +116,7 @@ private:
         {
             InnerWorker* worker = static_cast<InnerWorker*>(data);
             if (worker->execute_ != nullptr) {
-                worker->execute_(worker->data_);    
+                worker->execute_(worker->data_);
             }
         }
 

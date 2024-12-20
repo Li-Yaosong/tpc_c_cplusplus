@@ -28,7 +28,6 @@ public:
 
     ~ArkUINode() override {}
 
-    // NDK相关通用属性调用封装
     void SetWidth(float width)
     {
         ArkUI_NumberValue value[] = {{.f32 = width}};

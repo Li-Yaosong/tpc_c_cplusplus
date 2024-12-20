@@ -22,7 +22,7 @@
 namespace ImageKnifeC {
 class ImageKnifeRequest {
 public:
-    enum class Status{
+    enum class Status {
         PROGRESS,
         COMPLETE,
         ERROR,

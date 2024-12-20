@@ -5,7 +5,7 @@ export const createNativeRoot: (content: Object , componentId: string, imageKinf
 export const updateNativeRoot: (componentId: string, imageKinfeOption: Object, componentVersion: number, syncLoad: boolean) => void;
 export const clearNativeRoot: (componentId: string) => void;
 export const destroyNativeRoot: (componentId: string) => void;
-export const initFileCache: (context: object, size: number, memory: number, path?: string) => Promise<string>;
+export const initFileCache: (filesDir: string, size: number, memory: number, path?: string) => Promise<string>;
 export const setMaxRequests: (concurrency: number) => void;
-export const preload: (imageKinfeOption: ImageKnifeOption) => ImageKnifeRequest;
+export const preload: (imageKnifeRequest: ImageKnifeRequest) => ImageKnifeRequest;
 export const cancel: (request: ImageKnifeRequest)=> void;

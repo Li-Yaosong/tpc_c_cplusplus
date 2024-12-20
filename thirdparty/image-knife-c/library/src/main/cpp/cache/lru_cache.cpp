@@ -15,7 +15,6 @@
 
 #include "lru_cache.h"
 #include <cstdio>
-#include <stdio.h>
 
 namespace ImageKnifeC {
 const long LruCache::defaultSize = 50;
@@ -27,12 +26,10 @@ LruCache *LruCache::cachePtr = nullptr;
 
 LruCache *LruCache::GetInstance()
 {
-#define DEFAULT_MAX_SIZE 10
-#define DEFAULT_MAX_MEMORY 1024 * 1024
     if (!cachePtr) {
         // js层传入的参数
-        size_t allowMaxsize = DEFAULT_MAX_SIZE;
-        size_t allowMaxMemory = DEFAULT_MAX_MEMORY;
+        const size_t allowMaxsize = 10;
+        const size_t allowMaxMemory = 1024 * 1024;
         cachePtr = new LruCache(allowMaxsize, allowMaxMemory);
     }
     return cachePtr;

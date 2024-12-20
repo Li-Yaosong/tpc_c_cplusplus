@@ -27,7 +27,7 @@ ImageKnifeOption::ImageKnifeOption(napi_env env, napi_value &jsObject)
     imageLoader =  ImageKnife::GetInstance().GetDefaultImageKnifeLoader();
 
     napi_value value;
-    if (napi_get_named_property(env, jsObject, "loadSrc", &value) == napi_ok ) {
+    if (napi_get_named_property(env, jsObject, "loadSrc", &value) == napi_ok) {
         loadSrc.SetValue(env, value);
     }
 
@@ -115,9 +115,9 @@ ImageKnifeOption::ImageKnifeOption(napi_env env, napi_value &jsObject)
 
 ArkUI_ObjectFit ImageKnifeOption::ParseImagFit(napi_env env, napi_value &value)
 {
-#define DEFAULT_IMAGEFIT_VALUE 2
+    const int defaultValue = 2;
     // default is Cover
-    int num = DEFAULT_IMAGEFIT_VALUE;
+    int num = defaultValue;
     napi_get_value_int32(env, value, &num);
     // js 侧的枚举 ImageFit 与侧对应的ArkUI_ObjectFit 不一致，需要映射
     ArkUI_ObjectFit jsEnum[] = {
@@ -131,7 +131,7 @@ ArkUI_ObjectFit ImageKnifeOption::ParseImagFit(napi_env env, napi_value &value)
 
     // 如果给了异常值，默认cover模式
     if (num < 1 || num > sizeof(jsEnum) / sizeof(jsEnum[0])) {
-        num = DEFAULT_IMAGEFIT_VALUE;
+        num = defaultValue;
     }
 
     return jsEnum[num - 1];
@@ -139,7 +139,6 @@ ArkUI_ObjectFit ImageKnifeOption::ParseImagFit(napi_env env, napi_value &value)
 
 void ImageKnifeOption::CallJsOnComplete(EventImage &eventImage)
 {
-    // TODO 什么时候eventIamge触发时是undefined？
     napi_status status;
     napi_value thisValue, jsFunc, eventImageValue, number;
 
@@ -175,7 +174,7 @@ void ImageKnifeOption::CallJsOnComplete(EventImage &eventImage)
     napi_get_reference_value(env_, jsThis_, &thisValue);
     napi_get_reference_value(env_, onComplete_, &jsFunc);
     status = napi_call_function(env_, thisValue, jsFunc, 1, &eventImageValue, nullptr);
-    if ( status != napi_ok) {
+    if (status != napi_ok) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN,
                      "ImageKnifeOption",
                      "CallJsOnComplete failed, napi status: %{public}d",
@@ -271,14 +270,14 @@ void OnLoadCallBack::CallJsOnLoadSuccess(ImageDataBack &data, ImageKnifeData &im
         napi_get_undefined(env_, &args[0]);
     }
 
-    // TODO: 暂未实现ImageKnifeData, 目前使用undefined测试
     napi_get_undefined(env_, &args[1]);
 
     napi_status status;
     napi_value thisValue, jsFunc;
+    const int argv = 2;
     napi_get_reference_value(env_, jsThis_, &thisValue);
     napi_get_reference_value(env_, onLoadSuccess_, &jsFunc);
-    status = napi_call_function(env_, thisValue, jsFunc, 2, args, nullptr);
+    status = napi_call_function(env_, thisValue, jsFunc, argv, args, nullptr);
     if (status != napi_ok) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN,
                      "ImageKnifeNode",

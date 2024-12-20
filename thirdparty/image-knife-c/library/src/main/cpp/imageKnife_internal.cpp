@@ -38,7 +38,15 @@ void ImageKnifeInternal::CancelRequest(std::shared_ptr<ImageKnifeRequest> reques
     this->dispatcher->CancelRequest(std::static_pointer_cast<ImageKnifeRequestInternal>(request));
 }
 
-void ImageKnifeInternal::InitFileCache(std::string context, int size, int memory, std::string path)
+std::shared_future<std::string> ImageKnifeInternal::InitFileCacheAsync(std::string cachePath, int size, int memory, std::string path) 
+{
+    // 创建线程对象并分离线程
+    std::thread initThread(&ImageKnifeInternal::InitFileCache, this, cachePath, size, memory, path);
+    initThread.detach();  // 分离线程，主线程不需要等待
+    return ImageKnifeC::FileCache::GetInstance()->promise.get_future().share();
+}
+
+void ImageKnifeInternal::InitFileCache(std::string cachePath, int size, int memory, std::string path) 
 {
     if (path.empty()) {
         path = "ImageKnife";
@@ -46,7 +54,7 @@ void ImageKnifeInternal::InitFileCache(std::string context, int size, int memory
 
     // 初始化文件缓存 
     ImageKnifeC::FileCache::GetInstance()->Init(size,memory);
-    ImageKnifeC::FileCache::GetInstance()->filePath = context + "/" + path;
+    ImageKnifeC::FileCache::GetInstance()->filePath = cachePath + "/" + path;
 
     ImageKnifeC::FileCache::GetInstance()->InitFileCache();
 }
@@ -76,4 +84,22 @@ void ImageKnifeInternal::SetDefaultImageKnifeLoader(std::shared_ptr<ImageKnifeLo
     imageLoader_ = imageLoader;
 }
 
+std::shared_ptr<ImageKnifeRequest> ImageKnifeInternal::Preload(std::shared_ptr<ImageKnifeOption> imageKnifeOption)
+{
+    auto request = std::make_shared<ImageKnifeRequestInternal>(imageKnifeOption);
+    ImageKnife::GetInstance().Execute(request);
+    return request;
+}
+
+void ImageKnifeInternal::Cancel(std::shared_ptr<ImageKnifeRequest> request)
+{
+    if (request == nullptr) {
+        return;
+    }
+    // 使用 static_pointer_cast 进行类型转换
+    auto internalRequest = std::static_pointer_cast<ImageKnifeRequestInternal>(request);
+
+    // 调用 Destroy 方法
+    internalRequest->Destroy();
+}
 } // namespace ImageKnifeC

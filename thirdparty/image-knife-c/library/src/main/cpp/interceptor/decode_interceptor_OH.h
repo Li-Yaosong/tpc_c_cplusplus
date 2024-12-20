@@ -32,9 +32,7 @@ public:
     {
         // 确定数据来源是网络下载response 还是本地文件buffer
         if (task->product.response != nullptr) {
-            return Decode((uint8_t*)(task->product.response->body.buffer),
-                                     task->product.response->body.length,
-                                     task);
+            return Decode((uint8_t*)(task->product.response->body.buffer), task->product.response->body.length, task);
         } else if (task->product.imageBuffer != nullptr) {
             return Decode(task->product.imageBuffer.get(), task->product.imageLength, task);
         }

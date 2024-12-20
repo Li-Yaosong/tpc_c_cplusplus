@@ -19,7 +19,7 @@
 #include "IJob_queue.h"
 
 namespace ImageKnifeC {
-enum Priority{
+enum Priority {
     HIGH = 0,
     MEDIUM,
     LOW

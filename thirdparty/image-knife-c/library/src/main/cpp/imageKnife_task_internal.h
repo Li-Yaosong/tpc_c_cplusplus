@@ -80,7 +80,7 @@ public:
         if (interceptor_ != nullptr) {
             source = " (" + interceptor_.load()->name + ") ";
         }
-        lastError_ = GetTaskInfo(type,request.get()) + errorInfo + source;
+        lastError_ = GetTaskInfo(type, request.get()) + errorInfo + source;
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, "TaskError", "%{public}s", lastError_.c_str());
     }
 
@@ -115,6 +115,6 @@ private:
     bool fatalError_ = false;
     void *taskId_ = nullptr;
     std::string lastError_;
-}; 
+};
 } // end of namespace
 #endif // IMAGE_KNIFE_C_KEKE_IMAGEKNIFE_TASK_INTERNAL_H

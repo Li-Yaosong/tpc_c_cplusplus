@@ -26,7 +26,7 @@ export default class EntryAbility extends UIAbility {
       });
 
     //Set max requests
-    ImageKnife.getInstance().setMaxRequests(6);
+    ImageKnife.getInstance().setMaxRequests(8);
 
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {
