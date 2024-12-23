@@ -65,7 +65,7 @@ prepare() {
 
 build() {
     cd $pkgname-$ARCH-build
-    ./configure "$@" --host=$host --enable-static --enable-profiling > $buildlog 2>&1
+    ./configure "$@" --host=$host --enable-static > $buildlog 2>&1
     $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
