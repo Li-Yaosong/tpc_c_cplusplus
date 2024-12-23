@@ -8,7 +8,7 @@ url="https://github.com/audacity/libid3tag"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("GPL-2.0-only")
 depends=()
-makedepends=("wget")
+makedepends=("wget" "gperf")
 
 source="https://launchpadlibrarian.net/414577184/"$pkgname"_"$pkgver".orig.tar.gz"
 
@@ -28,6 +28,10 @@ host=
 prepare() {
     if [ $patchflag == true ];then
         cd $builddir
+        # 删除两个c文件，该c文件会使用gperf生成
+        rm frametype.c compat.c
+        # 打patch修复头文件函数参数与源文件函数参数不一致的问题
+        patch -p1 < $PKGBUILD_ROOT/libid3tag_oh_gperf.patch > $publicbuildlog  2>&1
         # 该库由于没有测试用例，所以打patch新增测试用例
         patch -p1 < $PKGBUILD_ROOT/libid3tag_oh_pkg.patch > $publicbuildlog  2>&1
         # patch只需要打一次,关闭打patch
@@ -65,7 +69,7 @@ prepare() {
 
 build() {
     cd $pkgname-$ARCH-build
-    ./configure "$@" --host=$host --enable-static --enable-profiling > $buildlog 2>&1
+    ./configure "$@" --host=$host --enable-static > $buildlog 2>&1
     $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
