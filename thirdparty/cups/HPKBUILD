@@ -21,7 +21,7 @@ pkgdesc="CUPS is a standards-based, open source printing system developed by App
 url="https://www.cups.org/"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("Apache LICENSE")
-depends=("libusb" "zlib")
+depends=("zlib")
 makedepends=()
 
 source="https://github.com/apple/$pkgname/archive/refs/tags/v$pkgver.tar.gz"
