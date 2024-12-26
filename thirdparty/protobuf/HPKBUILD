@@ -23,7 +23,7 @@ prepare() {
     then 
         cp -rf $builddir $builddir-host-build
         cd $builddir-host-build
-        cp $LYCIUM_ROOT/../thirdparty/abseil-cpp/abseil-cpp*.zip `pwd`/third_party/abseil-cpp/
+        cp $LYCIUM_ROOT/../community/abseil-cpp/abseil-cpp*.zip `pwd`/third_party/abseil-cpp/
         unzip `pwd`/third_party/abseil-cpp/abseil-cpp*.zip -d `pwd`/third_party/abseil-cpp > /dev/null 2>&1
         mv `pwd`/third_party/abseil-cpp/abseil-cpp-*/* `pwd`/third_party/abseil-cpp/
         rm `pwd`/third_party/abseil-cpp/abseil-cpp*.zip
