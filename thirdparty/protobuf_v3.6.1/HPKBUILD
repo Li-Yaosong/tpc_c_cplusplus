@@ -48,7 +48,7 @@ prepare() {
     if $buildhostprotoc
     then 
         mkdir -p $builddir/third_party/abseil-cpp/
-        unzip $PKGBUILD_ROOT/../abseil-cpp/abseil-cpp*.zip -d $builddir/third_party/abseil-cpp > /dev/null 2>&1
+        unzip $PKGBUILD_ROOT/../../community/abseil-cpp/abseil-cpp*.zip -d $builddir/third_party/abseil-cpp > /dev/null 2>&1
         mv $builddir/third_party/abseil-cpp/abseil-cpp-*/* $builddir/third_party/abseil-cpp/
 
         mkdir -p $builddir/third_party/googletest/
