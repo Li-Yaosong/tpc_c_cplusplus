@@ -14,6 +14,18 @@ openharmonycheck() {
         echo "the network not ready, the test depends the network! make sure the network is OK!!" >> ${logfile}
         return 1
     fi
+
+    linkPath="/data/CIusr/bin/python"
+    realPath="/data/python3.8.10/bin/python"
+    if [! -e "${linkPath}"];then
+        ln -s ${realPath} ${linkPath}
+        echo "create python link" >> ${logfile}
+    fi
+
+    cd ${builddir}
+    mv ./host-build/compiler/cpp/bin/thrift ./host-build/compiler/cpp/bin/thrift.bak
+    cp ./${ARCH}-build/compiler/cpp/bin/thrift ./host-build/compiler/cpp/bin
+
     cd ${builddir}/${ARCH}-build
     ctest >> ${logfile} 2>&1
     res=$?
