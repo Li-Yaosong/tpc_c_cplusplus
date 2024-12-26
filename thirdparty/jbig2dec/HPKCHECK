@@ -6,6 +6,8 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     cd $pkgname-$ARCH-build
+    export LD_LIBRARY_PATH=/data/python3.8.10/lib:$LD_LIBRARY_PATH
+    sed -i "s#/usr/bin/env python#/data/python3.8.10/bin/python#g" test_jbig2dec.py
     make check-TESTS > ${logfile} 2>&1
     res=$?
     if [ $res -ne 0 ]
