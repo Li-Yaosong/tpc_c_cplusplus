@@ -10,13 +10,12 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("MIT")
 depends=()
 makedepends=()
-#source="https://github.com/sisong/$pkgname/archive/refs/tags/$pkgver.tar.gz"
-source="https://gitee.com/lycium_pkg_mirror/$pkgname/repository/archive/$pkgver"
+source="https://github.com/sisong/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 autounpack=true
 downloadpackage=true
 
-builddir=$pkgname-v${pkgver:1}
-packagename=$builddir.zip
+builddir=$pkgname-${pkgver:1}
+packagename=$builddir.tar.gz
 dependsname="bzip2 libmd5 zlib zstd"
 buildtools="make"
 
@@ -38,14 +37,12 @@ prepare() {
             echo "fail: git clone bzip2 $ret"
             return $ret
         fi
-        #git clone -b v1.5.5 https://github.com/sisong/zstd.git
-        git clone -b v1.5.5 https://gitee.com/lycium_pkg_mirror/zstd.git
+        git clone -b v1.5.5 https://github.com/sisong/zstd.git
         if [ $ret -ne 0 ]; then
             echo "fail: git clone zstd $ret"
             return $ret
         fi
-        #git clone -b v1.2.11 https://github.com/sisong/zlib.git
-        git clone -b v1.2.11 https://gitee.com/lycium_pkg_mirror/zlib.git
+        git clone -b v1.2.11 https://github.com/sisong/zlib.git
         if [ $ret -ne 0 ]; then
             echo "fail: git clone zlib $ret"
             return $ret
