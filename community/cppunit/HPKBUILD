@@ -34,8 +34,8 @@ prepare() {
 
 build() {
     cd $pkgname-$ARCH-build
-    ./configure "$@" --host=$host  >> `pwd`/build.log 2>&1
-    make -j4 VERBOSE=1 >> `pwd`/build.log 2>&1
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" --host=$host  >> $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
@@ -43,7 +43,7 @@ build() {
 
 package() {
     cd $pkgname-$ARCH-build
-    make install >> `pwd`/build.log 2>&1
+    $MAKE VERBOSE=1 install >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
     if [ $ARCH == "arm64-v8a" ];then
