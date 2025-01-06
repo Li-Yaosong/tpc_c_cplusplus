@@ -1,0 +1,16 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/SingleImage",
+    "pages/TestObjectFit",
+    "pages/LazyForEach",
+    "pages/ReuseLazyForEach",
+    "pages/TestBorder",
+    "pages/TransformPage",
+    "pages/PrefetchAndPreload",
+    "pages/AutoImageFit",
+    "pages/MultipleImageCallBack",
+    "pages/LongImagePage",
+    "pages/LocalImage"
+  ]
+}

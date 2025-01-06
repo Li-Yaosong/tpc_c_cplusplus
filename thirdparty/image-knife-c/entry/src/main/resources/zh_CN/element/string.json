@@ -1,0 +1,36 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "模块描述"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "adjust_size",
+      "value": "调整大小"
+    },
+    {
+      "name": "local_r_file",
+      "value": "本地$r文件"
+    },
+    {
+      "name": "local_rawfile",
+      "value": "本地rawfile文件"
+    },
+    {
+      "name": "Under_context_file",
+      "value": "本地沙箱路径文件"
+    },
+    {
+      "name": "local_other_module",
+      "value": "本地其他模块文件"
+    }
+  ]
+}
