@@ -40,12 +40,8 @@ prepare() {
 
 build() {
     cd $builddir
-    # fix this OHOS_SDK 中的cmake版本过低，无法识别zstd项目中使用的cmake函数，因此替换为系统安装的cmake
-    # 此方法编译的zstd没有soname和软连接，被其他项目依赖时，将全路径依赖
-    # 规避上面问题的方法添加OHOS系统识别到开发机的cmake目录，具体具体如下
-    # cp $OHOS_SDK/native/build-tools/cmake/share/cmake-3.16/Modules/Platform/OHOS.cmake xxx(代表你开发机安装的cmake的路径)/cmake-3.26.3-linux-x86_64/share/cmake-3.26/Modules/Platform
     PKG_CONFIG_LIBDIR="${pkgconfigpath}" \
-    cmake "$@" -B$ARCH-build -S./build/cmake \
+    $OHOS_SDK/native/build-tools/cmake/bin/cmake "$@" -B$ARCH-build -S./build/cmake \
     -DZSTD_BUILD_TESTS=ON > $buildlog 2>&1
     $MAKE -C $ARCH-build VERBOSE=1 >> $buildlog 2>&1
     ret=$?
