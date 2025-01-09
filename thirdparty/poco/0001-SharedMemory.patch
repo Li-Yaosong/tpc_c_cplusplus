@@ -1,0 +1,31 @@
+From ff5a2aa1b70ccf4770ad3297eca6e7dcbbf149ef Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?=E5=BE=90=E5=BB=BA?=
+ <10267290+xujian026@user.noreply.gitee.com>
+Date: Thu, 9 Jan 2025 18:05:23 +0800
+Subject: [PATCH] =?UTF-8?q?=E9=B8=BF=E8=92=99=E5=AF=B9SharedMemory?=
+ =?UTF-8?q?=E7=9A=84=E6=94=AF=E6=8C=81=E4=B8=8D=E5=AE=8C=E5=96=84=EF=BC=8C?=
+ =?UTF-8?q?=E5=85=88=E8=A1=8C=E5=B1=8F=E8=94=BD?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ Foundation/src/SharedMemory.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Foundation/src/SharedMemory.cpp b/Foundation/src/SharedMemory.cpp
+index da43a42..1d276a1 100644
+--- a/Foundation/src/SharedMemory.cpp
++++ b/Foundation/src/SharedMemory.cpp
+@@ -18,7 +18,7 @@
+ #include "SharedMemory_DUMMY.cpp"
+ #elif defined(POCO_OS_FAMILY_WINDOWS)
+ #include "SharedMemory_WIN32.cpp"
+-#elif defined(POCO_OS_FAMILY_UNIX)
++#elif defined(POCO_OS_FAMILY_UNIX) and !defined(__OHOS__)
+ #include "SharedMemory_POSIX.cpp"
+ #else
+ #include "SharedMemory_DUMMY.cpp"
+-- 
+2.36.1.windows.1
+
