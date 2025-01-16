@@ -1,0 +1,36 @@
+{
+    "name": "@ohos/jpeg-9f",
+    "description": "",
+    "version": "3.1",
+    "license": "MIT",
+    "publishAs": "code-segment",
+    "segment": {
+        "destPath": "third_party/jpeg-9f"
+    },
+    "dirs": {},
+    "scripts": {},
+    "licensePath": "LICENSE.md",
+    "component": {
+        "name": "jpeg-9f",
+        "subsystem": "thirdparty",
+        "syscap": [],
+        "features": [],
+        "adapted_system_type": [
+            "standard"
+        ],
+        "rom": "",
+        "ram": "",
+        "deps": {
+            "components": [],
+            "third_party": []
+        },
+        "build": {
+            "sub_component": [
+		    "//third_party/jpeg-9f:jpeg-9f"
+            ],
+            "inner_kits": [],
+            "test": []
+	}
+    }
+}
+
