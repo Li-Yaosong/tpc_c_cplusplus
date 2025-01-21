@@ -23,14 +23,14 @@ license=("BSD-2-Clause")
 depends=()
 makedepends=()
 
-source="https://github.com/cisco/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.tar.gz"
 
 autounpack=true
 downloadpackage=true
 patchflag=true
 buildtools="make"
 
-builddir=$pkgname-${pkgver:1}
+builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
 
 source envset.sh
