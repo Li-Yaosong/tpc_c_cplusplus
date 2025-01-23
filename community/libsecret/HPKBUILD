@@ -44,7 +44,7 @@ prepare() {
         then 
             return -1
         fi
-        # 打patch
+        # 打patch，关闭了对后端keyrings秘钥环的运行时依赖，使主要接口可以使用鸿蒙huks的能力进行秘钥管理
         pushd libsecret
         git apply ../0001-secret-password.patch
         popd
