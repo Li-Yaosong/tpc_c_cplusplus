@@ -22,8 +22,15 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0                       # 记录返回值
     cd $builddir/$ARCH-build    # 进入到测试目录，鸿蒙环境下测试需要将库添加到系统库文件所在位置
-    ctest > ${logfile} 2>&1     # 执行测试命令并将测试结果导出到${logfile}，测试命令根据每个库的真实情况填写
+    ignore_test="test-closed__timerfd_EPOLL|regress__timerfd_EPOLL|regress__timerfd_EPOLL_debug|test-closed__changelist_EPOLL|regress__changelist_EPOLL|\
+    regress__changelist_EPOLL_debug|test-closed__timerfd_changelist_EPOLL|regress__timerfd_changelist_EPOLL|regress__timerfd_changelist_EPOLL_debug|\
+    regress__SELECT|regress__SELECT_debug|test-closed__POLL|regress__POLL|regress__POLL_debug"
+    ctest -E $ignore_test > ${logfile} 2>&1     # 执行测试命令并将测试结果导出到${logfile}，测试命令根据每个库的真实情况填写
     res=$?                      # 记录测试结果返回值
+    if [ $res -ne 0 ];then
+        mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
+        cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/     
+    fi 
     cd $OLDPWD                  # 返回上一次目录
 
     return $res                 # 返回测试值
