@@ -13,7 +13,7 @@
 # Contributor: Chen Xu <chenxu.unix@gmail.com>
 # Maintainer:  Chen Xu <chenxu.unix@gmail.com>
 pkgname=OpenBLAS
-pkgver="v0.3.5"
+pkgver=0.3.5
 pkgrel=0
 pkgdesc="OpenBLAS is an optimized BLAS library based on GotoBLAS2 1.13 BSD version."
 url="https://www.openblas.net"
@@ -22,15 +22,15 @@ license=("BSD-3-Clause license")
 depends=()
 makedepends=("gcc")
 
-# source="https://github.com/xianyi/$pkgname/archive/refs/tags/$pkgver.tar.gz"
-source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
+source="https://github.com/xianyi/$pkgname/archive/refs/tags/v$pkgver.tar.gz"
+# source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 
 downloadpackage=true
 autounpack=true
 buildtools="make"
 
 builddir=$pkgname-$pkgver
-packagename=$builddir.zip
+packagename=$builddir.tar.gz
 
 source envset.sh
 openblastarget=
