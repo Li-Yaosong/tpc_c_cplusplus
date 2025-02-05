@@ -49,7 +49,7 @@ prepare() {
 build() {
     cd $builddir
     # 该库直接交叉编译会报错，错误会提示我们将某些变量配置为"advanced"
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -DH5_LONG_TO_LDOUBLE_SPECIAL_RUN="advanced" -DH5_LONG_TO_LDOUBLE_SPECIAL_RUN__TRYRUN_OUTPUT="advanced" \
+    cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -DH5_LONG_TO_LDOUBLE_SPECIAL_RUN="advanced" -DH5_LONG_TO_LDOUBLE_SPECIAL_RUN__TRYRUN_OUTPUT="advanced" \
     -DH5_LDOUBLE_TO_LONG_SPECIAL_RUN="advanced" -DH5_LDOUBLE_TO_LONG_SPECIAL_RUN__TRYRUN_OUTPUT="advanced" -DH5_LDOUBLE_TO_LLONG_ACCURATE_RUN="advanced" \
     -DH5_LDOUBLE_TO_LLONG_ACCURATE_RUN__TRYRUN_OUTPUT="advanced" -DH5_LLONG_TO_LDOUBLE_CORRECT_RUN="advanced" -DH5_LLONG_TO_LDOUBLE_CORRECT_RUN__TRYRUN_OUTPUT="advanced" \
     -DH5_DISABLE_SOME_LDOUBLE_CONV_RUN="advanced" -DH5_DISABLE_SOME_LDOUBLE_CONV_RUN__TRYRUN_OUTPUT="advanced"  -DHDF5_BUILD_CPP_LIB=ON -L > `pwd`/$ARCH-build/build.log 2>&1
