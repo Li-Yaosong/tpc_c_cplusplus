@@ -15,7 +15,9 @@ openharmonycheck() {
         return 1
     fi
     cd ${builddir}/${ARCH}-build
-    ctest >> ${logfile} 2>&1
+    # 把需要python的用例排除
+    ignore_test="StalenessCheckTest"
+    ctest -E $ignore_test >> ${logfile} 2>&1
     res=$?
     if [ $res -ne 0 ]
     then
