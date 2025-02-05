@@ -7,7 +7,8 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     cd ${builddir}/${ARCH}-build
-    ctest > ${logfile} 2>&1
+    # 把需要python的用例排除
+    ctest -I 1,45 > ${logfile} 2>&1
     res=$?
     if [ $res -ne 0 ]
     then
