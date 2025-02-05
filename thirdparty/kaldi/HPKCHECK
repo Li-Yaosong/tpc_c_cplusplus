@@ -24,6 +24,12 @@ checkprepare() {
         rm -rf /usr/bin/env
         ln -s /bin/env /usr/bin/env
     fi
+    
+    ln -s /data/CIusr/bin/bash /bin/bash
+    # 将bash改为使用/bin/bash
+    sed -i 's#/usr/bin/env bash#/bin/bash#' $builddir-$ARCH-build/src/base/get_version.sh
+    # /tmp目录改为/data/local/tmp目录
+    sed -i 's# /tmp/temp.XXXXXX# /data/local/tmp/temp.XXXXXX#' $builddir-$ARCH-build/src/base/get_version.sh
 }
 
 openharmonycheck() {
