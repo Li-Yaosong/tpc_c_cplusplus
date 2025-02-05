@@ -8,7 +8,7 @@ pkgdesc="此库为影子库，只用于 CI 触发 community 目录下的库编�
 url=""
 archs=("armeabi-v7a" "arm64-v8a")
 license=()
-depends=() # 填下 community 下的库目录名，lycium 会自动触发其的编译工作
+depends=("mpfr") # 填下 community 下的库目录名，lycium 会自动触发其的编译工作
 makedepends=()
 
 source=
