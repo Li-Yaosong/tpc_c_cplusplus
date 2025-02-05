@@ -3,6 +3,12 @@
 
 source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
+
+checkprepare() {
+    # 把需要python的用例排除
+    sed -i '/^TESTS =/ s/\btest_jbig2dec.py\b//' $pkgname-$ARCH-build/Makefile
+}
+
 openharmonycheck() {
     res=0
     cd $pkgname-$ARCH-build
