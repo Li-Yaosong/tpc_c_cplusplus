@@ -24,15 +24,14 @@ license=("BSD-3-Clause license")
 depends=()
 makedepends=()
 
-# 源source="https://github.com/xianyi/${pkgname:0:8}/releases/download/v$pkgver/${pkgname:0:8}-$pkgver.tar.gz"
-source="https://gitee.com/mirrors/${pkgname:0:8}/repository/archive/v${pkgver}.zip"
+source="https://github.com/xianyi/${pkgname:0:8}/archive/refs/tags/v$pkgver.tar.gz"
 
 autounpack=true
 downloadpackage=true
 buildtools="cmake"
 
-builddir=${pkgname:0:8}-v${pkgver}
-packagename=v$pkgver.zip
+builddir=${pkgname:0:8}-${pkgver}
+packagename=$builddir.tar.gz
 patchflag=true
 
 prepare() {
