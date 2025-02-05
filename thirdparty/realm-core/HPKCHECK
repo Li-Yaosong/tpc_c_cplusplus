@@ -17,6 +17,16 @@
 source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
+checkprepare(){
+    LIBS=lib64
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        LIBS=lib
+    fi
+    cp $LYCIUM_ROOT/usr/zlib/$ARCH/lib/libz.so.1 /system/$LIBS/
+    cp $LYCIUM_ROOT/usr/openssl_1_1_1w/$ARCH/lib/libcrypto.so.1.1 /system/$LIBS/
+}
+
 openharmonycheck() {
     res=0
     cd $builddir/$ARCH-build
