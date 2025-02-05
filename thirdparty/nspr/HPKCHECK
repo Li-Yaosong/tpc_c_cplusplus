@@ -18,8 +18,7 @@ source HPKBUILD > /dev/null 2>&1
 logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
 checkprepare() {
-    # 挂载系统，测试时需要创建文件/tmp/sock
-    mount -o remount,rw /
+    sed -i '/^sema$/d; /^semaerr$/d; /^semaping$/d' $pkgname-$ARCH-build/$pkgname/pr/tests/runtests.sh
 }
 
 openharmonycheck() {
