@@ -54,7 +54,7 @@ prepare() {
         then
             return -1
         fi
-        git clone https://gitee.com/mirrors/LuaJIT.git deps/luajit >> `pwd`/build.log 2>&1
+        git clone https://gitee.com/wu-guangzhao/LuaJIT.git deps/luajit >> `pwd`/build.log 2>&1
         if [ $? != 0 ]
         then
             return -2
