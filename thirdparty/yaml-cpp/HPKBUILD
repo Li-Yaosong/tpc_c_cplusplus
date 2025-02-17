@@ -66,5 +66,4 @@ check() {
 # 清理环境
 cleanbuild() {
     rm -rf ${PWD}/$builddir  #${PWD}/$packagename
-    echo "rm -rf ${PWD}/$builddir"
 }
