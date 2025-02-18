@@ -21,7 +21,6 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 openharmonycheck() {
     res=0
     cd ${builddir}/${ARCH}-build/tests 
-    echo "cd ${builddir}/${ARCH}-build/tests"
     ctest > ${logfile} 2>&1
     res=$?
     if [ $res -ne 0 ]
