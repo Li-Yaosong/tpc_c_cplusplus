@@ -10,7 +10,7 @@ license=("Boost Software License")
 depends=()
 makedepends=()
 
-source="https://boostorg.jfrog.io/artifactory/main/release/$pkgver/source/$pkgname'_1_81_0.tar.gz'"
+source="https://archives.boost.io/release/${pkgver}/source/${pkgname}_1_81_0.tar.gz"
 
 autounpack=true
 downloadpackage=true
