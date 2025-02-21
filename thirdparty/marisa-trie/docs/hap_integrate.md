@@ -46,19 +46,18 @@
 
 ## 应用中使用三方库
 
-- 在IDE的cpp目录下新增thirdparty目录，将编译生成的库拷贝到该目录下，如下图所示
+- 在IDE的cpp目录下新增thirdparty目录，将编译生成的头文件和库文件拷贝到该目录下，将编译生成的动态库（只需要拷贝soname的so到该目录，否则会增加hap的大小）拷贝到工程的libs目录下。如下图所示：
+  &nbsp;
 
-  &nbsp;![thirdparty_install_dir](../../thirdparty_template/docs/pic/xxx_install_dir.png)
-
-  其中xxx代表的三方库名字，此处即为`marisa-trie`;
+  &nbsp;![marisa_install](pic/marisa_install.png)
 
 - 在最外层（cpp目录下）CMakeLists.txt中添加如下语句
 
   ```shell
   # 将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/marisa-trie/${OHOS_ARCH}/lib/libmarisa.a)
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/marisa-trie/${OHOS_ARCH}/lib/libmarisa.so.0)
   # 将三方库的头文件加入工程中
-  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/marisa/${OHOS_ARCH}/include)
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/marisa-trie/${OHOS_ARCH}/include)
   ```
 
 
