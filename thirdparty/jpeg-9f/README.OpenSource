@@ -1,0 +1,12 @@
+[
+    {
+      "Name":"JPEG",
+      "License":"IJG",
+      "License File":"https://www.ijg.org/files/README",
+      "Version Number":"9f",
+      "Owner":"wanghao03@superred.com.cn",
+      "Upstream URL":"https://jpegclub.org/reference/reference-sources/",
+      "Description":"libjpeg is a widely used library for handling JPEG image compression and decompression. It provides functions for encoding raw image data into the JPEG format and decoding JPEG images back into raw data, which is essential for applications dealing with image storage and transmission. The library is optimized for performance and includes features such as color space conversion, progressive JPEG support, and various compression quality levels."
+    }
+]
+

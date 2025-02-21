@@ -1,0 +1,289 @@
+import("//build/ohos.gni")  
+group("jpeg-9f"){
+    deps = [
+        "//third_party/jpeg-9f:cjpeg",
+        "//third_party/jpeg-9f:djpeg",
+        "//third_party/jpeg-9f:jpegtran",
+        "//third_party/jpeg-9f:rdjpgcom",
+        "//third_party/jpeg-9f:wrjpgcom",
+        "//third_party/jpeg-9f:libjpeg_static",
+    ]
+}
+
+
+
+
+config("libiconv_nowarn_config"){
+    cflags = [
+       
+    ]
+}
+
+
+config("libiconv_cflag_config"){
+    cflags = [
+      "-g",
+      "-O2"
+    ]
+    ldflags = [
+         
+    ]
+}
+
+ohos_executable("wrjpgcom") {
+  sources = [
+    "wrjpgcom.c",
+  ]
+
+  
+  deps = [
+    "//third_party/jpeg-9f:libjpeg",
+  ]
+
+  configs = [
+         ":libiconv_cflag_config",
+         ":libiconv_nowarn_config",
+  ]
+    part_name = "jpeg-9f"
+}
+
+
+ohos_executable("rdjpgcom") {
+  sources = [
+    "rdjpgcom.c",
+  ]
+
+  
+  deps = [
+    "//third_party/jpeg-9f:libjpeg",
+  ]
+
+ 
+  configs = [
+         ":libiconv_cflag_config",
+         ":libiconv_nowarn_config",
+  ]
+    part_name = "jpeg-9f"
+}
+
+
+ohos_executable("jpegtran") {
+  sources = [
+    "jpegtran.c",
+    "rdswitch.c",
+    "cdjpeg.c",
+    "transupp.c"
+  ]
+
+  
+  deps = [
+    "//third_party/jpeg-9f:libjpeg",
+  ]
+
+ 
+  configs = [
+         ":libiconv_cflag_config",
+         ":libiconv_nowarn_config",
+  ]
+    part_name = "jpeg-9f"
+}
+
+ohos_executable("cjpeg") {
+  sources = [
+    "cjpeg.c",
+    "rdppm.c",
+    "rdgif.c",
+    "rdtarga.c",
+    "rdrle.c",
+    "rdbmp.c",
+    "rdswitch.c",
+    "cdjpeg.c"
+  ]
+
+  
+  deps = [
+    "//third_party/jpeg-9f:libjpeg",
+  ]
+
+ 
+  configs = [
+         ":libiconv_cflag_config",
+         ":libiconv_nowarn_config",
+  ]
+    part_name = "jpeg-9f"
+}
+
+ohos_executable("djpeg") {
+  sources = [
+    "djpeg.c",
+    "wrppm.c",
+    "wrgif.c",
+    "wrtarga.c",
+    "wrrle.c",
+    "wrbmp.c",
+    "rdcolmap.c",
+    "cdjpeg.c"
+  ]
+
+  deps = [
+    "//third_party/jpeg-9f:libjpeg",
+  ]
+
+  configs = [
+         ":libiconv_cflag_config",
+         ":libiconv_nowarn_config",
+  ]
+    part_name = "jpeg-9f"
+}
+
+
+ohos_shared_library("libjpeg") {
+    sources = [
+         "cjpeg.c",
+         "rdppm.c",
+         "rdgif.c",
+         "rdtarga.c",
+         "rdrle.c",
+         "rdbmp.c",
+         "rdswitch.c",
+         "cdjpeg.c",
+         "jaricom.c",
+         "jcapimin.c", 
+         "jcapistd.c",
+         "jcarith.c",
+         "jccoefct.c",
+         "jccolor.c",
+         "jcdctmgr.c",
+         "jchuff.c",
+         "jcinit.c",
+         "jcmainct.c",
+         "jcmarker.c",
+         "jcmaster.c",
+         "jcomapi.c",
+         "jcparam.c",
+         "jcprepct.c",
+         "jcsample.c",
+         "jctrans.c",
+         "jdapimin.c",
+         "jdapistd.c",
+         "jdarith.c",
+         "jdatadst.c",
+         "jdatasrc.c",
+         "jdcoefct.c",
+         "jdcolor.c",
+         "jddctmgr.c",
+         "jdhuff.c",
+         "jdinput.c",
+         "jdmainct.c",
+         "jdmarker.c",
+         "jdmaster.c",
+         "jdmerge.c",
+         "jdpostct.c",
+         "jdsample.c",
+         "jdtrans.c",
+         "jerror.c",
+         "jfdctflt.c",
+         "jfdctfst.c",
+         "jfdctint.c",
+         "jidctflt.c",
+         "jidctfst.c",
+         "jidctint.c",
+         "jquant1.c",
+         "jquant2.c",
+         "jutils.c",
+         "jmemmgr.c",
+         "jmemnobs.c",
+      ]
+    configs = [ 
+         ":libiconv_cflag_config",
+         ":libiconv_nowarn_config",
+    ] 
+    include_dirs = [ 
+         "jerror.h",
+         "jmorecfg.h",
+         "jpeglib.h",
+         "cderror.h",
+         "cdjpeg.h",
+         "jdct.h",
+         "jinclude.h",
+         "jmemsys.h",
+         "jpegint.h",
+         "jversion.h",
+         "transupp.h",
+    ]
+    part_name = "jpeg-9f"
+
+}
+ohos_static_library("libjpeg_static") {
+    sources = [
+         "cjpeg.c",
+         "rdppm.c",
+         "rdgif.c",
+         "rdtarga.c",
+         "rdrle.c",
+         "rdbmp.c",
+         "rdswitch.c",
+         "cdjpeg.c",
+         "jaricom.c",
+         "jcapimin.c", 
+         "jcapistd.c",
+         "jcarith.c",
+         "jccoefct.c",
+         "jccolor.c",
+         "jcdctmgr.c",
+         "jchuff.c",
+         "jcinit.c",
+         "jcmainct.c",
+         "jcmarker.c",
+         "jcmaster.c",
+         "jcomapi.c",
+         "jcparam.c",
+         "jcprepct.c",
+         "jcsample.c",
+         "jctrans.c",
+         "jdapimin.c",
+         "jdapistd.c",
+         "jdarith.c",
+         "jdatadst.c",
+         "jdatasrc.c",
+         "jdcoefct.c",
+         "jdcolor.c",
+         "jddctmgr.c",
+         "jdhuff.c",
+         "jdinput.c",
+         "jdmainct.c",
+         "jdmarker.c",
+         "jdmaster.c",
+         "jdmerge.c",
+         "jdpostct.c",
+         "jdsample.c",
+         "jdtrans.c",
+         "jerror.c",
+         "jfdctflt.c",
+         "jfdctfst.c",
+         "jfdctint.c",
+         "jidctflt.c",
+         "jidctfst.c",
+         "jidctint.c",
+         "jquant1.c",
+         "jquant2.c",
+         "jutils.c",
+         "jmemmgr.c",
+         "jmemnobs.c",
+      ] 
+    include_dirs = [ 
+         "jerror.h",
+         "jmorecfg.h",
+         "jpeglib.h",
+         "cderror.h",
+         "cdjpeg.h",
+         "jdct.h",
+         "jinclude.h",
+         "jmemsys.h",
+         "jpegint.h",
+         "jversion.h",
+         "transupp.h",
+    ]
+    part_name = "jpeg-9f"
+}
+
