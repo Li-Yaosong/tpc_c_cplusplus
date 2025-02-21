@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "lizard-1.0",
+        "License": "BSD 2-Clause license && GPLv2 license",
+        "License File": "https://github.com/inikep/lizard/blob/lizard/LICENSE",
+        "Version Number": "v1.0",
+        "Owner": "2942375747@qq.com",
+        "Upstream URL": "https://github.com/inikep/lizard",
+        "Description": "lizard is an efficient compressor with very fast decompression."
+    }
+]
