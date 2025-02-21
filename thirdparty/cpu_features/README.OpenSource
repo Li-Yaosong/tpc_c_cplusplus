@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "cpu_features",
+        "License": "Apache License 2.0",
+        "License File": "https://github.com/google/cpu_features/blob/main/LICENSE",
+        "Version Number": "v0.4.0",
+        "Owner": "2942375747@qq.com",
+        "Upstream URL": "https://github.com/google/cpu_features",
+        "Description": "cpu_features is a cross-platform C library to retrieve CPU features (such as available instructions) at runtime."
+    }
+]
