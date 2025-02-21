@@ -1,0 +1,40 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: wangjialun <2271411@stu.neu.edu.cn>, zhangqian<2371418@stu.neu.edu.cn>, wangyihao<2471389@stu.neu.edu.cn> , wangying<wangying@swc.neu.edu.cn>
+# Maintainer: wangyihao<2471389@stu.neu.edu.cn>, wangjialun<2271411@stu.neu.edu.cn>, zhangqian<2371418@stu.neu.edu.cn>, wangying<wangying@swc.neu.edu.cn>
+
+source HPKBUILD > /dev/null 2>&1    # 导入HPKBUILD文件
+logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
+
+# 在OH环境执行测试的接口
+openharmonycheck() {
+    res=0                               
+    cd ${builddir}/${ARCH}-build        # 进入到测试目录
+    #1.新建名为1.txt文本文件，输入内容：12345。
+    #2.执行：./enchive -p ./pubkey.txt -s ./seckey.txt keygen 生成一个密钥对，将公钥存储到当前目录下的pubkey.txt，私钥存储到seckey.txt文件，需要输入密码并二次验证，供解密时确认。
+    #3.执行：./enchive -p pubkey.txt archive 1.txt 使用公钥加密 1.txt 文件，生成名为1.txt.enchive加密文件。此时无法查看1.txt.enchive内容
+    #4.执行：./enchive -s seckey.txt extract 1.txt.enchive 使用私钥解密1.txt.enchive文件，此时需输入生成密钥对时设置的密码。
+    touch 1.txt
+    echo "12345" > 1.txt
+    ./enchive -p ./pubkey.txt -s ./seckey.txt keygen >> $logfile 2>&1
+    ./enchive -p pubkey.txt archive 1.txt >> $logfile 2>&1
+    ./enchive -s seckey.txt extract 1.txt.enchive >> $logfile 2>&1
+    res=$?      
+    if [ $res -ne 0 ];then
+        mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
+        cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/     
+    fi 
+    cd $OLDPWD
+    return $res                       
+}

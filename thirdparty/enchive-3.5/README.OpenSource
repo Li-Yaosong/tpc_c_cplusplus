@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "enchive-3.5",
+        "License": " Unlicense license",
+        "License File": "https://github.com/skeeto/enchive/blob/master/UNLICENSE",
+        "Version Number": "3.5",
+        "Owner": "2942375747@qq.com",
+        "Upstream URL": "https://github.com/skeeto/enchive",
+        "Description": "enchive is a tool to encrypt files to yourself for long-term archival. It's a focused, simple alternative to more complex solutions such as GnuPG or encrypted filesystems."
+    }
+]
