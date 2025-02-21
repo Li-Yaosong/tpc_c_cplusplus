@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "ttyd",
+        "License": "MIT License",
+        "License File": "https://github.com/tsl0922/ttyd/blob/main/LICENSE",
+        "Version Number": "1.7.4",
+        "Owner" : "2968675576@qq.com"
+        "Upstream URL": "https://github.com/tsl0922/ttyd",
+        "Description": "ttyd is a simple command-line tool for sharing terminal over the web"
+    }
+]

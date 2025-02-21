@@ -1,0 +1,88 @@
+# Copyright (c) 2023 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: jiajiawei <2968675576@qq.com>
+# Maintainer: jiajiawei <2968675576@qq.com>
+
+pkgname=ttyd
+pkgver=1.7.4
+pkgrel=0
+pkgdesc="ttyd is a simple command-line tool for sharing terminal over the web."
+url="https://github.com/tsl0922/ttyd"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("MIT")
+depends=("openssl_1_0_2u" "libwebsockets" "libuv" "json-c" "zlib")
+makedepends=()
+
+source="https://codeload.github.com/tsl0922/${pkgname}/zip/refs/tags/$pkgver"
+
+downloadpackage=true 
+autounpack=true 
+builddir=$pkgname-${pkgver} 
+packagename=$builddir.zip 
+patchflag=true
+
+prepare() {
+    if [ $patchflag == true ];then
+        cd $builddir
+        # 打patch的原因：ttyd原生库依赖openssl_1_0_2u、libwebsockets、libuv、json-c、zlib,关闭ttyd的CMakeLists.txt中的find_package部分。换成在HPKBUILD中来指定openssl_1_0_2u、libwebsockets、libuv、json-c、zlib的头文件和库文件。
+        patch -p1 < `pwd`/../ttyd_oh_pkg.patch
+        # patch只需要打一次,关闭打patch
+        patchflag=false
+        cd $OLDPWD
+    fi
+    mkdir -p $builddir/$ARCH-build
+    mkdir -p $LYCIUM_ROOT/usr/ttyd/$ARCH # 创建$LYCIUM_ROOT/usr/ttyd/$ARCH目录,用于存放二进制文件
+}
+
+# 开启openssl_1_0_2u(openssl 1.0.2u版本)依赖，-DLWS_OPENSSL_ENABLED=ON -DLWS_MBEDTLS_ENABLED=OFF -DOPENSSL_INCLUDE_DIR=$LYCIUM_ROOT/usr/openssl_1_0_2u/$ARCH/include -DOPENSSL_LIBRARIES="$LYCIUM_ROOT/usr/openssl_1_0_2u/$ARCH/lib/libcrypto.a;$LYCIUM_ROOT/usr/openssl_1_0_2u/$ARCH/lib/libssl.a"
+# 开启libwebsockets依赖，-DLIBWEBSOCKETS_INCLUDE_DIRS=$LYCIUM_ROOT/usr/libwebsockets/$ARCH/include -DLIBWEBSOCKETS_LIBRARIES="$LYCIUM_ROOT/usr/libwebsockets/$ARCH/lib/libwebsockets.so;$LYCIUM_ROOT/usr/libwebsockets/$ARCH/lib/libwebsockets-evlib_event.so;$LYCIUM_ROOT/usr/libwebsockets/$ARCH/lib/libwebsockets-evlib_uv.so" 
+# 开启libuv依赖，-DLWS_WITH_LIBUV=ON -DLIBUV_INCLUDE_DIR=$LYCIUM_ROOT/usr/libuv/$ARCH/include -DLIBUV_LIBRARY=$LYCIUM_ROOT/usr/libuv/$ARCH/lib/libuv_a.a 
+# 开启json-c依赖，-DZLIB_INCLUDE_DIR=$LYCIUM_ROOT/usr/zlib/$ARCH/include -DZLIB_LIBRARIES=$LYCIUM_ROOT/usr/zlib/$ARCH/lib/libz.a 
+# 开启zlib依赖，-DZLIB_INCLUDE_DIR=$LYCIUM_ROOT/usr/zlib/$ARCH/include -DZLIB_LIBRARIES=$LYCIUM_ROOT/usr/zlib/$ARCH/lib/libz.a 
+build() {
+    cd $builddir
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+          -DLWS_OPENSSL_ENABLED=ON -DLWS_MBEDTLS_ENABLED=OFF -DOPENSSL_INCLUDE_DIR=$LYCIUM_ROOT/usr/openssl_1_0_2u/$ARCH/include -DOPENSSL_LIBRARIES="$LYCIUM_ROOT/usr/openssl_1_0_2u/$ARCH/lib/libcrypto.a;$LYCIUM_ROOT/usr/openssl_1_0_2u/$ARCH/lib/libssl.a" \
+          -DLIBWEBSOCKETS_INCLUDE_DIRS=$LYCIUM_ROOT/usr/libwebsockets/$ARCH/include -DLIBWEBSOCKETS_LIBRARIES="$LYCIUM_ROOT/usr/libwebsockets/$ARCH/lib/libwebsockets.so;$LYCIUM_ROOT/usr/libwebsockets/$ARCH/lib/libwebsockets-evlib_event.so;$LYCIUM_ROOT/usr/libwebsockets/$ARCH/lib/libwebsockets-evlib_uv.so" \
+          -DLWS_WITH_LIBUV=ON -DLIBUV_INCLUDE_DIR=$LYCIUM_ROOT/usr/libuv/$ARCH/include -DLIBUV_LIBRARY=$LYCIUM_ROOT/usr/libuv/$ARCH/lib/libuv_a.a \
+          -DJSON-C_INCLUDE_DIR=$LYCIUM_ROOT/usr/json-c/$ARCH/include/json-c -DJSON-C_LIBRARY=$LYCIUM_ROOT/usr/json-c/$ARCH/lib/libjson-c.a \
+          -DZLIB_INCLUDE_DIR=$LYCIUM_ROOT/usr/zlib/$ARCH/include -DZLIB_LIBRARIES=$LYCIUM_ROOT/usr/zlib/$ARCH/lib/libz.a \
+          -B$ARCH-build -S./ > $buildlog 2>&1
+    $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1 # 此处使用$MAKE，在lycium/build.sh中定义，变量值为make -j32。日志路径使用变量build.log
+    cp $ARCH-build/ttyd $LYCIUM_ROOT/usr/ttyd/$ARCH  # 将ttyd二进制复制到$LYCIUM_ROOT/usr/ttyd/$ARCH目录
+    cp $LYCIUM_ROOT/usr/libwebsockets/$ARCH/lib/libwebsockets-evlib_event.so $LYCIUM_ROOT/usr/ttyd/$ARCH # 复制可执行文件ttyd依赖的so到ttyd同一路径下
+    cp $LYCIUM_ROOT/usr/libwebsockets/$ARCH/lib/libwebsockets-evlib_uv.so $LYCIUM_ROOT/usr/ttyd/$ARCH    
+    cp $LYCIUM_ROOT/usr/libwebsockets/$ARCH/lib/libwebsockets.so $LYCIUM_ROOT/usr/ttyd/$ARCH
+    cp $LYCIUM_ROOT/usr/libwebsockets/$ARCH/lib/libwebsockets.a $LYCIUM_ROOT/usr/ttyd/$ARCH
+    cp $LYCIUM_ROOT/usr/libwebsockets/$ARCH/lib/libwebsockets.so.19 $LYCIUM_ROOT/usr/ttyd/$ARCH
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    $MAKE VERBOSE=1 -C $ARCH-build >> $buildlog 2>&1 # 此处使用$MAKE，在lycium/build.sh中定义，变量值为make -j32。日志路径使用变量build.log
+    cd $OLDPWD
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+    # TODO
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
