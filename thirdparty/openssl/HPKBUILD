@@ -38,6 +38,7 @@ patchflag=true
 source envset.sh
 
 host=
+
 prepare() {
     if $patchflag
     then
