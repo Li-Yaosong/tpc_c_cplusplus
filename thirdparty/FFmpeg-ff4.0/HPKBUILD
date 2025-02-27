@@ -30,6 +30,7 @@ prepare() {
         # fix bug
         patch -p1 < `pwd`/../oh_ffmpeg-bug-fixed.patch
         patch -p1 < `pwd`/../oh_ffmpeg_hls_optimization.patch
+        patch -p1 < `pwd`/../oh_ffmpeg_ff_seek_frame_binary-add-log.patch
         patchflag=false
         cd $OLDPWD
     fi

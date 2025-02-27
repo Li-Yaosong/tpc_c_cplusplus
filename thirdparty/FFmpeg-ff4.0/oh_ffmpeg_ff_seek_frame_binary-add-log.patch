@@ -1,0 +1,25 @@
+From 9fac42140c9f7c99382aafcd0e5f000aab9069bd Mon Sep 17 00:00:00 2001
+From: longfeng <longfeng24@h-partners.com>
+Date: Wed, 21 Aug 2024 09:23:02 +0800
+Subject: [PATCH] ff_seek_frame_binary add log
+
+---
+ libavformat/utils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libavformat/utils.c b/libavformat/utils.c
+index dfbfb0a8d6..665cd3d74e 100644
+--- a/libavformat/utils.c
++++ b/libavformat/utils.c
+@@ -2221,7 +2221,7 @@ int ff_seek_frame_binary(AVFormatContext *s, int stream_index,
+                     " dts_max=%s\n", pos_max, pos_limit, av_ts2str(ts_max));
+         }
+     }
+-
++    av_log(s, AV_LOG_TRACE, "read_seek: %d %s\n", stream_index, av_ts2str(target_ts));
+     pos = ff_gen_search(s, stream_index, target_ts, pos_min, pos_max, pos_limit,
+                         ts_min, ts_max, flags, &ts, avif->read_timestamp);
+     if (pos < 0)
+-- 
+2.44.0.windows.1
+
