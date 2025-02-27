@@ -7,7 +7,7 @@ pkgdesc="FFmpeg is a collection of libraries and tools to process multimedia con
 url="https://github.com/bilibili/FFmpeg/"
 archs=("armeabi-v7a" "arm64-v8a" "x86_64")
 license=("GPL2 or later" "LGPL2.1 or later" "MIT" "X11" "BSD-styl")
-depends=("openssl_1_1_1w" "openh264")
+depends=("openssl-3.4.0" "openh264")
 makedepends=()
 # source="https://github.com/bilibili/FFmpeg/archive/refs/tags/ff4.0--ijk0.8.8--20210426--001.tar.gz"
 source="https://gitee.com/lycium_pkg_mirror/FFmpeg/repository/archive/ff4.0--ijk0.8.8--20210426--001.zip"
@@ -61,6 +61,10 @@ prepare() {
 
 build() {
     cd $pkgname-$ARCH-build
+    if [ $ARCH == "x86_64" ]
+    then
+        pkgconfigpath=$LYCIUM_ROOT/usr/openssl-3.4.0/$ARCH/lib64/pkgconfig:$pkgconfigpath
+    fi
     PKG_CONFIG_LIBDIR="${pkgconfigpath}" ./configure "$@" --enable-neon --enable-asm --enable-network \
     --enable-cross-compile --disable-x86asm --enable-openssl --enable-protocols --enable-libopenh264 \
     --disable-programs --enable-static --disable-shared --disable-doc --disable-htmlpages --target-os=linux --arch=$arch \
