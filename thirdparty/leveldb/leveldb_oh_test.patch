@@ -1,0 +1,16 @@
+--- env_posix_test_bal.cc	2025-02-28 17:43:23.551976103 +0800
++++ env_posix_test.cc	2025-02-28 17:43:50.552733155 +0800
+@@ -216,12 +216,11 @@
+ 
+ TEST_F(EnvPosixTest, TestCloseOnExecSequentialFile) {
+   std::unordered_set<int> open_fds;
+-  GetOpenFileDescriptors(&open_fds);
+-
+   std::string test_dir;
+   ASSERT_LEVELDB_OK(env_->GetTestDirectory(&test_dir));
+   std::string file_path = test_dir + "/close_on_exec_sequential.txt";
+   ASSERT_LEVELDB_OK(WriteStringToFile(env_, "0123456789", file_path));
++  GetOpenFileDescriptors(&open_fds);
+ 
+   leveldb::SequentialFile* file = nullptr;
+   ASSERT_LEVELDB_OK(env_->NewSequentialFile(file_path, &file));
