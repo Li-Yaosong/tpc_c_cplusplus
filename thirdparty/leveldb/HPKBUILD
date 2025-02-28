@@ -26,6 +26,7 @@ autounpack=false
 builddir=$pkgname-${pkgver}
 cloneflag=true
 buildtools="cmake"
+patchflag=true
 
 # 原库地址：https://github.com/google/leveldb.git
 source="https://gitee.com/mirrors/${pkgname}.git"
@@ -50,6 +51,14 @@ prepare() {
         fi
         cd $OLDPWD
         cloneflag=false
+    fi
+
+    if $patchflag
+    then
+        cd $builddir/util
+        patch < `pwd`/../../leveldb_oh_pkg.patch
+        patchflag=false
+        cd $OLDPWD
     fi
 
     mkdir -p $builddir/$ARCH-build
