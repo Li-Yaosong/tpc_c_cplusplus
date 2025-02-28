@@ -26,6 +26,7 @@ autounpack=false
 builddir=$pkgname-${pkgver}
 cloneflag=true
 buildtools="cmake"
+patchflag=true
 
 # 原库地址：https://github.com/google/leveldb.git
 source="https://gitee.com/mirrors/${pkgname}.git"
@@ -50,6 +51,16 @@ prepare() {
         fi
         cd $OLDPWD
         cloneflag=false
+    fi
+
+    if $patchflag
+    then
+        cd $builddir/util
+        # 原库的一个测试用例获取当前进程所有文件描述符时会少获取一个fd，导致最后结果不正确，这里将获取逻辑执行两次，
+        # 确保当前进程的所有fd正确获取。
+        patch < `pwd`/../../leveldb_oh_test.patch
+        patchflag=false
+        cd $OLDPWD
     fi
 
     mkdir -p $builddir/$ARCH-build
