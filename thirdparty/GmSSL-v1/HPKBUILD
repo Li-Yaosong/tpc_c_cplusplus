@@ -11,9 +11,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Contributor: Jeff Han <hanjinfei@foxmail.com>
-# Maintainer: Jeff Han <hanjinfei@foxmail.com>
-
 pkgname=GmSSL
 pkgver=GmSSL-v1
 pkgrel=0
@@ -70,13 +67,11 @@ package() {
 
 check() {
     cd $builddir-$ARCH-build
-    # 删除四个不支持的测试用例
-    sed -i '1,/test_ssl/s/test_sll//' test/Makefile
-    sed -i '1,/test_tsa/s/test_tsa//' test/Makefile
-    sed -i '1,/test_cms/s/test_cms//' test/Makefile
-    sed -i '1,/test_ocsp/s/test_ocsp//' test/Makefile
+    # 删除一个不支持的测试用例
+    sed -i '1,/test_ssl/s/test_ssl//' test/Makefile
     cd $OLDPWD
-    
+
+    # test_cms这个测试用例，需要更新openssl证书目录test/smime-certs下的证书，才能通过
     echo "The test must be on an OpenHarmony device!"
 }
 

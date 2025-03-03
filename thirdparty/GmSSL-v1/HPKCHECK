@@ -11,11 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Contributor: lpzhong <278527840@qq.com>
-# Maintainer: lpzhong <278527840@qq.com>
-
 source HPKBUILD > /dev/null 2>&1
-logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
+logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}-v1/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
 
 openharmonycheck() {
     cd $builddir-$ARCH-build
@@ -23,8 +20,8 @@ openharmonycheck() {
     res=$?
     if [ $res -ne 0 ]
     then
-        mkdir -p $LYCIUM_FAULT_PATH/$pkgname
-        cp $logfile $LYCIUM_FAULT_PATH/$pkgname
+        mkdir -p $LYCIUM_FAULT_PATH/$pkgname-v1
+        cp $logfile $LYCIUM_FAULT_PATH/$pkgname-v1
     fi
     cd $OLDPWD
 
