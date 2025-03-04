@@ -19,7 +19,8 @@ builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
 source envset.sh
 buildhost=true
-arch=
+#门禁测试
+arch=""
 ldflags=
 
 prepare() {
