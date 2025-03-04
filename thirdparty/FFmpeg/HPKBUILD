@@ -14,7 +14,7 @@ source="https://github.com/FFmpeg/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 autounpack=false
 downloadpackage=true
 buildtools="configure"
-# 门禁测试
+
 builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
 source envset.sh
