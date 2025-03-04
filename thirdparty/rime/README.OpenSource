@@ -1,7 +1,7 @@
 [
     {
-        "Name": "rime",
-        "License": "BSD-3-Clause license",
+        "Name": "librime",
+        "License": "BSD-3-Clause",
         "License File": "https://github.com/rime/librime/blob/master/LICENSE",
         "Version Number": "1.13.0",
         "Owner": "xiafeng@huawei.com",
