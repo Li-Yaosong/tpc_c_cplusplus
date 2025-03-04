@@ -19,7 +19,7 @@ builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
 source envset.sh
 buildhost=true
-arch=
+arch=""
 ldflags=
 
 prepare() {
