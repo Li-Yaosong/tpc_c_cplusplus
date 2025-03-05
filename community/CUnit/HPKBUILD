@@ -1,7 +1,7 @@
 # Contributor: Jeff Han <hanjinfei@foxmail.com>
 # Maintainer: Jeff Han <hanjinfei@foxmail.com>
 pkgname=CUnit
-pkgver=2.1-3
+pkgver=v2.1-3
 pkgrel=0
 pkgdesc=""
 url=""
@@ -10,20 +10,20 @@ license=()
 depends=()
 makedepends=()
 install=
-source="https://sourceforge.net/projects/cunit/files/$pkgname/$pkgver/$pkgname-$pkgver.tar.bz2"
-
+# source="https://sourceforge.net/projects/cunit/files/$pkgname/$pkgver/$pkgname-$pkgver.tar.bz2"
+source="https://github.com/jacklicn/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 autounpack=false
 downloadpackage=true
 buildtools="configure"
 
-builddir=$pkgname-${pkgver}
-packagename=$builddir.tar.bz2
+builddir=$pkgname-${pkgver:1}
+packagename=$builddir.tar.gz
 
 source envset.sh
 host=
 prepare() {
     mkdir $pkgname-$ARCH-build
-    tar -jxf $packagename -C $pkgname-$ARCH-build
+    tar -zxf $packagename -C $pkgname-$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]
     then
         setarm32ENV
