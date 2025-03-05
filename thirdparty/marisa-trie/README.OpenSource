@@ -1,8 +1,8 @@
 [
     {
-        "Name": "marisa",
-        "License": "LGPL-2.1/GPL-2.0",
-        "License File": "COPYING.md",
+        "Name": "marisa-trie",
+        "License": "BSD-2-Clause;LGPL-2.1-or-later",
+        "License File": "https://github.com/s-yata/marisa-trie/blob/master/COPYING.md;https://github.com/s-yata/marisa-trie/blob/master/COPYING.md",
         "Version Number": "v0.2.6",
         "Owner": "zhongluping1@huawei.com",
         "Upstream URL": "https://github.com/s-yata/marisa-trie",
