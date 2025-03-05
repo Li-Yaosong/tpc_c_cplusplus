@@ -1,7 +1,7 @@
 [
     {
         "Name": "leveldb",
-        "License": "BSD-3-Clause license",
+        "License": "BSD-3-Clause",
         "License File": "https://github.com/google/leveldb/blob/main/LICENSE",
         "Version Number": "1.23",
         "Owner": "xiafeng@huawei.com",
