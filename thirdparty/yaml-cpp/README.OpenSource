@@ -1,7 +1,7 @@
 [
     {
         "Name": "yaml-cpp",
-        "License": "MIT license",
+        "License": "MIT",
         "License File": "https://github.com/jbeder/yaml-cpp/blob/master/LICENSE",
         "Version Number": "0.8.0",
         "Owner": "xiafeng@huawei.com",
