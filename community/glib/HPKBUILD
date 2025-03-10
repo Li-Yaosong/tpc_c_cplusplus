@@ -22,13 +22,12 @@ url="https://docs.gtk.org/glib/"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("LGPL-2.1-or-later")
 depends=("libffi" "pcre2")
-makedepends=("meson" "ninja") 
+makedepends=("meson" "ninja")
 
-# 原仓位置: https://github.com/GNOME/${pkgname}/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用镜像
-source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
+source="https://gitlab.gnome.org/GNOME/$pkgname.git"
 
-downloadpackage=true
-autounpack=true
+downloadpackage=false
+autounpack=false
 buildtools="meson"
 
 builddir=$pkgname-$pkgver
@@ -36,7 +35,25 @@ packagename=$pkgname-$pkgver.zip
 pkgconfigpath=
 clonesubmodule=true
 
+clonesrcflag=true
+
 prepare() {
+    # 源码下载
+    if $clonesrcflag
+    then
+        git clone -b $pkgver $source > $publicbuildlog $builddir 2>&1
+        if [ $? != 0 ]
+        then
+            return -1
+        fi
+        # glib在鸿蒙编译依赖GPL的libintl，故patch修复原仓库个别地方ENABLE_NLS选项不生效的问题，并close掉以规避GPL传染
+        pushd $builddir
+        git apply ../0001-ENABLE_NLS-ENABLE_NLS-GPL.patch
+        echo "apply patch end..."
+        popd
+
+        clonesrcflag=false
+    fi
     # 下载子模块
     if $clonesubmodule
     then
@@ -48,11 +65,7 @@ prepare() {
         cd $builddir/subprojects/gvdb
         git checkout --detach 0854af0fdb6d527a8d1999835ac2c5059976c210
         cd $OLDPWD
-        # 下载 libintl, meson 下载会失败, 原仓地址: https://github.com/frida/proxy-libintl.git 
-        git  clone --depth 1 --branch 0.4 https://gitee.com/lycium_pkg_mirror/proxy-libintl.git $builddir/subprojects/proxy-libintl
-        if [ $? -ne 0 ];then
-            return -2
-        fi
+
         clonesubmodule=false
     fi
 
