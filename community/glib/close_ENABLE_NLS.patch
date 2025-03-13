@@ -1,6 +1,7 @@
-From cc31f233cbb28b01ece0d581d0de1196993ba4fc Mon Sep 17 00:00:00 2001
+
+From bc11185d7cb55a0ab09bc12d706d0531af094bc7 Mon Sep 17 00:00:00 2001
 From: xujian 30069781 <xujian141@h-partners.com>
-Date: Fri, 7 Mar 2025 15:18:56 +0800
+Date: Mon, 17 Mar 2025 10:35:18 +0800
 Subject: [PATCH] =?UTF-8?q?=E4=BF=AE=E5=A4=8D=E5=8E=9F=E4=BB=93=E5=BA=93?=
  =?UTF-8?q?=E4=B8=AA=E5=88=ABENABLE=5FNLS=E9=80=89=E9=A1=B9=E4=B8=8D?=
  =?UTF-8?q?=E7=94=9F=E6=95=88=E7=9A=84=E9=97=AE=E9=A2=98=EF=BC=8C=E5=B9=B6?=
@@ -12,9 +13,9 @@ Content-Transfer-Encoding: 8bit
 
 ---
  glib/gi18n.h      | 20 +++++++++++++++++++-
- meson.build       |  8 +++-----
- meson_options.txt |  2 +-
- 3 files changed, 23 insertions(+), 7 deletions(-)
+ meson.build       | 17 ++++++++++++-----
+ meson_options.txt |  5 +++++
+ 3 files changed, 36 insertions(+), 6 deletions(-)
 
 diff --git a/glib/gi18n.h b/glib/gi18n.h
 index dbb2cb3..9f1f8e9 100644
@@ -54,19 +55,21 @@ index dbb2cb3..9f1f8e9 100644
 +
  #endif  /* __G_I18N_H__ */
 diff --git a/meson.build b/meson.build
-index 3773ce9..4b84f1c 100644
+index 3773ce9..321ff2b 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -244,7 +244,7 @@ glib_conf.set_quoted('PACKAGE_STRING', 'glib @0@'.format(meson.project_version()
+@@ -244,7 +244,9 @@ glib_conf.set_quoted('PACKAGE_STRING', 'glib @0@'.format(meson.project_version()
  glib_conf.set_quoted('PACKAGE_TARNAME', 'glib')
  glib_conf.set_quoted('PACKAGE_URL', '')
  glib_conf.set_quoted('PACKAGE_VERSION', meson.project_version())
 -glib_conf.set('ENABLE_NLS', 1)
-+# glib_conf.set('ENABLE_NLS', 1)
++if not get_option('no_libintl_proxy')
++  glib_conf.set('ENABLE_NLS', 1)
++endif
  
  # used by the .rc.in files
  glibconfig_conf.set('LT_CURRENT_MINUS_AGE', soversion)
-@@ -2150,10 +2150,8 @@ if libintl.found() and libintl.type_name() != 'internal'
+@@ -2150,10 +2152,15 @@ if libintl.found() and libintl.type_name() != 'internal'
    have_bind_textdomain_codeset = cc.has_function('bind_textdomain_codeset', dependencies: libintl_deps, prefix: libintl_prefix)
  else
    # using proxy-libintl fallback
@@ -74,25 +77,34 @@ index 3773ce9..4b84f1c 100644
 -  assert(libintl.type_name() == 'internal')
 -  libintl_deps = [libintl]
 -  have_bind_textdomain_codeset = true  # proxy-libintl supports it
-+  libintl_deps = []
-+  have_bind_textdomain_codeset = false  # proxy-libintl supports it
++  if get_option('no_libintl_proxy')
++    libintl_deps = []
++    have_bind_textdomain_codeset = false
++  else
++    libintl = dependency('intl', allow_fallback: true)
++    assert(libintl.type_name() == 'internal')
++    libintl_deps = [libintl]
++    have_bind_textdomain_codeset = true  # proxy-libintl supports it
++  endif
  endif
  
  glib_conf.set('HAVE_BIND_TEXTDOMAIN_CODESET', have_bind_textdomain_codeset)
 diff --git a/meson_options.txt b/meson_options.txt
-index 517d575..4ec2833 100644
+index 517d575..e16ea1e 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -90,7 +90,7 @@ option('installed_tests',
- option('nls',
-        type : 'feature',
-        value : 'auto',
--       yield: true,
-+       yield: false,
+@@ -93,6 +93,11 @@ option('nls',
+        yield: true,
         description : 'Enable native language support (translations)')
  
++option('no_libintl_proxy',
++       type : 'boolean',
++       value : false,
++       description : 'do not use libintl_proxy in any way, it is GPL')
++
  option('oss_fuzz',
+        type : 'feature',
+        value : 'disabled',
 -- 
-2.43.0
-
+2.36.1.windows.1
 

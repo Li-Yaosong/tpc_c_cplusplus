@@ -24,10 +24,11 @@ license=("LGPL-2.1-or-later")
 depends=("libffi" "pcre2")
 makedepends=("meson" "ninja")
 
-source="https://gitlab.gnome.org/GNOME/$pkgname.git"
+# 原仓位置: https://github.com/GNOME/${pkgname}/archive/refs/tags/$pkgver.tar.gz, 因网络原因使用镜像	
+source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 
-downloadpackage=false
-autounpack=false
+downloadpackage=true
+autounpack=true
 buildtools="meson"
 
 builddir=$pkgname-$pkgver
@@ -35,24 +36,19 @@ packagename=$pkgname-$pkgver.zip
 pkgconfigpath=
 clonesubmodule=true
 
-clonesrcflag=true
+patchsrcflag=true
 
 prepare() {
     # 源码下载
-    if $clonesrcflag
+    if $patchsrcflag
     then
-        git clone -b $pkgver $source > $publicbuildlog $builddir 2>&1
-        if [ $? != 0 ]
-        then
-            return -1
-        fi
         # glib在鸿蒙编译依赖GPL的libintl，故patch修复原仓库个别地方ENABLE_NLS选项不生效的问题，并close掉以规避GPL传染
         pushd $builddir
-        git apply ../0001-ENABLE_NLS-ENABLE_NLS-GPL.patch
+        patch -p1 < ../close_ENABLE_NLS.patch
         echo "apply patch end..."
         popd
 
-        clonesrcflag=false
+        patchsrcflag=false
     fi
     # 下载子模块
     if $clonesubmodule
@@ -65,7 +61,11 @@ prepare() {
         cd $builddir/subprojects/gvdb
         git checkout --detach 0854af0fdb6d527a8d1999835ac2c5059976c210
         cd $OLDPWD
-
+        # 下载 libintl, meson 下载会失败, 原仓地址: https://github.com/frida/proxy-libintl.git 
+        git  clone --depth 1 --branch 0.4 https://gitee.com/lycium_pkg_mirror/proxy-libintl.git $builddir/subprojects/proxy-libintl
+        if [ $? -ne 0 ];then
+            return -2
+        fi
         clonesubmodule=false
     fi
 
@@ -93,7 +93,7 @@ build() {
     # 需要设置pkg路径
     meson setup $ARCH-build --cross-file $ARCH-cross-file.txt \
         --pkg-config-path=$pkgconfigpath \
-        --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH > $ARCH-build/build.log 2>&1
+        --prefix=$LYCIUM_ROOT/usr/$pkgname/$ARCH -D no_libintl_proxy=true > $ARCH-build/build.log 2>&1
     ninja -C $ARCH-build -v >> $ARCH-build/build.log 2>&1
     ret=$?
     cd $OLDPWD
