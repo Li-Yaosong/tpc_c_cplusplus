@@ -28,6 +28,7 @@ prepare() {
     then
         cd $builddir
         # fix bug
+        patch -p1 < `pwd`/../ipv6.patch
         patch -p1 < `pwd`/../oh_ffmpeg-bug-fixed.patch
         patch -p1 < `pwd`/../oh_ffmpeg_hls_optimization.patch
         patchflag=false
