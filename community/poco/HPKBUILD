@@ -20,7 +20,7 @@ pkgrel=0
 pkgdesc="The POCO C++ Libraries are powerful cross-platform C++ libraries for building network- and internet-based applications that run on desktop, server, mobile, IoT, and embedded systems."
 url="https://pocoproject.org/"
 archs=("armeabi-v7a" "arm64-v8a") # armeabi-v7a 需要开启 -mfloat-abi=softfp 编译OK
-license=("Apache 2.0" "CC0-1.0" "GPL-2.0" "LGPL-2.1" "LLVM" "old-glib" "MIT")
+license=("Boost Software License")
 depends=("openssl")
 makedepends=("cmake")
 
