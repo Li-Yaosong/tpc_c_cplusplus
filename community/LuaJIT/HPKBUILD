@@ -10,14 +10,15 @@ license=("MIT")
 depends=()
 makedepends=("gcc")
 
-source="https://github.com/LuaJIT/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+source="https://codehub.devcloud.huaweicloud.com/4aeaa658e46e424893dcd5bd65f2a999/$pkgname.git"
 
-autounpack=true
-downloadpackage=true
+autounpack=false
+downloadpackage=false
 buildtools="make"
 
 builddir=$pkgname-${pkgver:1}
 packagename=$builddir.tar.gz
+cloneFlag=true
 
 dynamic_cc=
 target_ld=
@@ -29,6 +30,19 @@ target_strip=
 # sudo apt-get install build-essential module-assistant
 # sudo apt-get install gcc-multilib g++-multilib
 prepare() {
+    if $cloneFlag
+    then
+        git clone -b $pkgver $source $builddir > $publicbuildlog 2>&1
+        # TODO 退出码校验
+        if [ $? -ne 0 ]
+        then
+            echo "$pkgname git clone $source error."
+            return -1
+        fi
+        cloneFlag=false
+        cd $OLDPWD
+    fi
+
     cp -rf $builddir $builddir-$ARCH-build
     cd $builddir-$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]
