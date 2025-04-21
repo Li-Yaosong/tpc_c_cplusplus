@@ -10,7 +10,7 @@ license=("MIT")
 depends=()
 makedepends=("gcc")
 
-source="https://github.com/LuaJIT/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+source="https://codehub.devcloud.huaweicloud.com/4aeaa658e46e424893dcd5bd65f2a999/$pkgname.git"
 
 autounpack=true
 downloadpackage=true
