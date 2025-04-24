@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "n2n",
+        "License": "GNU General Public License v3.0",
+        "License File": "https://github.com/ntop/n2n/blob/dev/LICENSE",
+        "Version Number": "3.0",
+        "Owner": "2942375747@qq.com",
+        "Upstream URL": "https://github.com/ntop/n2n",
+        "Description": "n2n is a lightweight virtual private network (VPN) software that allows users to easily create virtual networks and bypass intermediate firewalls."
+    }
+]

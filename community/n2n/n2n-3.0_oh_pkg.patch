@@ -1,0 +1,70 @@
+--- n2n-3.0/include/portable_endian.h	2024-12-29 21:54:28.663090405 +0800
++++ n2n-3.0/include/portable_endian.h	2024-12-29 21:54:28.659090413 +0800
+@@ -96,7 +96,7 @@
+ 
+ #elif defined(__OpenBSD__)
+ 
+-#   include <sys/endian.h>
++#include <endian.h>
+ 
+ #elif defined(__HAIKU__)
+ 
+--- n2n-3.0/src/n2n.c	2024-12-29 21:54:28.679090377 +0800
++++ n2n-3.0/src/n2n.c	2024-12-29 21:54:28.675090383 +0800
+@@ -410,7 +410,7 @@
+ void resolve_cancel_thread (n2n_resolve_parameter_t *param) {
+ 
+ #ifdef HAVE_PTHREAD
+-    pthread_cancel(param->id);
++    // pthread_cancel(param->id);
+     free(param);
+ #endif
+ }
+--- n2n-3.0/src/edge.c	2024-12-29 21:54:28.711090318 +0800
++++ n2n-3.0/src/edge.c	2024-12-29 21:54:28.707090326 +0800
+@@ -932,7 +932,7 @@
+              * Use line buffered stdout
+              */
+             /* setlinebuf (stdout); */
+-            setvbuf(stdout, (char *)NULL, _IOLBF, 0);
++            // setvbuf(stdout, (char *)NULL, _IOLBF, 0);
+         } else /* father */
+             exit(0);
+     }
+--- n2n-3.0/CMakeLists.txt	2025-04-24 18:54:13.055874986 +0800
++++ n2n-3.0/CMakeLists.txt	2025-04-24 18:55:41.051731306 +0800
+@@ -1,4 +1,19 @@
+ project(n2n)
++# 添加架构相关的编译选项
++if(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm")
++    message("arm")
++    if(NOT CMAKE_C_FLAGS MATCHES "-march=armv7-a" OR NOT CMAKE_CXX_FLAGS MATCHES "-march=armv7-a")
++        add_compile_options(-march=armv7-a -mfpu=vfpv3 -mfloat-abi=softfp)
++    endif()
++elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
++    message("aarch64")
++    if(NOT CMAKE_C_FLAGS MATCHES "-march=armv8-a" OR NOT CMAKE_CXX_FLAGS MATCHES "-march=armv8-a")
++        add_compile_options(-march=armv8-a -mfloat-abi=soft)
++    endif()
++else()
++    message(WARNING "Unknown architecture: ${CMAKE_SYSTEM_PROCESSOR}")
++endif()
++
+ cmake_minimum_required(VERSION 2.6)
+ include(CheckFunctionExists)
+ SET(CMAKE_VERBOSE_MAKEFILE ON)
+@@ -196,6 +211,14 @@
+         LIBRARY DESTINATION lib
+         ARCHIVE DESTINATION lib
+        )
++install(TARGETS n2n edge supernode
++        RUNTIME DESTINATION sbin
++        LIBRARY DESTINATION lib
++        ARCHIVE DESTINATION lib
++       )
++install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/
++        DESTINATION include)
++
+ 
+ 
+ # Tools
