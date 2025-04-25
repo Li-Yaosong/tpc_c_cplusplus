@@ -3,7 +3,7 @@
         "Name": "openal-soft",
         "License": "LGPL-2.0",
         "License File": "https://github.com/kcat/openal-soft/blob/master/COPYING",
-        "Version Number": "1.23.1",
+        "Version Number": "1.24.3",
         "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://github.com/kcat/openal-soft/archive/refs/tags/1.23.1.tar.gz",
         "Description": "OpenAL Soft is a software implementation of the OpenAL 3D audio API."

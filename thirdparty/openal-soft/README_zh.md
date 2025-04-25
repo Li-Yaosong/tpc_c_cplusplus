@@ -3,7 +3,7 @@
 OpenAL Soft是OpenAL 3D音频API的软件实现。
 
 ## 三方库版本
-- 1.23.1
+- 1.24.3
 
 ## 使用约束
 - [IDE和SDK版本](../../docs/constraint.md)
