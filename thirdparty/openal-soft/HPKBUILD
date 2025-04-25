@@ -13,7 +13,7 @@
 # Contributor: TangShaoteng <tangshaoteng@163.com>
 # Maintainer: TangShaoteng <tangshaoteng@163.com>
 pkgname=openal-soft
-pkgver=1.23.1
+pkgver=1.24.3
 pkgrel=0
 pkgdesc="OpenAL Soft is an LGPL-licensed, cross-platform, software implementation of the OpenAL 3D audio API."
 url="https://openal-soft.org"
@@ -26,21 +26,11 @@ source="https://github.com/kcat/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 
 autounpack=true
 downloadpackage=true
-patchflag=true
 
 builddir=${pkgname}-${pkgver}
 packagename=$builddir.tar.gz
 
 prepare() {
-    if $patchflag
-    then
-        cd $builddir
-        # 添加控制动态库的符号可见性开关
-        patch -p1 < `pwd`/../openal-soft_oh_pkg.patch
-        # patch只需要打一次,关闭打patch
-        patchflag=false
-        cd $OLDPWD
-    fi
     mkdir -p $builddir/$ARCH-build
 }
 
