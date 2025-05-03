@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "u8g2",
+        "License": "new-BSD license",
+        "License File": "https://github.com/olikraus/u8g2/blob/master/LICENSE",
+        "Version Number": "master",
+        "Owner": "2942375747@qq.com",
+        "Upstream URL": "https://github.com/olikraus/u8g2",
+        "Description": "U8g2 is a monochrome graphics library for embedded devices. The U8g2 supports monochrome oled and lcd."
+    }
+]
