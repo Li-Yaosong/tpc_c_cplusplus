@@ -15,7 +15,7 @@
 # Maintainer: wangyihao<2471389@stu.neu.edu.cn>, wangjialun<2271411@stu.neu.edu.cn>, zhangqian<2371418@stu.neu.edu.cn>, wangying<wangying@swc.neu.edu.cn>
 
 pkgname=u8g2
-pkgver=master-f27be15217611deb58aecadd8b6bc4dfc1f9aa29
+pkgver=master
 pkgrel=0
 pkgdesc="U8g2 is a monochrome graphics library for embedded devices. The U8g2 supports monochrome oled and lcd."
 url="https://github.com/olikraus/u8g2"
