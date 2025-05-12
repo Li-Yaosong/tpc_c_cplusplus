@@ -15,12 +15,22 @@ source="https://github.com/fmtlib/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 downloadpackage=true
 autounpack=true
 buildtools="cmake"
+patchflag=true
 
 builddir=$pkgname-${pkgver}
 packagename=$builddir.tar.gz
 
 
 prepare()  {
+    if $patchflag
+    then
+        cd $builddir
+        # 删除不符合posix规范且不影响功能验证的测试用例
+        patch -p1 < $PKGBUILD_ROOT/fmt_oh_test.patch > $publicbuildlog 2>&1
+        # patch只需要打一次,关闭打patch
+        patchflag=false
+        cd $OLDPWD
+    fi
     mkdir -p $builddir/$ARCH-build
 }
 
