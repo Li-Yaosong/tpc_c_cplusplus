@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "enet",
+        "License": "MIT license",
+        "License File": "https://github.com/lsalzman/enet?tab=MIT-1-ov-file#readme",
+        "Version Number": "1.3.18",
+        "Owner": "2942375747@qq.com",
+        "Upstream URL": "https://github.com/lsalzman/enet",
+        "Description": "ENet is a reliable UDP networking library."
+    }
+]
