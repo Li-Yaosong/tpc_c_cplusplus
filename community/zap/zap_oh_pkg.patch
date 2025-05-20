@@ -1,0 +1,78 @@
+--- zap-0.10.1/facil.io/tests/slowloris.c	2025-05-10 09:53:28.560629000 +0800
++++ zap-0.10.1/facil.io/tests/slowloris.c	2025-05-10 09:53:28.556629006 +0800
+@@ -226,7 +226,7 @@
+   }
+   while (thread_count) {
+     --thread_count;
+-    pthread_join(threads[thread_count], NULL);
++    pthread_detach(threads[thread_count]);
+   }
+   time_t end = 0;
+   time(&end);
+--- zap-0.10.1/facil.io/lib/facil/fio.c	2025-05-10 09:53:28.592628948 +0800
++++ zap-0.10.1/facil.io/lib/facil/fio.c	2025-05-10 09:53:28.580628967 +0800
+@@ -630,7 +630,7 @@
+ int __attribute__((weak)) fio_thread_join(void *p_thr) {
+   if (!p_thr || !(*((pthread_t *)p_thr)))
+     return -1;
+-  pthread_join(*((pthread_t *)p_thr), NULL);
++  pthread_detach(*((pthread_t *)p_thr));
+   *((pthread_t *)p_thr) = (pthread_t)NULL;
+   free(p_thr);
+   return 0;
+--- zap-0.10.1/facil.io/tests/CMakeLists.txt	1970-01-01 08:00:00.000000000 +0800
++++ zap-0.10.1/facil.io/tests/CMakeLists.txt	2025-05-10 16:28:03.610441815 +0800
+@@ -0,0 +1,41 @@
++# 手动列出需要测试的源文件
++set(TEST_SOURCES 
++    #malloc_speed.c 
++    #memchr_speed.c 
++    parse_url.c 
++    #random.c 
++    #redis_cmd.c 
++    #slowloris.c 
++    #tests.c
++)
++
++
++# 包含头文件路径
++include_directories(
++    ${CMAKE_SOURCE_DIR}/lib/facil
++    ${CMAKE_SOURCE_DIR}/lib/facil/cli
++    ${CMAKE_SOURCE_DIR}/lib/facil/fiobj
++    ${CMAKE_SOURCE_DIR}/lib/facil/http
++    ${CMAKE_SOURCE_DIR}/lib/facil/http/parsers
++    ${CMAKE_SOURCE_DIR}/lib/facil/legacy
++    ${CMAKE_SOURCE_DIR}/lib/facil/redis
++    ${CMAKE_SOURCE_DIR}/lib/facil/tls
++    ${CMAKE_SOURCE_DIR}
++    ${CMAKE_SOURCE_DIR}/tests
++)
++
++# 定义库源文件
++set(FACIL_SOURCES
++    ${CMAKE_SOURCE_DIR}/lib/facil/fio.c
++#    ${CMAKE_SOURCE_DIR}/lib/facil/fiobj/fiobject.c
++#    ${CMAKE_SOURCE_DIR}/lib/facil/http/http.c
++    #${CMAKE_SOURCE_DIR}/lib/facil/http/http1.c
++    #${CMAKE_SOURCE_DIR}/lib/facil/http/http_internal.c
++    #${CMAKE_SOURCE_DIR}/lib/facil/http/websockets.c
++)
++
++add_executable(tests ${TEST_SOURCES} ${FACIL_SOURCES})
++# 定义测试名称
++set(TEST_NAME tests)
++# 注册测试
++add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME} "https://user:pass@host:8080/path?query=1#fragment")
+\ 鏂囦欢灏炬病鏈夋崲琛岀
+--- zap-0.10.1/facil.io/CMakeLists.txt	2025-04-01 22:30:24.000000000 +0800
++++ zap-0.10.1/facil.io/CMakeLists.txt	2025-05-10 15:14:54.965279032 +0800
+@@ -40,4 +40,8 @@
+   PUBLIC  lib/facil/http/parsers
+   PUBLIC  lib/facil/redis
+ )
++# 启用测试功能
++enable_testing()
+ 
++# 添加 tests 目录
++add_subdirectory(tests)

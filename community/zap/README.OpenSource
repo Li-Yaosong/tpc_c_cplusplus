@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "zap",
+        "License": "MIT license",
+        "License File": "https://github.com/zigzap/zap?tab=MIT-1-ov-file#readme",
+        "Version Number": "2.5.0",
+        "Owner": "2942375747@qq.com",
+        "Upstream URL": "https://github.com/zigzap/zap",
+        "Description": "Zap is a zig alternative to REST apis written in python with Flask and mongodb, etc., and can be thought of as a microframework for web applications."
+    }
+]
