@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "oniguruma",
+        "License": "Oniguruma LICENSE",
+        "License File": "https://github.com/kkos/oniguruma?tab=License-1-ov-file#readme",
+        "Version Number": "6.9.10",
+        "Owner": "2942375747@qq.com",
+        "Upstream URL": "https://github.com/kkos/oniguruma",
+        "Description": "Oniguruma is a modern and flexible regular expressions library.  It encompasses features from different regular expression implementations that traditionally exist in different languages."
+    }
+]

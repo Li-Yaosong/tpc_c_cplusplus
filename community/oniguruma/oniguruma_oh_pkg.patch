@@ -1,0 +1,67 @@
+--- oniguruma-6.9.10/CMakeLists.txt	2024-12-28 22:36:11.000000000 +0800
++++ oniguruma-6.9.10/CMakeLists.txt	2025-05-19 09:41:38.093740754 +0800
+@@ -243,7 +243,9 @@
+ 
+ install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/onig-config
+         DESTINATION "${CMAKE_INSTALL_BINDIR}")
+-
++# ∆Ù”√≤‚ ‘
++include(CTest)
++enable_testing()
+ # Test
+ if(BUILD_TEST)
+   add_subdirectory(test)
+--- oniguruma-6.9.10/test/CMakeLists.txt	2024-12-28 22:36:11.000000000 +0800
++++ oniguruma-6.9.10/test/CMakeLists.txt	2025-05-19 09:40:55.941795383 +0800
+@@ -12,18 +12,21 @@
+ if(MSVC)
+   target_compile_options(test_utf8 PRIVATE /utf-8)
+ endif(MSVC)
++add_test(NAME test_utf8 COMMAND test_utf8)
+ 
+ add_executable(test_syntax test_syntax.c)
+ target_link_libraries(test_syntax onig)
+ if(MSVC)
+   target_compile_options(test_syntax PRIVATE /utf-8)
+ endif(MSVC)
++add_test(NAME test_syntax COMMAND test_syntax)
+ 
+ add_executable(test_options test_options.c)
+ target_link_libraries(test_options onig)
+ if(MSVC)
+   target_compile_options(test_options PRIVATE /utf-8)
+ endif(MSVC)
++add_test(NAME test_options COMMAND test_options)
+ 
+ if(NOT MSVC)
+   # EUC
+@@ -32,24 +35,29 @@
+   if (CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
+ 	target_compile_options(testc PRIVATE -Wall -Wno-invalid-source-encoding)
+   endif()
++  add_test(NAME testc COMMAND testc)
+ endif(NOT MSVC)
+ 
+ if(ENABLE_POSIX_API)
+   add_executable(testp testp.c)
+   target_link_libraries(testp onig)
++  add_test(NAME testp COMMAND testp)
+ endif()
+ 
+ add_executable(testcu testu.c)
+ target_link_libraries(testcu onig)
++add_test(NAME testcu COMMAND testcu)
+ 
+ add_executable(test_regset test_regset.c)
+ target_link_libraries(test_regset onig)
+ if(MSVC)
+   target_compile_options(test_regset PRIVATE /utf-8)
+ endif(MSVC)
++add_test(NAME test_regset COMMAND test_regset)
+ 
+ add_executable(test_back test_back.c)
+ target_link_libraries(test_back onig)
+ if(MSVC)
+   target_compile_options(test_back PRIVATE /utf-8)
+ endif(MSVC)
++add_test(NAME test_back COMMAND test_back)
