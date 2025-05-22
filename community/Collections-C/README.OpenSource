@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "Collections-C",
+        "License": "LGPL-3.0 license",
+        "License File": "https://github.com/srdja/Collections-C?tab=LGPL-3.0-1-ov-file#readme",
+        "Version Number": "-",
+        "Owner": "2942375747@qq.com",
+        "Upstream URL": "https://github.com/srdja/Collections-C",
+        "Description": "Collections-C is a library of generic data structures for the C language."
+    }
+]
