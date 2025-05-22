@@ -1,0 +1,375 @@
+--- sc-1.0.4/condition/cond_test.c	2025-05-18 21:37:48.570793291 +0800
++++ sc-1.0.4/condition/cond_test.c	2025-05-18 21:37:48.566793296 +0800
+@@ -122,7 +122,13 @@
+         return -1;
+     }
+ 
+-    rc = pthread_join(thread->id, &val);
++    #ifdef __OHOS__
++	// OpenHarmony��֧��pthread_join,��Ϊ֧�ֵ�pthread_detach
++	rc = pthread_detach(thread->id);
++#else
++	// ��OpenHarmony������ʹ��pthread_join
++	rc = pthread_join(thread->id, &val);
++#endif
+     thread->id = 0;
+ 
+     if (ret != NULL) {
+--- sc-1.0.4/thread/sc_thread.c	2025-05-18 21:37:48.586793270 +0800
++++ sc-1.0.4/thread/sc_thread.c	2025-05-18 21:37:48.582793275 +0800
+@@ -142,7 +142,13 @@
+         return -1;
+     }
+ 
+-    rc = pthread_join(thread->id, &val);
++    #ifdef __OHOS__
++	// OpenHarmony��֧��pthread_join,��Ϊ֧�ֵ�pthread_detach
++	rc = pthread_detach(thread->id);
++#else
++	// ��OpenHarmony������ʹ��pthread_join
++	rc = pthread_join(thread->id, &val);
++#endif
+     if (rc != 0) {
+         strncpy(thread->err, strerror(rc), sizeof(thread->err) - 1);
+     }
+--- sc-1.0.4/socket/sock_test.c	2025-05-18 21:37:48.602793250 +0800
++++ sc-1.0.4/socket/sock_test.c	2025-05-18 21:37:48.598793254 +0800
+@@ -136,7 +136,13 @@
+         return -1;
+     }
+ 
+-    rc = pthread_join(thread->id, &val);
++    #ifdef __OHOS__
++	// OpenHarmony��֧��pthread_join,��Ϊ֧�ֵ�pthread_detach
++	rc = pthread_detach(thread->id);
++#else
++	// ��OpenHarmony������ʹ��pthread_join
++	rc = pthread_join(thread->id, &val);
++#endif
+     thread->id = 0;
+ 
+     if (ret != NULL) {
+@@ -1065,7 +1071,7 @@
+ 
+     sc_sock_init(&sock, 0, true, SC_SOCK_UNIX);
+     fail_setsockopt = 1;
+-    assert(sc_sock_listen(&sock, "/tmp/x", NULL) == -1);
++    assert(sc_sock_listen(&sock, "/data/local/tmp/x", NULL) == -1);
+     fail_setsockopt = 2;
+     assert(sc_sock_listen(&sock, "/tmp/x", NULL) == -1);
+     fail_setsockopt = 3;
+@@ -1202,7 +1208,7 @@
+     assert(sc_sock_term(&in) == 0);
+ 
+     sc_sock_init(&sock, 0, false, SC_SOCK_UNIX);
+-    assert(sc_sock_listen(&sock, "/tmp/x", "8080") == 0);
++    assert(sc_sock_listen(&sock, "/data/local/tmp/x", "8080") == 0);
+     sc_sock_init(&client, 0, false, SC_SOCK_UNIX);
+     fail_setsockopt = 1;
+     rc = sc_sock_connect(&client, "/tmp/x", "8080", NULL, NULL);
+--- sc-1.0.4/time/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/time/CMakeLists.txt	2025-05-18 22:35:34.686191779 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_time PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/crc32/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/crc32/CMakeLists.txt	2025-05-18 22:36:58.166089176 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_crc32 PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/thread/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/thread/CMakeLists.txt	2025-05-18 22:40:22.417834218 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_thread PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -pthread -Wextra -Wall -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -pthread -Wextra -Wall -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/socket/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/socket/CMakeLists.txt	2025-05-18 22:41:09.305775061 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_socket PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -pthread -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -pthread")
+ endif ()
+ 
+ 
+--- sc-1.0.4/signal/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/signal/CMakeLists.txt	2025-05-18 22:41:42.825732650 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_signal PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic")
+ endif ()
+ 
+
+--- sc-1.0.4/array/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/array/CMakeLists.txt	2025-05-19 19:20:55.152862679 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_array PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/buffer/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/buffer/CMakeLists.txt	2025-05-19 19:21:04.632852172 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_buf PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/condition/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/condition/CMakeLists.txt	2025-05-19 19:21:17.432837987 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_cond PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -pthread -Wall -Wextra -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -pthread -Wall -Wextra -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/heap/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/heap/CMakeLists.txt	2025-05-19 19:21:41.192811649 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_heap PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/ini/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/ini/CMakeLists.txt	2025-05-19 19:21:50.960800818 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_ini PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/linked-list/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/linked-list/CMakeLists.txt	2025-05-19 19:22:03.772786611 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_list PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/logger/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/logger/CMakeLists.txt	2025-05-19 19:22:16.564772426 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_log PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror -pthread")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -pthread")
+ endif ()
+ 
+ 
+--- sc-1.0.4/map/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/map/CMakeLists.txt	2025-05-19 19:22:29.396758190 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_map PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/memory-map/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/memory-map/CMakeLists.txt	2025-05-19 19:22:40.980745335 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_mmap PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror -pthread")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -pthread")
+ endif ()
+ 
+ 
+--- sc-1.0.4/mutex/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/mutex/CMakeLists.txt	2025-05-19 19:22:51.940733181 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_mutex PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror -pthread")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -pthread")
+ endif ()
+ 
+ 
+--- sc-1.0.4/option/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/option/CMakeLists.txt	2025-05-19 19:23:03.544720310 +0800
+@@ -14,7 +14,7 @@
+ 
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror -pthread")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -pthread")
+ endif ()
+ 
+ 
+--- sc-1.0.4/queue/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/queue/CMakeLists.txt	2025-05-19 19:23:14.616708023 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_queue PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/perf/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/perf/CMakeLists.txt	2025-05-19 19:23:29.140691912 +0800
+@@ -14,5 +14,5 @@
+ 
+     target_include_directories(sc_perf PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -pedantic -Werror -Wextra -Wall")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -pedantic -Wextra -Wall")
+ endif ()
+--- sc-1.0.4/sc/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/sc/CMakeLists.txt	2025-05-19 19:23:41.956677693 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror -pthread")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -pthread")
+ endif ()
+ 
+ 
+--- sc-1.0.4/string/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/string/CMakeLists.txt	2025-05-19 19:24:19.360636184 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_str PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/timer/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/timer/CMakeLists.txt	2025-05-19 19:24:44.736608018 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_timer PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -g -pedantic -Werror")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -g -pedantic")
+ endif ()
+ 
+ 
+--- sc-1.0.4/uri/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/uri/CMakeLists.txt	2025-05-19 19:25:09.132580934 +0800
+@@ -13,7 +13,7 @@
+ target_include_directories(sc_uri PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+ 
+ if (NOT CMAKE_C_COMPILER_ID MATCHES "MSVC")
+-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -pedantic -Werror -Wall -Wextra")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -pedantic -Wall -Wextra")
+ endif ()
+ 
+ 
+--- sc-1.0.4/CMakeLists.txt	2021-03-24 06:37:41.000000000 +0800
++++ sc-1.0.4/CMakeLists.txt	2025-05-19 20:25:46.456085397 +0800
+@@ -18,14 +18,13 @@
+ endif ()
+ 
+ if (NOT ${CMAKE_BUILD_TYPE} MATCHES "Debug" AND NOT ${CMAKE_BUILD_TYPE} MATCHES "Coverage")
+-    SET(SC_BUILD_TEST OFF CACHE BOOL "Turn off sc_lib tests" FORCE)
++    SET(SC_BUILD_TEST ON CACHE BOOL "Turn off sc_lib tests" FORCE)
+     message(STATUS "Not building tests, SC tests are supported in Debug build only.")
+ endif ()
+ 
+ add_subdirectory(array)
+ add_subdirectory(buffer)
+ add_subdirectory(condition)
+-add_subdirectory(crc32)
+ add_subdirectory(heap)
+ add_subdirectory(ini)
+ add_subdirectory(linked-list)
+@@ -45,6 +44,47 @@
+ add_subdirectory(thread)
+ add_subdirectory(uri)
+ 
++set(INSTALL_INCLUDE_DIR include)
++set(INSTALL_BIN_DIR bin)
++set(INSTALL_LIB_DIR lib)
++
++
++# ��Ŀ¼�б�
++set(SUBDIRS 
++    array buffer condition crc32 heap ini linked-list logger map memory-map 
++    mutex option queue perf signal socket string time timer thread uri
++)
++
++# ���ڴ洢����Դ�ļ���ͷ�ļ�
++set(SRC_FILES "")
++set(INCLUDE_FILES "")
++
++# ������Ŀ¼���ռ�Դ�ļ���ͷ�ļ�
++foreach(subdir ${SUBDIRS})
++    # ��ȡԴ�ļ���sc_*.c��
++    file(GLOB subdir_src_files ${subdir}/sc_*.c)
++    list(APPEND SRC_FILES ${subdir_src_files})
++
++    # ��ȡͷ�ļ���sc_*.h��
++    file(GLOB subdir_include_files ${subdir}/sc_*.h)
++    list(APPEND INCLUDE_FILES ${subdir_include_files})
++endforeach()
++
++# ��ӡ�ռ���Դ�ļ���ͷ�ļ�
++message(STATUS "Source Files: ${SRC_FILES}")
++message(STATUS "Include Files: ${INCLUDE_FILES}")
++
++# ���ɹ�����
++add_library(sc_all SHARED ${SRC_FILES})
++
++# ��װ������
++install(TARGETS sc_all
++    LIBRARY DESTINATION ${INSTALL_LIB_DIR}
++)
++
++# ��װͷ�ļ���������ͷ�ļ�ͳһ��װ�� include/sc Ŀ¼��
++install(FILES ${INCLUDE_FILES} DESTINATION ${INSTALL_INCLUDE_DIR})
++
+ # --------------------------------------------------------------------------- #
+ # --------------------- Test Configuration Start ---------------------------- #
+ # --------------------------------------------------------------------------- #

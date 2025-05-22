@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "sc",
+        "License": "BSD-3-Clause license",
+        "License File": "https://github.com/tezc/sc?tab=BSD-3-Clause-1-ov-file#readme",
+        "Version Number": "1.0.4",
+        "Owner": "2942375747@qq.com",
+        "Upstream URL": "https://github.com/tezc/sc",
+        "Description": "sc is a portable C library collection with high performance and low memory overhead. It provides independent data structures and common function modules in the form of header file/source file pairs, and supports cross-platform integration directly."
+    }
+]
