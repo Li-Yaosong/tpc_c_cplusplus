@@ -6,10 +6,10 @@
  
 -    rc = pthread_join(thread->id, &val);
 +    #ifdef __OHOS__
-+	// OpenHarmony��֧��pthread_join,��Ϊ֧�ֵ�pthread_detach
++	// OpenHarmony不支持pthread_join,需改为pthread_detach
 +	rc = pthread_detach(thread->id);
 +#else
-+	// ��OpenHarmony������ʹ��pthread_join
++	// 非OpenHarmony环境，继续使用pthread_join
 +	rc = pthread_join(thread->id, &val);
 +#endif
      thread->id = 0;
@@ -23,10 +23,10 @@
  
 -    rc = pthread_join(thread->id, &val);
 +    #ifdef __OHOS__
-+	// OpenHarmony��֧��pthread_join,��Ϊ֧�ֵ�pthread_detach
++	// OpenHarmony不支持pthread_join,需改为pthread_detach
 +	rc = pthread_detach(thread->id);
 +#else
-+	// ��OpenHarmony������ʹ��pthread_join
++	// 非OpenHarmony环境，继续使用pthread_join
 +	rc = pthread_join(thread->id, &val);
 +#endif
      if (rc != 0) {
@@ -40,10 +40,10 @@
  
 -    rc = pthread_join(thread->id, &val);
 +    #ifdef __OHOS__
-+	// OpenHarmony��֧��pthread_join,��Ϊ֧�ֵ�pthread_detach
++	// OpenHarmony不支持pthread_join,需改为pthread_detach
 +	rc = pthread_detach(thread->id);
 +#else
-+	// ��OpenHarmony������ʹ��pthread_join
++	// 非OpenHarmony环境，继续使用pthread_join
 +	rc = pthread_join(thread->id, &val);
 +#endif
      thread->id = 0;
@@ -334,40 +334,40 @@
 +set(INSTALL_LIB_DIR lib)
 +
 +
-+# ��Ŀ¼�б�
++# 子目录列表
 +set(SUBDIRS 
 +    array buffer condition crc32 heap ini linked-list logger map memory-map 
 +    mutex option queue perf signal socket string time timer thread uri
 +)
 +
-+# ���ڴ洢����Դ�ļ���ͷ�ļ�
++# 用于存储所有源文件和头文件
 +set(SRC_FILES "")
 +set(INCLUDE_FILES "")
 +
-+# ������Ŀ¼���ռ�Դ�ļ���ͷ�ļ�
++# 遍历子目录，收集源文件和头文件
 +foreach(subdir ${SUBDIRS})
-+    # ��ȡԴ�ļ���sc_*.c��
++    # 获取源文件(sc_*.c)
 +    file(GLOB subdir_src_files ${subdir}/sc_*.c)
 +    list(APPEND SRC_FILES ${subdir_src_files})
 +
-+    # ��ȡͷ�ļ���sc_*.h��
++    # 获取头文件(sc_*.h)
 +    file(GLOB subdir_include_files ${subdir}/sc_*.h)
 +    list(APPEND INCLUDE_FILES ${subdir_include_files})
 +endforeach()
 +
-+# ��ӡ�ռ���Դ�ļ���ͷ�ļ�
++# 打印收集的源文件和头文件
 +message(STATUS "Source Files: ${SRC_FILES}")
 +message(STATUS "Include Files: ${INCLUDE_FILES}")
 +
-+# ���ɹ�����
++# 生成共享库
 +add_library(sc_all SHARED ${SRC_FILES})
 +
-+# ��װ������
++# 安装共享库
 +install(TARGETS sc_all
 +    LIBRARY DESTINATION ${INSTALL_LIB_DIR}
 +)
 +
-+# ��װͷ�ļ���������ͷ�ļ�ͳһ��װ�� include/sc Ŀ¼��
++# 安装头文件，将所有头文件统一安装到 include/sc 目录下
 +install(FILES ${INCLUDE_FILES} DESTINATION ${INSTALL_INCLUDE_DIR})
 +
  # --------------------------------------------------------------------------- #
