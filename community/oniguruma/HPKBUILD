@@ -23,7 +23,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("Oniguruma LICENSE")
 depends=()
 makedepends=()
-source="https://github.com/kkos/oniguruma/archive/refs/tags/v6.9.10.zip"
+source="https://github.com/kkos/$pkgname/archive/refs/tags/v$pkgver.zip"
 
 downloadpackage=true
 autounpack=true
@@ -38,7 +38,7 @@ prepare() {
     then
         cd $builddir
         # 启用测试
-        patch -p1 < `pwd`/../oniguruma_oh_pkg.patch
+        patch -p1 < $PKGBUILD_ROOT/oniguruma_v6.9.10_oh_pkg.patch
         # patch只需要打一次,关闭打patch
         patchflag=false
         cd $OLDPWD

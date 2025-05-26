@@ -24,7 +24,7 @@
   ├── SHA512SUM                         #三方库校验文件
   ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
   ├── README_zh.md                      #三方库简介
-  ├── oniguruma_oh_pkg.patch            #用于oniguruma库编译的补丁
+  ├── oniguruma_v6.9.10_oh_pkg.patch    #用于oniguruma库编译的补丁
   ```
 
 - 在lycium目录下编译三方库
