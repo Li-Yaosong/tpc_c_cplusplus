@@ -1,4 +1,4 @@
-# 实用OpenHarmony SDK编译源代码
+# 开源三方库OpenHarmony交叉编译指导
 
 ## 简介
 
@@ -52,7 +52,7 @@ OpenHarmony提供 linux/windwos以及mac平台的几种SDK，开发者可以在l
    owner@ubuntu:~/workspace/{SRC}/build$
    ```
 
-2. 配置交叉编译参数，生成Makefile，本用例中，我们采用Linux平台下的cmake工具和对应配置进行编译（对应的路径为：SDKPATH=~/workspace/ohos-sdk/linux/native/build-tools/cmake），参考命令如下：
+2. 配置交叉编译参数，生成Makefile，本用例中，我们采用OpenHarmony SDK内，linux文件夹里的cmake工具和对应配置进行编译（对应的路径为：SDKPATH=~/workspace/ohos-sdk/linux/native/build-tools/cmake），参考命令如下：
 
    ```shell
    owner@ubuntu:~/workspace/{SRC}/build$ {SDKPATH}/bin/cmake -DCMAKE_TOOLCHAIN_FILE={SDKPATH}/ohos.toolchain.cmake -DCMAKE_INSTALL_PREFIX={INSTALL_PATH} -DOHOS_ARCH=arm64-v8a .. -L             # 执行cmake命令,执行完cmake成功后在当前目录生成Makefile文件
