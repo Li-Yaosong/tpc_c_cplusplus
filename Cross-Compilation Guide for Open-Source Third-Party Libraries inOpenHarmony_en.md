@@ -18,7 +18,7 @@ This chapter describes the source code compilation methods:
 
 OpenHarmony provides SDKs for Linux, Windows, and macOS platforms, enabling cross-compilation across these systems. This guide focuses on Linux-based cross-compilation.
 
-1. Download the SDK for your target platform from the [official release channel](https://gitcode.com/openharmony/docs/blob/master/zh-cn/release-notes/OpenHarmony-v5.0.2-release.md#%E4%BB%8E%E9%95%9C%E5%83%8F%E7%AB%99%E7%82%B9%E8%8E%B7%E5%8F%96).
+1. Download the SDK for your target platform from the [official release channel](https://gitcode.com/openharmony/docs/blob/master/en/release-notes/OpenHarmony-v5.0.1-release.md#acquiring-source-code-from-mirrors).
 2. Extract the SDK package:
    ```shell
    owner@ubuntu:~/workspace$ tar -zxvf ohos-sdk-windows_linux-public.tar.tar.gz
