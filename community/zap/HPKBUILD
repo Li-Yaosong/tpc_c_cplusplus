@@ -23,7 +23,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("MIT license")
 depends=()
 makedepends=()
-source="https://github.com/zigzap/zap/archive/refs/tags/v0.10.1.zip"
+source="https://github.com/zigzap/$pkgname/archive/refs/tags/v$pkgver.zip"
 
 downloadpackage=true
 autounpack=true
@@ -39,7 +39,7 @@ prepare() {
         cd $builddir
         # pthread_join属于OpenHarmony不支持的api
         # 添加测试支持
-        patch -p1 < `pwd`/../zap_oh_pkg.patch
+        patch -p1 < $PKGBUILD_ROOT/zap_0.10.1_oh_pkg.patch
         # patch只需要打一次,关闭打patch
         patchflag=false
         cd $OLDPWD

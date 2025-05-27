@@ -24,7 +24,7 @@
   ├── SHA512SUM                         #三方库校验文件
   ├── README.OpenSource                 #说明三方库源码的下载地址，版本，license等信息
   ├── README_zh.md                      #三方库简介
-  ├── zap_oh_pkg.patch                  #用于zap库编译的补丁
+  ├── zap_0.10.1_oh_pkg.patch           #用于zap库编译的补丁
   ```
 
 - 在lycium目录下编译三方库
@@ -57,9 +57,9 @@
 
   ```shell
   #将三方库加入工程中
-  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/bullet3/${OHOS_ARCH}/lib/libfacil.io.a)
+  target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/zap/${OHOS_ARCH}/lib/libfacil.io.a)
   #将三方库的头文件加入工程中
-  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/bullet3/${OHOS_ARCH}/include)
+  target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/zap/${OHOS_ARCH}/include)
   ```
 
 ## 测试三方库
@@ -67,10 +67,10 @@
 进入到构建目录运行测试用例（注意arm64-v8a为构建64位的目录，armeabi-v7a为构建32位的目录）。执行结果如图所示
 
 ```shell
-  cd /data/tpc_c_cplusplus/thirdparty/zap/arm64-v8a-build/
+  cd /data/tpc_c_cplusplus/thirdparty/zap/zap-0.10.1/arm64-v8a-build/
   ./ctest
 ```
-&nbsp;![bullet3_test](pic/zap_test.png)
+&nbsp;![zap_test](pic/zap_test.png)
 
 ## 参考资料
 
