@@ -16,6 +16,7 @@
 
 pkgname=Collections-C
 pkgver=master
+# commit id : 67a094035b3f7159cf3f9af82c55ae63fcb86a34
 pkgrel=0
 pkgdesc="Collections-C is a library of generic data structures for the C language."
 url="https://github.com/srdja/Collections-C"
@@ -23,7 +24,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("LGPL-3.0 license")
 depends=()
 makedepends=()
-source="https://github.com/srdja/Collections-C/archive/refs/heads/master.zip"
+source="https://github.com/srdja/$pkgname/archive/refs/heads/$pkgver.zip"
 
 downloadpackage=true
 autounpack=true

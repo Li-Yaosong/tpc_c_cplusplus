@@ -70,7 +70,7 @@
   cd /data/tpc_c_cplusplus/thirdparty/Collections-C/Collections-C-master/arm64-v8a-build/
   ./ctest
 ```
-&nbsp;![bullet3_test](pic/Collections-C_test.png)
+&nbsp;![Collections-C_test](pic/Collections-C_test.png)
 
 ## 参考资料
 
