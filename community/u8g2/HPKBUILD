@@ -16,6 +16,7 @@
 
 pkgname=u8g2
 pkgver=master
+#三方库版本为master-f27be15217611deb58aecadd8b6bc4dfc1f9aa29（master分支commit ID）
 pkgrel=0
 pkgdesc="U8g2 is a monochrome graphics library for embedded devices. The U8g2 supports monochrome oled and lcd."
 url="https://github.com/olikraus/u8g2"
@@ -23,7 +24,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("new-BSD license")
 depends=()
 makedepends=()
-source="https://github.com/olikraus/u8g2/archive/refs/heads/master.zip"
+source="https://github.com/olikraus/$pkgname/archive/refs/heads/$pkgver.zip"
 
 downloadpackage=true
 autounpack=true
@@ -37,7 +38,7 @@ prepare() {
     if $patchflag
     then
         cd $builddir
-        patch -p1 < `pwd`/../u8g2_oh_pkg.patch
+        patch -p1 < $PKGBUILD_ROOT/u8g2_master_oh_pkg.patch
         # 为u8g2安装可执行文件，添加测试与测试链接
         patchflag=false
         cd $OLDPWD
