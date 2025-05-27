@@ -23,7 +23,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD-3-Clause license")
 depends=()
 makedepends=()
-source="https://github.com/tezc/sc/archive/refs/tags/v1.0.4.zip"
+source="https://github.com/tezc/$pkgname/archive/refs/tags/v$pkgver.zip"
 
 downloadpackage=true
 autounpack=true
@@ -40,7 +40,7 @@ prepare() {
         # pthread_join是OpenHarmony不支持的api
         # 解决/tmp无权限问题
         # 添加install指令
-        patch -p1 < `pwd`/../sc_oh_pkg.patch
+        patch -p1 < $PKGBUILD_ROOT/sc_1.0.4_oh_pkg.patch
         # patch只需要打一次,关闭打patch
         patchflag=false
         cd $OLDPWD
