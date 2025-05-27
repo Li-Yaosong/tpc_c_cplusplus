@@ -23,7 +23,7 @@ archs=("armeabi-v7a" "arm64-v8a")
 license=(MIT license)
 depends=()
 makedepends=()
-source="https://github.com/lsalzman/enet/archive/refs/tags/v1.3.18.zip"
+source="https://github.com/lsalzman/$pkgname/archive/refs/tags/v$pkgver.zip"
 
 downloadpackage=true
 autounpack=true
@@ -39,7 +39,7 @@ prepare() {
         cd $builddir
         # 启用测试功能
         # 添加测试用例
-        patch -p1 < `pwd`/../enet_oh_pkg.patch
+        patch -p1 < $PKGBUILD_ROOT/enet_1.3.18_oh_pkg.patch
         patchflag=false
         cd $OLDPWD
     fi
