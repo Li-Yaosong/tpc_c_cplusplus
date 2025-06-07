@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "json",
+        "License": "MIT",
+        "License File": "LICENSE",
+        "Version Number": "v3.11.2",
+        "Owner": "wupingyuan@huawei.com",
+        "Upstream URL": "https://github.com/nlohmann/json",
+        "Description": "JSON for Modern C++"
+    }
+]
