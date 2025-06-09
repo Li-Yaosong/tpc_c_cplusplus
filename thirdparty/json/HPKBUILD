@@ -48,4 +48,3 @@ check() {
 cleanbuild(){
     rm -rf ${PWD}/$builddir #${PWD}/$packagename
 }
-77
