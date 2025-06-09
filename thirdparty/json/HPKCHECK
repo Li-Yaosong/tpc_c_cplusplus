@@ -25,75 +25,75 @@ openharmonycheck() {
     ./tests/test-allocator_cpp11 > ${logfile} 2>&1  
     ./tests/test-alt-string_cpp11 > ${logfile} 2>&1                  
     ./tests/test-assert_macro_cpp11 > ${logfile} 2>&1                
-./tests/test-binary_formats_cpp11 > ${logfile} 2>&1             
-./tests/test-bjdata_cpp11 > ${logfile} 2>&1                     
-./tests/test-bson_cpp11 > ${logfile} 2>&1                        
-./tests/test-byte_container_with_subtype_cpp11 > ${logfile} 2>&1 
-./tests/test-capacity_cpp11 > ${logfile} 2>&1                   
-./tests/test-cbor_cpp11 > ${logfile} 2>&1                     
-./tests/test-class_const_iterator_cpp11 > ${logfile} 2>&1      
-./tests/test-class_iterator_cpp11 > ${logfile} 2>&1         
-./tests/test-class_lexer_cpp11 > ${logfile} 2>&1                
-./tests/test-class_parser_cpp11 > ${logfile} 2>&1               
-./tests/test-comparison_cpp11 > ${logfile} 2>&1                 
-./tests/test-comparison_cpp20 > ${logfile} 2>&1                
-./tests/test-comparison_legacy_cpp11 > ${logfile} 2>&1         
-./tests/test-comparison_legacy_cpp20 > ${logfile} 2>&1          
-./tests/test-concepts_cpp11 > ${logfile} 2>&1                    
-./tests/test-constructor1_cpp11 > ${logfile} 2>&1                
-./tests/test-constructor2_cpp11 > ${logfile} 2>&1                
-./tests/test-convenience_cpp11 > ${logfile} 2>&1                
-./tests/test-conversions_cpp11 > ${logfile} 2>&1                 
-./tests/test-conversions_cpp17 > ${logfile} 2>&1               
-./tests/test-deserialization_cpp11 > ${logfile} 2>&1             
-./tests/test-diagnostics_cpp11 > ${logfile} 2>&1                
-./tests/test-disabled_exceptions_cpp11 > ${logfile} 2>&1        
-./tests/test-element_access1_cpp11 > ${logfile} 2>&1             
-./tests/test-element_access2_cpp11 > ${logfile} 2>&1            
-./tests/test-element_access2_cpp14 > ${logfile} 2>&1           
-./tests/test-element_access2_cpp17 > ${logfile} 2>&1            
-./tests/test-hash_cpp11 > ${logfile} 2>&1                        
-./tests/test-inspection_cpp11 > ${logfile} 2>&1               
-./tests/test-items_cpp11 > ${logfile} 2>&1                   
-./tests/test-items_cpp17 > ${logfile} 2>&1                     
-./tests/test-iterators1_cpp11 > ${logfile} 2>&1                 
-./tests/test-iterators2_cpp11 > ${logfile} 2>&1                 
-./tests/test-iterators2_cpp20 > ${logfile} 2>&1                 
-./tests/test-json_patch_cpp11 > ${logfile} 2>&1                 
-./tests/test-json_pointer_cpp11 > ${logfile} 2>&1               
-./tests/test-json_pointer_cpp20 > ${logfile} 2>&1               
-./tests/test-large_json_cpp11 > ${logfile} 2>&1                 
-./tests/test-merge_patch_cpp11 > ${logfile} 2>&1                
-./tests/test-meta_cpp11 > ${logfile} 2>&1                       
-./tests/test-modifiers_cpp11 > ${logfile} 2>&1                  
-./tests/test-msgpack_cpp11 > ${logfile} 2>&1                    
-./tests/test-noexcept_cpp11 > ${logfile} 2>&1                   
-./tests/test-ordered_json_cpp11 > ${logfile} 2>&1               
-./tests/test-ordered_map_cpp11 > ${logfile} 2>&1               
-./tests/test-pointer_access_cpp11 > ${logfile} 2>&1            
-./tests/test-readme_cpp11 > ${logfile} 2>&1                     
-./tests/test-reference_access_cpp11 > ${logfile} 2>&1           
-./tests/test-regression1_cpp11 > ${logfile} 2>&1               
-./tests/test-regression1_cpp17 > ${logfile} 2>&1                
-./tests/test-regression2_cpp11 > ${logfile} 2>&1                
-./tests/test-regression2_cpp17 > ${logfile} 2>&1               
-./tests/test-regression2_cpp20 > ${logfile} 2>&1               
-./tests/test-serialization_cpp11 > ${logfile} 2>&1             
-./tests/test-testsuites_cpp11 > ${logfile} 2>&1                 
-./tests/test-to_chars_cpp11 > ${logfile} 2>&1                   
-./tests/test-type_traits_cpp11 > ${logfile} 2>&1                
-./tests/test-ubjson_cpp11 > ${logfile} 2>&1                     
-./tests/test-udl_cpp11 > ${logfile} 2>&1                        
-./tests/test-udt_cpp11 > ${logfile} 2>&1                        
-./tests/test-udt_macro_cpp11 > ${logfile} 2>&1                  
-./tests/test-unicode1_cpp11 > ${logfile} 2>&1                   
-./tests/test-unicode2_cpp11 > ${logfile} 2>&1                  
-./tests/test-unicode3_cpp11 > ${logfile} 2>&1                   
-./tests/test-unicode4_cpp11 > ${logfile} 2>&1                   
-./tests/test-unicode5_cpp11 > ${logfile} 2>&1                  
-./tests/test-user_defined_input_cpp11 > ${logfile} 2>&1        
-./tests/test-windows_h_cpp11 > ${logfile} 2>&1                  
-./tests/test-wstring_cpp11 > ${logfile} 2>&1
+    ./tests/test-binary_formats_cpp11 > ${logfile} 2>&1             
+    ./tests/test-bjdata_cpp11 > ${logfile} 2>&1                     
+    ./tests/test-bson_cpp11 > ${logfile} 2>&1                        
+    ./tests/test-byte_container_with_subtype_cpp11 > ${logfile} 2>&1 
+    ./tests/test-capacity_cpp11 > ${logfile} 2>&1                   
+    ./tests/test-cbor_cpp11 > ${logfile} 2>&1                     
+    ./tests/test-class_const_iterator_cpp11 > ${logfile} 2>&1      
+    ./tests/test-class_iterator_cpp11 > ${logfile} 2>&1         
+    ./tests/test-class_lexer_cpp11 > ${logfile} 2>&1                
+    ./tests/test-class_parser_cpp11 > ${logfile} 2>&1               
+    ./tests/test-comparison_cpp11 > ${logfile} 2>&1                 
+    ./tests/test-comparison_cpp20 > ${logfile} 2>&1                
+    ./tests/test-comparison_legacy_cpp11 > ${logfile} 2>&1         
+    ./tests/test-comparison_legacy_cpp20 > ${logfile} 2>&1          
+    ./tests/test-concepts_cpp11 > ${logfile} 2>&1                    
+    ./tests/test-constructor1_cpp11 > ${logfile} 2>&1                
+    ./tests/test-constructor2_cpp11 > ${logfile} 2>&1                
+    ./tests/test-convenience_cpp11 > ${logfile} 2>&1                
+    ./tests/test-conversions_cpp11 > ${logfile} 2>&1                 
+    ./tests/test-conversions_cpp17 > ${logfile} 2>&1               
+    ./tests/test-deserialization_cpp11 > ${logfile} 2>&1             
+    ./tests/test-diagnostics_cpp11 > ${logfile} 2>&1                
+    ./tests/test-disabled_exceptions_cpp11 > ${logfile} 2>&1        
+    ./tests/test-element_access1_cpp11 > ${logfile} 2>&1             
+    ./tests/test-element_access2_cpp11 > ${logfile} 2>&1            
+    ./tests/test-element_access2_cpp14 > ${logfile} 2>&1           
+    ./tests/test-element_access2_cpp17 > ${logfile} 2>&1            
+    ./tests/test-hash_cpp11 > ${logfile} 2>&1                        
+    ./tests/test-inspection_cpp11 > ${logfile} 2>&1               
+    ./tests/test-items_cpp11 > ${logfile} 2>&1                   
+    ./tests/test-items_cpp17 > ${logfile} 2>&1                     
+    ./tests/test-iterators1_cpp11 > ${logfile} 2>&1                 
+    ./tests/test-iterators2_cpp11 > ${logfile} 2>&1                 
+    ./tests/test-iterators2_cpp20 > ${logfile} 2>&1                 
+    ./tests/test-json_patch_cpp11 > ${logfile} 2>&1                 
+    ./tests/test-json_pointer_cpp11 > ${logfile} 2>&1               
+    ./tests/test-json_pointer_cpp20 > ${logfile} 2>&1               
+    ./tests/test-large_json_cpp11 > ${logfile} 2>&1                 
+    ./tests/test-merge_patch_cpp11 > ${logfile} 2>&1                
+    ./tests/test-meta_cpp11 > ${logfile} 2>&1                       
+    ./tests/test-modifiers_cpp11 > ${logfile} 2>&1                  
+    ./tests/test-msgpack_cpp11 > ${logfile} 2>&1                    
+    ./tests/test-noexcept_cpp11 > ${logfile} 2>&1                   
+    ./tests/test-ordered_json_cpp11 > ${logfile} 2>&1               
+    ./tests/test-ordered_map_cpp11 > ${logfile} 2>&1               
+    ./tests/test-pointer_access_cpp11 > ${logfile} 2>&1            
+    ./tests/test-readme_cpp11 > ${logfile} 2>&1                     
+    ./tests/test-reference_access_cpp11 > ${logfile} 2>&1           
+    ./tests/test-regression1_cpp11 > ${logfile} 2>&1               
+    ./tests/test-regression1_cpp17 > ${logfile} 2>&1                
+    ./tests/test-regression2_cpp11 > ${logfile} 2>&1                
+    ./tests/test-regression2_cpp17 > ${logfile} 2>&1               
+    ./tests/test-regression2_cpp20 > ${logfile} 2>&1               
+    ./tests/test-serialization_cpp11 > ${logfile} 2>&1             
+    ./tests/test-testsuites_cpp11 > ${logfile} 2>&1                 
+    ./tests/test-to_chars_cpp11 > ${logfile} 2>&1                   
+    ./tests/test-type_traits_cpp11 > ${logfile} 2>&1                
+    ./tests/test-ubjson_cpp11 > ${logfile} 2>&1                     
+    ./tests/test-udl_cpp11 > ${logfile} 2>&1                        
+    ./tests/test-udt_cpp11 > ${logfile} 2>&1                        
+    ./tests/test-udt_macro_cpp11 > ${logfile} 2>&1                  
+    ./tests/test-unicode1_cpp11 > ${logfile} 2>&1                   
+    ./tests/test-unicode2_cpp11 > ${logfile} 2>&1                  
+    ./tests/test-unicode3_cpp11 > ${logfile} 2>&1                   
+    ./tests/test-unicode4_cpp11 > ${logfile} 2>&1                   
+    ./tests/test-unicode5_cpp11 > ${logfile} 2>&1                  
+    ./tests/test-user_defined_input_cpp11 > ${logfile} 2>&1        
+    ./tests/test-windows_h_cpp11 > ${logfile} 2>&1                  
+    ./tests/test-wstring_cpp11 > ${logfile} 2>&1
     res=$?
     cd $OLDPWD
     return $res
