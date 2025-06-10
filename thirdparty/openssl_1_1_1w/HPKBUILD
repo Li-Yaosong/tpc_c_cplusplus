@@ -25,19 +25,30 @@ depends=()
 makedepends=()
 
 # 官方下载地址https://github.com/openssl/$pkgname/archive/refs/tags/$pkgver.zip受网络影响可能存在下载失败的情况，现使用gitee镜像可以与官方仓库保持同步
-source="https://gitee.com/mirrors/${pkgname:0:7}/repository/archive/$pkgver.zip"
+source="https://gitee.com/mirrors/openssl.git"
 
-autounpack=true
-downloadpackage=true
+autounpack=false
+downloadpackage=false
 buildtools="configure"
 
 builddir=${pkgname:0:7}-${pkgver}
 packagename=$builddir.zip
+cloneFlag=true
 
 source envset.sh
 
 host=
 prepare() {
+    if $cloneFlag
+    then
+        git clone -b $pkgver $source $builddir > $publicbuildlog 2>&1
+        if [ $? -ne 0 ]
+        then
+            echo "$pkgname git clone $source error."
+            return -1
+        fi
+        cloneFlag=false
+    fi
     mkdir -p $builddir/$ARCH-build
     if [ $ARCH == "armeabi-v7a" ]
     then
