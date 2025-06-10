@@ -1,0 +1,38 @@
+#!/bin/bash
+# HPKCHECK: Run Speex test binaries (NB, WB, UWB) and log results
+
+# Variables inherited from HPKBUILD environment:
+# LYCIUM_THIRDPARTY_ROOT, pkgname, ARCH, OHOS_SDK_VER, builddir, srcdir
+
+source HPKBUILD > /dev/null 2>&1
+logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
+# Ensure libraries for test programs are found
+export LD_LIBRARY_PATH=/data/:${LYCIUM_THIRDPARTY_ROOT}/../lycium/usr/speex/${ARCH}/lib
+
+openharmonycheck() {
+    res=0
+    # Move to build output directory
+    cd ${builddir}/${ARCH}-build/libspeex/.libs
+
+    # Prepare log
+    echo "total test 3" >> $logfile
+
+    # 1. Narrowband (testenc)
+    echo "[1/3] Running testenc (Narrowband)" >> $logfile
+    # input PCM must be placed under srcdir/testdata/in.nb.pcm
+    ./testenc in.nb.pcm out.nb.pcm bits.nb >> $logfile 2>&1
+    res=$((res + $?))
+
+    # 2. Wideband (testenc_wb)
+    echo "[2/3] Running testenc_wb (Wideband)" >> $logfile
+    ./testenc_wb in.wb.pcm out.wb.pcm bits.wb >> $logfile 2>&1
+    res=$((res + $?))
+
+    # 3. Ultra-wideband (testenc_uwb)
+    echo "[3/3] Running testenc_uwb (Ultra-wideband)" >> $logfile
+    ./testenc_uwb in.uwb.pcm out.uwb.pcm bits.uwb >> $logfile 2>&1
+    res=$((res + $?))
+
+    # Return non-zero if any test failed
+    return $res
+}
