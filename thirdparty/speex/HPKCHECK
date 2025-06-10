@@ -19,7 +19,7 @@ openharmonycheck() {
 
     # 1. Narrowband (testenc)
     echo "[1/3] Running testenc (Narrowband)" >> $logfile
-    # input PCM must be placed under srcdir/testdata/in.nb.pcm
+    # input PCM must be placed under srcdir in.nb.pcm
     ./testenc in.nb.pcm out.nb.pcm bits.nb >> $logfile 2>&1
     res=$((res + $?))
 
