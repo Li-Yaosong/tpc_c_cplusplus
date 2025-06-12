@@ -43,6 +43,11 @@ check() {
     echo "The test must be on an OpenHarmony device!"
     # 在OpenHarmony开发板中执行用例
     # ctest    
+    ctest -R download_test_data  # 执行下载测试资源
+    cd $OLDPWD
+    # 在OpenHarmony开发板中执行用例
+    # ctest -E "download_test_data|cmake_import_configure|cmake_import_build|cmake_import_minver_build|cmake_add_subdirectory_configure|cmake_add_subdirectory_build|cmake_fetch_content_configure|cmake_fetch_content_build|cmake_fetch_content2_configure|cmake_fetch_content2_build|cmake_target_include_directories_configure|cmake_target_include_directories_build|cmake_import_minver_configure"
+    # 排除资源下载任务 
 }
 
 cleanbuild(){
