@@ -10,20 +10,32 @@ license=("GPL2 or later" "LGPL2.1 or later" "MIT" "X11" "BSD-styl")
 depends=("openssl-3.4.0" "openh264")
 makedepends=()
 # source="https://github.com/bilibili/FFmpeg/archive/refs/tags/ff4.0--ijk0.8.8--20210426--001.tar.gz"
-source="https://gitee.com/lycium_pkg_mirror/FFmpeg/repository/archive/ff4.0--ijk0.8.8--20210426--001.zip"
+source="https://gitee.com/lycium_pkg_mirror/FFmpeg.git"
 
-autounpack=true
-downloadpackage=true
+autounpack=false
+downloadpackage=false
 buildtools="configure"
 
 builddir=$pkgname--${pkgver}
 packagename=$builddir.zip
 patchflag=true
+cloneFlag=true
+tag="ff4.0--"$pkgver
 source envset.sh
 arch=
 ldflags=
 
 prepare() {
+    if $cloneFlag
+    then
+        git clone -b $tag $source $builddir > $publicbuildlog 2>&1
+        if [ $? -ne 0 ]
+        then
+            echo "$pkgname git clone $source error."
+            return -1
+        fi
+        cloneFlag=false
+    fi
     if $patchflag
     then
         cd $builddir
