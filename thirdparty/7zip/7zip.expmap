@@ -1,0 +1,6 @@
+{
+global:
+    *Main2*;
+local:
+    *;
+};
