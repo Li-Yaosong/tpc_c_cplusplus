@@ -23,14 +23,14 @@ license=("patent-free")
 depends=("libogg")
 makedepends=()
 
-source="https://github.com/xiph/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+source="https://gitee.com/lycium_pkg_mirror/${pkgname}/repository/archive/${pkgver}"
 
 autounpack=true
 downloadpackage=true
 buildtools="configure"
 
 builddir=$pkgname-${pkgver}
-packagename=$builddir.tar.gz
+packagename=$builddir.zip
 autogenflag=true
 
 source envset.sh
