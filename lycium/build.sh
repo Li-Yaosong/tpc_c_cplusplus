@@ -74,9 +74,9 @@ preparetoolchain() {
        [ ! -f $OHOS_SDK/native/llvm/bin/arm-linux-ohos-clang.cmd ] ||
        [ ! -f $OHOS_SDK/native/llvm/bin/arm-linux-ohos-clang++.cmd ]
     then
-        cd ${LYCIUM_ROOT}/Buildtools/
-        tar -zxf toolchain.tar.gz -C $OHOS_SDK/native/llvm/bin/
-        cd ${OLDPWD}
+        tar xvf Buildtools/toolchain.tar.gz
+        cp -rfa toolchain/* $OHOS_SDK/native/llvm/bin
+        rm -rf toolchain
     fi
 }
 
