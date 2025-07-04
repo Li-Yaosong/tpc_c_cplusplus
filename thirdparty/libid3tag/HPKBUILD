@@ -50,7 +50,7 @@ prepare() {
         downloadconfigflag=false
     fi
 
-    cp -rf $builddir $pkgname-$ARCH-build
+    cp -rfp $builddir $pkgname-$ARCH-build
     if [ $ARCH == "armeabi-v7a" ];then
         setarm32ENV
         host=arm-linux
@@ -65,7 +65,7 @@ prepare() {
 
 build() {
     cd $pkgname-$ARCH-build
-    ./configure "$@" --host=$host --enable-static --enable-profiling > $buildlog 2>&1
+    ./configure "$@" --host=$host --enable-static > $buildlog 2>&1
     $MAKE VERBOSE=1 >> $buildlog 2>&1
     ret=$?
     cd $OLDPWD
