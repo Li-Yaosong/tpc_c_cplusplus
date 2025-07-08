@@ -8,35 +8,8 @@ shell是一个命令行解释器，将用户命令解析为操作系统所能理
 
 ## 编译步骤
 
-### 编译工具链下载
-
-- 64位编译工具：gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz  [下载链接](https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz)
-
-### 解压编译工具链
-
-- 解压64位 tar xvJf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
-
-
-- 进入解压后的文件夹，查看bin目录下就有我们编译用到的工具链
-
-### 设置交叉编译环境
-
-- 设置64位交叉编译环境, xxx 是表示工具链存放的目录路径
-
-```shell
-export TOOLS=/xxx/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin
-export AS=${TOOLS}/aarch64-linux-gnu-as
-export CC=${TOOLS}/aarch64-linux-gnu-gcc
-export CXX=${TOOLS}/aarch64-linux-gnu-g++
-export LD=${TOOLS}/aarch64-linux-gnu-ld
-export STRIP=${TOOLS}/aarch64-linux-gnu-strip
-export RANLIB=${TOOLS}/aarch64-linux-gnu-ranlib
-export OBJDUMP=${TOOLS}/aarch64-linux-gnu-objdump
-export OBJCOPY=${TOOLS}/aarch64-linux-gnu-objcopy
-export NM=${TOOLS}/aarch64-linux-gnu-gcc-nm
-export AR=${TOOLS}/aarch64-linux-gnu-ar
-export READELF="${TOOLS}/aarch64-linux-gnu-readelf"
-```
+### 编译环境准备
+请阅读[Buildtools README](../../Buildtools/README.md)
 
 ### 下载解压源码
 
@@ -48,6 +21,27 @@ export READELF="${TOOLS}/aarch64-linux-gnu-readelf"
 ###  生成makefile
 
 - 编译bash，请进入bash源码目录执行如下命令生成makefile
+
+```shell
+./configure --host=arm-linux --prefix="${PWD}/arm64_v8a_install"
+```
+
+- ![bashbuildsuccess](./media/bash_configure.png)
+
+- 由于-static编译在链接时会自动链接sdk中的libc库，该库已经包含malloc，在生成的Makefile中取消链接代码中的libmalloc库，删除$(MALLOC_LIB)，如下图
+
+- ![bashbuildsuccess](./media/bash_mk_malloc.png)
+
+- 不使用本地mallco需要注释config.h中的\#define USING_BASH_MALLOC 1
+
+- ![bashbuildsuccess](./media/bash_config.png)
+
+- 由于sh_xxx不是标准库函数所以注释shmalloc.h中sh_malloc、sh_realloc、sh_free
+
+- ![bashbuildsuccess](./media/bash_shmalloc.png)
+
+  
+
 - 编译mawk，请进入mawk源码目录执行如下命令生成makefile
 
 ```shell

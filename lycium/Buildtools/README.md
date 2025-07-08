@@ -15,15 +15,33 @@ sudo apt install cmake
 ```
 
 ## 下载ohos sdk
+- 编译工具：Command Line Tools 5.1.1 Release [下载链接](https://awei.com/consumer/cn/download/)
+- 下滑选择编译平台，这里我们选择Linux，如下图
+&nbsp;![bashbuildsuccess](../CItools/shell_cmdohos_tools.png)
 
-[参考OHOS_SDK-Usage](../doc/ohos_use_sdk/OHOS_SDK-Usage.md)
+## 解压编译工具链
+- 解压命令：unzip -d /存放的路径 commandline-tools-linux-x64-5.1..840.zip
+- 进解压后的文件夹，查看command-line-tools/sdk/default/openharmony/native/llvm/bin目录下的工具链，这些链用于编译。
 
 ## 配置环境变量
 
 `lycium`支持的是C/C++三方库的交叉编译，SDK工具链只涉及到`native`目录下的工具，故OHOS_SDK的路径需配置成`native`工具的父目录，linux环境中配置SDK环境变量方法如下：
-
+- 设置64位交叉编译环境, xxx 是表示工具链存放的目录路径
 ```shell
-    export OHOS_SDK=/home/ohos/tools/OH_SDK/ohos-sdk/linux      # 此处SDK的路径使用者需配置成自己的sdk解压目录
+export OHOS_SDK=/xxx/command-line-tools/sdk/default/openharmony # 此处SDK的路径使用者需配置成自己的sdk解压目录
+export AS=${OHOS_SDK}/native/llvm/bin/llvm-as
+export CC=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang
+export CXX=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang++
+export LD=${OHOS_SDK}/native/llvm/bin/ld.lld
+export STRIP=${OHOS_SDK}/native/llvm/bin/llvm-strip
+export RANLIB=${OHOS_SDK}/native/llvm/bin/llvm-ranlib
+export OBJDUMP=${OHOS_SDK}/native/llvm/bin/llvm-objdump
+export OBJCOPY=${OHOS_SDK}/native/llvm/bin/llvm-objcopy
+export NM=${OHOS_SDK}/native/llvm/bin/llvm-nm
+export AR=${OHOS_SDK}/native/llvm/bin/llvm-ar
+export CFLAGS="-DOHOS_NDK -fPIC -D_MUSL_=1"
+export CXXFLAGS="-DOHOS_NDK -fPIC -D__MUSL__=1"
+export LDFLAGS=""
 ```
 
 ## 拷贝编译工具
