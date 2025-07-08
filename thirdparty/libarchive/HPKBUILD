@@ -21,18 +21,18 @@ pkgdesc="The libarchive project develops a portable, efficient C library that ca
 url="http://www.libarchive.org/"
 archs=("armeabi-v7a" "arm64-v8a")
 license=("BSD")
-depends=("xz" "zstd")
+depends=("xz" "zstd" "openssl")
 makedepends=()
 # 官网地址：https://github.com/libarchive/libarchive/archive/refs/tags/$pkgver.tar.gz，因网络原因采用gitee mirrors
 source="https://gitee.com/mirrors/$pkgname/repository/archive/$pkgver.zip"
 
 downloadpackage=true
 autounpack=true
-buildtools="cmake"
+buildtools="configure"
 
 builddir=${pkgname}-$pkgver
 packagename=$builddir.zip
-
+source envset.sh
 patchflag=true
 prepare() {
     if $patchflag
@@ -43,13 +43,35 @@ prepare() {
        patchflag=false
        cd $OLDPWD
     fi
-    mkdir -p $builddir/$ARCH-build
+    
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        setarm32ENV
+        host=arm-linux
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        setarm64ENV
+        host=aarch64-linux
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
+    
+    cp -rf $builddir $pkgname-$ARCH-build
+    cd $pkgname-$ARCH-build
+    ./build/autogen.sh > $buildlog 2>&1
+    cd $OLDPWD
+    
+    export CPPFLAGS="-I${LYCIUM_ROOT}/usr/xz/${ARCH}/include -I${LYCIUM_ROOT}/usr/zstd/${ARCH}/include -I${LYCIUM_ROOT}/usr/openssl/${ARCH}/include ${CPPFLAGS}"
+    export LDFLAGS="-L${LYCIUM_ROOT}/usr/xz/${ARCH}/lib -L${LYCIUM_ROOT}/usr/zstd/${ARCH}/lib -L${LYCIUM_ROOT}/usr/openssl/${ARCH}/lib ${LDFLAGS}"
 }
 
 build() {
-    cd $builddir
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
-    make -j4 -C $ARCH-build >> `pwd`/$ARCH-build/build.log 2>&1
+    # https://github.com/libarchive/libarchive/issues/1607
+    # cmake编译不会定义宏HAVE_PKCS5_PBKDF2_HMAC_SHA1，所以使用configure编译
+    cd $pkgname-$ARCH-build
+    ./configure "$@" --host=$host --without-xml2 > $buildlog 2>&1
+    $MAKE VERBOSE=1 >> $buildlog 2>&1
     # 对最关键一步的退出码进行判断
     ret=$?
     cd $OLDPWD
@@ -58,20 +80,32 @@ build() {
 
 # 打包安装
 package() {
-    cd $builddir
-    make -C $ARCH-build install >> `pwd`/$ARCH-build/build.log 2>&1
+    cd $pkgname-$ARCH-build
+    $MAKE install >> $buildlog 2>&1
     cd $OLDPWD
 }
 
 # 进行测试的准备和说明
 check() {
     echo "The test must be on an OpenHarmony device!"
-    # 测试方式
-    # 进入构建目录
-    # 执行: ctest
+    cd $pkgname-$ARCH-build
+    $MAKE check >> $buildlog 2>&1
+    cd $OLDPWD
+
+    unset host
+    if [ $ARCH == "armeabi-v7a" ]
+    then
+        unsetarm32ENV
+    elif [ $ARCH == "arm64-v8a" ]
+    then
+        unsetarm64ENV
+    else
+        echo "${ARCH} not support"
+        return -1
+    fi
 }
 
 # 清理环境fmt
 cleanbuild() {
-   rm -rf ${PWD}/$builddir #${PWD}/$packagename
+   rm -rf ${PWD}/$builddir ${PWD}/$pkgname-armeabi-v7a-build  ${PWD}/$pkgname-arm64-v8a-build #${PWD}/$packagename
 }

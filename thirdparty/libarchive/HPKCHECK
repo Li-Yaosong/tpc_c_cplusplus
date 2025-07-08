@@ -19,15 +19,35 @@ logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_
 
 openharmonycheck() {
     res=0
-    cd ${builddir}/${ARCH}-build
-    ctest > $logfile 2>&1
-    res=$?
-    if [ $res -ne 0 ]
+    cd $pkgname-${ARCH}-build
+    ./libarchive_test > $logfile 2>&1
+    if [ $? -ne 0 ]
     then
-        mkdir ${LYCIUM_FAULT_PATH}/${pkgname}
-        cp Testing/Temporary/LastTest.log ${LYCIUM_FAULT_PATH}/${pkgname}/
-    fi  
-    cd $OLDPWD
+        echo "libarchive_test test failed" >> ${logfile} 2>&1
+        res=1
+    fi
 
+    ./bsdcat_test >> $logfile 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "bsdcat_test test failed" >> ${logfile} 2>&1
+        res=2
+    fi
+
+    ./bsdtar_test >> $logfile 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "bsdtar_test test failed" >> ${logfile} 2>&1
+        res=3
+    fi
+
+    ./bsdcpio_test >> $logfile 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "bsdcpio_test test failed" >> ${logfile} 2>&1
+        res=4
+    fi
+
+    cd $OLDPWD
     return $res
 }
