@@ -19,7 +19,7 @@ pkgver=v5.4.1
 pkgrel=0
 pkgdesc="XZ Utils is free general-purpose data compression software with a high compression ratio. XZ Utils were written for POSIX-like systems, but also work on some not-so-POSIX systems. XZ Utils are the successor to LZMA Utils."
 url="https://tukaani.org/xz"
-archs=("armeabi-v7a" "arm64-v8a")
+archs=("armeabi-v7a" "arm64-v8a" "x86_64")
 license=("public domain" "LGPLv2.1" "GPLv2" "GPLv3")
 depends=()
 makedepends=()
@@ -48,6 +48,10 @@ prepare() {
     then
         setarm64ENV
         host=aarch64-linux
+    elif [ $ARCH == "x86_64" ]
+    then
+        setx86_64ENV
+        host=x86_64-linux
     else
         echo "${ARCH} not support"
         return -1
@@ -90,6 +94,9 @@ recoverpkgbuildenv() {
     elif [ $ARCH == "arm64-v8a" ]
     then
         unsetarm64ENV
+    elif [ $ARCH == "x86_64" ]
+    then
+        unsetx86_64ENV
     else
         echo "${ARCH} not support"
         return -1
