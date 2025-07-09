@@ -19,7 +19,7 @@ pkgver=OpenSSL_1_1_1u
 pkgrel=0
 pkgdesc="OpenSSL is a robust, commercial-grade, full-featured Open Source Toolkit for the Transport Layer Security (TLS) protocol formerly known as the Secure Sockets Layer (SSL) protocol."
 url="https://www.openssl.org/"
-archs=("armeabi-v7a" "arm64-v8a")
+archs=("armeabi-v7a" "arm64-v8a" "x86_64")
 license=("OpenSSL License","Original SSLeay License")
 depends=()
 makedepends=()
@@ -57,6 +57,10 @@ prepare() {
     then
         setarm64ENV
         host=linux-aarch64
+    elif [ $ARCH == "x86_64" ]
+    then
+        setx86_64ENV
+        host=linux-x86_64
     else
         echo "${ARCH} not support"
         return -1
@@ -90,6 +94,9 @@ check() {
     elif [ $ARCH == "arm64-v8a" ]
     then
         unsetarm64ENV
+    elif [ $ARCH == "x86_64" ]
+    then
+        unsetx86_64ENV
     else
         echo "${ARCH} not support"
         return -1
