@@ -46,7 +46,13 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    FRIBIDI_CFLAGS="-I${LYCIUM_ROOT}/usr/fribidi/$ARCH/include/fribidi" FRIBIDI_LIBS="${LYCIUM_ROOT}/usr/fribidi/$ARCH/lib/libfribidi.so" FREETYPE_CFLAGS="-I${LYCIUM_ROOT}/usr/freetype2/$ARCH/include/freetype2 ${LYCIUM_ROOT}/usr/bzip2/$ARCH/lib/libbz2.a ${LYCIUM_ROOT}/usr/brotli/$ARCH/lib/libbrotlicommon.so ${LYCIUM_ROOT}/usr/brotli/$ARCH/lib/libbrotlienc.so ${LYCIUM_ROOT}/usr/brotli/$ARCH/lib/libbrotlidec.so -lz" FREETYPE_LIBS="${LYCIUM_ROOT}/usr/freetype2/$ARCH/lib/libfreetype.a" FONTCONFIG_CFLAGS="-I${LYCIUM_ROOT}/usr/fontconfig/$ARCH/include/ ${LYCIUM_ROOT}/usr/libxml2/$ARCH/lib/libxml2.so" FONTCONFIG_LIBS="${LYCIUM_ROOT}/usr/fontconfig/$ARCH/lib/libfontconfig.so" PKG_CONFIG_PATH="${pkgconfigpath}" ../configure "$@" --enable-test --enable-static --host=$host >> $buildlog 2>&1
+    FRIBIDI_CFLAGS="-I${LYCIUM_ROOT}/usr/fribidi/$ARCH/include/fribidi" \
+    FRIBIDI_LIBS="${LYCIUM_ROOT}/usr/fribidi/$ARCH/lib/libfribidi.so" \
+    FREETYPE_CFLAGS="-I${LYCIUM_ROOT}/usr/freetype2/$ARCH/include/freetype2 ${LYCIUM_ROOT}/usr/bzip2/$ARCH/lib/libbz2.a ${LYCIUM_ROOT}/usr/brotli/$ARCH/lib/libbrotlicommon.so ${LYCIUM_ROOT}/usr/brotli/$ARCH/lib/libbrotlienc.so ${LYCIUM_ROOT}/usr/brotli/$ARCH/lib/libbrotlidec.so -lz" \
+    FREETYPE_LIBS="${LYCIUM_ROOT}/usr/freetype2/$ARCH/lib/libfreetype.a" \
+    FONTCONFIG_CFLAGS="-I${LYCIUM_ROOT}/usr/fontconfig/$ARCH/include/ ${LYCIUM_ROOT}/usr/libxml2/$ARCH/lib/libxml2.so" \
+    FONTCONFIG_LIBS="${LYCIUM_ROOT}/usr/fontconfig/$ARCH/lib/libfontconfig.so" \
+    PKG_CONFIG_PATH="${pkgconfigpath}" ../configure "$@" --enable-test --enable-static --enable-fontconfig --host=$host >> $buildlog 2>&1
     make -j4 >> `pwd`/build.log 2>&1
     # 对最关键一步的退出码进行判断
     ret=$?
