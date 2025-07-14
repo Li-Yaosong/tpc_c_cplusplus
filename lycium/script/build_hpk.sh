@@ -22,7 +22,8 @@ download() {
     then
         echo ${PWD}/$2"，存在"
     else
-        curl -f -L -k -- "$1" > ${PWD}/$2
+        echo "Downloading "$2
+        wget "$1" -O ${PWD}/$2 -o download.log
         return $?
     fi
 }
