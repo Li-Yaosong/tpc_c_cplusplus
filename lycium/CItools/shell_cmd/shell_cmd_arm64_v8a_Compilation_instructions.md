@@ -10,32 +10,34 @@ shell是一个命令行解释器，将用户命令解析为操作系统所能理
 
 ### 编译工具链下载
 
-- 64位编译工具：gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz  [下载链接](https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz)
+- 编译工具：**Command Line Tools 5.1.1 Release**[下载链接]([最新版本 - 下载中心 - 华为开发者联盟](https://developer.huawei.com/consumer/cn/download/))
+- 下滑选择编译平台，这里我们选择的Linux，如下图
 
 ### 解压编译工具链
 
-- 解压64位 tar xvJf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
-
-
-- 进入解压后的文件夹，查看bin目录下就有我们编译用到的工具链
+- 解压unzip -d   /存放的路径  commandline-tools-linux-x64-5.1.0.840.zip
+- 进入解压后的文件夹，查看command-line-tools/sdk/default/openharmony/native/llvm/bin目录下就有我们编译用到的工具链
+- [](./media/ohos_tools .png) 
 
 ### 设置交叉编译环境
 
 - 设置64位交叉编译环境, xxx 是表示工具链存放的目录路径
 
 ```shell
-export TOOLS=/xxx/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin
-export AS=${TOOLS}/aarch64-linux-gnu-as
-export CC=${TOOLS}/aarch64-linux-gnu-gcc
-export CXX=${TOOLS}/aarch64-linux-gnu-g++
-export LD=${TOOLS}/aarch64-linux-gnu-ld
-export STRIP=${TOOLS}/aarch64-linux-gnu-strip
-export RANLIB=${TOOLS}/aarch64-linux-gnu-ranlib
-export OBJDUMP=${TOOLS}/aarch64-linux-gnu-objdump
-export OBJCOPY=${TOOLS}/aarch64-linux-gnu-objcopy
-export NM=${TOOLS}/aarch64-linux-gnu-gcc-nm
-export AR=${TOOLS}/aarch64-linux-gnu-ar
-export READELF="${TOOLS}/aarch64-linux-gnu-readelf"
+export OHOS_SDK=/xxx/command-line-tools/sdk/default/openharmony
+export AS=${OHOS_SDK}/native/llvm/bin/llvm-as
+export CC=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang
+export CXX=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang++
+export LD=${OHOS_SDK}/native/llvm/bin/ld.lld
+export STRIP=${OHOS_SDK}/native/llvm/bin/llvm-strip
+export RANLIB=${OHOS_SDK}/native/llvm/bin/llvm-ranlib
+export OBJDUMP=${OHOS_SDK}/native/llvm/bin/llvm-objdump
+export OBJCOPY=${OHOS_SDK}/native/llvm/bin/llvm-objcopy
+export NM=${OHOS_SDK}/native/llvm/bin/llvm-nm
+export AR=${OHOS_SDK}/native/llvm/bin/llvm-ar
+export CFLAGS="-DOHOS_NDK -fPIC -D__MUSL__=1"
+export CXXFLAGS="-DOHOS_NDK -fPIC -D__MUSL__=1"
+export LDFLAGS=""
 ```
 
 ### 下载解压源码
