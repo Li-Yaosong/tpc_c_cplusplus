@@ -10,7 +10,7 @@ shell是一个命令行解释器，将用户命令解析为操作系统所能理
 
 ### 编译工具链下载
 
-- 编译工具：**Command Line Tools 5.1.1 Release**[下载链接]([最新版本 - 下载中心 - 华为开发者联盟](https://developer.huawei.com/consumer/cn/download/))
+- 编译工具：**Command Line Tools 5.1.1 Release**[下载链接](https://developer.huawei.com/consumer/cn/download/)
 - 下滑选择编译平台，这里我们选择的Linux，如下图
 
 ### 解压编译工具链
