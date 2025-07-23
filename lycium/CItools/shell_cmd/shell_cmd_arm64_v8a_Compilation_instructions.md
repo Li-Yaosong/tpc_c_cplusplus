@@ -12,12 +12,12 @@ shell是一个命令行解释器，将用户命令解析为操作系统所能理
 
 - 编译工具：**Command Line Tools 5.1.1 Release**[下载链接](https://developer.huawei.com/consumer/cn/download/)
 - 下滑选择编译平台，这里我们选择的Linux，如下图
-
+&nbsp;![bashbuildsuccess](./media/ohos_tools.png style="zoom:50%;) 
 ### 解压编译工具链
 
 - 解压unzip -d   /存放的路径  commandline-tools-linux-x64-5.1.0.840.zip
 - 进入解压后的文件夹，查看command-line-tools/sdk/default/openharmony/native/llvm/bin目录下就有我们编译用到的工具链
-&nbsp;![bashbuildsuccess](./media/ohos_tools.png) 
+
 
 ### 设置交叉编译环境
 
