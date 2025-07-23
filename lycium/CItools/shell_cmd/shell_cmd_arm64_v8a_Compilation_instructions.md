@@ -65,7 +65,7 @@ export LDFLAGS=""
 
 - ![bashbuildsuccess](./media/bash_config.png)
 
-- 注释shmalloc.h中的三句extern
+- 注释shmalloc.h中sh_malloc、sh_realloc、sh_free
 
 - ![bashbuildsuccess](./media/bash_shmalloc.png)
 
