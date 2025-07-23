@@ -50,7 +50,6 @@ export LDFLAGS=""
 ###  生成makefile
 
 - 编译bash，请进入bash源码目录执行如下命令生成makefile
-- 编译mawk，请进入mawk源码目录执行如下命令生成makefile
 
 ```shell
 ./configure --host=arm-linux --prefix="${PWD}/arm64_v8a_install"
