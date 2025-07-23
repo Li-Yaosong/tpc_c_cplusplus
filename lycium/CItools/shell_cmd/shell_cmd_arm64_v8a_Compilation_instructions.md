@@ -53,6 +53,28 @@ export LDFLAGS=""
 - 编译mawk，请进入mawk源码目录执行如下命令生成makefile
 
 ```shell
+./configure --host=arm-linux --prefix="${PWD}/arm64_v8a_install"
+```
+
+- ![bashbuildsuccess](./media/bash_configure.png)
+
+- 在生成的Makefile中取消链接代码中的libmalloc库，删除$(MALLOC_LIB)，如下图
+
+- ![bashbuildsuccess](./media/bash_mk_malloc.png)
+
+- 注释config.h中的\#define USING_BASH_MALLOC 1
+
+- ![bashbuildsuccess](./media/bash_config.png)
+
+- 注释shmalloc.h中的三句extern
+
+- ![bashbuildsuccess](./media/bash_shmalloc.png)
+
+  
+
+- 编译mawk，请进入mawk源码目录执行如下命令生成makefile
+
+```shell
 ./configure --host=aarch64-linux --prefix="${PWD}/arm64_v8a_install"
 ```
 
