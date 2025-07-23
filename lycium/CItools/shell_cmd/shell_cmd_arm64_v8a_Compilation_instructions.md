@@ -9,38 +9,7 @@ shell是一个命令行解释器，将用户命令解析为操作系统所能理
 ## 编译步骤
 
 ### 编译环境准备
-请跳转至[编译环境准备](../../Buildtools/README.md)
-### 编译工具链下载
-
-- 编译工具：**Command Line Tools 5.1.1 Release**[下载链接](https://developer.huawei.com/consumer/cn/download/)
-- 下滑选择编译平台，这里我们选择的Linux，如下图
-&nbsp;![bashbuildsuccess](./media/ohos_tools.png)
-### 解压编译工具链
-
-- 解压unzip -d   /存放的路径  commandline-tools-linux-x64-5.1.0.840.zip
-- 进入解压后的文件夹，查看command-line-tools/sdk/default/openharmony/native/llvm/bin目录下就有我们编译用到的工具链
-
-
-### 设置交叉编译环境
-
-- 设置64位交叉编译环境, xxx 是表示工具链存放的目录路径
-
-```shell
-export OHOS_SDK=/xxx/command-line-tools/sdk/default/openharmony
-export AS=${OHOS_SDK}/native/llvm/bin/llvm-as
-export CC=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang
-export CXX=${OHOS_SDK}/native/llvm/bin/aarch64-linux-ohos-clang++
-export LD=${OHOS_SDK}/native/llvm/bin/ld.lld
-export STRIP=${OHOS_SDK}/native/llvm/bin/llvm-strip
-export RANLIB=${OHOS_SDK}/native/llvm/bin/llvm-ranlib
-export OBJDUMP=${OHOS_SDK}/native/llvm/bin/llvm-objdump
-export OBJCOPY=${OHOS_SDK}/native/llvm/bin/llvm-objcopy
-export NM=${OHOS_SDK}/native/llvm/bin/llvm-nm
-export AR=${OHOS_SDK}/native/llvm/bin/llvm-ar
-export CFLAGS="-DOHOS_NDK -fPIC -D__MUSL__=1"
-export CXXFLAGS="-DOHOS_NDK -fPIC -D__MUSL__=1"
-export LDFLAGS=""
-```
+请阅读[Buildtools README](../../Buildtools/README.md)
 
 ### 下载解压源码
 
@@ -59,15 +28,15 @@ export LDFLAGS=""
 
 - ![bashbuildsuccess](./media/bash_configure.png)
 
-- 在生成的Makefile中取消链接代码中的libmalloc库，删除$(MALLOC_LIB)，如下图
+- 由于-static编译在链接时会自动链接sdk中的libc库，该库已经包含malloc，在生成的Makefile中取消链接代码中的libmalloc库，删除$(MALLOC_LIB)，如下图
 
 - ![bashbuildsuccess](./media/bash_mk_malloc.png)
 
-- 注释config.h中的\#define USING_BASH_MALLOC 1
+- 不使用本地mallco需要注释config.h中的\#define USING_BASH_MALLOC 1
 
 - ![bashbuildsuccess](./media/bash_config.png)
 
-- 注释shmalloc.h中sh_malloc、sh_realloc、sh_free
+- 由于sh_xxx不是标准库函数所以注释shmalloc.h中sh_malloc、sh_realloc、sh_free
 
 - ![bashbuildsuccess](./media/bash_shmalloc.png)
 
