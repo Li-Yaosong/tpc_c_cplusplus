@@ -8,7 +8,7 @@ GNUMake是一种工具，用于控制从程序的源文件生成程序的可执�
 ## 编译步骤
 
 ### 编译环境准备
-请阅读[Buildtools README](../../Buildtools/README.md)
+- 请阅读[Buildtools README](../../Buildtools/README.md)
 
 ### 下载解压make源码
 
