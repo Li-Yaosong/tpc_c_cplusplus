@@ -8,6 +8,8 @@ shell是一个命令行解释器，将用户命令解析为操作系统所能理
 
 ## 编译步骤
 
+### 编译环境准备
+请跳转至[编译环境准备](../../Buildtools/README.md)
 ### 编译工具链下载
 
 - 编译工具：**Command Line Tools 5.1.1 Release**[下载链接](https://developer.huawei.com/consumer/cn/download/)
