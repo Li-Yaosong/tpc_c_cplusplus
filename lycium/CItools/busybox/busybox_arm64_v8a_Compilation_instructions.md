@@ -7,16 +7,8 @@ BusyBox:嵌入式Linux的瑞士军刀。
 
 ## 编译步骤
 
-### 编译工具链下载
-
-- 64位编译工具：gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz  [下载链接](https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz)
-
-### 解压编译工具链
-
-- 解压64位 tar xvJf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
-
-
-- 进入解压后的文件夹，查看bin目录下就有我们编译用到的工具链
+### 编译环境准备
+- 请阅读[Buildtools README](../../Buildtools/README.md)
 
 ### 下载解压busybox源码
 
@@ -41,7 +33,7 @@ BusyBox:嵌入式Linux的瑞士军刀。
 
 &nbsp;![conifig](media/config3.png)
 
-- 进入后输入 /xxxgcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu- ，xxx 是表示工具链存放的目录路径
+- 进入后输入 /xxx/command-line-tools/sdk/default/openharmony/native/llvm/bin/aarch64-linux-ohos- ，xxx 是表示工具链存放的目录路径
 
 &nbsp;![conifig](media/config_arm64_v8a.png)
 
@@ -65,8 +57,18 @@ BusyBox:嵌入式Linux的瑞士军刀。
 
 &nbsp;![conifig](media/config5.png)
 
+### 修改Makefile
+- 因为工具链的发生变化而且编译工具名称并不是统一的所以需要修改 
+- 增加了一个绝对路径REAL_PATH代表工具链的绝对路径，gcc改为clang，并且as、ar、nm、strip、objcopy、objdump需要改路径与名称，工具名后需要增加llvm-
+- 修改红色方框内的内容，如下图
+&nbsp;![conifig](media/busybox_makefile_fix.png)
 
-
+### 修改返回值类型
+- 由于编译器原因对于数值传递需要类型一致
+- getutxent()的返回值类型强制转换为struct utmpx *,如下图
+&nbsp;![conifig](media/busybox_who_fix.png)
+- getusershell()的返回值类型强制转换为char *,如下图
+&nbsp;![conifig](media/busybox_su_fix.png)
 ### 编译busybox源码
 
 在解压后的目录执行make VERBOSE=1 命令编译busybox源码，执行结果截图如下
