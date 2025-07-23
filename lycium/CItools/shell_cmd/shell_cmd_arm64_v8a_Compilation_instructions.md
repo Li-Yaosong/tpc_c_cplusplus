@@ -17,7 +17,7 @@ shell是一个命令行解释器，将用户命令解析为操作系统所能理
 
 - 解压unzip -d   /存放的路径  commandline-tools-linux-x64-5.1.0.840.zip
 - 进入解压后的文件夹，查看command-line-tools/sdk/default/openharmony/native/llvm/bin目录下就有我们编译用到的工具链
-- [](./media/ohos_tools .png) 
+-&nbsp;![bashbuildsuccess](./media/ohos_tools .png) 
 
 ### 设置交叉编译环境
 
