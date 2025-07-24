@@ -28,8 +28,9 @@ CMake是一个跨平台的编译安装工具。
 ```shell
 cmake ../ -L -DCMAKE_USE_OPENSSL=OFF -DBUILD_TESTING=OFF
 ```
-- 由于编译工具链中不包含pthread_setaffinity_np与pthread_getaffinity_np，需要在调用的位置注释
+- 由于编译工具链中不包含pthread_setaffinity_np与pthread_getaffinity_np，需要在调用的位置注释，如下图
 &nbsp;![file](media/cmake_pthread_get.png)
+- 注释调用的位置
 &nbsp;![file](media/cmake_pthread_set.png)
 ### 编译cmake源码
 
