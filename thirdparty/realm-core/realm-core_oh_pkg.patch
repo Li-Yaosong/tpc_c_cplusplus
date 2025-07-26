@@ -1,6 +1,6 @@
 diff -Nura realm-core-14.12.0/CMakeLists.txt realm-core-14.12.0-other/CMakeLists.txt
---- realm-core-14.12.0/CMakeLists.txt	2024-08-10 06:04:49.000000000 +0800
-+++ realm-core-14.12.0-other/CMakeLists.txt	2024-09-10 11:05:24.693192917 +0800
+--- realm-core-14.12.0/CMakeLists.txt	2025-08-30 15:50:55.350155328 +0800
++++ realm-core-14.12.0-other/CMakeLists.txt	2025-08-30 15:51:09.131323156 +0800
 @@ -289,13 +289,13 @@
  
  if(REALM_ENABLE_SYNC)
@@ -17,9 +17,25 @@ diff -Nura realm-core-14.12.0/CMakeLists.txt realm-core-14.12.0-other/CMakeLists
      set(REALM_NEEDS_OPENSSL TRUE)
  endif()
  
-diff -Nura realm-core-14.12.0/src/realm/util/features.h realm-core-14.12.0-other/src/realm/util/features.h
---- realm-core-14.12.0/src/realm/util/features.h	2024-08-10 06:04:49.000000000 +0800
-+++ realm-core-14.12.0-other/src/realm/util/features.h	2024-09-10 11:06:07.818574026 +0800
+diff --color -Nura realm-core-14.12.0/.gitmodules realm-core-14.12.0-other/.gitmodules
+--- realm-core-14.12.0/.gitmodules	2025-08-30 15:50:55.346154986 +0800
++++ realm-core-14.12.0-other/.gitmodules	2025-08-30 15:51:09.131323156 +0800
+@@ -1,9 +1,9 @@
+ [submodule "src/external/sha-1"]
+ 	path = src/external/sha-1
+-	url = https://github.com/clibs/sha1.git
++	url = https://ghproxy.net/https://github.com/clibs/sha1.git
+ [submodule "src/external/sha-2"]
+ 	path = src/external/sha-2
+-	url = https://github.com/kalven/sha-2.git
++	url = https://ghproxy.net/https://github.com/kalven/sha-2.git
+ [submodule "test/external/catch"]
+ 	path = test/external/catch
+-	url = https://github.com/catchorg/Catch2.git
++	url = https://ghproxy.net/https://github.com/catchorg/Catch2.git
+diff --color -Nura realm-core-14.12.0/src/realm/util/features.h realm-core-14.12.0-other/src/realm/util/features.h
+--- realm-core-14.12.0/src/realm/util/features.h	2025-08-30 15:50:55.350155328 +0800
++++ realm-core-14.12.0-other/src/realm/util/features.h	2025-08-30 15:51:09.131323156 +0800
 @@ -212,6 +212,10 @@
  #if defined ANDROID || defined __ANDROID_API__
  #define REALM_ANDROID 1
@@ -40,9 +56,9 @@ diff -Nura realm-core-14.12.0/src/realm/util/features.h realm-core-14.12.0-other
  #define REALM_MOBILE 1
  #else
  #define REALM_MOBILE 0
-diff -Nura realm-core-14.12.0/src/realm/util/thread.cpp realm-core-14.12.0-other/src/realm/util/thread.cpp
---- realm-core-14.12.0/src/realm/util/thread.cpp	2024-08-10 06:04:49.000000000 +0800
-+++ realm-core-14.12.0-other/src/realm/util/thread.cpp	2024-09-10 11:08:00.768780585 +0800
+diff --color -Nura realm-core-14.12.0/src/realm/util/thread.cpp realm-core-14.12.0-other/src/realm/util/thread.cpp
+--- realm-core-14.12.0/src/realm/util/thread.cpp	2025-08-30 15:50:55.350155328 +0800
++++ realm-core-14.12.0-other/src/realm/util/thread.cpp	2025-08-30 15:51:09.135323491 +0800
 @@ -45,13 +45,17 @@
  #if _POSIX_THREADS >= 200809L
  #ifdef __GNU_LIBRARY__
