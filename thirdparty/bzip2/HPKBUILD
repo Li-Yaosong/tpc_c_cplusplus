@@ -19,7 +19,7 @@ pkgver=1_0_6
 pkgrel=0
 pkgdesc=""
 url=""
-archs=("armeabi-v7a" "arm64-v8a")
+archs=("armeabi-v7a" "arm64-v8a" "x86_64")
 license=("public domain" "LGPLv2.1" "GPLv2" "GPLv3")
 depends=()
 makedepends=()
@@ -53,6 +53,13 @@ prepare() {
         ar=${OHOS_SDK}/native/llvm/bin/llvm-ar
         ranlib=${OHOS_SDK}/native/llvm/bin/llvm-ranlib
     fi
+
+    if [ $ARCH == "x86_64" ]
+    then
+        cc=${OHOS_SDK}/native/llvm/bin/x86_64-linux-ohos-clang
+        ar=${OHOS_SDK}/native/llvm/bin/llvm-ar
+        ranlib=${OHOS_SDK}/native/llvm/bin/llvm-ranlib
+    fi
     cd $OLDPWD # 1> /dev/null
 }
 
@@ -78,5 +85,5 @@ check() {
 
 # 清理环境
 cleanbuild(){
-    rm -rf ${PWD}/$builddir $builddir-armeabi-v7a-build  $builddir-arm64-v8a-build #${PWD}/$packagename
+    rm -rf ${PWD}/$builddir $builddir-armeabi-v7a-build  $builddir-arm64-v8a-build $builddir-x86_64-build #${PWD}/$packagename
 }
