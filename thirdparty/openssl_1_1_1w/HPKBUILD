@@ -70,7 +70,7 @@ prepare() {
 
 build() {
     cd $builddir/$ARCH-build
-    ../Configure "$@" $host no-shared > `pwd`/build.log 2>&1
+    ../Configure "$@" $host > `pwd`/build.log 2>&1
     make -j4 >> `pwd`/build.log 2>&1
     ret=$?
     cd $OLDPWD
