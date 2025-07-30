@@ -59,7 +59,7 @@ BusyBox:嵌入式Linux的瑞士军刀。
 
 ### 修改Makefile
 - 因为工具链的发生变化而且编译工具名称并不是统一的所以需要修改 
-- 增加了一个绝对路径REAL_PATH代表工具链的绝对路径，gcc改为clang，并且as、ar、nm、strip、objcopy、objdump需要改路径与名称，工具名后需要增加llvm-
+- 增加了一个绝对路径REAL_PATH代表工具链的绝对路径，编译器从gcc改为clang，同时as、ar、strip、objcopy、dump的路径与名称进行了更改，工具名后添加了llvm-前缀
 
 - 修改红色方框内的内容，如下图
 

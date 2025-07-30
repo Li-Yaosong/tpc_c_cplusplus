@@ -15,13 +15,13 @@ sudo apt install cmake
 ```
 
 ## 下载ohos sdk
-- 编译工具：**Command Line Tools 5.1.1 Release**[下载链接](https://developer.huawei.com/consumer/cn/download/)
-- 下滑选择编译平台，这里我们选择的Linux，如下图
-&nbsp;![bashbuildsuccess](../CItools/shell_cmd/media/ohos_tools.png)
+- 编译工具：Command Line Tools 5.1.1 Release [下载链接](https://awei.com/consumer/cn/download/)
+- 下滑选择编译平台，这里我们选择Linux，如下图
+&nbsp;![bashbuildsuccess](../CItools/shell_cmdohos_tools.png)
 
 ## 解压编译工具链
-- 解压unzip -d   /存放的路径  commandline-tools-linux-x64-5.1.0.840.zip
-- 进入解压后的文件夹，查看command-line-tools/sdk/default/openharmony/native/llvm/bin目录下就有我们编译用到的工具链
+- 解压命令：unzip -d /存放的路径 commandline-tools-linux-x64-5.1..840.zip
+- 进解压后的文件夹，查看command-line-tools/sdk/default/openharmony/native/llvm/bin目录下的工具链，这些链用于编译。
 
 ## 配置环境变量
 
@@ -39,7 +39,7 @@ export OBJDUMP=${OHOS_SDK}/native/llvm/bin/llvm-objdump
 export OBJCOPY=${OHOS_SDK}/native/llvm/bin/llvm-objcopy
 export NM=${OHOS_SDK}/native/llvm/bin/llvm-nm
 export AR=${OHOS_SDK}/native/llvm/bin/llvm-ar
-export CFLAGS="-DOHOS_NDK -fPIC -D__MUSL__=1"
+export CFLAGS="-DOHOS_NDK -fPIC -D_MUSL_=1"
 export CXXFLAGS="-DOHOS_NDK -fPIC -D__MUSL__=1"
 export LDFLAGS=""
 ```
