@@ -48,7 +48,7 @@
 
 ## 应用中使用三方库
 
-- 在IDE的cpp目录新建一个thirdparty目录，将生成的二进制文件以及头文件拷贝到该目录下，每种架构目录下包含了该库的头文件(include)、二进制文件(lib)，如下图所示：
+- 在IDE的cpp目录新建一个thirdparty目录，将ncnn以及依赖库openmp生成的二进制文件以及头文件拷贝到该目录下，每种架构目录下包含了该库的头文件(include)、二进制文件(lib)，如下图所示：
   &nbsp;
 
   &nbsp;![thirdparty_install_dir](pic/ncnn_install_dir.png)
@@ -58,8 +58,10 @@
   ```shell
   #将三方库加入工程中
   target_link_libraries(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/ncnn/${OHOS_ARCH}/lib/libncnn.a)
+  target_link_libraries(entry  PUBLIC ${NATIVERENDER_ROOT_PATH}/thirdparty/openmp/${OHOS_ARCH}/lib/libnomp.so)
   #将三方库的头文件加入工程中
   target_include_directories(entry PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/ncnn/${OHOS_ARCH}/include)
+  target_include_directories(entry PUBLIC ${NATIVERENDER_ROOT_PATH}/thirdparty/openmp/${OHOS_ARCH}/include)
   ```
 
 ## 测试三方库
