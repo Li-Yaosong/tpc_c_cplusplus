@@ -70,4 +70,8 @@
 
 - #### Q8: 模拟器上如何验证C/C++三方库
 
-请参照文档[DevEco studio工具的模拟器验证C/C++三方库](./emulator_verification.md)
+  请参照文档[DevEco studio工具的模拟器验证C/C++三方库](./emulator_verification.md)
+
+- #### Q9：如何验证OpenSSL在OpenHamrony上使用问题是和SSL证书有关？
+
+  请参照文档[OpenHarmony 应用中openssl使用指导](./openssl_use_in_openharnmony.md#ssl证书疑问解答)
