@@ -3,7 +3,7 @@
         "Name": "ncnn",
         "License": "BSD-3-Clause license" "BSD 2-clause license" "zlib License",
         "License File": "LICENSE.txt",
-        "Version Number": "20240102",
+        "Version Number": "20250503",
         "Owner": "xiafeng@huawei.com",
         "Upstream URL": "https://github.com/Tencent/ncnn",
         "Description": "ncnn is a high-performance neural network inference framework
