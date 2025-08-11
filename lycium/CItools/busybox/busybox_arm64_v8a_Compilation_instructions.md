@@ -7,16 +7,8 @@ BusyBox:嵌入式Linux的瑞士军刀。
 
 ## 编译步骤
 
-### 编译工具链下载
-
-- 64位编译工具：gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz  [下载链接](https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz)
-
-### 解压编译工具链
-
-- 解压64位 tar xvJf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
-
-
-- 进入解压后的文件夹，查看bin目录下就有我们编译用到的工具链
+### 环境准备
+- [交叉编译环境准备](../../../lycium/Buildtools/README.md)
 
 ### 下载解压busybox源码
 
@@ -41,7 +33,7 @@ BusyBox:嵌入式Linux的瑞士军刀。
 
 &nbsp;![conifig](media/config3.png)
 
-- 进入后输入 /xxxgcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu- ，xxx 是表示工具链存放的目录路径
+- 进入后输入 /xxx/llvm/bin/llvm- ，xxx 是表示工具链存放的目录路径
 
 &nbsp;![conifig](media/config_arm64_v8a.png)
 
@@ -65,17 +57,15 @@ BusyBox:嵌入式Linux的瑞士军刀。
 
 &nbsp;![conifig](media/config5.png)
 
-
-
 ### 编译busybox源码
 
-在解压后的目录执行make VERBOSE=1 命令编译busybox源码，执行结果截图如下
+在解压后的目录执行make VERBOSE=1 CFLAGS+=-Wno-int-conversion CC=/xxx/llvm/bin/aarch64-unknown-linux-ohos-clang (xxx 是表示工具链存放的目录绝对路径)命令编译busybox源码，执行结果截图如下
 
 &nbsp;![build_success](media/build_success.png)
 
 ### 安装busybox
 
-执行 make install，执行结果截图如下：
+执行 make install CFLAGS+=-Wno-int-conversion CC=/xxx/llvm/bin/aarch64-unknown-linux-ohos-clang(xxx 是表示工具链存放的目录绝对路径)，执行结果截图如下：
 
 &nbsp;![install](media/install64.png)
 

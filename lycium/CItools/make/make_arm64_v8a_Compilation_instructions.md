@@ -9,14 +9,14 @@ GNUMake是一种工具，用于控制从程序的源文件生成程序的可执�
 
 ### 编译工具链下载
 
-- 64位编译工具：gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz  [下载链接](https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz)
+- 64位编译工具：ohos-sdk-windows_linux-public.tar.gz  [下载链接](https://repo.huaweicloud.com/openharmony/os/6.0-Beta1/ohos-sdk-windows_linux-public.tar.gz)
 
 ### 解压编译工具链
 
-- 解压64位 tar xvJf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+- 解压64位 tar -zxvf ohos-sdk-windows_linux-public.tar.gz &&  cd ohos-sdk/linux/ && for i in *.zip;do unzip ${i};done
 
 
-- 进入解压后的文件夹，查看bin目录下就有我们编译用到的工具链
+- 进入解压后的文件夹，查看ohos-sdk/linux/native/llvm/bin目录下就有我们编译用到的工具链
 
 ### 下载解压make源码
 
