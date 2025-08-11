@@ -8,35 +8,13 @@ shell是一个命令行解释器，将用户命令解析为操作系统所能理
 
 ## 编译步骤
 
-### 编译工具链下载
+### 环境准备
+- [交叉编译环境准备](../../../lycium/Buildtools/README.md)
 
-- 64位编译工具：gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz  [下载链接](https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz)
-
-### 解压编译工具链
-
-- 解压64位 tar xvJf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
-
-
-- 进入解压后的文件夹，查看bin目录下就有我们编译用到的工具链
 
 ### 设置交叉编译环境
 
-- 设置64位交叉编译环境, xxx 是表示工具链存放的目录路径
-
-```shell
-export TOOLS=/xxx/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin
-export AS=${TOOLS}/aarch64-linux-gnu-as
-export CC=${TOOLS}/aarch64-linux-gnu-gcc
-export CXX=${TOOLS}/aarch64-linux-gnu-g++
-export LD=${TOOLS}/aarch64-linux-gnu-ld
-export STRIP=${TOOLS}/aarch64-linux-gnu-strip
-export RANLIB=${TOOLS}/aarch64-linux-gnu-ranlib
-export OBJDUMP=${TOOLS}/aarch64-linux-gnu-objdump
-export OBJCOPY=${TOOLS}/aarch64-linux-gnu-objcopy
-export NM=${TOOLS}/aarch64-linux-gnu-gcc-nm
-export AR=${TOOLS}/aarch64-linux-gnu-ar
-export READELF="${TOOLS}/aarch64-linux-gnu-readelf"
-```
+- [设置交叉编译环境变量](../../../lycium/doc/ohos_use_sdk/OHOS_SDK-Usage.md#%E6%96%B9%E6%B3%952%E4%BD%BF%E7%94%A8%E9%A1%B9%E7%9B%AE%E5%8E%9F%E7%94%9F%E7%9A%84%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E4%BE%8B%E5%A6%82-configuremakefile)
 
 ### 下载解压源码
 
