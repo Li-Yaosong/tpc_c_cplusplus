@@ -9,14 +9,13 @@ CMake是一个跨平台的编译安装工具。
 
 ### 编译工具链下载
 
-- 64位编译工具：gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz  [下载链接](https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz)
+- 64位编译工具：ohos-sdk-windows_linux-public.tar.gz  [下载链接](https://repo.huaweicloud.com/openharmony/os/6.0-Beta1/ohos-sdk-windows_linux-public.tar.gz)
 
 ### 解压编译工具链
 
-- 解压64位工具链tar xvJf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+- 解压64位工具链tar -zxvf ohos-sdk-windows_linux-public.tar.gz &&  cd ohos-sdk/linux/ && for i in *.zip;do unzip ${i};done
 
-
-- 进入解压后的文件夹，查看bin目录下就有我们编译用到的工具链
+- 进入解压后的文件夹，查看ohos-sdk/linux/native/llvm/bin目录下就有我们编译用到的工具链
 
 ### 下载解压cmake源码
 
@@ -34,17 +33,19 @@ CMake是一个跨平台的编译安装工具。
 
 
 ```shell
-export TOOLS=/xxx/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin
-export AS=${TOOLS}/aarch64-linux-gnu-as
-export CC=${TOOLS}/aarch64-linux-gnu-gcc
-export CXX=${TOOLS}/aarch64-linux-gnu-g++
-export LD=${TOOLS}/aarch64-linux-gnu-ld
-export STRIP=${TOOLS}/aarch64-linux-gnu-strip
-export RANLIB=${TOOLS}/aarch64-linux-gnu-ranlib
-export OBJDUMP=${TOOLS}/aarch64-linux-gnu-objdump
-export OBJCOPY=${TOOLS}/aarch64-linux-gnu-objcopy
-export NM=${TOOLS}/aarch64-linux-gnu-gcc-nm
-export AR=${TOOLS}/aarch64-linux-gnu-ar
+export OHOS_SDK=/xxx/ohos-sdk/linux
+export AS=${OHOS_SDK}/native/llvm/bin/llvm-as
+export CC=${OHOS_SDK}/native/llvm/bin/aarch64-unknown-linux-ohos-clang
+export CXX=${OHOS_SDK}/native/llvm/bin/aarch64-unknown-linux-ohos-clang++
+export LD=${OHOS_SDK}/native/llvm/bin/ld.lld
+export STRIP=${OHOS_SDK}/native/llvm/bin/llvm-strip
+export RANLIB=${OHOS_SDK}/native/llvm/bin/llvm-ranlib
+export OBJDUMP=${OHOS_SDK}/native/llvm/bin/llvm-objdump
+export OBJCOPY=${OHOS_SDK}/native/llvm/bin/llvm-objcopy
+export NM=${OHOS_SDK}/native/llvm/bin/llvm-nm
+export AR=${OHOS_SDK}/native/llvm/bin/llvm-ar
+export CFLAGS="-DOHOS_NDK -fPIC -D__MUSL__=1"
+export CXXFLAGS="-DOHOS_NDK -fPIC -D__MUSL__=1"
 export LDFLAGS="-static"
 ```
 
@@ -56,7 +57,9 @@ export LDFLAGS="-static"
 ```shell
 cmake ../ -L -DCMAKE_USE_OPENSSL=OFF -DBUILD_TESTING=OFF
 ```
-
+- 由于编译工具链中不包含pthread_setaffinity_np与pthread_getaffinity_np，需要在调用的位置注释，如下图
+&nbsp;![file](media/cmake_pthread_get.png)
+&nbsp;![file](media/cmake_pthread_set.png)
 ### 编译cmake源码
 
 在对应的编译目录执行 make VERBOSE=1,编译成功截图如下

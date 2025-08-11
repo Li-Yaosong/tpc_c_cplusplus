@@ -10,14 +10,14 @@ shell是一个命令行解释器，将用户命令解析为操作系统所能理
 
 ### 编译工具链下载
 
-- 64位编译工具：gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz  [下载链接](https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz)
+- 64位编译工具：ohos-sdk-windows_linux-public.tar.gz  [下载链接](https://repo.huaweicloud.com/openharmony/os/6.0-Beta1/ohos-sdk-windows_linux-public.tar.gz)
 
 ### 解压编译工具链
 
-- 解压64位 tar xvJf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+- 解压64位 tar -zxvf ohos-sdk-windows_linux-public.tar.gz &&  cd ohos-sdk/linux/ && for i in *.zip;do unzip ${i};done
 
 
-- 进入解压后的文件夹，查看bin目录下就有我们编译用到的工具链
+- 进入解压后的文件夹，查看ohos-sdk/linux/native/llvm/bin目录下就有我们编译用到的工具链
 
 ### 设置交叉编译环境
 
@@ -48,6 +48,27 @@ export READELF="${TOOLS}/aarch64-linux-gnu-readelf"
 ###  生成makefile
 
 - 编译bash，请进入bash源码目录执行如下命令生成makefile
+
+```shell
+./configure --host=arm-linux --prefix="${PWD}/arm64_v8a_install"
+```
+
+- ![bashbuildsuccess](./media/bash_configure.png)
+
+- 由于-static编译在链接时会自动链接sdk中的libc库，该库已经包含malloc，在生成的Makefile中取消链接代码中的libmalloc库，删除$(MALLOC_LIB)，如下图
+
+- ![bashbuildsuccess](./media/bash_mk_malloc.png)
+
+- 不使用本地mallco需要注释config.h中的\#define USING_BASH_MALLOC 1
+
+- ![bashbuildsuccess](./media/bash_config.png)
+
+- 由于sh_xxx不是标准库函数所以注释shmalloc.h中sh_malloc、sh_realloc、sh_free
+
+- ![bashbuildsuccess](./media/bash_shmalloc.png)
+
+  
+
 - 编译mawk，请进入mawk源码目录执行如下命令生成makefile
 
 ```shell
