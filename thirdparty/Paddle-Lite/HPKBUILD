@@ -146,7 +146,6 @@ build() {
         -DWITH_MKL=OFF \
         -DLITE_WITH_ARM=ON \
         -DLITE_WITH_X86=OFF \
-        -DLITE_THREAD_POOL=ON \
         -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > `pwd`/$ARCH-build/build.log 2>&1
     make -j32 -C $ARCH-build VERBOSE=1 >> `pwd`/$ARCH-build/build.log 2>&1
     ret=$?
