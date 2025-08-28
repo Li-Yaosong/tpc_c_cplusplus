@@ -56,7 +56,7 @@ build() {
 
 package() {
     cd $builddir
-    make -C $ARCH-build install VERBOSE=1 >> $publicbuildlog 2>&1
+    $MAKE -C $ARCH-build install VERBOSE=1 >> $publicbuildlog 2>&1
     ret=$?
     cd $OLDPWD
     return $ret
