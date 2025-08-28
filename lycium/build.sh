@@ -29,8 +29,8 @@ export LYCIUM_BUILD_CHECK=$buildcheckflag
 export LYCIUM_BUILD_OS=$osname
 export LYCIUM_ROOT=$LYCIUM_ROOT
 
-export MAKE="make -j32"
-export Ninja="ninja -j32"
+export MAKE="make -j8"
+export Ninja="ninja -j8"
 
 if [ -z ${OHOS_SDK} ]
 then
