@@ -21,9 +21,13 @@ openharmonycheck() {
     # 因测试需要，手动测试和执行自动化测试前需执行mkdir -p /data/storage/el2/base/temp创建测试目录
     mkdir -p /data/storage/el2/base/temp
     cd $builddir/$ARCH-build
+    sed -i '331,335 { s/grep -E/__TEMP__/g; s/grep/grep -E/g; s/__TEMP__/grep -E/g; }; 343,371 { s/grep -E/__TEMP__/g; s/grep/grep -E/g; s/__TEMP__/grep -E/g; };384 { s/grep -E/__TEMP__/g; s/grep/grep -E/g; s/__TEMP__/grep -E/g; }' \ 
+    /data/tpc_c_cplusplus/thirdparty/PROJ/PROJ-9.4.1/test/cli/testprojinfo
+    sed -i '331,371 { /^\$EXE/ s/\\|/|/g }; 384 { /^\$EXE/ s/\\|/|/g }' \ 
+    /data/tpc_c_cplusplus/thirdparty/PROJ/PROJ-9.4.1/test/cli/testprojinfo
     echo "total test 61"  > $logfile 2>&1
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/tpc_c_cplusplus/thirdparty/PROJ/PROJ-9.4.1/${ARCH}-build/lib/
-    export PATH=${PATH}:/data/tpc_c_cplusplus/lycium/usr/sqlite_3_46_0/${ARCH}/bin/
+    export PATH=/data/tpc_c_cplusplus/lycium/usr/sqlite_3_46_0/${ARCH}/bin/:${PATH}
     ctest >> ${logfile} 2>&1
     res=$?
     if [ $res -ne 0 ];then
