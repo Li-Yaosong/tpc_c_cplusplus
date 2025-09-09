@@ -65,7 +65,7 @@ package() {
 check() {
     echo "The test must be on an OpenHarmony device!"
     cd $builddir/dlib/test
-    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" -DCMAKE_BUILD_TYPE=Release -B$ARCH-build -S./ -L  > $publicbuildlog 2>&1
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake -DCMAKE_TOOLCHAIN_FILE=${OHOS_SDK}/native/build/cmake/ohos.toolchain.cmake -DCMAKE_BUILD_TYPE=Release -B$ARCH-build -S./ -L  > $publicbuildlog 2>&1
     $MAKE -C $ARCH-build VERBOSE=1 >> $publicbuildlog 2>&1
     ret=$?
     cd $OLDPWD
