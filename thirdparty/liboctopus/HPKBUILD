@@ -1,0 +1,105 @@
+# This is an example HPKBUILD file. Use this as a start to creating your own,
+# and remove these comments.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Contributor: Your Name <youremail@domain.com>
+# Maintainer: Your Name <youremail@domain.com>
+
+pkgname=liboctopus # 库名
+pkgver=3.0.2 # 库版本
+pkgrel=0 # 发布号
+pkgdesc="A C++ library for representing the Octopus format as data structures, as well as parsing and serializing the Octopus JSON format." # 库描述
+url="https://github.com/opendesigndev/liboctopus" # 官网链接
+archs=("armeabi-v7a" "arm64-v8a" "x86_64")
+license=()
+depends=() # 依赖库的目录名 必须保证被依赖的库的archs是当前库的archs的超集
+makedepends=() # 构建库时的依赖工具->需要用户安装的工具
+source="https://github.jobcher.com/gh/https://github.com/opendesigndev/$pkgname.git" # 库源码下载链接
+
+downloadpackage=false # 是否自动下载压缩包，如若不写默认 true. (应对一些特殊情况，代码只能 git clone (项目中依赖 submoudle ))
+autounpack=false # 是否自动解压，如若不写默认 true, 如果为 false 则需要用户在 prepare 函数中自行解压
+buildtools=cmake # 编译方法, 暂时支持cmake, configure, make等, 是什么就填写什么. 如若不写默认为cmake.
+
+builddir=liboctopus # 源码压缩包解压后目录名 编译目录名
+packagename=$builddir.tar.gz # 压缩包名
+
+patchflag=true
+cloneflag=true
+
+source envset.sh
+
+# 为编译设置环境，如设置环境变量，创建编译目录等
+prepare() {
+    if [ $cloneflag == true ];then
+        git clone $source $builddir
+        if [ $? -ne 0 ]
+        then
+            echo "$pkgname git clone $source error."
+            rm -rf $builddir
+            return -1
+        fi
+        cloneflag=false
+    fi
+
+    if [ $patchflag == true ];then
+        cd $builddir
+        patch -p1 < ../octopus_oh.patch >> $publicbuildlog 2>&1
+        cd $OLDPWD
+        patchflag=false
+    fi
+
+    if [ $ARCH == "arm64-v8a" ]
+    then
+        setarm64ENV
+    elif [ $ARCH == "armeabi-v7a" ]
+    then
+        setarm32ENV
+    fi
+    echo "prepare ok"
+}
+
+# ${OHOS_SDK} oh sdk安装路径
+# $ARCH 编译的架构是 archs 的遍历
+# $LYCIUM_ROOT/usr/$pkgname/$ARCH 安装到顶层目录的usr/$pkgname/$ARCH
+# 执行编译构建的命令
+build() {
+    # 如果是cmake构建 "$@"=-DCMAKE_FIND_ROOT_PATH="..." -DCMAKE_TOOLCHAIN_FILE="..." -DCMAKE_INSTALL_PREFIX="..." 依赖库的搜索路径,toolchain file 路径,安装路径
+    cd $builddir
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    -DCMAKE_INSTALL_PREFIX=${PWD}/../../../lycium/usr/$pkgname/$ARCH \
+    -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L
+    make -j4 -C $ARCH-build
+    # 对最关键一步的退出码进行判断
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+# 打包安装
+package() {
+    cd $builddir
+    mkdir -p ${PWD}/../../../lycium/usr/$pkgname/$ARCH/include/
+    mkdir -p ${PWD}/../../../lycium/usr/$pkgname/$ARCH/lib/
+    cp -f octopus/*.h ${PWD}/../../../lycium/usr/$pkgname/$ARCH/include/
+    cp -f octopus-manifest/*.h ${PWD}/../../../lycium/usr/$pkgname/$ARCH/include/
+    cp $ARCH-build/${pkgname}.a ${PWD}/../../../lycium/usr/$pkgname/$ARCH/lib
+    cd $OLDPWD
+}
+
+# 进行测试的准备和说明
+check() {
+    if [ $ARCH == "arm64-v8a" ]
+    then
+        unsetarm64ENV
+    elif [ $ARCH == "armeabi-v7a" ]
+    then
+        unsetarm32ENV
+    fi
+    echo "The test must be on an OpenHarmony device!"
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
