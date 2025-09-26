@@ -1,0 +1,106 @@
+# This is an example HPKBUILD file. Use this as a start to creating your own,
+# and remove these comments.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Contributor: Your Name <youremail@domain.com>
+# Maintainer: Your Name <youremail@domain.com>
+
+pkgname=liboctopus
+pkgver=3.0.2
+pkgrel=0
+pkgdesc="A C++ library for representing the Octopus format as data structures, as well as parsing and serializing the Octopus JSON format."
+url="https://github.com/opendesigndev/liboctopus"
+archs=("armeabi-v7a" "arm64-v8a" "x86_64")
+license=()
+depends=()
+makedepends=()
+source="https://github.jobcher.com/gh/https://github.com/opendesigndev/$pkgname.git"
+
+downloadpackage=false
+autounpack=false
+buildtools=cmake
+
+builddir=liboctopus
+packagename=$builddir.tar.gz
+
+patchflag=true
+cloneflag=true
+
+source envset.sh
+
+prepare() {
+    if [ $cloneflag == true ];then
+        git clone $source $builddir
+        if [ $? -ne 0 ]
+        then
+            echo "$pkgname git clone $source error."
+            rm -rf $builddir
+            return -1
+        fi
+        cloneflag=false
+    fi
+
+    if [ $patchflag == true ];then
+        cd $builddir
+        patch -p1 < ../octopus_3.0.2_oh_pkg.patch >> $publicbuildlog 2>&1
+        cd $OLDPWD
+        patchflag=false
+    fi
+    
+    mkdir -p $builddir/$ARCH-build
+    if [ $ARCH == "arm64-v8a" ]
+    then
+        setarm64ENV
+    elif [ $ARCH == "armeabi-v7a" ]
+    then
+        setarm32ENV
+    elif [ $ARCH == "x86_64" ]
+    then
+        setx86_64ENV
+    fi
+}
+
+build() {
+    cd $builddir
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+    -DOHOS_ARCH=$ARCH -B$ARCH-build -S./ -L > $buildlog 2>&1
+    make -j4 -C $ARCH-build > $buildlog 2>&1
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+package() {
+    cd $builddir
+    mkdir -p $LYCIUM_ROOT/usr/$pkgname/include/octopus
+    mkdir -p $LYCIUM_ROOT/usr/$pkgname/include/octopus-manifest
+    mkdir -p $LYCIUM_ROOT/usr/$pkgname/include/nonstd
+    mkdir -p $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib/
+    cp -f octopus/*.h $LYCIUM_ROOT/usr/$pkgname/include/octopus/
+    cp -f octopus-manifest/*.h $LYCIUM_ROOT/usr/$pkgname/include/octopus-manifest
+    cp -f nonstd/*.hpp $LYCIUM_ROOT/usr/$pkgname/include/nonstd/
+    cp $ARCH-build/${pkgname}.a $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib
+    cd $OLDPWD
+}
+
+check() {
+    if [ $ARCH == "arm64-v8a" ]
+    then
+        cp ${OHOS_SDK}/native/llvm/lib/aarch64-linux-ohos/libc++_shared.so $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib/
+        unsetarm64ENV
+    elif [ $ARCH == "armeabi-v7a" ]
+    then
+        cp ${OHOS_SDK}/native/llvm/lib/arm-linux-ohos/libc++_shared.so $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib/
+        unsetarm32ENV
+    elif [ $ARCH == "x86_64" ]
+    then
+        cp ${OHOS_SDK}/native/llvm/lib/x86_64-linux-ohos/libc++_shared.so $LYCIUM_ROOT/usr/$pkgname/$ARCH/lib/
+        unsetx86_64ENV
+    fi
+    echo "The test must be on an OpenHarmony device!"
+}
+
+cleanbuild() {
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
