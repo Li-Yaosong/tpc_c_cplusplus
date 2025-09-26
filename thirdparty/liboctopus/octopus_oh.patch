@@ -1,0 +1,16 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5b0b41e..61fdbe9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -45,9 +45,9 @@ set(LIBOCTOPUS_MANIFEST_JSON_SOURCES
+     "octopus-manifest/serializer.cpp"
+ )
+ 
+-add_library(liboctopus ${LIBOCTOPUS_OCTOPUS_HEADERS} ${LIBOCTOPUS_MANIFEST_HEADERS} ${LIBOCTOPUS_VALIDATOR_SOURCES} ${LIBOCTOPUS_JSON_SOURCES} ${LIBOCTOPUS_MANIFEST_JSON_SOURCES})
++add_library(octopus ${LIBOCTOPUS_OCTOPUS_HEADERS} ${LIBOCTOPUS_MANIFEST_HEADERS} ${LIBOCTOPUS_VALIDATOR_SOURCES} ${LIBOCTOPUS_JSON_SOURCES} ${LIBOCTOPUS_MANIFEST_JSON_SOURCES})
+ 
+-target_include_directories(liboctopus PUBLIC
++target_include_directories(octopus PUBLIC
+     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+     $<INSTALL_INTERFACE:include>
+ )
