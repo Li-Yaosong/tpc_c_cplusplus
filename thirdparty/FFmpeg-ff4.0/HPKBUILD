@@ -43,6 +43,8 @@ prepare() {
         patch -p1 < `pwd`/../ipv6.patch
         patch -p1 < `pwd`/../oh_ffmpeg-bug-fixed.patch
         patch -p1 < `pwd`/../oh_ffmpeg_hls_optimization.patch
+        # fix seek crash
+        patch -p1 < `pwd`/../oh_ffmpeg-seek-fixed.patch
         patchflag=false
         cd $OLDPWD
     fi
