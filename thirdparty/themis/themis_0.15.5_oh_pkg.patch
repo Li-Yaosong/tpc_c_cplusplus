@@ -1,0 +1,20 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 59ef269e..f5a4c803 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,5 +1,6 @@
+ project(themis)
+ cmake_minimum_required(VERSION 3.8)
++include_directories(include)
+ include_directories(src)
+ 
+ if (NO_NIST_STS)
+@@ -20,6 +21,8 @@ file(GLOB_RECURSE THEMIS_SOURCE_FILES src/themis/*.c)
+ add_library(themis ${THEMIS_SOURCE_FILES})
+ add_library(themis_shared SHARED ${THEMIS_SOURCE_FILES})
+ set_target_properties(themis_shared PROPERTIES OUTPUT_NAME themis)
++target_link_libraries(themis soter)
++target_link_libraries(themis_shared soter)
+ 
+ file(GLOB SOTER_TEST_SOURCE tests/soter/*.c tests/common/*.c )
+ file(GLOB THEMIS_TEST_SOURCE tests/themis/*.c tests/common/*.c)
