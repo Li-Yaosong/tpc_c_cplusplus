@@ -1,0 +1,21 @@
+diff --git a/autogen.sh b/autogen.sh
+index 178decf..ad72210 100755
+--- a/autogen.sh
++++ b/autogen.sh
+@@ -24,11 +24,11 @@ automake -a -c
+ autoconf
+ 
+ #./configure --enable-static --enable-shared --prefix=/usr --disable-icu
+-./configure --enable-static --disable-shared --enable-debug --prefix=/usr --enable-icu
+-make clean
+-make ChangeLog
+-make dist
+-cp lib*-*.tar.gz pacman
++#./configure --enable-static --disable-shared --enable-debug --prefix=/usr --enable-icu
++#make clean
++#make ChangeLog
++#make dist
++#cp lib*-*.tar.gz pacman
+ #make
+ #make distclean
+ 
