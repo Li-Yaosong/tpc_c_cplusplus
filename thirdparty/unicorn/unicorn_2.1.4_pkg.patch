@@ -1,0 +1,122 @@
+From 09b6f82b3c350fbd4cb6215e468884452aebb403 Mon Sep 17 00:00:00 2001
+From: Bjl <bianjianliang3@huawei-partners.com>
+Date: Mon, 29 Sep 2025 11:15:51 +0800
+Subject: [PATCH] This content only supports x86
+
+---
+ qemu/include/qemu/cpuid.h      |  2 ++
+ qemu/tcg/i386/tcg-target.inc.c | 24 +++++++++++++++++++++++-
+ 2 files changed, 25 insertions(+), 1 deletion(-)
+
+diff --git a/qemu/include/qemu/cpuid.h b/qemu/include/qemu/cpuid.h
+index 9c09dd1..ae31887 100644
+--- a/qemu/include/qemu/cpuid.h
++++ b/qemu/include/qemu/cpuid.h
+@@ -14,8 +14,10 @@
+ #ifdef _MSC_VER
+ #include <intrin.h>
+ #else
++#if defined(__x86_64__) && defined(ENABLE_XCR)
+ #include <cpuid.h>
+ #endif
++#endif
+ 
+ /* Cover the uses that we have within qemu.  */
+ /* ??? Irritating that we have the same information in target/i386/.  */
+diff --git a/qemu/tcg/i386/tcg-target.inc.c b/qemu/tcg/i386/tcg-target.inc.c
+index 15cc1c0..c8ec57a 100644
+--- a/qemu/tcg/i386/tcg-target.inc.c
++++ b/qemu/tcg/i386/tcg-target.inc.c
+@@ -3729,22 +3729,30 @@ static void tcg_target_init(TCGContext *s)
+ 
+ #ifdef _MSC_VER
+     int cpu_info[4];
++#if defined(__x86_64__) && defined(ENABLE_XCR)
+     __cpuid(cpu_info, 0);
++#endif
+     max = cpu_info[0];
+ #else
+-    max = __get_cpuid_max(0, 0);
++#if defined(__x86_64__) && defined(ENABLE_XCR)
++    __cpuid(cpu_info, 0);
++#endif
+ #endif
+ 
+     if (max >= 7) {
+         /* BMI1 is available on AMD Piledriver and Intel Haswell CPUs.  */
+ #ifdef _MSC_VER
++#if defined(__x86_64__) && defined(ENABLE_XCR)
+         __cpuid(cpu_info, 7);
++#endif
+         a = cpu_info[0];
+         b7 = cpu_info[1];
+         c = cpu_info[2];
+         d = cpu_info[3];
+ #else
++#if defined(__x86_64__) && defined(ENABLE_XCR)
+         __cpuid_count(7, 0, a, b7, c, d);
++#endif
+ #endif
+         have_bmi1 = (b7 & bit_BMI) != 0;
+         have_bmi2 = (b7 & bit_BMI2) != 0;
+@@ -3752,14 +3760,18 @@ static void tcg_target_init(TCGContext *s)
+ 
+     if (max >= 1) {
+ #ifdef _MSC_VER
++#if defined(__x86_64__) && defined(ENABLE_XCR)
+         __cpuid(cpu_info, 1);
++#endif
+         a = cpu_info[0];
+         b = cpu_info[1];
+         c = cpu_info[2];
+         d = cpu_info[3];
+ #else
++#if defined(__x86_64__) && defined(ENABLE_XCR)
+         __cpuid(1, a, b, c, d);
+ #endif
++#endif
+ #ifndef have_cmov
+         /* For 32-bit, 99% certainty that we're running on hardware that
+            supports cmov, but we still need to check.  In case cmov is not
+@@ -3780,7 +3792,9 @@ static void tcg_target_init(TCGContext *s)
+              * the assembler, so we encode the instruction manually.
+              */
+ #ifndef _MSC_VER
++#if defined(__x86_64__) && defined(ENABLE_XCR)
+             asm(".byte 0x0f, 0x01, 0xd0" : "=a" (xcrl), "=d" (xcrh) : "c" (0));
++#endif
+ #else
+             unsigned long long bv = _xgetbv(0);
+             xcrl = bv & 0xFFFFFFFF;
+@@ -3794,20 +3808,28 @@ static void tcg_target_init(TCGContext *s)
+     }
+ 
+ #ifdef _MSC_VER
++#if defined(__x86_64__) && defined(ENABLE_XCR)
+     __cpuid(cpu_info, 0x80000000);
++#endif
+     max = cpu_info[0];
+ #else
++#if defined(__x86_64__) && defined(ENABLE_XCR)
+     max = __get_cpuid_max(0x8000000, 0);
++#endif
+ #endif
+     if (max >= 1) {
+ #ifdef _MSC_VER
++#if defined(__x86_64__) && defined(ENABLE_XCR)
+         __cpuid(cpu_info, 0x80000001);
++#endif
+         a = cpu_info[0];
+         b = cpu_info[1];
+         c = cpu_info[2];
+         d = cpu_info[3];
+ #else
++#if defined(__x86_64__) && defined(ENABLE_XCR)
+         __cpuid(0x80000001, a, b, c, d);
++#endif
+ #endif
+         /* LZCNT was introduced with AMD Barcelona and Intel Haswell CPUs.  */
+         have_lzcnt = (c & bit_LZCNT) != 0;
+-- 
+2.34.1
+
