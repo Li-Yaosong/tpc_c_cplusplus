@@ -1,0 +1,246 @@
+# Copyright (c) 2025 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: Jeff Han <shilinke001@chinasoftinc.com>
+# Maintainer: Jeff Han <shilinke001@chinasoftinc.com>
+
+source HPKBUILD > /dev/null 2>&1
+
+logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
+
+mkdir -p $(dirname ${logfile})
+
+openharmonycheck() {
+    local res=0
+    local test_count=0
+    local pass_count=0
+    local test_dir="${builddir}/${ARCH}-build/tests"
+    
+    # 检查测试目录是否存在
+    if [ ! -d "${test_dir}" ]; then
+        echo "Error: Test directory ${test_dir} not found!" > ${logfile}
+        return 1
+    fi
+    
+    cd "${test_dir}"
+    echo "Starting liboqs tests at $(date)" > ${logfile}
+    echo "Test architecture: ${ARCH}" >> ${logfile}
+    echo "----------------------------------------" >> ${logfile}
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: dump_alg_info" >> ${logfile}
+    ./dump_alg_info >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: dump_alg_info pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: dump_alg_info fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: test_kem" >> ${logfile}
+    ./test_kem Kyber768 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: test_kem pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: test_kem fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: kat_kem" >> ${logfile}
+    ./kat_kem BIKE-L5 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: kat_kem pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: kat_kem fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: test_sig" >> ${logfile}
+    ./test_sig Dilithium2 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: test_sig pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: test_sig fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: kat_sig" >> ${logfile}
+    ./kat_sig Dilithium5 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: kat_sig pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: kat_sig fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: test_kem_mem" >> ${logfile}
+    ./test_kem_mem Classic-McEliece-348864f 0 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: test_kem_mem pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: test_kem_mem fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: test_sig_mem" >> ${logfile}
+    ./test_sig_mem Falcon-512 0 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: test_sig_mem pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: test_sig_mem fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: example_kem" >> ${logfile}
+    ./example_kem Kyber768 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: example_kem pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: example_kem fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: example_sig" >> ${logfile}
+    ./example_sig Dilithium3 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: example_sig pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: example_sig fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: example_sig_stfl" >> ${logfile}
+    ./example_sig_stfl SPHINCS+-SHA2-256f-simple >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: example_sig_stfl pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: example_sig_stfl fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: test_aes" >> ${logfile}
+    ./test_aes >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: test_aes pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: test_aes fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: test_sha3" >> ${logfile}
+    ./test_sha3 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: test_sha3 pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: test_sha3 fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: test_hash" >> ${logfile}
+    echo -n "liboqs_test_hash_data" | ./test_hash sha3_256 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: test_hash pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: test_hash fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: test_sig_stfl" >> ${logfile}
+    ./test_sig_stfl SPHINCS+-SHA2-192f-simple >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: test_sig_stfl pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: test_sig_stfl fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: speed_common" >> ${logfile}
+    ./speed_common hash sha256 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: speed_common pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: speed_common fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: speed_kem" >> ${logfile}）
+    ./speed_kem Kyber512 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: speed_kem pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: speed_kem fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: speed_sig" >> ${logfile}）
+    ./speed_sig Dilithium2 >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: speed_sig pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: speed_sig fail" >> ${logfile}
+        res=1
+    fi
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: speed_sig_stfl" >> ${logfile}）
+    ./speed_sig_stfl --algs >> ${logfile} 2>&1
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: speed_sig_stfl pass" >> ${logfile}
+    else
+        echo "Test ${test_count}: speed_sig_stfl fail" >> ${logfile}
+        res=1
+    fi
+
+    echo "----------------------------------------" >> ${logfile}
+    echo "Total tests: ${test_count}" >> ${logfile}
+    echo "Passed tests: ${pass_count}" >> ${logfile}
+    echo "Failed tests: $((test_count - pass_count))" >> ${logfile}
+    echo "Test completed at $(date)" >> ${logfile}
+
+    cd ${OLDPWD}
+    return ${res}
+}
