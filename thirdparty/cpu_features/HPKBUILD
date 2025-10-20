@@ -1,0 +1,75 @@
+# This is an example HPKBUILD file. Use this as a start to creating your own,
+# and remove these comments.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Contributor: wangle <604413545@qq.com>
+# Maintainer: wangle <604413545@qq.com>
+
+## 三方库简述
+pkgname=cpu_features
+pkgver=0.9.0
+pkgrel=0
+pkgdesc="跨平台 C 库，用于在运行时检测 CPU 特性（如 SSE/AVX/NEON 等指令集支持）"
+url="https://github.com/google/cpu_features"
+
+## 编译设置
+archs=("armeabi-v7a" "arm64-v8a" "x86_64")
+license=("Apache License 2.0")
+depends=("googletest")
+makedepends=()
+
+downloadpackage=true
+packagename=$pkgname-$pkgver.tar.gz
+autounpack=true
+builddir=$pkgname-$pkgver
+buildtools=cmake
+
+source="https://github.com/google/$pkgname/archive/refs/tags/v$pkgver.tar.gz"
+
+patchflag=true
+prepare() {
+    if [[ $patchflag == true ]];
+    then
+        cd $builddir
+        ## 该patch对将gtest的依赖指向了本地
+        patch -p1 < `pwd`/../cpu_features-0.9.0.patch
+        # patch只需要打一次,关闭打patch        
+        cd $OLDPWD
+    fi
+    patchflag=false
+}
+
+# 执行编译构建的命令
+build() {
+    cd $builddir    
+    # 如果是cmake构建 "$@"=-DCMAKE_FIND_ROOT_PATH="..." -DCMAKE_TOOLCHAIN_FILE="..." -DCMAKE_INSTALL_PREFIX="..." 依赖库的搜索路径,toolchain file 路径,安装路径
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake \
+        "$@"                                       \
+        -DCMAKE_FIND_ROOT_PATH=$LYCIUM_ROOT/usr/googletest/$ARCH \
+        -DOHOS_ARCH=$ARCH                          \
+        -B$ARCH-build                              \
+        -S./ -L
+
+    make -j4 -C $ARCH-build
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+# 打包安装
+package() {
+    cd $builddir
+    make -C $ARCH-build install
+    cd $OLDPWD
+}
+
+# 进行测试的准备和说明
+check() {
+    echo "The test must be on an OpenHarmony device!"
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
