@@ -1,0 +1,92 @@
+# This is an example HPKBUILD file. Use this as a start to creating your own,
+# and remove these comments.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Contributor: wangle <604413545@qq.com>
+# Maintainer: wangle <604413545@qq.com>
+
+## 三方库简述
+pkgname=cpu_features
+pkgver=0.9.0
+pkgrel=0
+pkgdesc="跨平台 C 库，用于在运行时检测 CPU 特性（如 SSE/AVX/NEON 等指令集支持）"
+url="https://github.com/google/cpu_features"
+
+## 编译设置
+### 目标平台
+archs=("armeabi-v7a" "arm64-v8a" "x86_64")
+### 开源协议
+license=("Apache License 2.0")
+### 依赖模块
+depends=("googletest")
+### 依赖工具
+makedepends=()
+
+### 下载source指定的源码包
+downloadpackage=true
+packagename=$pkgname-$pkgver.tar.gz # 源码包名
+### 自动解压
+autounpack=true
+builddir=$pkgname-$pkgver # 解压后的源码文件夹(需填写,非指定)
+### 编译方法, 暂时支持cmake, configure, make等, 是什么就填写什么. 如若不写默认为cmake.
+buildtools=cmake
+
+## source地址设置
+useproxy=true
+source="https://github.com/google/$pkgname/archive/refs/tags/v$pkgver.tar.gz"
+
+if [[ $useproxy == "true" ]]; then
+    set_proxy $source
+    echo "$source"
+fi
+
+patchflag=true
+prepare() {
+    if [[ $patchflag == true ]];
+    then
+        cd $builddir
+        ## 该patch对将gtest的依赖指向了本地
+        patch -p1 < `pwd`/../cpu_features-0.9.0.patch
+        # patch只需要打一次,关闭打patch        
+        cd $OLDPWD
+    fi
+    patchflag=false
+}
+
+# ${OHOS_SDK} oh sdk安装路径
+# $ARCH 编译的架构是 archs 的遍历
+# $LYCIUM_ROOT/usr/$pkgname/$ARCH 安装到顶层目录的usr/$pkgname/$ARCH
+# 执行编译构建的命令
+build() {
+    cd $builddir    
+    # 如果是cmake构建 "$@"=-DCMAKE_FIND_ROOT_PATH="..." -DCMAKE_TOOLCHAIN_FILE="..." -DCMAKE_INSTALL_PREFIX="..." 依赖库的搜索路径,toolchain file 路径,安装路径
+    PKG_CONFIG_LIBDIR="${pkgconfigpath}" ${OHOS_SDK}/native/build-tools/cmake/bin/cmake \
+        "$@"                                       \
+        -DCMAKE_FIND_ROOT_PATH=$LYCIUM_ROOT/usr/googletest/$ARCH \
+        -DOHOS_ARCH=$ARCH                          \
+        -B$ARCH-build                              \
+        -S./ -L
+
+    make -j4 -C $ARCH-build
+    ret=$?
+    cd $OLDPWD
+    return $ret
+}
+
+# 打包安装
+package() {
+    cd $builddir
+    make -C $ARCH-build install
+    cd $OLDPWD
+}
+
+# 进行测试的准备和说明
+check() {
+    echo "The test must be on an OpenHarmony device!"
+}
+
+# 清理环境
+cleanbuild() {
+    rm -rf ${PWD}/$builddir #${PWD}/$packagename
+}
