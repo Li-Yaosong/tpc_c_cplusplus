@@ -1,0 +1,65 @@
+# This is an example HPKCHECK file. Use this as a start to creating your own,
+# and remove these comments.
+
+# Contributor: wangle <604413545@qq.com>
+# Maintainer: wangle <604413545@qq.com>
+
+source HPKBUILD > /dev/null 2>&1    # 导入HPKBUILD文件
+logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
+
+# 测试前的准备, 如果不需要可以不写。
+checkprepare(){
+   return 0
+}
+
+# 在OH环境执行测试的接口
+openharmonycheck() {
+   res=0                               # 记录返回值
+   cd ${builddir}/${ARCH}-build        # 进入到测试目录
+   # 执行测试命令并将测试结果导出到${logfile}，测试命令根据每个库的真实情况填写
+       # 检查构建目录是否存在
+   if [ ! -d "${test_dir}" ]; then
+      echo "错误: 测试目录不存在: ${test_dir}" >&2
+      return 1
+   fi
+   
+   # 进入测试目录
+   cd "${test_dir}" || {
+      echo "错误: 无法进入目录: ${test_dir}" >&2
+      return 1
+   }
+   
+   # 执行测试命令
+   # 根据实际测试需求修改以下命令
+   if [ -f "./bit_utils_test" ]; then
+      ./bit_utils_test >> "${logfile}" 2>&1
+      ((res+=$?))
+   fi
+   
+   if [ -f "./cpuinfo_arm_test" ]; then
+      ./cpuinfo_arm_test >> "${logfile}" 2>&1
+      ((res+=$?))
+   fi
+   
+   if [ -f "./stack_line_reader_test" ]; then
+      ./stack_line_reader_test >> "${logfile}" 2>&1
+      ((res+=$?))
+   fi
+   
+   if [ -f "./string_view_test" ]; then
+      ./string_view_test >> "${logfile}" 2>&1
+      ((res+=$?))
+   fi
+   
+   # 返回原目录
+   cd "$OLDPWD" || return 1
+   
+   # 检查总体测试结果
+   if [ $res -eq 0 ]; then
+      echo "所有测试通过" >> "${logfile}"
+   else
+      echo "部分测试失败，错误码: $res" >> "${logfile}"
+   fi
+   
+   return $res
+}
