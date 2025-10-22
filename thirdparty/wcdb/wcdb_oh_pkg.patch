@@ -1,0 +1,140 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 41d261714..06952880e 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -464,6 +464,9 @@ else ()
+             elseif(${OHOS_ARCH} STREQUAL "x86_64")
+                 target_link_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../tools/prebuild/openssl/ohos/x86_64)
+                 target_link_directories(sqlcipher PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../tools/prebuild/openssl/ohos/x86_64)
++            elseif(${OHOS_ARCH} STREQUAL "armeabi-v7a")
++                target_link_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../tools/prebuild/openssl/ohos/armeabi-v7a/lib)
++                target_link_directories(sqlcipher PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../tools/prebuild/openssl/ohos/armeabi-v7a/lib)
+             endif()
+         endif()
+     else ()
+@@ -493,6 +496,8 @@ else ()
+                 target_link_directories(sqlcipher PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../tools/prebuild/openssl/ohos/arm64-v8a)
+             elseif(${OHOS_ARCH} STREQUAL "x86_64")
+                 target_link_directories(sqlcipher PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../tools/prebuild/openssl/ohos/x86_64)
++            elseif(${OHOS_ARCH} STREQUAL "armeabi-v7a")
++                target_link_directories(sqlcipher PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../tools/prebuild/openssl/ohos/armeabi-v7a/lib)
+             endif()
+         endif()
+     endif()
+@@ -565,3 +570,36 @@ elseif (WIN32)
+ else ()
+     message(FATAL_ERROR "Unsupported platform!")
+ endif ()
++if (true)
++    message(STATUS "--- Configuring Tests ---")
++
++    include(FetchContent)
++    FetchContent_Declare(
++      googletest
++      GIT_REPOSITORY https://github.jobcher.com/gh/https://github.com/google/googletest.git
++      GIT_TAG        v1.15.2
++    )
++
++    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
++    set(WCDB_TEST_SOURCES ${WCDB_SRC_DIR}/cpp/tests/WCDBTest.cpp)
++    FetchContent_MakeAvailable(googletest)
++
++    add_executable(wcdb_tests
++        ${WCDB_TEST_SOURCES}
++    )
++
++    target_link_libraries(wcdb_tests PRIVATE
++        GTest::gtest_main
++        ${TARGET_NAME}
++    )
++
++    target_include_directories(wcdb_tests PRIVATE
++        ${WCDB_COMMON_INCLUDES}
++        ${WCDB_CPP_INCLUDES}
++        ${EXPORT_PUBLIC_HEADERS_PATH}
++    )
++
++    include(GoogleTest)
++    gtest_add_tests(wcdb_tests "" ${WCDB_TEST_SOURCES})
++    message(STATUS "--- Tests configured ---")
++endif()
+diff --git a/src/cpp/tests/WCDBTest.cpp b/src/cpp/tests/WCDBTest.cpp
+new file mode 100644
+index 0000000..f0f8392
+--- /dev/null
++++ b/wcdb-2.1.14/src/cpp/tests/WCDBTest.cpp
+@@ -0,0 +1,74 @@
++#include "WCDBCpp.h"
++#include "gtest/gtest.h"
++#include <cassert>
++#include <cstdio>
++#include <string>
++#include <vector>
++
++using namespace WCDB;
++using namespace std;
++
++class TestData {
++public:
++    TestData() : id(0) {}
++    TestData(int id, const std::string &name) : id(id), name(name) {}
++
++    int id;
++    std::string name;
++
++    WCDB_CPP_ORM_DECLARATION(TestData)
++};
++
++WCDB_CPP_ORM_IMPLEMENTATION_BEGIN(TestData)
++WCDB_CPP_SYNTHESIZE(id)
++WCDB_CPP_SYNTHESIZE(name)
++WCDB_CPP_ORM_IMPLEMENTATION_END;
++
++TEST(WCDBTestSuite, BasicOperations)
++{
++    std::remove("/tmp/test.db");
++
++    WCDB::Database db("/tmp/test.db");
++
++    bool created = db.createTable<TestData>("test_table");
++    ASSERT_TRUE(created) << "Failed to create table 'test_table': "
++                         << db.getError().getMessage();
++
++    TestData data1(1, "Alice");
++    TestData data2(2, "Bob");
++    TestData data3(3, "Charlie");
++
++    bool inserted1 = db.insertObject(data1, "test_table");
++    ASSERT_TRUE(inserted1) << "Failed to insert data1: " << db.getError().getMessage();
++
++    bool inserted2 = db.insertObject(data2, "test_table");
++    ASSERT_TRUE(inserted2) << "Failed to insert data2: " << db.getError().getMessage();
++
++    bool inserted3 = db.insertObject(data3, "test_table");
++    ASSERT_TRUE(inserted3) << "Failed to insert data3: " << db.getError().getMessage();
++
++    WCDB::OptionalValueArray<TestData> allResults = db.getAllObjects<TestData>("test_table");
++    ASSERT_TRUE(allResults.succeed())
++    << "Failed to get all objects: " << db.getError().getMessage();
++    ASSERT_EQ(allResults.value().size(), 3) << "Should get 3 objects.";
++
++    TestData updateObject;
++    updateObject.name = "Bobby";
++    bool updated = db.updateObject(updateObject,
++                                   WCDB_FIELD(TestData::name),
++                                   "test_table",
++                                   WCDB_FIELD(TestData::id) == 2 
++    );
++    ASSERT_TRUE(updated) << "Failed to update object: " << db.getError().getMessage();
++
++    bool deleted = db.deleteObjects("test_table", WCDB_FIELD(TestData::id) == 3);
++    ASSERT_TRUE(deleted) << "Failed to delete object: " << db.getError().getMessage();
++
++    allResults = db.getAllObjects<TestData>("test_table");
++    ASSERT_TRUE(allResults.succeed())
++    << "Failed to get all objects after deletion: " << db.getError().getMessage();
++    ASSERT_EQ(allResults.value().size(), 2) << "Should get 2 objects after deletion.";
++
++    std::cout << "All basic operations tests passed successfully!" << std::endl;
++}
++
