@@ -1,0 +1,86 @@
+# This is an example HPKBUILD file. Use this as a start to creating your own,
+# and remove these comments.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Contributor: wangle <604413545@qq.com>
+# Maintainer: wangle <604413545@qq.com>
+
+pkgname=jemalloc
+pkgver=5.3.0
+pkgrel=1
+pkgdesc="通用内存分配器"
+url="https://github.com/jemalloc/jemalloc"
+
+archs=("armeabi-v7a" "arm64-v8a" "x86_64")
+license=("BSD-2-Clause")
+depends=()
+makedepends=("make" "autoconf")
+
+buildtools="configure"
+downloadpackage=true
+autounpack=true
+packagename=$pkgname-$pkgver.tar.gz
+builddir=$pkgname-$pkgver
+
+source="https://github.com/jemalloc/jemalloc/archive/refs/tags/${pkgver}.tar.gz"
+
+source envset.sh
+host=
+
+prepare() {
+  mkdir -p $builddir/$ARCH-build
+  cd $builddir
+  case "$ARCH" in
+    armeabi-v7a)
+        setarm32ENV
+        host=arm-linux
+        ;;
+    arm64-v8a)
+        setarm64ENV
+        host=aarch64-linux
+        ;;
+    x86_64)
+        setx86_64ENV
+        host=x86_64-linux
+        ;;
+  esac
+  autoconf
+  cd $OLDPWD
+}
+
+build() {
+  cd $builddir/$ARCH-build
+  PKG_CONFIG_LIBDIR="${pkgconfigpath}" ../configure "$@" \
+    --host=$host --enable-autogen --disable-shared --enable-static \
+    --enable-prof --enable-tests --with-jemalloc-prefix=je_ >> $buildlog 2>&1
+
+  $MAKE VERBOSE=1 >> $buildlog 2>&1
+  ret=$?
+  if [ $ret -eq 0 ]; then
+    $MAKE tests VERBOSE=1 >> $buildlog 2>&1
+    ret=$?
+  fi
+  cd $OLDPWD
+  return $ret
+}
+
+package() {
+  cd $builddir/$ARCH-build
+  $MAKE install VERBOSE=1 >> $buildlog 2>&1
+  cd $OLDPWD
+}
+
+check() {
+  unset host
+  case "$ARCH" in
+    armeabi-v7a) unsetarm32ENV ;;
+    arm64-v8a)   unsetarm64ENV ;;
+    x86_64)      unsetx86_64ENV ;;
+  esac
+}
+
+cleanbuild() {
+  rm -rf "${PWD}/${builddir}"
+}
+

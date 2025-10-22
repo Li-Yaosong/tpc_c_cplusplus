@@ -1,0 +1,131 @@
+# This is an example HPKCHECK file. Use this as a start to creating your own,
+# and remove these comments.
+
+# Contributor: wangle <604413545@qq.com>
+# Maintainer: wangle <604413545@qq.com>
+
+source HPKBUILD > /dev/null 2>&1
+logfile=${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log
+
+openharmonycheck() {
+    res=0
+    cd ${builddir}/${ARCH}-build
+    
+    # 运行原有的检查
+    make tast > ${logfile} 2>&1
+    res=$?
+    
+    # 如果原有的检查成功，则运行单元测试
+    if [ $res -eq 0 ]; then
+        echo "Running unit tests..." >> ${logfile}
+        /bin/sh test/test.sh \
+            test/unit/a0 \
+            test/unit/arena_decay \
+            test/unit/arena_reset \
+            test/unit/atomic \
+            test/unit/background_thread \
+            test/unit/background_thread_enable \
+            test/unit/base \
+            test/unit/batch_alloc \
+            test/unit/binshard \
+            test/unit/bitmap \
+            test/unit/bit_util \
+            test/unit/buf_writer \
+            test/unit/cache_bin \
+            test/unit/ckh \
+            test/unit/counter \
+            test/unit/decay \
+            test/unit/div \
+            test/unit/double_free \
+            test/unit/edata_cache \
+            test/unit/emitter \
+            test/unit/extent_quantize \
+            test/unit/fb \
+            test/unit/fork \
+            test/unit/fxp \
+            test/unit/san \
+            test/unit/san_bump \
+            test/unit/hash \
+            test/unit/hook \
+            test/unit/hpa \
+            test/unit/hpa_background_thread \
+            test/unit/hpdata \
+            test/unit/huge \
+            test/unit/inspect \
+            test/unit/junk \
+            test/unit/junk_alloc \
+            test/unit/junk_free \
+            test/unit/log \
+            test/unit/mallctl \
+            test/unit/malloc_conf_2 \
+            test/unit/malloc_io \
+            test/unit/math \
+            test/unit/mpsc_queue \
+            test/unit/mq \
+            test/unit/mtx \
+            test/unit/nstime \
+            test/unit/oversize_threshold \
+            test/unit/pa \
+            test/unit/pack \
+            test/unit/pages \
+            test/unit/peak \
+            test/unit/ph \
+            test/unit/prng \
+            test/unit/prof_accum \
+            test/unit/prof_active \
+            test/unit/prof_gdump \
+            test/unit/prof_hook \
+            test/unit/prof_idump \
+            test/unit/prof_log \
+            test/unit/prof_mdump \
+            test/unit/prof_recent \
+            test/unit/prof_reset \
+            test/unit/prof_stats \
+            test/unit/prof_tctx \
+            test/unit/prof_thread_name \
+            test/unit/prof_sys_thread_name \
+            test/unit/psset \
+            test/unit/ql \
+            test/unit/qr \
+            test/unit/rb \
+            test/unit/retained \
+            test/unit/rtree \
+            test/unit/safety_check \
+            test/unit/sc \
+            test/unit/sec \
+            test/unit/seq \
+            test/unit/SFMT \
+            test/unit/size_check \
+            test/unit/size_classes \
+            test/unit/slab \
+            test/unit/smoothstep \
+            test/unit/spin \
+            test/unit/stats \
+            test/unit/stats_print \
+            test/unit/sz \
+            test/unit/tcache_max \
+            test/unit/test_hooks \
+            test/unit/thread_event \
+            test/unit/ticker \
+            test/unit/tsd \
+            test/unit/uaf \
+            test/unit/witness \
+            test/unit/zero \
+            test/unit/zero_realloc_abort \
+            test/unit/zero_realloc_free \
+            test/unit/zero_realloc_alloc \
+            test/unit/zero_reallocs \
+            test/unit/arena_reset_prof \
+            test/unit/batch_alloc_prof >> ${logfile} 2>&1
+        
+        # 获取单元测试的返回状态
+        test_res=$?
+        if [ $test_res -ne 0 ]; then
+            res=$test_res
+        fi
+    fi
+    
+    cd $OLDPWD
+
+    return $res
+}
