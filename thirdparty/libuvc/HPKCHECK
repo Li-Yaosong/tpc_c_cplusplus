@@ -1,0 +1,60 @@
+# Copyright (c) 2025 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: shilinke <shilinke001@chinasoftinc.com>
+# Maintainer: shilinke <shilinke001@chinasoftinc.com>
+
+source HPKBUILD > /dev/null 2>&1
+
+logfile="${LYCIUM_THIRDPARTY_ROOT}/${pkgname}/${pkgname}_${ARCH}_${OHOS_SDK_VER}_test.log"
+mkdir -p "$(dirname "${logfile}")"
+
+openharmonycheck() {
+    local res=0                
+    local test_count=0
+    local pass_count=0
+    local test_dir="${builddir}/${ARCH}-build"
+    local original_dir="${PWD}"
+
+    if [ ! -d "${test_dir}" ]; then
+        echo "Error: Test directory ${test_dir} not found" > "${logfile}"
+        return 1
+    fi
+
+    cd "${test_dir}" || {
+        echo "Error: Test directory ${test_dir} not put" >> "${logfile}"
+        res=1
+        return "${res}"
+    }
+
+    test_count=$((test_count + 1))
+    echo "Running test ${test_count}: uvc_test" >> "${logfile}"
+    ./uvc_test >> "${logfile}" 2>&1
+
+    if [ $? -eq 0 ]; then
+        pass_count=$((pass_count + 1))
+        echo "Test ${test_count}: uvc_test pass" >> "${logfile}"
+    else
+        echo "Test ${test_count}: uvc_test fail" >> "${logfile}"
+        res=1
+    fi
+
+    echo "------------------------" >> "${logfile}"
+    echo "Total tests: ${test_count}" >> "${logfile}"
+    echo "Passed tests: ${pass_count}" >> "${logfile}"
+    echo "Failed tests: $((test_count - pass_count))" >> "${logfile}"
+
+    cd "${original_dir}" || exit 1
+
+    return "${res}"
+}

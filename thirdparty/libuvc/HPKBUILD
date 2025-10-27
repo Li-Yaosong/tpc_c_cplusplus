@@ -1,0 +1,97 @@
+# Copyright (c) 2025 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contributor: shilinke <shilinke001@chinasoftinc.com>
+# Maintainer: shilinke <shilinke001@chinasoftinc.com>
+
+pkgname=libuvc
+pkgver=0.0.7
+pkgrel=0
+pkgdesc="A cross-platform library for USB video devices"
+url="https://github.com/libuvc/libuvc"
+archs=("armeabi-v7a" "arm64-v8a")
+license=("BSD")
+depends=("libusb" "opencv")
+makedepends=()
+
+source="https://github.com/libuvc/libuvc/archive/refs/tags/v$pkgver.tar.gz"
+
+autounpack=true
+downloadpackage=true
+buildtools="cmake"
+patchflag=true
+builddir="$pkgname-$pkgver"
+packagename="v$pkgver.tar.gz"
+
+
+prepare() {
+    if $patchflag
+    then
+        # 将测试程序 uvc_test 从 “纯 C 编译” 改为 “用 C++ 编译器编译”
+        patch -p1 < libuvc.patch >> $buildlog 2>&1
+        patchflag=false
+    fi
+    
+    cd "$builddir"
+    mkdir -p "$ARCH-build"
+    cd "$OLDPWD"
+}
+
+build() {
+    cd "$builddir"
+
+    local libusb_prefix="${LYCIUM_ROOT}/usr/libusb/$ARCH"
+    local libusb_include_dir="${libusb_prefix}/include/libusb-1.0"
+    local libusb_lib_dir="${libusb_prefix}/lib"
+    local opencv_prefix="${LYCIUM_ROOT}/usr/opencv/$ARCH"
+    local opencv_config_dir="${opencv_prefix}/lib/cmake/opencv4"
+    local opencv_include_dir="${opencv_prefix}/include/opencv4"
+    local opencv_lib_dir="${opencv_prefix}/lib"
+
+    export PKG_CONFIG_PATH="${libusb_prefix}/lib/pkgconfig:${opencv_prefix}/lib/pkgconfig:${PKG_CONFIG_PATH}"
+
+    ${OHOS_SDK}/native/build-tools/cmake/bin/cmake "$@" \
+        -DOHOS_ARCH="$ARCH" \
+        -DOpenCV_DIR="${opencv_config_dir}" \
+        -DOpenCV_INCLUDE_DIRS="${opencv_include_dir}" \
+        -DCMAKE_FIND_ROOT_PATH="${libusb_prefix};${opencv_prefix}" \
+        -DBUILD_SHARED_LIBS=ON \
+        -DBUILD_TEST=ON \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_C_FLAGS="-I${libusb_include_dir} -I${opencv_include_dir}" \
+        -DCMAKE_CXX_FLAGS="-I${libusb_include_dir} -I${opencv_include_dir} -std=c++11" \
+        -DCMAKE_SHARED_LINKER_FLAGS="-L${libusb_lib_dir} -L${opencv_lib_dir} -lusb-1.0 -lopencv_core -lopencv_highgui -Wl,-rpath,${libusb_lib_dir}:${opencv_lib_dir}" \
+        -DCMAKE_EXE_LINKER_FLAGS="-L${libusb_lib_dir} -L${opencv_lib_dir} -lusb-1.0 -lopencv_core -lopencv_highgui -Wl,-rpath,${libusb_lib_dir}:${opencv_lib_dir}" \
+        -B"$ARCH-build" \
+        -S./ > $buildlog 2>&1
+
+    $MAKE -C "${ARCH}-build" VERBOSE=1 >> $buildlog 2>&1
+    local ret=$?
+
+    cd "$OLDPWD"
+    return $ret
+}
+
+package() {
+    cd "$builddir"
+    $MAKE -C "${ARCH}-build" install >> $buildlog 2>&1
+    cd "$OLDPWD"
+}
+
+check() {
+    echo "The test must be on an OpenHarmony device!"
+}
+
+cleanbuild() {
+    rm -rf ${PWD}/$builddir
+}
