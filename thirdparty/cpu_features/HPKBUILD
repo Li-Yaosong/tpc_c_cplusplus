@@ -14,32 +14,18 @@ pkgdesc="跨平台 C 库，用于在运行时检测 CPU 特性（如 SSE/AVX/NEO
 url="https://github.com/google/cpu_features"
 
 ## 编译设置
-### 目标平台
 archs=("armeabi-v7a" "arm64-v8a" "x86_64")
-### 开源协议
 license=("Apache License 2.0")
-### 依赖模块
 depends=("googletest")
-### 依赖工具
 makedepends=()
 
-### 下载source指定的源码包
 downloadpackage=true
-packagename=$pkgname-$pkgver.tar.gz # 源码包名
-### 自动解压
+packagename=$pkgname-$pkgver.tar.gz
 autounpack=true
-builddir=$pkgname-$pkgver # 解压后的源码文件夹(需填写,非指定)
-### 编译方法, 暂时支持cmake, configure, make等, 是什么就填写什么. 如若不写默认为cmake.
+builddir=$pkgname-$pkgver
 buildtools=cmake
 
-## source地址设置
-useproxy=true
 source="https://github.com/google/$pkgname/archive/refs/tags/v$pkgver.tar.gz"
-
-if [[ $useproxy == "true" ]]; then
-    set_proxy $source
-    echo "$source"
-fi
 
 patchflag=true
 prepare() {
