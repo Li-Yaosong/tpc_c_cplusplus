@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libuvc",
+        "License": "BSD",
+        "License File": "LICENSE",
+        "Version Number": "v0.0.7",
+        "Owner": "shilinke001@chinasoftinc.com",
+        "Upstream URL": "https://github.com/libuvc/libuvc",
+        "Description": "libuvc is an open-source, libusb-based library for interacting with UVC-compliant devices (e.g., USB cameras), offering simplified APIs for video stream capture and device control."
+    }
+]
