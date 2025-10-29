@@ -1,0 +1,22 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "x86_64",
+      "displayName": "x86_64 Build",
+      "generator": "Unix Makefiles"
+    },
+    {
+      "name": "arm32", 
+      "displayName": "ARM32 Build",
+      "generator": "Unix Makefiles",
+      "toolchainFile": "${sourceDir}/arm32-toolchain.cmake"
+    },
+    {
+      "name": "arm64",
+      "displayName": "ARM64 Build", 
+      "generator": "Unix Makefiles",
+      "toolchainFile": "${sourceDir}/arm64-toolchain.cmake"
+    }
+  ]
+}
