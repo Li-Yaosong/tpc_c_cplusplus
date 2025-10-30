@@ -23,7 +23,7 @@ license=("GPL-3.0""Apache-2.0""BSD-2-Clause")
 depends=()
 makedepends=()
 
-source="https://ghproxy.net/https://github.com/espeak-ng/$pkgname/archive/refs/tags/$pkgver.tar.gz"
+source="https://github.com/espeak-ng/$pkgname/archive/refs/tags/$pkgver.tar.gz"
 autounpack=true
 downloadpackage=true
 buildhostespeak=true
