@@ -21,11 +21,11 @@ jobs:
           wget -q -O sdk.zip https://contentcenter-drcn.dbankcdn.cn/pub_1/DevEcoSpace_1_900_9/13/v3/CcUeigptTbyk_8Ij634-PA/lvBPDKW2QbqJ9RK5qrIr1A.zip
           unzip -o sdk.zip
           export OHOS_SDK=$(pwd)
-          cd lycium && ./build.sh ffmpeg
+          cd lycium && ./build.sh FFmpeg
           
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ffmpeg-n6.0
+          name: FFmpeg-n6.0
           path: |
-            lycium/usr/ffmpeg
+            lycium/usr/FFmpeg
